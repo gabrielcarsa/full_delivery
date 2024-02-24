@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+        //RETORNAR DASHBOARD
+        return view('dashboard');})->name('dashboard');
+
+        //APENAS REGISTRO DE USUÁRIO SE ESTIVER AUTENTICADO
+        Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 });
