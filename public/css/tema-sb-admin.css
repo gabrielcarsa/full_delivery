@@ -223,52 +223,12 @@ SIDEBAR
   font-size: 0.65rem;
 }
 
-.sidebar-light .sidebar-brand {
-  color: #6e707e;
+.nav-link-active, .nav-link-active i{
+  color: #FFFF !important;
+  font-weight: 600 !important;
 }
-
-.sidebar-light hr.sidebar-divider {
-  border-top: 1px solid #eaecf4;
-}
-
-.sidebar-light .sidebar-heading {
-  color: #b7b9cc;
-}
-
-.sidebar-light .nav-item .nav-link {
-  color: #858796;
-}
-
-.sidebar-light .nav-item .nav-link i {
-  color: #d1d3e2;
-}
-
-.sidebar-light .nav-item .nav-link:active, .sidebar-light .nav-item .nav-link:focus, .sidebar-light .nav-item .nav-link:hover {
-  color: #6e707e;
-}
-
-.sidebar-light .nav-item .nav-link:active i, .sidebar-light .nav-item .nav-link:focus i, .sidebar-light .nav-item .nav-link:hover i {
-  color: #6e707e;
-}
-
-.sidebar-light .nav-item .nav-link[data-toggle="collapse"]::after {
-  color: #b7b9cc;
-}
-
-.sidebar-light .nav-item.active .nav-link {
-  color: #6e707e;
-}
-
-.sidebar-light .nav-item.active .nav-link i {
-  color: #6e707e;
-}
-
-.sidebar-light #sidebarToggle {
-  background-color: #eaecf4;
-}
-
-.sidebar-light #sidebarToggle::after {
-  color: #b7b9cc;
+.nav-link-desactive{
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .sidebar-light #sidebarToggle:hover {
@@ -279,14 +239,6 @@ SIDEBAR
   color: #fff;
 }
 
-.sidebar-dark hr.sidebar-divider {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.sidebar-dark .sidebar-heading {
-  color: rgba(255, 255, 255, 0.4);
-}
-
 .sidebar-dark .nav-item .nav-link {
   color: rgba(255, 255, 255, 0.8);
 }
@@ -295,25 +247,6 @@ SIDEBAR
   color: rgba(255, 255, 255, 0.3);
 }
 
-.sidebar-dark .nav-item .nav-link:active, .sidebar-dark .nav-item .nav-link:focus, .sidebar-dark .nav-item .nav-link:hover {
-  color: #fff;
-}
-
-.sidebar-dark .nav-item .nav-link:active i, .sidebar-dark .nav-item .nav-link:focus i, .sidebar-dark .nav-item .nav-link:hover i {
-  color: #fff;
-}
-
-.sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.sidebar-dark .nav-item.active .nav-link {
-  color: #fff;
-}
-
-.sidebar-dark .nav-item.active .nav-link i {
-  color: #fff;
-}
 
 .sidebar-dark #sidebarToggle {
   background-color: rgba(255, 255, 255, 0.2);
