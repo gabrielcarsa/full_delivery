@@ -37,6 +37,8 @@ Route::middleware([
         Route::get('/categoria_produto',function () {return view('categoria_produto/listar');})->name('categoria_produto');
         Route::get('/categoria_produto/listar', [CategoriaProdutoController::class, 'listar'])->name('categoria_produto_listar');
         Route::get('/categoria_produto/novo', function () {return view('categoria_produto/novo');})->name('categoria_produto_novo');
+        Route::post('/categoria_produto/cadastrar/{usuario_id}', [CategoriaProdutoController::class, 'cadastrar'])->name('categoria_produto_cadastrar');
+
 
         
 

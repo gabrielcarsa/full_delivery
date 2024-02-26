@@ -8,15 +8,43 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <form class="row g-3" action="/categoria_produto/listar" method="get" autocomplete="off">
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            <form class="row g-3" action="/categoria_produto/cadastrar/{{Auth::user()->id}}" method="post"
+                autocomplete="off">
                 @csrf
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome da categoria</label>
                     <input type="text" name="nome" value="{{request('nome')}}" class="form-control" id="inputNome">
                 </div>
-
+                <div class="col-md-6">
+                    <label for="inputDescricao" class="form-label">Descrição</label>
+                    <input type="text" name="descricao" value="{{request('descricao')}}" class="form-control"
+                        id="inputDescricao">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputOrdem" class="form-label">Ordem de exibição</label>
+                    <input type="text" name="ordem" value="{{request('ordem')}}" class="form-control" id="inputOrdem">
+                </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Consultar</button>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </div>
             </form>
         </div>
