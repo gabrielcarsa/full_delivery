@@ -99,7 +99,7 @@
                             <span>Cardápio</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                            <li><a class="dropdown-item" href="#">Categoria de produtos</a></li>
+                            <li><a class="dropdown-item" href="{{ route('categoria_produto') }}">Categoria de produtos</a></li>
                             <li><a class="dropdown-item" href="#">Produtos</a></li>
                         </ul>
                     </li>

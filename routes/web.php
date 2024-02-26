@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\CategoriaProdutoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +32,11 @@ Route::middleware([
 
         //APENAS REGISTRO DE USUÁRIO SE ESTIVER AUTENTICADO
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+
+        //CATEGORIA PRODUTO
+        Route::get('/categoria_produto',function () {return view('categoria_produto/listar');})->name('categoria_produto');
+        Route::get('/categoria_produto/listar', [CategoriaProdutoController::class, 'listar'])->name('categoria_produto_listar');
+
+        
+
 });
