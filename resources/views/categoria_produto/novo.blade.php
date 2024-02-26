@@ -4,9 +4,7 @@
     <div class="card mb-4 mt-4">
         <!-- Card Header  -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 fw-semibold fs-5">Categoria de produtos</h2>
-            <a class="btn btn-primary" href="{{ route('categoria_produto_novo') }}">Cadastrar</a>
-
+            <h2 class="m-0 fw-semibold fs-5">Cadastro de Categoria</h2>
         </div>
         <!-- Card Body -->
         <div class="card-body">

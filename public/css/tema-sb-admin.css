@@ -74,6 +74,13 @@ body {
   text-transform: uppercase !important;
 }
 
+/*-------
+FORMS
+--------*/
+.card-header{
+  background-color: #ff4e6f !important;
+  color: #FFFF !important;
+}
 
 /*------
 SIDEBAR
@@ -94,7 +101,7 @@ SIDEBAR
 .sidebar {
   width: 14rem !important;
   min-height: 100vh;
-  background-color: #e93a5a !important;
+  background-color: #ff4e6f !important;
 }
 
 .sidebar .nav-item .collapse {

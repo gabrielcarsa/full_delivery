@@ -36,6 +36,7 @@ Route::middleware([
         //CATEGORIA PRODUTO
         Route::get('/categoria_produto',function () {return view('categoria_produto/listar');})->name('categoria_produto');
         Route::get('/categoria_produto/listar', [CategoriaProdutoController::class, 'listar'])->name('categoria_produto_listar');
+        Route::get('/categoria_produto/novo', function () {return view('categoria_produto/novo');})->name('categoria_produto_novo');
 
         
 
