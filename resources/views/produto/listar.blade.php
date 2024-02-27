@@ -12,7 +12,7 @@
         <div class="card-body justify-content-center d-flex">
             @if(isset($produtos))
             @foreach ($produtos as $produto)
-            <div class="card ml-1 mr-1" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem) }}" style="max-width: 100%;"
                     class="card-img-top max-height-20">
                 <div class="card-body">
@@ -20,9 +20,9 @@
                     <p class="card-text descricao-produto">{{$produto->descricao}}</p>
                     <p class="card-text">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
                     <div class="row justify-content-center">
-                        <a href="#" class="btn btn-primary col-md-3 mr-1"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="#" class="btn btn-success col-md-3 ml-1"><i class="fa-solid fa-percent"></i></a>
-                        <a href="#" class="btn btn-danger col-md-3 ml-1"><i class="fa-solid fa-trash"></i></a>
+                        <a href="#" class="btn btn-primary col-md-3"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="#" class="btn btn-success col-md-3"><i class="fa-solid fa-percent"></i></a>
+                        <a href="#" class="btn btn-danger col-md-3"><i class="fa-solid fa-trash"></i></a>
 
                     </div>
                 </div>
