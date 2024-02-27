@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CategoriaProdutoController;
+use App\Http\Controllers\ProdutoController;
 
 
 /*
@@ -39,7 +40,11 @@ Route::middleware([
         Route::get('/categoria_produto/novo', function () {return view('categoria_produto/novo');})->name('categoria_produto_novo');
         Route::post('/categoria_produto/cadastrar/{usuario_id}', [CategoriaProdutoController::class, 'cadastrar'])->name('categoria_produto_cadastrar');
 
-
+        //PRODUTO
+        Route::get('/produtos', [ProdutoController::class, 'listar'])->name('produtos');
+        Route::get('/produtos/pesquisar', [ProdutoController::class, 'pesquisar']);
+        Route::get('/produto/novo', [ProdutoController::class, 'novo'])->name('produto_novo');
+        Route::post('/produto/cadastrar/{usuario_id}', [ProdutoController::class, 'cadastrar']);
         
 
 });

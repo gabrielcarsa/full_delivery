@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\CategoriaProduto;
-use Carbon\Carbon;
+
 use Illuminate\Http\Request;
+
+use App\Models\CategoriaProduto;
 
 class CategoriaProdutoController extends Controller
 {

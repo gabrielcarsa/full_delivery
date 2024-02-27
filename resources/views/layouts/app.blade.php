@@ -83,8 +83,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link "
-                            href="">
+                        <a class="nav-link " href="">
                             <i class="fa-solid fa-user"></i>
                             <span> Clientes</span>
                         </a>
@@ -99,8 +98,9 @@
                             <span>Cardápio</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                            <li><a class="dropdown-item" href="{{ route('categoria_produto') }}">Categoria de produtos</a></li>
-                            <li><a class="dropdown-item" href="#">Produtos</a></li>
+                            <li><a class="dropdown-item" href="#">Visual</a></li>
+                            <li><a class="dropdown-item" href="{{ route('categoria_produto') }}">Categoria de
+                                    produtos</a></li>
                         </ul>
                     </li>
 
