@@ -44,7 +44,7 @@ Route::middleware([
         Route::get('/produtos', [ProdutoController::class, 'listar'])->name('produtos');
         Route::get('/produtos/pesquisar', [ProdutoController::class, 'pesquisar']);
         Route::get('/produto/novo', [ProdutoController::class, 'novo'])->name('produto_novo');
-        Route::post('/produto/cadastrar/{usuario_id}', [ProdutoController::class, 'cadastrar']);
+        Route::post('/produto/cadastrar/{categoria_id}/{usuario_id}', [ProdutoController::class, 'cadastrar']);
         
 
 });

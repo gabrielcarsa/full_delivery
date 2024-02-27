@@ -270,3 +270,15 @@ SIDEBAR
 .sidebar-dark.toggled #sidebarToggle::after {
   color: rgba(255, 255, 255, 0.5);
 }
+
+
+/*------
+PRODUTO PAINEL
+-------*/
+
+.descricao-produto{
+  max-height: 80px; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
