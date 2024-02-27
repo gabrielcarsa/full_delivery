@@ -77,7 +77,10 @@ body {
 /*-------
 FORMS
 --------*/
-
+.acoes-listar{
+  padding: 0 5px;
+  font-size: 20px;
+}
 
 /*------
 SIDEBAR
