@@ -106,9 +106,9 @@
                     </div>
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('estabelecimento') ? 'nav-link-active' : 'nav-link-desactive'}}" href="{{ route('estabelecimento') }}">
+                        <a class="nav-link {{ request()->routeIs('restaurante') ? 'nav-link-active' : 'nav-link-desactive'}}" href="{{ route('restaurante') }}">
                             <i class="fa-solid fa-house"></i>
-                            <span>Estabelecimento</span>
+                            <span>Restaurante</span>
                         </a>
 
                     </li>

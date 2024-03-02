@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\RestauranteController;
+
 
 
 /*
@@ -34,8 +36,8 @@ Route::middleware([
         //APENAS REGISTRO DE USUÁRIO SE ESTIVER AUTENTICADO
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
         
-        //ESTABELECIMENTO
-        Route::get('/estabelecimento', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
+        //RESTAURANTE
+        Route::get('/restaurante', [RestauranteController::class, 'index'])->name('restaurante');
 
         //CATEGORIA PRODUTO
         Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
