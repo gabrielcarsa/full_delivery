@@ -102,13 +102,13 @@
 
                     <!-- Heading -->
                     <div class="sidebar-heading">
-                        Estabelecimento
+                        Negócios
                     </div>
 
                     <li class="nav-item">
                         <a class="nav-link " href="">
                             <i class="fa-solid fa-user"></i>
-                            <span></span>
+                            <span>Estabelecimento</span>
                         </a>
 
                     </li>

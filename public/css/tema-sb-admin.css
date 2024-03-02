@@ -276,6 +276,15 @@ SIDEBAR
 PRODUTO PAINEL
 -------*/
 
+.card {
+  margin-right: 10px; /* Adiciona margem à direita de cada card */
+}
+
+/* Opcional: para evitar que o último card tenha margem à direita */
+.card:last-child {
+  margin-right: 0;
+}
+
 .descricao-produto{
   max-height: 80px; 
   overflow: hidden; 

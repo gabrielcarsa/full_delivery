@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
 use App\Models\CategoriaProduto;
 
@@ -35,7 +35,17 @@ class ProdutoController extends Controller
     //CADASTRAR
     public function cadastrar(Request $request, $categoria_id, $usuario_id){
 
-        //TODO: fazer validações
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'imagem' => 'required|image|dimensions:ratio=1', // A dimensão deve ter uma proporção de 1:1
+            //TODO: fazer validações
+            
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         //Cadastro de categoria
         $produto = new Produto();
