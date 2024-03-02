@@ -37,9 +37,11 @@ class ProdutoController extends Controller
 
         // Validação do formulário
         $validator = Validator::make($request->all(), [
-            'imagem' => 'required|image|dimensions:ratio=1', // A dimensão deve ter uma proporção de 1:1
             //TODO: fazer validações
-            
+            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min_width=300,min_height=275',
+            'nome' => 'required|string|max:255',
+            'descricao' => 'required|string|max:500',
+            'preco' => 'required|numeric|min:0',
         ]);
 
         // Se a validação falhar

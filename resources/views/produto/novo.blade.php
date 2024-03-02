@@ -38,16 +38,16 @@
 
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome</label>
-                    <input type="text" name="nome" value="{{request('nome')}}" class="form-control" id="inputNome">
+                    <input type="text" name="nome" value="{{old('nome')}}" class="form-control" id="inputNome">
                 </div>
                 <div class="col-md-6">
                     <label for="inputDescricao" class="form-label">Descrição</label>
-                    <input type="text" name="descricao" value="{{request('descricao')}}" class="form-control"
+                    <input type="text" name="descricao" value="{{old('descricao')}}" class="form-control"
                         id="inputDescricao">
                 </div>
                 <div class="col-md-4">
                     <label for="inputPreco" class="form-label">Preço</label>
-                    <input type="text" name="preco" value="{{request('preco')}}" class="form-control" id="inputPreco">
+                    <input type="text" name="preco" value="{{old('preco')}}" class="form-control" id="inputPreco">
                 </div>
                 <div class="col-md-2">
                     <label for="inputTipoDisponibilidade" id="disponibilidade"
