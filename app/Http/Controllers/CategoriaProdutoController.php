@@ -9,13 +9,13 @@ use App\Models\CategoriaProduto;
 class CategoriaProdutoController extends Controller
 {
     //LISTAGEM
-    public function listar(){
+    public function index(){
         $categorias = CategoriaProduto::all();
         return view('categoria_produto/listar', compact('categorias'));
     }
 
     //CADASTRAR
-    public function cadastrar(Request $request, $usuario_id){
+    public function store(Request $request, $usuario_id){
 
         //TODO: fazer validações
 

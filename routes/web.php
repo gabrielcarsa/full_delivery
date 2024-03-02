@@ -35,16 +35,16 @@ Route::middleware([
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 
         //CATEGORIA PRODUTO
-        Route::get('/categoria_produto',function () {return view('categoria_produto/listar');})->name('categoria_produto');
-        Route::get('/categoria_produto/listar', [CategoriaProdutoController::class, 'listar'])->name('categoria_produto_listar');
-        Route::get('/categoria_produto/novo', function () {return view('categoria_produto/novo');})->name('categoria_produto_novo');
-        Route::post('/categoria_produto/cadastrar/{usuario_id}', [CategoriaProdutoController::class, 'cadastrar'])->name('categoria_produto_cadastrar');
+        Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
+        Route::get('/categoria_produto/novo', function () {return view('categoria_produto/novo');})->name('categoria_produto.novo');
+        Route::post('/categoria_produto/cadastrar/{usuario_id}', [CategoriaProdutoController::class, 'store'])->name('categoria_produto.cadastrar');
 
         //PRODUTO
-        Route::get('/produtos', [ProdutoController::class, 'listar'])->name('produtos');
+        Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos');
         Route::get('/produtos/pesquisar', [ProdutoController::class, 'pesquisar']);
-        Route::get('/produto/novo', [ProdutoController::class, 'novo'])->name('produto_novo');
-        Route::post('/produto/cadastrar/{categoria_id}/{usuario_id}', [ProdutoController::class, 'cadastrar']);
+        Route::get('/produto/novo', [ProdutoController::class, 'create'])->name('produto.novo');
+        Route::post('/produto/cadastrar/{categoria_id}/{usuario_id}', [ProdutoController::class, 'store']);
+        Route::delete('/produto/apagar/{id}', [ProdutoController::class, 'destroy'])->name('produto.excluir');
         
 
 });

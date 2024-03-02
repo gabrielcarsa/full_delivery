@@ -5,12 +5,12 @@
         <!-- Card Header  -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
             <h2 class="m-0 fw-semibold fs-5">Categoria de produtos</h2>
-            <a class="btn btn-primary" href="{{ route('categoria_produto_novo') }}">Cadastrar</a>
+            <a class="btn btn-primary" href="{{ route('categoria_produto.novo') }}">Cadastrar</a>
 
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <form class="row g-3" action="/categoria_produto/listar" method="get" autocomplete="off">
+            <form class="row g-3" action="/categoria_produto" method="get" autocomplete="off">
                 @csrf
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome da categoria</label>

@@ -11,19 +11,19 @@ use App\Models\CategoriaProduto;
 class ProdutoController extends Controller
 {
      //LISTAGEM
-     public function listar(Request $request){
+     public function index(Request $request){
 
         $categoria_id = $request->input('categoria_id');
 
         $categoria = CategoriaProduto::find($categoria_id)->first();
-
+   
         $produtos = Produto::where('categoria_id', $categoria_id)->get();
 
         return view('produto/listar', compact('produtos', 'categoria'));
     }
 
     //RETORNAR VIEW PARA CADASTRO
-    public function novo(Request $request){
+    public function create(Request $request){
 
         $categoria_id = $request->input('categoria_id');
 
@@ -33,7 +33,7 @@ class ProdutoController extends Controller
     }
 
     //CADASTRAR
-    public function cadastrar(Request $request, $categoria_id, $usuario_id){
+    public function store(Request $request, $categoria_id, $usuario_id){
 
         // Validação do formulário
         $validator = Validator::make($request->all(), [
@@ -75,4 +75,9 @@ class ProdutoController extends Controller
     //ALTERAR
 
     //EXCLUIR
+    public function destroy($id){
+        $produto = Produto::find($id);
+        $produto->delete();
+        return redirect()->back()->with('success', 'Produto excluido com sucesso');
+    }
 }
