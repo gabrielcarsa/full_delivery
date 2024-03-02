@@ -33,6 +33,9 @@ Route::middleware([
 
         //APENAS REGISTRO DE USUÁRIO SE ESTIVER AUTENTICADO
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+        
+        //ESTABELECIMENTO
+        Route::get('/estabelecimento', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
 
         //CATEGORIA PRODUTO
         Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');

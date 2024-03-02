@@ -106,8 +106,8 @@
                     </div>
 
                     <li class="nav-item">
-                        <a class="nav-link " href="">
-                            <i class="fa-solid fa-user"></i>
+                        <a class="nav-link {{ request()->routeIs('estabelecimento') ? 'nav-link-active' : 'nav-link-desactive'}}" href="{{ route('estabelecimento') }}">
+                            <i class="fa-solid fa-house"></i>
                             <span>Estabelecimento</span>
                         </a>
 

@@ -39,7 +39,7 @@ class ProdutoController extends Controller
         $validator = Validator::make($request->all(), [
             //TODO: fazer validações
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min_width=300,min_height=275',
-            'nome' => 'required|string|max:255',
+            'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
             'preco' => 'required|numeric|min:0',
         ]);
