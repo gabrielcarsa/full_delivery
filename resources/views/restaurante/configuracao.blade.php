@@ -42,11 +42,12 @@
                         </h2>
                         <div id="panelsStayOpen-geral" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <label class="input-group-text" for="inputImagem">Logo</label>
                                     <input type="file" class="form-control @error('imagem') is-invalid @enderror"
                                         name="imagem" id="inputImagem">
                                 </div>
+                                <p class="text-secondary ml-2">512 x 512 (px)</p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="inputNome" class="form-label">Nome</label>
@@ -131,15 +132,13 @@
                                     <h4>Segunda-feira</h4>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
-                                        <input type="time" name="1_abertura"
-                                            value="{{request('1_abertura')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="1_abertura" value="{{request('1_abertura')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="1_fechamento"
-                                            value="{{request('1_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="1_fechamento" value="{{request('1_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -151,9 +150,8 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="2_fechamento"
-                                            value="{{request('2_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="2_fechamento" value="{{request('2_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -165,9 +163,8 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="3_fechamento"
-                                            value="{{request('3_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="3_fechamento" value="{{request('3_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -179,9 +176,8 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="4_fechamento"
-                                            value="{{request('4_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="4_fechamento" value="{{request('4_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -193,9 +189,8 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="5_fechamento"
-                                            value="{{request('5_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="5_fechamento" value="{{request('5_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -207,24 +202,21 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="6_fechamento"
-                                            value="{{request('6_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="6_fechamento" value="{{request('6_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <h4>Domingo</h4>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
-                                        <input type="time" name="0_abertura"
-                                            value="{{request('0_abertura')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="0_abertura" value="{{request('0_abertura')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
-                                        <input type="time" name="0_fechamento"
-                                            value="{{request('0_fechamento')}}" class="form-control"
-                                            id="inputDiaSemana">
+                                        <input type="time" name="0_fechamento" value="{{request('0_fechamento')}}"
+                                            class="form-control" id="inputDiaSemana">
                                     </div>
                                 </div>
 

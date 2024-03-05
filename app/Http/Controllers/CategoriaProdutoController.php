@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\CategoriaProduto;
+use App\Models\Restaurante;
 
 class CategoriaProdutoController extends Controller
 {
@@ -24,6 +25,7 @@ class CategoriaProdutoController extends Controller
         $categoria->nome = $request->input('nome');
         $categoria->descricao = $request->input('descricao');
         $categoria->ordem = $request->input('ordem');
+        $categoria->restaurante_id = $request->input('restaurante_id');
         $categoria->cadastrado_usuario_id = $usuario_id;
         $categoria->save();
 

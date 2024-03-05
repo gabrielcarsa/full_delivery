@@ -26,7 +26,7 @@ class RestauranteController extends Controller
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             //TODO: fazer validações
-            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min_width=300,min_height=275',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:width=512,height=512',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
         ]);
@@ -64,7 +64,7 @@ class RestauranteController extends Controller
         $i = 0;
         for($i; $i < 7; $i++){
             $horario_funcionamento = new HorarioFuncionamento();
-            $horario_funcionamento->id = $restaurante->id;
+            $horario_funcionamento->restaurante_id = $restaurante->id;
             $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
             $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
             $horario_funcionamento->save();
