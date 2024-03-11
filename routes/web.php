@@ -42,12 +42,12 @@ Route::middleware([
         Route::post('/restaurante/cadastrar/{usuario_id}', [RestauranteController::class, 'store']);
         Route::put('/restaurante/alterar/{usuario_id}/{restaurante_id}', [RestauranteController::class, 'update']);
 
-
-
         //CATEGORIA PRODUTO
         Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
         Route::get('/categoria_produto/novo', function () {return view('categoria_produto/novo');})->name('categoria_produto.novo');
         Route::post('/categoria_produto/cadastrar/{usuario_id}', [CategoriaProdutoController::class, 'store'])->name('categoria_produto.cadastrar');
+        Route::get('/categoria_produto/editar', [CategoriaProdutoController::class, 'edit'])->name('categoria_produto.editar');
+        Route::put('/categoria_produto/alterar/{usuario_id}/{categoria_id}', [CategoriaProdutoController::class, 'update']);
 
         //PRODUTO
         Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos');

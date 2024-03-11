@@ -57,7 +57,7 @@
                         <td>{{$categoria->descricao}}</td>
                         <td>{{$categoria->ordem}}</td>
                         <td>
-                            <a href="editar/{{$categoria->id}}" class="acoes-listar btn-acao-listagem-secundary"><i
+                            <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}" class="acoes-listar btn-acao-listagem-secundary"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <a href="editar/{{$categoria->id}}" class="acoes-listar btn-acao-listagem-secundary text-danger"><i
                                     class="fa-solid fa-trash"></i></a>
