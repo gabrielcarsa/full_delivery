@@ -40,6 +40,8 @@ Route::middleware([
         Route::get('/restaurante', [RestauranteController::class, 'index'])->name('restaurante');
         Route::get('/restaurante/configurar', [RestauranteController::class, 'configuracao'])->name('restaurante.configurar');
         Route::post('/restaurante/cadastrar/{usuario_id}', [RestauranteController::class, 'store']);
+        Route::put('/restaurante/alterar/{usuario_id}/{restaurante_id}', [RestauranteController::class, 'update']);
+
 
 
         //CATEGORIA PRODUTO
