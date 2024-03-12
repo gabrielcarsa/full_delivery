@@ -5,6 +5,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\RestauranteController;
+use App\Http\Controllers\CardapioController;
 
 
 
@@ -19,9 +20,8 @@ use App\Http\Controllers\RestauranteController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CardapioController::class, 'index'])->name('cardapio');
+
 
 Route::middleware([
     'auth:sanctum',

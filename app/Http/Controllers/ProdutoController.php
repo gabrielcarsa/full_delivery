@@ -13,12 +13,12 @@ class ProdutoController extends Controller
      //LISTAGEM
      public function index(Request $request){
 
-        $categoria_id = $request->input('categoria_id');
+        $categoria_id = $request->get('categoria_id');
 
-        $categoria = CategoriaProduto::find($categoria_id)->first();
+        $categoria = CategoriaProduto::find($categoria_id);
    
         $produtos = Produto::where('categoria_id', $categoria_id)->get();
-
+      
         return view('produto/listar', compact('produtos', 'categoria'));
     }
 
@@ -27,7 +27,7 @@ class ProdutoController extends Controller
 
         $categoria_id = $request->input('categoria_id');
 
-        $categoria = CategoriaProduto::find($categoria_id)->first();
+        $categoria = CategoriaProduto::find($categoria_id);
 
         return view('produto/novo', compact('categoria'));
     }

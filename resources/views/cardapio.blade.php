@@ -8,24 +8,103 @@
     <title>Laravel</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 
     <!-- Styles -->
+    <link href="{{ asset('css/tema-sb-admin.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 </head>
 
+<style>
+
+</style>
+
 <body class="">
-    <footer>
-        <div class="">
+    @if($data['restaurante_id'] == null)
+
+    <div class="container my-3 mx-3 bg-body-tertiary">
+
+        <h2 class="madimi-one-regular fs-2">Escolha o restaurante:</h2>
+
+        @foreach($data['restaurantes'] as $restaurante)
+
+        <a href="?restaurante_id={{$restaurante->id}}" class="btn btn-dark">{{$restaurante->nome}}</a>
+
+        @endforeach
+
+    </div>
+
+    @else
+
+    <div class="restaurante-section bg-body-tertiary py-3">
+        <div class="container d-flex p-3 align-items-center justify-content-center">
+            <div class="p-2">
+                <img src="{{ asset('storage/logo/'.$data['restaurantes']->imagem) }}" class="logo-cardapio">
+            </div>
+            <div class="p-4">
+                <h2>{{$data['restaurantes']->nome}}</h2>
+                <p class="text-secondary">{{$data['restaurantes']->descricao}}</p>
+            </div>
+        </div>
+        <div class="my-3 mx-3">
+            <p class="m-3">Aberto</p>
+            <p class="m-3">Pedido minímo: R$ 20,00</p>
+            <!-- Button trigger modal -->
+            <a href="" class="m-3 text-reset" data-bs-toggle="modal" data-bs-target="#modalHorarios">
+                Horários de funcionamento
+            </a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
-    </footer>
+    </div>
+
+    <div class="p-3">
+
+        @foreach($data['categoria_cardapio'] as $categoria)
+        <a href="" class="btn btn-dark">{{$categoria->nome}}</a>
+        @endforeach
+
+        <div class="cardapio-lista bg-body-body m-3">
+            @foreach($data['cardapio_resultados'] as $cardapio)
+            <div class="d-flex">
+                <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}" width="150px" class="">
+                <a href="">{{$cardapio->nome_produto}}</a>
+            </div>
+            @endforeach
+        </div>
+
+
+    </div>
+
+    @endif
 
     <!-- Footer -->
-    <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+    <footer class="text-center text-lg-start text-muted bg-body-tertiary">
         <!-- Section: Social media -->
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
             <!-- Left -->
