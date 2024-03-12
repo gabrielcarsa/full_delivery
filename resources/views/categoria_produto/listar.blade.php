@@ -53,15 +53,49 @@
                     @foreach ($categorias as $categoria)
                     <tr>
                         <th scope="row">{{$categoria->id}}</th>
-                        <td><a class="btn btn-outline-primary"  href="{{ route('produtos', ['categoria_id' => $categoria->id]) }}">{{$categoria->nome}}</a></td>
+                        <td><a class="btn btn-outline-primary"
+                                href="{{ route('produtos', ['categoria_id' => $categoria->id]) }}">{{$categoria->nome}}</a>
+                        </td>
                         <td>{{$categoria->descricao}}</td>
                         <td>{{$categoria->ordem}}</td>
                         <td>
-                            <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}" class="acoes-listar btn-acao-listagem-secundary"><i
+                            <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}"
+                                class="acoes-listar btn-acao-listagem-secundary"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="editar/{{$categoria->id}}" class="acoes-listar btn-acao-listagem-secundary text-danger"><i
-                                    class="fa-solid fa-trash"></i></a>
+                            <a href="" data-bs-toggle="modal"
+                                class="acoes-listar btn-acao-listagem-secundary text-danger"
+                                data-bs-target="#exampleModal{{$categoria->id}}"><i class="fa-solid fa-trash"></i></a>
                         </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
+                                            {{$categoria->nome}}?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Essa ação é irreversível! Tem certeza?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Não</button>
+                                        <form
+                                            action="{{ route('categoria_produto.excluir', ['id' => $categoria->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Sim, eu
+                                                tenho</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </tr>
                     @endforeach
                 </tbody>

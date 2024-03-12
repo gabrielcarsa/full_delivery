@@ -36,7 +36,7 @@ class CategoriaProdutoController extends Controller
     //ALTERAR VIEW
     public function edit(Request $request){
         $id = $request->input('id');
-        $categoria = CategoriaProduto::find($id)->first();
+        $categoria = CategoriaProduto::find($id);
         return view('categoria_produto/novo', compact('categoria'));
     }
 
@@ -56,4 +56,9 @@ class CategoriaProdutoController extends Controller
     }
 
     //EXCLUIR
+    public function destroy($id){
+        $produto = CategoriaProduto::find($id);
+        $produto->delete();
+        return redirect()->back()->with('success', 'Categoria excluida com sucesso');
+    }
 }
