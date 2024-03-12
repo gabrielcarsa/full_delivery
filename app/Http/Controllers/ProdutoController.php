@@ -38,7 +38,28 @@ class ProdutoController extends Controller
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             //TODO: fazer validações
-            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min_width=300,min_height=275',
+            'imagem' => [
+                'required',
+                'image',
+                'mimes:jpeg,png,jpg',
+                'max:20480',
+                function ($attribute, $value, $fail) {
+                    // Verifique se é uma imagem válida
+                    $imageInfo = getimagesize($value->getPathname());
+                    if ($imageInfo === false) {
+                        $fail('O arquivo fornecido não é uma imagem válida.');
+                        return;
+                    }
+                    
+                    // Obtém as dimensões da imagem
+                    list($width, $height) = $imageInfo;
+            
+                    // Verifique se é quadrada
+                    if ($width !== $height) {
+                        $fail('A imagem deve ser quadrada.');
+                    }
+                },
+            ],
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
             'preco' => 'required|numeric|min:0',
