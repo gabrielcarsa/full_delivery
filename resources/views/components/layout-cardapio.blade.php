@@ -27,81 +27,8 @@
 </style>
 
 <body class="">
-    @if($data['restaurante_id'] == null)
 
-    <div class="container my-3 mx-3 bg-body-tertiary">
-
-        <h2 class="madimi-one-regular fs-2">Escolha o restaurante:</h2>
-
-        @foreach($data['restaurantes'] as $restaurante)
-
-        <a href="?restaurante_id={{$restaurante->id}}" class="btn btn-dark">{{$restaurante->nome}}</a>
-
-        @endforeach
-
-    </div>
-
-    @else
-
-    <div class="restaurante-section bg-body-tertiary py-3">
-        <div class="container d-flex p-3 align-items-center justify-content-center">
-            <div class="p-2">
-                <img src="{{ asset('storage/logo/'.$data['restaurantes']->imagem) }}" class="logo-cardapio">
-            </div>
-            <div class="p-4">
-                <h2>{{$data['restaurantes']->nome}}</h2>
-                <p class="text-secondary">{{$data['restaurantes']->descricao}}</p>
-            </div>
-        </div>
-        <div class="my-3 mx-3">
-            <p class="m-3">Aberto</p>
-            <p class="m-3">Pedido minímo: R$ 20,00</p>
-            <!-- Button trigger modal -->
-            <a href="" class="m-3 text-reset" data-bs-toggle="modal" data-bs-target="#modalHorarios">
-                Horários de funcionamento
-            </a>
-
-            <!-- Modal -->
-            <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="p-3">
-
-        @foreach($data['categoria_cardapio'] as $categoria)
-        <a href="" class="btn btn-dark">{{$categoria->nome}}</a>
-        @endforeach
-
-        <div class="cardapio-lista bg-body-body m-3">
-            @foreach($data['cardapio_resultados'] as $cardapio)
-            <div class="d-flex">
-                <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}" width="150px" class="">
-                <a href="">{{$cardapio->nome_produto}}</a>
-            </div>
-            @endforeach
-        </div>
-
-
-    </div>
-
-    @endif
+    {{ $slot }}
 
     <!-- Footer -->
     <footer class="text-center text-lg-start text-muted bg-body-tertiary">
@@ -225,6 +152,26 @@
         </div>
         <!-- Copyright -->
     </footer>
+
+    <div class="app-bar fixed-bottom bg-white border-top p-2">
+        <div class="container">
+            <ul class="nav justify-content-around">
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                        <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                        <i class="fa-solid fa-receipt"></i><span>Pedidos</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                        <i class="fa-solid fa-user"></i><span>Conta</span></a>
+
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

@@ -21,6 +21,7 @@ class CardapioController extends Controller
             'p.descricao as descricao_produto',
             'p.imagem as imagem_produto',
             'p.preco as preco_produto',
+            'p.categoria_id as categoria_id',
             'cp.nome as nome_categoria'
             )
         ->rightjoin('categoria_produto as cp', 'cp.id', '=', 'p.categoria_id')
@@ -43,6 +44,6 @@ class CardapioController extends Controller
             'categoria_cardapio' => $categoria_cardapio,
         ];
 
-        return view('cardapio', compact('data'));
+        return view('cardapio/cardapio', compact('data'));
     }
 }

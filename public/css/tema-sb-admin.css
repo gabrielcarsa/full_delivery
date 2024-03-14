@@ -309,10 +309,25 @@ PRODUTO PAINEL
     width: 150px;
     border-radius: 100%;
   }
+  .img-produto{
+    width: 150px;  
+  }
+
 }
 @media(max-width: 400px){
   .logo-cardapio{
     width: 100%;
     border-radius: 100%;
+  }
+  .img-produto{
+    width: 80px;
+
+  }
+  .card-body h5{
+    font-size: 9px;
+
+  }
+  .card-body p{
+    font-size: 9px;
   }
 }
