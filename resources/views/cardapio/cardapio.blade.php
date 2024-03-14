@@ -116,15 +116,15 @@
         <div class="container">
             <ul class="nav justify-content-around">
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}" href="#">
                         <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}" href="#">
                         <i class="fa-solid fa-receipt"></i><span>Pedidos</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}" href="#">
                         <i class="fa-solid fa-user"></i><span>Conta</span></a>
 
                 </li>
