@@ -15,6 +15,12 @@
 
     @else
 
+    <div class="carrinho-botao fixed-top d-flex align-items-end justify-content-end">
+        <button type="button" class="btn btn-light btn-carrinho p-3 rounded">
+            <span class="fas fa-shopping-cart"></span>
+        </button>
+    </div>
+
     <div class="restaurante-section">
 
         <div class="banner-img" style="background-image: url({{ asset('storage/images/banner.jpg')}});');">
@@ -81,23 +87,27 @@
                     @if($categoria->id == $cardapio->categoria_id)
 
                     <div class="col-md-6">
-                        <div class="card mb-2 px-3">
-                            <div class="card-grid">
-                                <div class="centralizar-img">
-                                    <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}"
-                                        class="rounded img-produto" alt="{{$cardapio->nome_produto}}">
-                                </div>
-                                <div class="card-texto-grid">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{$cardapio->nome_produto}}</h5>
-                                        <p class="text-secondary text-truncate">{{$cardapio->descricao_produto}}</p>
-                                        <p>Serve 1 pessoa</p>
-                                        <p class="fw-800"><strong>R$
-                                                {{number_format($cardapio->preco_produto, 2, ',', '.')}}</strong></p>
+                        <a href="" class="text-decoration-none text-reset">
+                            <div class="card mb-2 px-3">
+                                <div class="card-grid">
+                                    <div class="centralizar-img">
+                                        <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}"
+                                            class="rounded img-produto" alt="{{$cardapio->nome_produto}}">
+                                    </div>
+                                    <div class="card-texto-grid">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{$cardapio->nome_produto}}</h5>
+                                            <p class="text-secondary text-truncate">{{$cardapio->descricao_produto}}</p>
+                                            <p>Serve 1 pessoa</p>
+                                            <p class="fw-800"><strong>R$
+                                                    {{number_format($cardapio->preco_produto, 2, ',', '.')}}</strong>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+
                     </div>
                     @endif
                     @endforeach
@@ -116,15 +126,18 @@
         <div class="container">
             <ul class="nav justify-content-around">
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}" href="#">
+                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
+                        href="#">
                         <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}" href="#">
+                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}"
+                        href="#">
                         <i class="fa-solid fa-receipt"></i><span>Pedidos</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}" href="#">
+                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}"
+                        href="#">
                         <i class="fa-solid fa-user"></i><span>Conta</span></a>
 
                 </li>
