@@ -286,6 +286,13 @@ SIDEBAR
 /*------
 PRODUTO PAINEL
 -------*/
+.banner-img{
+  background-position: center; /* Centraliza a imagem horizontalmente e verticalmente */
+  background-size: cover; /* Redimensiona a imagem para cobrir todo o elemento */
+  width: 100%;
+  height: 200px;
+  filter: brightness(0.5);
+}
 
 .card {
   margin-right: 10px; /* Adiciona margem à direita de cada card */

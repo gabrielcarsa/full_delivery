@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Foomy</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -153,25 +153,6 @@
         <!-- Copyright -->
     </footer>
 
-    <div class="app-bar fixed-bottom bg-white border-top p-2">
-        <div class="container">
-            <ul class="nav justify-content-around">
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
-                        <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
-                        <i class="fa-solid fa-receipt"></i><span>Pedidos</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
-                        <i class="fa-solid fa-user"></i><span>Conta</span></a>
-
-                </li>
-            </ul>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">

@@ -15,7 +15,11 @@
 
     @else
 
-    <div class="restaurante-section py-3">
+    <div class="restaurante-section">
+
+        <div class="banner-img" style="background-image: url({{ asset('storage/images/banner.jpg')}});');">
+        </div>
+
         <div class="container d-flex p-3 align-items-center justify-content-center">
             <div class="p-2">
                 <img src="{{ asset('storage/logo/'.$data['restaurantes']->imagem) }}" class="logo-cardapio">
@@ -25,12 +29,12 @@
                 <p class="text-secondary">{{$data['restaurantes']->descricao}}</p>
             </div>
         </div>
-        <div class="my-3 mx-3">
-            <p class="m-3">Aberto</p>
-            <p class="m-3">Pedido minímo: R$ 20,00</p>
+        <div class="m-3 text-center">
+            <p class=""><i class="fa-solid fa-circle-check text-success"></i> Aberto</p>
+            <p class=""><i class="fa-solid fa-dollar-sign"></i> Pedido minímo: R$ 20,00</p>
             <!-- Button trigger modal -->
-            <a href="" class="m-3 text-reset" data-bs-toggle="modal" data-bs-target="#modalHorarios">
-                Horários de funcionamento
+            <a href="" class="btn border" data-bs-toggle="modal" data-bs-target="#modalHorarios">
+                Mais sobre
             </a>
 
             <!-- Modal -->
@@ -105,6 +109,26 @@
             </div>
 
 
+        </div>
+    </div>
+
+    <div class="app-bar fixed-bottom bg-white border-top p-2">
+        <div class="container">
+            <ul class="nav justify-content-around">
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                        <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                        <i class="fa-solid fa-receipt"></i><span>Pedidos</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex flex-column align-items-center text-reset" href="#">
+                        <i class="fa-solid fa-user"></i><span>Conta</span></a>
+
+                </li>
+            </ul>
         </div>
     </div>
 
