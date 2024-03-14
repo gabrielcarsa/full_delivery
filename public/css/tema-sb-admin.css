@@ -296,6 +296,23 @@ PRODUTO PAINEL
   margin-right: 0;
 }
 
+.card-grid{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    justify-content: center; /* Centraliza as colunas horizontalmente */
+    align-items: center; /* Centraliza as linhas verticalmente */
+}
+
+.centralizar-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-texto-grid{
+  padding: 0 15px;
+}
+
+
 .descricao-produto{
   max-height: 80px; 
   overflow: hidden; 
@@ -320,14 +337,14 @@ PRODUTO PAINEL
     border-radius: 100%;
   }
   .img-produto{
-    width: 80px;
+    width: 100px;
 
   }
   .card-body h5{
-    font-size: 9px;
+    font-size: 16px;
 
   }
   .card-body p{
-    font-size: 9px;
+    font-size: 14px;
   }
 }

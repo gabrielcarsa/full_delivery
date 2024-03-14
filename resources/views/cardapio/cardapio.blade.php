@@ -15,7 +15,7 @@
 
     @else
 
-    <div class="restaurante-section bg-body-tertiary py-3">
+    <div class="restaurante-section py-3">
         <div class="container d-flex p-3 align-items-center justify-content-center">
             <div class="p-2">
                 <img src="{{ asset('storage/logo/'.$data['restaurantes']->imagem) }}" class="logo-cardapio">
@@ -55,54 +55,57 @@
         </div>
     </div>
 
-    <div class="p-3 container">
+    <div class="bg-body-tertiary">
+        <div class="p-3 container">
 
-        <div class="d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center">
 
-            @foreach($data['categoria_cardapio'] as $categoria)
+                @foreach($data['categoria_cardapio'] as $categoria)
 
-            <a href="#{{$categoria->nome}}" class="btn btn-dark m-1">{{$categoria->nome}}</a>
+                <a href="#{{$categoria->nome}}" class="btn btn-dark m-1">{{$categoria->nome}}</a>
 
-            @endforeach
-        </div>
+                @endforeach
+            </div>
 
-        <div class="cardapio-lista bg-body-body">
-            @foreach($data['categoria_cardapio'] as $categoria)
-            <h3 id="{{$categoria->nome}}" class="my-3">{{$categoria->nome}}</h3>
-            <div class="row">
+            <div class="cardapio-lista bg-body-body">
+                @foreach($data['categoria_cardapio'] as $categoria)
+                <h3 id="{{$categoria->nome}}" class="my-3 fw-bolder">{{$categoria->nome}}</h3>
+                <div class="row">
 
-                @foreach($data['cardapio_resultados'] as $cardapio)
+                    @foreach($data['cardapio_resultados'] as $cardapio)
 
-                @if($categoria->id == $cardapio->categoria_id)
+                    @if($categoria->id == $cardapio->categoria_id)
 
-                <div class="col-md-6 ">
-                    <div class="card mb-2">
-                        <div class="row g-0 d-flex flex-column flex-sm-row align-items-center">
-                            <div class="col-sm-4 d-flex align-items-center justify-content-center">
-                                <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}"
-                                    class="rounded img-produto" alt="{{$cardapio->nome_produto}}">
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{$cardapio->nome_produto}}</h5>
-                                    <p class="text-secondary text-truncate">{{$cardapio->descricao_produto}}</p>
-                                    <p>Serve 1 pessoa</p>
-                                    <p class="fw-800"><strong>R$ {{$cardapio->preco_produto}}</strong></p>
+                    <div class="col-md-6">
+                        <div class="card mb-2 px-3">
+                            <div class="card-grid">
+                                <div class="centralizar-img">
+                                    <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}"
+                                        class="rounded img-produto" alt="{{$cardapio->nome_produto}}">
+                                </div>
+                                <div class="card-texto-grid">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$cardapio->nome_produto}}</h5>
+                                        <p class="text-secondary text-truncate">{{$cardapio->descricao_produto}}</p>
+                                        <p>Serve 1 pessoa</p>
+                                        <p class="fw-800"><strong>R$
+                                                {{number_format($cardapio->preco_produto, 2, ',', '.')}}</strong></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @endforeach
+
                 </div>
-                @endif
+
                 @endforeach
 
             </div>
 
-            @endforeach
 
         </div>
-
-
     </div>
 
     @endif
