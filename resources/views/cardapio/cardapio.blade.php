@@ -16,9 +16,9 @@
     @else
 
     <div class="carrinho-botao fixed-top d-flex align-items-end justify-content-end">
-        <button type="button" class="btn btn-light btn-carrinho p-3 rounded">
-            <span class="fas fa-shopping-cart"></span>
-        </button>
+        <a href="{{ route('carrinho.cardapio', ['restaurante_id' => $data['restaurante_id']]) }}" class="btn btn-primary btn-carrinho p-3 rounded">
+            <span class="fas fa-shopping-cart fs-4"></span>
+        </a>
     </div>
 
     <div class="restaurante-section">
@@ -82,25 +82,25 @@
                 <h3 id="{{$categoria->nome}}" class="my-3 fw-bolder">{{$categoria->nome}}</h3>
                 <div class="row">
 
-                    @foreach($data['cardapio_resultados'] as $cardapio)
+                    @foreach($data['cardapio_resultados'] as $produto)
 
-                    @if($categoria->id == $cardapio->categoria_id)
+                    @if($categoria->id == $produto->categoria_id)
 
                     <div class="col-md-6">
-                        <a href="" class="text-decoration-none text-reset">
+                        <a href="{{ route('produto.cardapio', ['restaurante_id' => $data['restaurante_id'], 'produto_id' => $produto->id_produto]) }}" class="text-decoration-none text-reset">
                             <div class="card mb-2 px-3">
                                 <div class="card-grid">
                                     <div class="centralizar-img">
-                                        <img src="{{ asset('storage/imagens_produtos/'.$cardapio->imagem_produto) }}"
-                                            class="rounded img-produto" alt="{{$cardapio->nome_produto}}">
+                                        <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem_produto) }}"
+                                            class="rounded img-produto" alt="{{$produto->nome_produto}}">
                                     </div>
                                     <div class="card-texto-grid">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{$cardapio->nome_produto}}</h5>
-                                            <p class="text-secondary text-truncate">{{$cardapio->descricao_produto}}</p>
+                                            <h5 class="card-title">{{$produto->nome_produto}}</h5>
+                                            <p class="text-secondary text-truncate">{{$produto->descricao_produto}}</p>
                                             <p>Serve 1 pessoa</p>
                                             <p class="fw-800"><strong>R$
-                                                    {{number_format($cardapio->preco_produto, 2, ',', '.')}}</strong>
+                                                    {{number_format($produto->preco_produto, 2, ',', '.')}}</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
             <ul class="nav justify-content-around">
                 <li class="nav-item">
                     <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
-                        href="#">
+                        href="{{ route('cardapio', ['restaurante_id' => request('restaurante_id')]) }}">
                         <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
                 </li>
                 <li class="nav-item">

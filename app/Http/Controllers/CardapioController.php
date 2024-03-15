@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CategoriaProduto;
 use App\Models\Restaurante;
 use App\Models\HorarioFuncionamento;
+use App\Models\Produto;
 use Illuminate\Support\Facades\DB;
 
 class CardapioController extends Controller
@@ -17,6 +18,7 @@ class CardapioController extends Controller
 
         $cardapio_resultados = DB::table('produto as p')
         ->select(
+            'p.id as id_produto',
             'p.nome as nome_produto',
             'p.descricao as descricao_produto',
             'p.imagem as imagem_produto',
@@ -45,5 +47,21 @@ class CardapioController extends Controller
         ];
 
         return view('cardapio/cardapio', compact('data'));
+    }
+
+    public function carrinho(Request $request){
+        
+        $restaurante_id = $request->get('restaurante_id');
+
+        return view('cardapio/carrinho')->with('restaurante_id', $restaurante_id);
+    }
+
+    public function produto(Request $request){
+        $restaurante_id = $request->get('restaurante_id');
+        $produto_id = $request->get('produto_id');
+        
+        $produto = Produto::find($produto_id);
+
+        return view('cardapio/produto', compact('produto'))->with('restaurante_id', $restaurante_id);
     }
 }

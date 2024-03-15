@@ -21,7 +21,8 @@ use App\Http\Controllers\CardapioController;
 */
 
 Route::get('/', [CardapioController::class, 'index'])->name('cardapio');
-
+Route::get('/carrinho', [CardapioController::class, 'carrinho'])->name('carrinho.cardapio');
+Route::get('/produto', [CardapioController::class, 'produto'])->name('produto.cardapio');
 
 Route::middleware([
     'auth:sanctum',
