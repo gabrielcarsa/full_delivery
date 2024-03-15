@@ -16,8 +16,8 @@
     @else
 
     <div class="carrinho-botao fixed-top d-flex align-items-end justify-content-end">
-        <a href="{{ route('carrinho.cardapio', ['restaurante_id' => $data['restaurante_id']]) }}" class="btn btn-primary btn-carrinho p-3 rounded">
-            <span class="fas fa-shopping-cart fs-4"></span>
+        <a href="{{ route('carrinho.cardapio', ['restaurante_id' => $data['restaurante_id']]) }}" class="btn btn-light border link-carrinho shadow-lg">
+            <span class="fas fa-shopping-cart fs-3"></span>
         </a>
     </div>
 

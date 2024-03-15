@@ -1,6 +1,7 @@
 <x-layout-cardapio>
-    <div class="container">
-        <h1 class="mt-5 mb-4">Detalhes do Produto</h1>
+    <a href="#" onclick="history.go(-1); return false;" class="btn btn-light rounded-circle border"><i
+            class="fas fa-arrow-left"></i></a>
+    <div class="container mt-1">
         <div class="row">
             <div class="col-md-6">
                 <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem) }}" class="rounded img-fluid mb-3"
@@ -8,7 +9,7 @@
             </div>
             <div class="col-md-6">
                 <h2>{{$produto->nome}}</h2>
-                <p>{{$produto->descricao}}</p>
+                <p class="text-secondary">{{$produto->descricao}}</p>
                 <p><strong>Preço: </strong>R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
                 <form action="/adicionar-ao-carrinho" method="post">
 
