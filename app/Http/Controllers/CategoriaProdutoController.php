@@ -11,7 +11,7 @@ class CategoriaProdutoController extends Controller
 {
     //LISTAGEM
     public function index(){
-        $categorias = CategoriaProduto::all();
+        $categorias = CategoriaProduto::orderBy('ordem')->get();
         return view('categoria_produto/listar', compact('categorias'));
     }
 
@@ -44,7 +44,7 @@ class CategoriaProdutoController extends Controller
     public function update(Request $request, $usuario_id, $id){
 
          //Cadastro de categoria
-         $categoria = CategoriaProduto::find($id)->first();
+         $categoria = CategoriaProduto::find($id);
          $categoria->nome = $request->input('nome');
          $categoria->descricao = $request->input('descricao');
          $categoria->ordem = $request->input('ordem');

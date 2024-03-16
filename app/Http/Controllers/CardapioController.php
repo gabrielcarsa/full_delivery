@@ -29,7 +29,7 @@ class CardapioController extends Controller
         ->rightjoin('categoria_produto as cp', 'cp.id', '=', 'p.categoria_id')
         ->get();
 
-        $categoria_cardapio = CategoriaProduto::all();
+        $categoria_cardapio = CategoriaProduto::orderBy('ordem')->get();
         
         if($restaurante_id != null){
             $restaurantes = Restaurante::find($restaurante_id)->first();
