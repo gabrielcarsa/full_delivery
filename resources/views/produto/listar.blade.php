@@ -14,20 +14,34 @@
                 @if(isset($produtos))
                 @foreach ($produtos as $produto)
                 <div class="col">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card position-relative">
+                        <div class="dropdown position-absolute end-0 top-0">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Ações
+                            </button>
+                            <ul class="dropdown-menu text-center">
+                                <li><a href="#" class="dropdown-item">Adicionar Opcional</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="#" class="dropdown-item">Editar</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="#" class="dropdown-item">Promoção</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{$produto->id}}"
+                                        class="dropdown-item">
+                                        Excluir
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
                         <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem) }}" style="max-width: 100%;"
-                            class="card-img-top max-height-20">
+                            class="">
                         <div class="card-body">
-                            <h5 class="card-title">{{$produto->nome}}</h5>
-                            <p class="card-text descricao-produto">{{$produto->descricao}}</p>
-                            <p class="card-text">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
-                            <div class="row justify-content-center">
-                                <a href="#" class="btn btn-primary col-3 mx-1"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="#" class="btn btn-success col-3 mx-1"><i class="fa-solid fa-percent"></i></a>
-                                <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{$produto->id}}"
-                                    class="btn btn-danger col-3 mx-1"><i class="fa-solid fa-trash"></i></a>
-                            </div>
+                            <h5 class="card-title text-truncate">{{$produto->nome}}</h5>
+                            <p class="text-truncate text-secondary">{{$produto->descricao}}</p>
+                            <p class="fw-semibold">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$produto->id}}" tabindex="-1"

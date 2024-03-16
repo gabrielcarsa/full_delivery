@@ -325,15 +325,6 @@ PRODUTO PAINEL
   padding: 0 15px;
 }
 
-
-.descricao-produto{
-  max-height: 80px; 
-  overflow: hidden; 
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-
 @media(min-width: 400px){
   .logo-cardapio{
     width: 150px;
