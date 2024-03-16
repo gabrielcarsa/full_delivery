@@ -53,9 +53,11 @@ Route::middleware([
 
         //PRODUTO
         Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos');
-        Route::get('/produtos/pesquisar', [ProdutoController::class, 'pesquisar']);
+        Route::get('/produtos/pesquisar', [ProdutoController::class, 'search']);
         Route::get('/produto/novo', [ProdutoController::class, 'create'])->name('produto.novo');
         Route::post('/produto/cadastrar/{categoria_id}/{usuario_id}', [ProdutoController::class, 'store']);
+        Route::get('/produto/editar', [ProdutoController::class, 'edit'])->name('produto.editar');
+        Route::put('/produto/alterar/{usuario_id}/{produto_id}', [ProdutoController::class, 'update']);
         Route::delete('/produto/apagar/{id}', [ProdutoController::class, 'destroy'])->name('produto.excluir');
         
 

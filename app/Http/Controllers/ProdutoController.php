@@ -71,12 +71,15 @@ class ProdutoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        //Cadastro de categoria
+        //Cadastro de produto
         $produto = new Produto();
         $produto->nome = $request->input('nome');
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
-        $produto->preco = $request->input('preco');
+
+        $preco = str_replace(',', '.', $request->input('preco')); // trocar virgula por ponto
+        $produto->preco = (double) $preco; // Converter a string diretamente para um número em ponto flutuante
+        
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
         $produto->categoria_id = $categoria_id;
         $produto->cadastrado_usuario_id = $usuario_id;
@@ -96,8 +99,29 @@ class ProdutoController extends Controller
     }
 
     //ALTERAR VIEW
+    public function edit(Request $request){
+        $id = $request->input('id');
+        $produto = Produto::find($id);
+        return view('produto/novo', compact('produto'));
+    }
+
 
     //ALTERAR
+    public function update(Request $request, $usuario_id, $id){
+        //Alterando produto
+        $produto = Produto::find($id);
+        $produto->nome = $request->input('nome');
+        $produto->descricao = $request->input('descricao');
+        $produto->disponibilidade = $request->input('disponibilidade');
+
+        $preco = str_replace(',', '.', $request->input('preco')); // trocar virgula por ponto
+        $produto->preco = (double) $preco; // Converter a string diretamente para um número em ponto flutuante
+
+        $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
+        $produto->alterado_usuario_id = $usuario_id;
+        $produto->save();
+        return redirect()->back()->with('success', 'Alteração feita com sucesso');
+    }
 
     //EXCLUIR
     public function destroy($id){

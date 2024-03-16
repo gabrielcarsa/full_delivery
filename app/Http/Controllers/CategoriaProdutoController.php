@@ -43,7 +43,7 @@ class CategoriaProdutoController extends Controller
     //ALTERAR
     public function update(Request $request, $usuario_id, $id){
 
-         //Cadastro de categoria
+         //alterando categoria
          $categoria = CategoriaProduto::find($id);
          $categoria->nome = $request->input('nome');
          $categoria->descricao = $request->input('descricao');

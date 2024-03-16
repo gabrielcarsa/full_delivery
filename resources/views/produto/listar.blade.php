@@ -21,9 +21,9 @@
                                 Ações
                             </button>
                             <ul class="dropdown-menu text-center">
-                                <li><a href="#" class="dropdown-item">Adicionar Opcional</a></li>
+                                <li><a href="" class="dropdown-item">Adicionar Opcional</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Editar</a></li>
+                                <li><a href="{{ route('produto.editar', ['id' => $produto->id]) }}" class="dropdown-item">Editar</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a href="#" class="dropdown-item">Promoção</a></li>
                                 <li><hr class="dropdown-divider"></li>
