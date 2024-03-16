@@ -39,9 +39,10 @@
                         <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem) }}" style="max-width: 100%;"
                             class="">
                         <div class="card-body">
-                            <h5 class="card-title text-truncate">{{$produto->nome}}</h5>
-                            <p class="text-truncate text-secondary">{{$produto->descricao}}</p>
-                            <p class="fw-semibold">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
+                            <h5 class="card-title text-truncate m-0">{{$produto->nome}}</h5>
+                            <p class="text-truncate text-secondary m-0">{{$produto->descricao}}</p>
+                            <p class="text-truncate m-0">Serve {{$produto->quantidade_pessoa}} {{$produto->quantidade_pessoa == 1 ? 'pessoa' : 'pessoas'}}</p>
+                            <p class="fw-semibold text-truncate">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$produto->id}}" tabindex="-1"

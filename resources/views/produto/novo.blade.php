@@ -33,22 +33,23 @@
                 @csrf
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputImagem">Imagem</label>
-                    <input type="file" class="form-control" name="imagem" id="inputImagem">
+                    <input type="file" class="form-control" name="imagem" id="inputImagem" required>
                 </div>
 
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome</label>
                     <input type="text" name="nome" value="{{old('nome')}}" class="form-control" id="inputNome"
-                        maxlength="100">
+                        maxlength="100" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputDescricao" class="form-label">Descrição</label>
                     <input type="text" name="descricao" value="{{old('descricao')}}" class="form-control"
-                        id="inputDescricao" maxlength="500">
+                        id="inputDescricao" maxlength="500" required>
                 </div>
                 <div class="col-md-4">
                     <label for="inputPreco" class="form-label">Preço</label>
-                    <input type="text" name="preco" value="{{old('preco')}}" class="form-control" id="inputPreco">
+                    <input type="text" name="preco" value="{{old('preco')}}" class="form-control" id="inputPreco"
+                        required>
                 </div>
                 <div class="col-md-2">
                     <label for="inputTipoDisponibilidade" id="disponibilidade"
@@ -57,6 +58,13 @@
                         <option value="1" select>Dísponivel</option>
                         <option value="0">Não dísponivel</option>
                     </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="inputQtdPessoa" class="form-label">Serve quantas pessoas?</label>
+                    <input type="number" name="quantidade_pessoa"
+                        value="{{old('quantidade_pessoa') != null ? old('quantidade_pessoa') : '1'}}"
+                        class="form-control" id="inputQtdPessoa" min="1" required>
                 </div>
 
                 <div class="col-12">

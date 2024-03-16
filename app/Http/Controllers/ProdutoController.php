@@ -63,6 +63,7 @@ class ProdutoController extends Controller
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
             'preco' => 'required|numeric|min:0',
+            'quantidade_pessoa' => 'required|numeric|min:1',
         ]);
 
         // Se a validação falhar
@@ -76,6 +77,7 @@ class ProdutoController extends Controller
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
         $produto->preco = $request->input('preco');
+        $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
         $produto->categoria_id = $categoria_id;
         $produto->cadastrado_usuario_id = $usuario_id;
         if ($request->hasFile('imagem')) {
