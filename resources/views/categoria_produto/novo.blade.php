@@ -4,7 +4,8 @@
     <div class="card mb-4 mt-4">
         <!-- Card Header  -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 fw-semibold fs-5">{{empty($categoria) ? 'Cadastro de Categoria' : 'Alterar ' . $categoria->nome }}</h2>
+            <h2 class="m-0 fw-semibold fs-5">
+                {{empty($categoria) ? 'Cadastro de Categoria' : 'Alterar ' . $categoria->nome }}</h2>
         </div>
         <!-- Card Body -->
         <div class="card-body">
@@ -27,25 +28,43 @@
                 </ul>
             </div>
             @endif
-            <form class="row g-3" action="{{empty($categoria) ? '/categoria_produto/cadastrar/' . Auth::user()->id : '/categoria_produto/alterar/' . Auth::user()->id .'/' . $categoria->id }}" method="post"
-                autocomplete="off">
+            <form class="row g-3"
+                action="{{empty($categoria) ? '/categoria_produto/cadastrar/' . Auth::user()->id : '/categoria_produto/alterar/' . Auth::user()->id .'/' . $categoria->id }}"
+                method="post" autocomplete="off">
                 @csrf
                 @if(!empty($categoria))
                 @method('PUT')
                 @endif
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome da categoria</label>
-                    <input type="text" name="nome" value="{{!empty($categoria) ? $categoria->nome : old('nome')}}" class="form-control" id="inputNome">
+                    <input type="text" name="nome" value="{{!empty($categoria) ? $categoria->nome : old('nome')}}"
+                        class="form-control" id="inputNome" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputDescricao" class="form-label">Descrição</label>
-                    <input type="text" name="descricao" value="{{!empty($categoria) ? $categoria->descricao : old('descricao')}}" class="form-control"
-                        id="inputDescricao">
+                    <input type="text" name="descricao"
+                        value="{{!empty($categoria) ? $categoria->descricao : old('descricao')}}" class="form-control"
+                        id="inputDescricao" required>
                 </div>
                 <div class="col-md-6">
                     <label for="inputOrdem" class="form-label">Ordem de exibição</label>
-                    <input type="number" name="ordem" value="{{!empty($categoria) ? $categoria->ordem : old('ordem')}}" class="form-control" id="inputOrdem">
+                    <input type="number" name="ordem" value="{{!empty($categoria) ? $categoria->ordem : old('ordem')}}"
+                        class="form-control" id="inputOrdem" required>
                 </div>
+                @if(empty($categoria))
+                <div class="col-md-6">
+                    <label for="inputRestaurante" class="form-label">Restaurante</label>
+                    <select required id="inputRestaurante" name="restaurante_id" class="form-select form-control">
+                        <option value="" {{ old('restaurante_id') == null ? 'selected' : '' }}>-- Selecione --</option>
+                        @foreach ($restaurantes as $restaurante)
+                        <option value="{{ $restaurante->id }}"
+                            {{ old('restaurante_id') == $restaurante->id ? 'selected' : '' }}>
+                            {{$restaurante->nome}}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                @endif
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </div>

@@ -15,6 +15,14 @@ class CategoriaProdutoController extends Controller
         return view('categoria_produto/listar', compact('categorias'));
     }
 
+    //RETORNAR VIEW PARA CADASTRO
+    public function create(Request $request){
+
+        $restaurantes = Restaurante::all();
+
+        return view('categoria_produto/novo', compact('restaurantes'));
+    }
+
     //CADASTRAR
     public function store(Request $request, $usuario_id){
 

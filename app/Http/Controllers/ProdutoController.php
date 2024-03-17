@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
 use App\Models\CategoriaProduto;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -35,9 +35,12 @@ class ProdutoController extends Controller
     //CADASTRAR
     public function store(Request $request, $categoria_id, $usuario_id){
 
+        $request->merge([
+            'preco' => str_replace(['.', ','], ['', '.'], $request->input('preco')),
+        ]);
+
         // Validação do formulário
         $validator = Validator::make($request->all(), [
-            //TODO: fazer validações
             'imagem' => [
                 'required',
                 'image',
@@ -62,7 +65,7 @@ class ProdutoController extends Controller
             ],
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
-            'preco' => 'required|numeric|min:0',
+            'preco' => 'required|numeric',
             'quantidade_pessoa' => 'required|numeric|min:1',
         ]);
 
@@ -77,9 +80,8 @@ class ProdutoController extends Controller
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
 
-        $preco = str_replace(',', '.', $request->input('preco')); // trocar virgula por ponto
-        $produto->preco = (double) $preco; // Converter a string diretamente para um número em ponto flutuante
-        
+        $produto->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
+
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
         $produto->categoria_id = $categoria_id;
         $produto->cadastrado_usuario_id = $usuario_id;
@@ -108,14 +110,26 @@ class ProdutoController extends Controller
 
     //ALTERAR
     public function update(Request $request, $usuario_id, $id){
+        
+        $request->merge([
+            'preco' => str_replace(['.', ','], ['', '.'], $request->input('preco')),
+        ]);
+
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string|max:100',
+            'descricao' => 'required|string|max:500',
+            'preco' => 'required|numeric',
+            'quantidade_pessoa' => 'required|numeric|min:1',
+        ]);
+
         //Alterando produto
         $produto = Produto::find($id);
         $produto->nome = $request->input('nome');
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
 
-        $preco = str_replace(',', '.', $request->input('preco')); // trocar virgula por ponto
-        $produto->preco = (double) $preco; // Converter a string diretamente para um número em ponto flutuante
+        $produto->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
 
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
         $produto->alterado_usuario_id = $usuario_id;
@@ -126,6 +140,10 @@ class ProdutoController extends Controller
     //EXCLUIR
     public function destroy($id){
         $produto = Produto::find($id);
+         // Excluir a imagem do armazenamento, se existir
+        if ($produto->imagem) {
+            Storage::delete('public/imagens_produtos/' . $produto->imagem);
+        }
         $produto->delete();
         return redirect()->back()->with('success', 'Produto excluido com sucesso');
     }
