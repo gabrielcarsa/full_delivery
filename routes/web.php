@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\RestauranteController;
 use App\Http\Controllers\CardapioController;
+use App\Http\Controllers\OpcionalProdutoController;
 
 
 
@@ -60,5 +61,10 @@ Route::middleware([
         Route::put('/produto/alterar/{usuario_id}/{produto_id}', [ProdutoController::class, 'update']);
         Route::delete('/produto/apagar/{id}', [ProdutoController::class, 'destroy'])->name('produto.excluir');
         
-
+        //OPCIONAL PRODUTO
+        Route::get('/opcional_produto', [OpcionalProdutoController::class, 'index'])->name('opcional_produto');
+        Route::get('/opcional_produto/novo', [OpcionalProdutoController::class, 'create'])->name('opcional_produto.novo');
+        Route::post('/opcional_produto/cadastrar/{produto_id}/{usuario_id}', [OpcionalProdutoController::class, 'store']);
+        Route::delete('/opcional_produto/apagar/{id}', [OpcionalProdutoController::class, 'destroy'])->name('opcional_produto.excluir');
+ 
 });

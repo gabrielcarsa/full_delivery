@@ -21,12 +21,20 @@
                                 Ações
                             </button>
                             <ul class="dropdown-menu text-center">
-                                <li><a href="" class="dropdown-item">Adicionar Opcional</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a href="{{ route('produto.editar', ['id' => $produto->id]) }}" class="dropdown-item">Editar</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li><a href="{{ route('opcional_produto', ['produto_id' => $produto->id]) }}"
+                                        class="dropdown-item">Opcionais</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a href="{{ route('produto.editar', ['id' => $produto->id]) }}"
+                                        class="dropdown-item">Editar</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li><a href="#" class="dropdown-item">Promoção</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li>
                                     <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{$produto->id}}"
                                         class="dropdown-item">
@@ -41,7 +49,8 @@
                         <div class="card-body">
                             <h5 class="card-title text-truncate m-0">{{$produto->nome}}</h5>
                             <p class="text-truncate text-secondary m-0">{{$produto->descricao}}</p>
-                            <p class="text-truncate m-0">Serve {{$produto->quantidade_pessoa}} {{$produto->quantidade_pessoa == 1 ? 'pessoa' : 'pessoas'}}</p>
+                            <p class="text-truncate m-0">Serve {{$produto->quantidade_pessoa}}
+                                {{$produto->quantidade_pessoa == 1 ? 'pessoa' : 'pessoas'}}</p>
                             <p class="fw-semibold text-truncate">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
 
                             <!-- Modal -->
