@@ -27,6 +27,7 @@ class CardapioController extends Controller
             'cp.nome as nome_categoria'
             )
         ->rightjoin('categoria_produto as cp', 'cp.id', '=', 'p.categoria_id')
+        ->rightjoin('restaurante as r', 'r.id', '=', 'cp.restaurante_id')
         ->get();
 
         $categoria_cardapio = CategoriaProduto::orderBy('ordem')->get();
@@ -60,7 +61,16 @@ class CardapioController extends Controller
         $restaurante_id = $request->get('restaurante_id');
         $produto_id = $request->get('produto_id');
         
-        $produto = Produto::find($produto_id);
+        $produto = DB::table('produto as p')
+        ->select(
+            'op.nome as nome_opcional',
+            'op.descricao as descricao_opcional',
+            'op.preco as preco_opcional',
+            'p.*'
+        )
+        ->leftjoin('opcional_produto as op', 'op.produto_id', '=', 'p.id')
+        ->where('p.id', $produto_id)
+        ->get();
 
         return view('cardapio/produto', compact('produto'))->with('restaurante_id', $restaurante_id);
     }

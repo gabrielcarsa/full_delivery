@@ -325,6 +325,11 @@ PRODUTO PAINEL
   padding: 0 15px;
 }
 
+.checkbox-produto-opcional{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 @media(min-width: 400px){
   .logo-cardapio{
     width: 150px;
