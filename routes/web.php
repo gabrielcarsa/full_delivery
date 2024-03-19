@@ -22,8 +22,11 @@ use App\Http\Controllers\OpcionalProdutoController;
 */
 
 Route::get('/', [CardapioController::class, 'index'])->name('cardapio');
-Route::get('/carrinho', [CardapioController::class, 'carrinho'])->name('carrinho.cardapio');
-Route::get('/produto', [CardapioController::class, 'produto'])->name('produto.cardapio');
+Route::get('/carrinho', [CardapioController::class, 'indexCarrinho'])->name('cardapio.carrinho');
+Route::get('/produto', [CardapioController::class, 'showProduto'])->name('cardapio.produto');
+Route::post('/adicionar-carrinho/{produto_id}', [CardapioController::class, 'storeCarrinho']);
+Route::get('/limpar-carrinho', [CardapioController::class, 'destroyCarrinho'])->name('cardapio.esvaziarCarrinho');
+
 
 Route::middleware([
     'auth:sanctum',

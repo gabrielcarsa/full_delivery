@@ -294,12 +294,6 @@ PRODUTO PAINEL
   filter: brightness(0.5);
 }
 
-.link-carrinho{
-  border-radius: 0 0 0 100% !important;
-  padding-bottom: 30px !important;
-  padding-left: 30px !important;
-}
-
 .card {
   margin-right: 10px; /* Adiciona margem à direita de cada card */
 }

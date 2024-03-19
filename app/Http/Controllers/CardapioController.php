@@ -7,7 +7,9 @@ use App\Models\CategoriaProduto;
 use App\Models\Restaurante;
 use App\Models\HorarioFuncionamento;
 use App\Models\Produto;
+use App\Models\OpcionalProduto;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CardapioController extends Controller
 {
@@ -39,6 +41,7 @@ class CardapioController extends Controller
         }
 
         $horarios_funcionamento = HorarioFuncionamento::all();
+
         $data = [
             'cardapio_resultados' => $cardapio_resultados,
             'restaurantes' => $restaurantes,
@@ -47,22 +50,54 @@ class CardapioController extends Controller
             'categoria_cardapio' => $categoria_cardapio,
         ];
 
-        return view('cardapio/cardapio', compact('data'));
+        $carrinho = session()->get('carrinho', []);
+
+        return view('cardapio/cardapio', compact('data', 'carrinho'));
     }
 
-    public function carrinho(Request $request){
+    public function indexCarrinho(Request $request){
         
         $restaurante_id = $request->get('restaurante_id');
 
-        return view('cardapio/carrinho')->with('restaurante_id', $restaurante_id);
+        $carrinho = session()->get('carrinho', []);
+
+        return view('cardapio/carrinho', compact('carrinho'))->with('restaurante_id', $restaurante_id);
     }
 
-    public function produto(Request $request){
+    public function storeCarrinho(Request $request, $produto_id){
+        $observacao = $request->input('observacao');
+        $opcional_id = $request->input('opcionais');
+        $restaurante_id = $request->get('restaurante_id');
+
+        $produto = Produto::find($produto_id);
+
+        $opcionais = OpcionalProduto::find($opcional_id);
+
+        $itensCarrinho = [
+            'opcionais' => $opcionais,
+            'observacao' => $observacao,
+            'produto' => $produto,
+        ];
+
+        // Adicionando o item ao carrinho na sessão
+        $request->session()->push('carrinho', $itensCarrinho);
+
+        return redirect()->action([CardapioController::class, 'index'], ['restaurante_id' => $restaurante_id]);
+    }
+
+    public function destroyCarrinho(){
+        Session::forget('carrinho');
+
+        return redirect()->back();
+    }
+
+    public function showProduto(Request $request){
         $restaurante_id = $request->get('restaurante_id');
         $produto_id = $request->get('produto_id');
         
         $produto = DB::table('produto as p')
         ->select(
+            'op.id as id_opcional',
             'op.nome as nome_opcional',
             'op.descricao as descricao_opcional',
             'op.preco as preco_opcional',

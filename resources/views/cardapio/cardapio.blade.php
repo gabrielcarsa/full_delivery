@@ -14,12 +14,19 @@
     </div>
 
     @else
-
-    <div class="carrinho-botao fixed-top d-flex align-items-end justify-content-end">
-        <a href="{{ route('carrinho.cardapio', ['restaurante_id' => $data['restaurante_id']]) }}" class="btn btn-light border link-carrinho shadow-lg">
-            <span class="fas fa-shopping-cart fs-3"></span>
+    <div class="carrinho-botao fixed-top m-1">
+        <a href="{{ route('cardapio.carrinho', ['restaurante_id' => $data['restaurante_id']]) }}"
+            class="btn btn-primary shadow-lg">
+            <span class="fas fa-shopping-cart fs-3">
+                @if(!empty($carrinho))
+                <span class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle">
+                    <span class="visually-hidden">New alerts</span>
+                </span>
+                @endif
+            </span>
         </a>
     </div>
+
 
     <div class="restaurante-section">
 
@@ -87,7 +94,8 @@
                     @if($categoria->id == $produto->categoria_id)
 
                     <div class="col-md-6">
-                        <a href="{{ route('produto.cardapio', ['restaurante_id' => $data['restaurante_id'], 'produto_id' => $produto->id_produto]) }}" class="text-decoration-none text-reset">
+                        <a href="{{ route('cardapio.produto', ['restaurante_id' => $data['restaurante_id'], 'produto_id' => $produto->id_produto]) }}"
+                            class="text-decoration-none text-reset">
                             <div class="card mb-2 px-3">
                                 <div class="card-grid">
                                     <div class="centralizar-img">

@@ -1,71 +1,78 @@
 <x-layout-cardapio>
+    <div class="nav-produto d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
+        <div class="d-flex align-items-center">
+            <a href="#" onclick="history.go(-1); return false;" class="btn btn-light rounded-circle"><i
+                    class="fas fa-arrow-left"></i></a>
+        </div>
+        <div class="d-flex align-items-center justify-content-center text-center" style="flex: 1;">
+            <h2 class="fs-5">Carrinho de Compras</h2>
+        </div>
+    </div>
+
+    @if(empty($carrinho))
+    <div class="d-flex justify-content-center align-items-center" style="padding-top: 70px;">
+        <div class="m-5">
+            <h3>Ops!</h3>
+            <p>Parece que seu carrinho está vazio!</p>
+            <a href="#" onclick="history.go(-1); return false;" class="btn btn-primary">Ir para cardápio</a>
+        </div>
+    </div>
+    @else
     <div class="container">
-        <h1 class="mt-5 mb-4">Carrinho de Compras</h1>
-        <div class="row">
+        <div class="row" style="padding-top: 70px;">
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-header">
                         Itens no Carrinho
                     </div>
                     <div class="card-body">
-                        <!-- Aqui você pode adicionar itens dinamicamente do seu backend -->
+
                         <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Item 1
-                                <span class="badge badge-primary badge-pill">1</span>
+                            @php
+                            $valor_total = 0;
+                            @endphp
+                            @foreach($carrinho as $item)
+                            @php
+                            $valor_total += $item['produto']->preco;
+                            @endphp
+                            <li class="list-group-item">
+                                <p class="m-0 p-0 text-truncate"><strong>1x</strong> {{$item['produto']->nome}}</p>
+                                <p class="m-0 p-0 text-secondary text-truncate">{{$item['observacao']}}</p>
+                                <p class="m-0 p-0 text-truncate">R$
+                                    {{number_format($item['produto']->preco, 2, ',', '.')}}</p>
+
+                                @if(!empty($item['opcionais']))
+                                <div class="border p-1 rounded">
+                                    @foreach($item['opcionais'] as $opcional)
+                                    <p class="m-0 p-0 text-truncate text-secondary"> - {{$opcional->nome}} R$
+                                        {{number_format($opcional->preco, 2, ',', '.')}}</p>
+                                    @endforeach
+                                </div>
+                                @endif
+
                             </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Item 2
-                                <span class="badge badge-primary badge-pill">2</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Item 3
-                                <span class="badge badge-primary badge-pill">1</span>
-                            </li>
+                            @endforeach
+
+                            <div class="mt-3">
+                                <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="btn btn-danger">Limpar
+                                    carrinho</a>
+                            </div>
+
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Resumo do Pedido
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Total
-                                <span class="badge badge-primary badge-pill">$50.00</span>
-                            </li>
-                        </ul>
-                        <button class="btn btn-success btn-block mt-3">Finalizar Compra</button>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
-    <div class="app-bar fixed-bottom bg-white border-top p-2">
-        <div class="container">
-            <ul class="nav justify-content-around">
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
-                        href="{{ route('cardapio', ['restaurante_id' => request('restaurante_id')]) }}">
-                        <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}"
-                        href="#">
-                        <i class="fa-solid fa-receipt"></i><span>Pedidos</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}"
-                        href="#">
-                        <i class="fa-solid fa-user"></i><span>Conta</span></a>
-
-                </li>
-            </ul>
+    <div class="mt-3 fixed-bottom p-3 shadow-sm bg-light">
+        <div class="">
+            <a href="" class="btn btn-success">Adicionar R$
+                {{number_format($valor_total, 2, ',', '.')}}</a>
         </div>
     </div>
-    
+
+    @endif
+
 </x-layout-cardapio>
