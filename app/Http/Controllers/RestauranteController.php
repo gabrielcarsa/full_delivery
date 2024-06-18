@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class RestauranteController extends Controller
 {
+     //ESCOLHER RESTAURANTE
+     public function choose(Request $request, $id){
+        session(['restaurante_id' => $id]);
+        $restaurante = Restaurante::where('id', $id);
+        return redirect()->route('restaurante')->with('success', 'Conectado como {{$restaurante->nome}}');
+    }
+
     //LISTAGEM
     public function index(){
         $restaurantes = Restaurante::all();

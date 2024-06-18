@@ -42,6 +42,7 @@ Route::middleware([
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
         
         //RESTAURANTE
+        Route::post('/escolher-restaurante/{id}', [RestauranteController::class, 'choose']);
         Route::get('/restaurante', [RestauranteController::class, 'index'])->name('restaurante');
         Route::get('/restaurante/configurar', [RestauranteController::class, 'configuracao'])->name('restaurante.configurar');
         Route::post('/restaurante/cadastrar/{usuario_id}', [RestauranteController::class, 'store']);

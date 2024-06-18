@@ -12,6 +12,9 @@ class CategoriaProdutoController extends Controller
 {
     //LISTAGEM
     public function index(){
+        //Sessão do restaurante que está conectado
+        $restauranteIdConectado = session('restaurante_id');
+
         $categorias = DB::table('categoria_produto as cp')
         ->select(
             'cp.*',
@@ -19,6 +22,7 @@ class CategoriaProdutoController extends Controller
         )
         ->join('restaurante as r', 'r.id', '=', 'cp.restaurante_id')
         ->orderBy('cp.ordem')
+        ->where('cp.restaurante_id', $restauranteIdConectado)
         ->get();
         return view('categoria_produto/listar', compact('categorias'));
     }

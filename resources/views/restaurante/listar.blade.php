@@ -11,9 +11,9 @@
         <div class="card-body">
             @if($restaurantes->isNotEmpty())
             @foreach($restaurantes as $restaurante)
-            <div class="row align-items-center">
+            <div
+                class="row align-items-center m-2 p-1 {{session('restaurante_id')==$restaurante->id ? 'border-3' : 'border-3 border-success'}}">
                 <div class="col-2">
-
                     <!-- Button trigger modal -->
                     <a class="position-absolute bg-dark p-1 text-white rounded" data-bs-toggle="modal"
                         data-bs-target="#modalEditarImagem">
@@ -22,7 +22,7 @@
                         </span>
                     </a>
 
-                    <!-- Modal -->
+                    <!-- MODAL -->
                     <div class="modal fade" id="modalEditarImagem" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
@@ -36,9 +36,7 @@
                                     autocomplete="off" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
-
                                     <div class="modal-body">
-
                                         <div class="input-group">
                                             <label class="input-group-text" for="inputImagem">Logo</label>
                                             <input type="file"
@@ -57,9 +55,12 @@
                             </div>
                         </div>
                     </div>
+                    <!-- FIM MODAL -->
 
+                    <!-- LOGO RESTAURANTE -->
                     <img src='{{asset("storage/logo/$restaurante->logo")}}' width="250"
                         alt="Logo {{$restaurante->nome}}" class="shadow-sm rounded">
+
                 </div>
                 <div class="col-8">
                     <h2 class="fs-2 fw-bold">{{$restaurante->nome}}</h2>
@@ -68,7 +69,17 @@
                         {{$restaurante->bairro}}, {{$restaurante->cidade}} {{$restaurante->estado}}
                         {{$restaurante->cep}}</p>
                     <a href="{{route('restaurante.configurar', ['id' => $restaurante->id])}}"
-                        class="btn btn-primary">Configurações</a>
+                        class="btn btn-primary mb-1">Configurações</a>
+
+                    @if(session('restaurante_id') != $restaurante->id)
+                    <form action="{{'/escolher-restaurante/'.$restaurante->id}}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Conectar</button>
+                    </form>
+                    @else
+                    <button type="button" class="btn btn-info">Conectado</button>
+                    @endif
+
 
                 </div>
                 <div class="col-2 text-left">
