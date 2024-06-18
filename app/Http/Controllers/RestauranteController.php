@@ -132,4 +132,31 @@ class RestauranteController extends Controller
         return redirect()->route('restaurante')->with('success', 'Alteração feita com sucesso');
     }
 
+    //ALTERAR LOGO
+    public function update_logo(Request $request, $restaurante_id){
+         // Validação do formulário
+         $validator = Validator::make($request->all(), [
+            //TODO: fazer validações
+            'logo' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }  
+        
+        //Alterar restaurante
+        $restaurante = Restaurante::find($restaurante_id)->first();
+
+        if ($request->hasFile('logo')) {
+            //Colocando nome único no arquivo
+            $nomeArquivo = "logo";
+            $request->file('logo')->storeAs('public/logo', $nomeArquivo);
+            $restaurante->logo = $nomeArquivo;
+        }
+
+        return redirect()->route('restaurante')->with('success', 'Logo alterada com sucesso');
+
+    }
+
 }

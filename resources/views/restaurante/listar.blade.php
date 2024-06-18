@@ -13,8 +13,53 @@
             @foreach($restaurantes as $restaurante)
             <div class="row align-items-center">
                 <div class="col-2">
-                    <img src="{{asset("storage/logo/$restaurante->imagem")}}" width="250"
-                        alt="Logo {{$restaurante->nome}}">
+
+                    <!-- Button trigger modal -->
+                    <a class="position-absolute bg-dark p-1 text-white rounded" data-bs-toggle="modal"
+                        data-bs-target="#modalEditarImagem">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
+                    </a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalEditarImagem" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar logo restaurante</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{'/restaurante/alterar-logo/' . $restaurante->id}}" method="post"
+                                    autocomplete="off" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class="modal-body">
+
+                                        <div class="input-group">
+                                            <label class="input-group-text" for="inputImagem">Logo</label>
+                                            <input type="file"
+                                                class="form-control @error('imagem') is-invalid @enderror" name="logo"
+                                                id="inputImagem">
+                                        </div>
+                                        <p class="text-secondary ml-2">300 x 300 (px)</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <img src='{{asset("storage/logo/$restaurante->logo")}}' width="250"
+                        alt="Logo {{$restaurante->nome}}" class="shadow-sm rounded">
                 </div>
                 <div class="col-8">
                     <h2 class="fs-2 fw-bold">{{$restaurante->nome}}</h2>
@@ -28,23 +73,23 @@
                 </div>
                 <div class="col-2 text-left">
                     @if($horarios_funcionamento->isNotEmpty())
-                    
+
                     @foreach($horarios_funcionamento as $horario)
-                        @if($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 0)
-                        <p class="m-0">Dom: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 1)
-                        <p class="m-0">Seg: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 2)
-                        <p class="m-0">Ter: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 3)
-                        <p class="m-0">Qua: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 4)
-                        <p class="m-0">Qui: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 5)
-                        <p class="m-0">Sex: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 6)
-                        <p class="m-0">Sab: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                        @endif
+                    @if($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 0)
+                    <p class="m-0">Dom: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 1)
+                    <p class="m-0">Seg: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 2)
+                    <p class="m-0">Ter: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 3)
+                    <p class="m-0">Qua: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 4)
+                    <p class="m-0">Qui: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 5)
+                    <p class="m-0">Sex: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 6)
+                    <p class="m-0">Sab: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
+                    @endif
                     @endforeach
                     @endif
                 </div>

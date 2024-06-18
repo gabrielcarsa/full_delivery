@@ -2,7 +2,7 @@
 
     @if(!request()->is('register'))
     <div>
-        <img src="{{asset("storage/images/logo_nome.png")}}" width="200px" alt="Foomy"></a>
+        <img src="{{asset("storage/images/logo.png")}}" width="200px" alt="Foomy"></a>
     </div>
     @endif
     
