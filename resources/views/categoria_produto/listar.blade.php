@@ -46,6 +46,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Descrição</th>
                         <th scope="col">Ordem de exibição</th>
+                        <th scope="col">Restaurante</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -58,13 +59,21 @@
                         </td>
                         <td>{{$categoria->descricao}}</td>
                         <td>{{$categoria->ordem}}</td>
+                        <td>{{$categoria->restaurante}}</td>
                         <td>
                             <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}"
-                                class="acoes-listar btn-acao-listagem-secundary"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
+                                class="acoes-listar btn-acao-listagem-secundary text-decoration-none">
+                                <span class="material-symbols-outlined">
+                                    edit
+                                </span>
+                            </a>
                             <a href="" data-bs-toggle="modal"
                                 class="acoes-listar btn-acao-listagem-secundary text-danger"
-                                data-bs-target="#exampleModal{{$categoria->id}}"><i class="fa-solid fa-trash"></i></a>
+                                data-bs-target="#exampleModal{{$categoria->id}}">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </a>
                         </td>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"

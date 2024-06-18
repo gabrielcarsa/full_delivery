@@ -43,7 +43,6 @@
                 </div>
                 @endif
 
-
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome</label>
                     <input type="text" name="nome" value="{{!empty($produto) ? $produto->nome : old('nome')}}"

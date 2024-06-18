@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\CategoriaProduto;
 use App\Models\Restaurante;
 
@@ -11,7 +12,14 @@ class CategoriaProdutoController extends Controller
 {
     //LISTAGEM
     public function index(){
-        $categorias = CategoriaProduto::orderBy('ordem')->get();
+        $categorias = DB::table('categoria_produto as cp')
+        ->select(
+            'cp.*',
+            'r.nome as restaurante'
+        )
+        ->join('restaurante as r', 'r.id', '=', 'cp.restaurante_id')
+        ->orderBy('cp.ordem')
+        ->get();
         return view('categoria_produto/listar', compact('categorias'));
     }
 
