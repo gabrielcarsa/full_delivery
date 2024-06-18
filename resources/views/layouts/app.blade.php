@@ -22,7 +22,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
-    <link href="{{ asset('css/tema-sb-admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/master.css') }}" rel="stylesheet">
     @livewireStyles
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -35,120 +35,122 @@
     <div class="min-h-screen bg-gray-100">
         @livewire('navigation-menu')
 
-        <!-- Page Heading -->
-        @if (isset($header))
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {{ $header }}
-            </div>
-        </header>
-        @endif
-
         <!-- Page Content -->
         <main>
             <div class="flex">
-                <!-- Sidebar -->
-                <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                    <!-- Nav Item - Dashboard -->
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'nav-link-active' : 'nav-link-desactive'}}"
-                            href="{{ route('dashboard') }}">
-                            <i class="fas fa-fw fa-tachometer-alt"></i>
-                            <span>{{ __('Dashboard') }}</span>
+                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #FF014B ">
+                    <div
+                        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        <a href="/"
+                            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                            <span class="fs-5 d-none d-sm-inline">Foomy - #1</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="">
-                            <i class="fa-solid fa-list-check"></i>
-                            <span> Painel de Pedidos</span>
-                        </a>
+                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                            id="menu">
 
-                    </li>
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard') }}"
+                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('dashboard') ? 'nav-link-active' : 'nav-link-desactive'}}">
+                                    <span class="material-symbols-outlined">
+                                        dashboard
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Dashboard</span>
+                                </a>
+                            </li>
 
-                    <!-- Divider -->
-                    <hr class="sidebar-divider">
+                            <li class="nav-item">
+                                <a href=""
+                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('painel-pedidos') ? 'nav-link-active' : 'nav-link-desactive'}}">
+                                    <span class="material-symbols-outlined">
+                                        receipt_long
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Pedidos</span>
+                                </a>
+                            </li>
 
-                    <!-- Heading -->
-                    <div class="sidebar-heading">
-                        Pessoas
-                    </div>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('register') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                    href="{{ route('register') }}">
+                                    <span class="material-symbols-outlined">
+                                        person_add
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Cadastrar Usuário</span>
+                                </a>
+                            </li>
 
-                    <!-- Nav Item  -->
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('register') ? 'nav-link-active' : 'nav-link-desactive'}}"
-                            href="{{ route('register') }}">
-                            <i class="fa-solid fa-user"></i>
-                            <span> {{ __('Cadastrar Usuário') }}</span>
-                        </a>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('clientes') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                    href="">
+                                    <span class="material-symbols-outlined">
+                                        groups
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline"> Clientes</span>
+                                </a>
+                            </li>
 
-                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('restaurante') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                    href="{{ route('restaurante') }}">
+                                    <span class="material-symbols-outlined">
+                                        storefront
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Restaurante</span>
+                                </a>
+                            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link " href="">
-                            <i class="fa-solid fa-user"></i>
-                            <span> Clientes</span>
-                        </a>
+                            <!-- Nav Item - CARDAPIO DROPEND -->
+                            <li class="nav-item dropend">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
+                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="material-symbols-outlined">
+                                        restaurant_menu
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Cardápio</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                    <li><a class="dropdown-item" href="#">Visual</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('categoria_produto') }}">Categoria de
+                                            produtos</a></li>
+                                </ul>
+                            </li>
 
-                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('notificacoes') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                    href="">
+                                    <span class="material-symbols-outlined">
+                                        payments
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Financeiro</span>
+                                </a>
+                            </li>
 
-                    <!-- Divider -->
-                    <hr class="sidebar-divider">
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('notificacoes') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                    href="">
+                                    <span class="material-symbols-outlined">
+                                        campaign
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Notificações app</span>
+                                </a>
+                            </li>
 
-                    <!-- Heading -->
-                    <div class="sidebar-heading">
-                        Negócios
-                    </div>
+                            <li class="nav-item">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('assinaturas') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                    href="">
+                                    <span class="material-symbols-outlined">
+                                        favorite
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Assinaturas</span>
+                                </a>
+                            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('restaurante') ? 'nav-link-active' : 'nav-link-desactive'}}"
-                            href="{{ route('restaurante') }}">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Restaurante</span>
-                        </a>
-
-                    </li>
-                    <!-- Nav Item - Utilities Collapse Menu -->
-                    <li class="nav-item dropend ">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" id="dropdownCardapio"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-burger"></i>
-                            <span>Cardápio</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                            <li><a class="dropdown-item" href="#">Visual</a></li>
-                            <li><a class="dropdown-item" href="{{ route('categoria_produto') }}">Categoria de
-                                    produtos</a></li>
                         </ul>
-                    </li>
 
-
-                    <!-- Nav Item - Charts -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="charts.html">
-                            <i class="fas fa-fw fa-chart-area"></i>
-                            <span>Charts</span></a>
-                    </li>
-
-                    <!-- Nav Item - Tables -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="tables.html">
-                            <i class="fas fa-fw fa-table"></i>
-                            <span>Tables</span></a>
-                    </li>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider d-none d-md-block">
-
-                    <!-- Sidebar Toggler (Sidebar) -->
-                    <div class="text-center d-none d-md-inline">
-                        <button class="rounded-circle border-0" id="sidebarToggle"></button>
                     </div>
+                </div>
 
-
-                </ul>
-                <!-- End of Sidebar -->
-
+                <!-- CONTEÚDO -->
                 <div class="container-fluid">
                     {{ $slot }}
                 </div>
@@ -168,10 +170,7 @@
     </script>
     <script src="https://code.jquery.com/jquery.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin.js') }}"></script>
 
-    <script src="https://kit.fontawesome.com/e9fb33108b.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,0 +1,9 @@
+
+.nav-link-active{
+    color: #FFFF !important;
+    font-weight: bolder !important;
+}
+.nav-link-desactive{
+    color: #EDEDED !important;
+    font-weight: 300 !important;
+}

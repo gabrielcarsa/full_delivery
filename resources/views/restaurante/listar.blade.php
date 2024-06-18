@@ -49,8 +49,8 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                            data-bs-dismiss="modal">Fechar</button>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </form>
 
@@ -67,8 +67,8 @@
                     <p><i class="fa-solid fa-location-dot mr-2"></i>{{$restaurante->rua}}, {{$restaurante->numero}} -
                         {{$restaurante->bairro}}, {{$restaurante->cidade}} {{$restaurante->estado}}
                         {{$restaurante->cep}}</p>
-                    <a href="{{route('restaurante.configurar', ['id' => $restaurante->id])}}" class="btn btn-primary"><i
-                            class="fa-solid fa-gears mr-2"></i>Configurações</a>
+                    <a href="{{route('restaurante.configurar', ['id' => $restaurante->id])}}"
+                        class="btn btn-primary">Configurações</a>
 
                 </div>
                 <div class="col-2 text-left">
