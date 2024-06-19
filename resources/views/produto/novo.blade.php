@@ -37,10 +37,11 @@
                 @endif
 
                 @if(empty($produto))
-                <div class="input-group mb-3">
+                <div class="input-group mb-0">
                     <label class="input-group-text" for="inputImagem">Imagem</label>
                     <input type="file" class="form-control" name="imagem" id="inputImagem" required>
                 </div>
+                <p class="fs-6 text-secondary m-0 pl-1">Imagem deve ser quadrada e ser jpeg,png ou jpg</p>
                 @endif
 
                 <div class="col-md-6">

@@ -4,15 +4,15 @@
     <div class="card mb-4 mt-4">
         <!-- Card Header  -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 fw-semibold fs-5">{{$categoria->nome}}</h2>
+            <h2 class="m-0 fw-semibold fs-5">{{$data['categoria']->nome}}</h2>
             <a class="btn btn-primary"
-                href="{{ route('produto.novo', ['categoria_id' => $categoria->id]) }}">Cadastrar</a>
+                href="{{ route('produto.novo', ['categoria_id' => $data['categoria']->id]) }}">Cadastrar</a>
         </div>
         <!-- Card Body -->
         <div class="card-body">
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                @if(isset($produtos))
-                @foreach ($produtos as $produto)
+                @if(isset($data['produtos']))
+                @foreach ($data['produtos'] as $produto)
                 <div class="col">
                     <div class="card position-relative">
                         <div class="dropdown position-absolute end-0 top-0">
@@ -44,7 +44,7 @@
 
                             </ul>
                         </div>
-                        <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem) }}" style="max-width: 100%;"
+                        <img src="{{ asset('storage/'.$data['restaurante']->nome.'/imagens_produtos/'.$produto->imagem) }}" style="max-width: 100%;"
                             class="">
                         <div class="card-body">
                             <h5 class="card-title text-truncate m-0">{{$produto->nome}}</h5>

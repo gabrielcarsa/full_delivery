@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
 use App\Models\CategoriaProduto;
+use App\Models\Restaurante;
 use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
@@ -13,13 +14,22 @@ class ProdutoController extends Controller
      //LISTAGEM
      public function index(Request $request){
 
+        //Exibir produtos de uma categoria
         $categoria_id = $request->get('categoria_id');
 
         $categoria = CategoriaProduto::find($categoria_id);
-   
+
         $produtos = Produto::where('categoria_id', $categoria_id)->get();
+
+        $restaurante = Restaurante::where('id', $categoria->restaurante_id)->first();
+
+        $data = [
+            'produtos' => $produtos,
+            'categoria' => $categoria,
+            'restaurante' => $restaurante,
+        ];
       
-        return view('produto/listar', compact('produtos', 'categoria'));
+        return view('produto/listar', compact('data'));
     }
 
     //RETORNAR VIEW PARA CADASTRO
@@ -74,6 +84,9 @@ class ProdutoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $categoria = CategoriaProduto::where('id', $categoria_id)->first();
+        $restaurante = Restaurante::where('id', $categoria->restaurante_id)->first();
+
         //Cadastro de produto
         $produto = new Produto();
         $produto->nome = $request->input('nome');
@@ -91,7 +104,7 @@ class ProdutoController extends Controller
             $imagemNome = pathinfo($imagemNome, PATHINFO_FILENAME);
             $nomeArquivo = $imagemNome . '_' . time() . '.' . $request->file('imagem')->getClientOriginalExtension();
 
-            $request->file('imagem')->storeAs('public/imagens_produtos', $nomeArquivo);
+            $request->file('imagem')->storeAs('public/'.$restaurante->nome.'/imagens_produtos', $nomeArquivo);
             $produto->imagem = $nomeArquivo;
         }
         $produto->save();
