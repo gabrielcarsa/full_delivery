@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\CategoriaProduto;
@@ -38,7 +39,11 @@ class CategoriaProdutoController extends Controller
     //CADASTRAR
     public function store(Request $request, $usuario_id){
 
-        //TODO: fazer validações
+        $validator = Validator::make($request->all(), [
+            //TODO: fazer validações
+            'nome' => 'required|string|max:100',
+            'descricao' => 'required|string|max:100',
+        ]);
 
         //Cadastro de categoria
         $categoria = new CategoriaProduto();
