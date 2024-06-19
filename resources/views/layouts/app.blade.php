@@ -41,10 +41,11 @@
                 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #FF014B ">
                     <div
                         class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                        <h4 class="ml-1 d-none d-sm-inline">
+                        <p class="p-0 m-0 fw-regular" style="font-size: 14px">conectado como</p>
+                        <h4 class="p-0 m-0 fs-3 fw-bold">
                             {{session('restauranteConectado') != null ? session('restauranteConectado')['nome'] : '---'}}
                         </h4>
-                        <a href="{{ route('restaurante') }}" class="d-flex align-items-center align-middle fs-6 text-decoration-none text-secondary">
+                        <a href="{{ route('restaurante') }}" class="d-flex align-items-center align-middle fs-6 text-decoration-none text-dark">
                             <span class="material-symbols-outlined fs-6">
                                 change_circle
                             </span>

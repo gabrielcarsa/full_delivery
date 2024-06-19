@@ -1,26 +1,34 @@
 <x-app-layout>
 
-    <!-- Card Consulta -->
+    <!-- CONTEUDO -->
     <div class="card mb-4 mt-4">
-        <!-- Card Header  -->
+
+        <!-- CARD HEADER -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between dropdown">
             <h2 class="m-0 fw-semibold fs-5">Restaurante</h2>
+            <a href="{{route('restaurante.configurar')}}" class="btn btn-primary px-5">Adicionar</a>
         </div>
-        <!-- Card Body -->
+        <!-- FIM CARD HEADER -->
 
+        <!-- CARD BODY -->
         <div class="card-body">
+            
             @if($restaurantes->isNotEmpty())
+
+            <!-- RESTAURANTES -->
             @foreach($restaurantes as $restaurante)
             <div
-                class="row align-items-center m-2 p-1 {{ session('restauranteConectado') && session('restauranteConectado')['id'] == $restaurante->id ? 'border-3' : 'border-3 border-success' }}">
+                class="row align-items-center m-2 p-1 {{ session('restauranteConectado') && session('restauranteConectado')['id'] == $restaurante->id ? 'border-3 border-success' : 'border-3' }}">
                 <div class="col-2">
-                    <!-- Button trigger modal -->
+                    
+                    <!-- BTN EDITAR IMG -->
                     <a class="position-absolute bg-dark p-1 text-white rounded" data-bs-toggle="modal"
                         data-bs-target="#modalEditarImagem">
                         <span class="material-symbols-outlined">
                             edit
                         </span>
                     </a>
+                    <!-- FIM BTN EDITAR IMG -->
 
                     <!-- MODAL -->
                     <div class="modal fade" id="modalEditarImagem" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -58,10 +66,12 @@
                     <!-- FIM MODAL -->
 
                     <!-- LOGO RESTAURANTE -->
-                    <img src='{{asset("storage/logo/$restaurante->logo")}}' width="250"
+                    <img src='{{asset("storage/$restaurante->nome/$restaurante->logo")}}' width="250"
                         alt="Logo {{$restaurante->nome}}" class="shadow-sm rounded">
 
                 </div>
+
+                <!-- INFO RESTAURANTE -->
                 <div class="col-8">
                     <h2 class="fs-2 fw-bold">{{$restaurante->nome}}</h2>
                     <p class="text-secondary">{{$restaurante->descricao}}</p>
@@ -80,8 +90,10 @@
                     </form>
                     @endif
 
-
                 </div>
+                <!-- FIM INFO RESTAURANTE -->
+
+                <!-- HORARIOS RESTAURANTE -->
                 <div class="col-2 text-left">
                     @if($horarios_funcionamento->isNotEmpty())
 
@@ -104,8 +116,13 @@
                     @endforeach
                     @endif
                 </div>
+                <!-- FIM HORARIOS RESTAURANTE -->
+
             </div>
             @endforeach
+            <!-- FIM RESTAURANTES -->
+
+            <!-- SE NÃO HOUVER RESTAURANTES -->
             @else
             <div class="container-fluid mt-5 mb-5 d-flex flex-column align-items-center">
                 <img src="{{asset("storage/images/logo.png")}}" width="150px" alt="Foomy"></a>
@@ -113,8 +130,12 @@
                 <p>Comece configurando as informações do seu restaurante!</p>
                 <a href="{{route('restaurante.configurar')}}" class="btn btn-primary px-5">Iniciar</a>
             </div>
+            <!-- FIM SE NÃO HOUVER RESTAURANTES -->
 
             @endif
+
         </div>
+        <!-- FIM CARD BODY -->
+
     </div>
 </x-app-layout>

@@ -33,7 +33,7 @@ class RestauranteController extends Controller
     public function configuracao(Request $request){
         $id = $request->input('id');
         if($id != null){
-            $restaurante = Restaurante::find($id)->first();
+            $restaurante = Restaurante::where('id' , $id)->first();
             $horarios = HorarioFuncionamento::where('restaurante_id' , $id)->get();
             return view('restaurante.configuracao', compact('restaurante', 'horarios'));
         }else{
@@ -66,8 +66,8 @@ class RestauranteController extends Controller
         if ($request->hasFile('imagem')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "logo";
-            $request->file('imagem')->storeAs('public/logo', $nomeArquivo);
-            $restaurante->imagem = $nomeArquivo;
+            $request->file('imagem')->storeAs('public/'.$restaurante->nome, $nomeArquivo);
+            $restaurante->logo = $nomeArquivo;
         }
 
         //Endereço
@@ -98,6 +98,7 @@ class RestauranteController extends Controller
 
     //ALTERAR
     public function update(Request $request, $usuario_id, $restaurante_id){
+        
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             //TODO: fazer validações
@@ -111,7 +112,7 @@ class RestauranteController extends Controller
         }
 
         //Alterar restaurante
-        $restaurante = Restaurante::find($restaurante_id)->first();
+        $restaurante = Restaurante::where('id', $restaurante_id)->first();
 
         //Informações Gerais
         $restaurante->nome = $request->input('nome');
