@@ -62,13 +62,13 @@
                         <td>{{$categoria->restaurante}}</td>
                         <td>
                             <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}"
-                                class="acoes-listar btn-acao-listagem-secundary text-decoration-none">
+                                class="acoes-listar text-decoration-none">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
                             </a>
                             <a href="" data-bs-toggle="modal"
-                                class="acoes-listar btn-acao-listagem-secundary text-danger"
+                                class="acoes-listar text-danger"
                                 data-bs-target="#exampleModal{{$categoria->id}}">
                                 <span class="material-symbols-outlined">
                                     delete

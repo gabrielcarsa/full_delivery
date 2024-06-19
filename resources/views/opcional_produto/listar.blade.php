@@ -29,12 +29,18 @@
                         <td>{{$opcional->descricao}}</td>
                         <td>R$ {{number_format($opcional->preco, 2, ',', '.')}}</td>
                         <td>
-                            <a href=""
-                                class="acoes-listar btn-acao-listagem-secundary"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="" class="acoes-listar text-decoration-none">
+                                <span class="material-symbols-outlined">
+                                    edit
+                                </span>
+                            </a>
                             <a href="" data-bs-toggle="modal"
-                                class="acoes-listar btn-acao-listagem-secundary text-danger"
-                                data-bs-target="#exampleModal{{$opcional->id}}"><i class="fa-solid fa-trash"></i></a>
+                                class="acoes-listar text-decoration-none text-danger"
+                                data-bs-target="#exampleModal{{$opcional->id}}">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </a>
                         </td>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal{{$opcional->id}}" tabindex="-1"
@@ -53,8 +59,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Não</button>
-                                        <form
-                                            action="{{ route('opcional_produto.excluir', ['id' => $opcional->id]) }}"
+                                        <form action="{{ route('opcional_produto.excluir', ['id' => $opcional->id]) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
