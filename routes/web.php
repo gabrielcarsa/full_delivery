@@ -65,6 +65,8 @@ Route::middleware([
         Route::get('/produto/editar', [ProdutoController::class, 'edit'])->name('produto.editar');
         Route::put('/produto/alterar/{usuario_id}/{produto_id}', [ProdutoController::class, 'update']);
         Route::delete('/produto/apagar/{id}', [ProdutoController::class, 'destroy'])->name('produto.excluir');
+        Route::get('/produto/promocao', [ProdutoController::class, 'edit_promocao'])->name('produto.promocao');
+        Route::post('/produto/promocao/{produto_id}', [ProdutoController::class, 'update_promocao']);
         
         //OPCIONAL PRODUTO
         Route::get('/opcional_produto', [OpcionalProdutoController::class, 'index'])->name('opcional_produto');

@@ -160,4 +160,32 @@ class ProdutoController extends Controller
         $produto->delete();
         return redirect()->back()->with('success', 'Produto excluido com sucesso');
     }
+
+
+    //ALTERAR VIEW DESCONTO
+    public function edit_promocao(Request $request){
+        $id = $request->input('id');
+        $produto = Produto::find($id);
+        return view('produto/promocao', compact('produto'));
+    }
+
+     //ALTERAR
+     public function update_promocao(Request $request, $id){
+        
+        $request->merge([
+            'preco_promocao' => str_replace(['.', ','], ['', '.'], $request->input('preco_promocao')),
+        ]);
+
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'preco_promocao' => 'required|numeric',
+        ]);
+
+        //Alterando produto
+        $produto = Produto::find($id);
+
+        $produto->preco_promocao = (double) $request->input('preco_promocao'); // Converter a string diretamente para um número em ponto flutuante
+        $produto->save();
+        return redirect()->back()->with('success', 'Promoção cadastrada');
+    }
 }

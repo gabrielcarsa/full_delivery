@@ -31,7 +31,8 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a href="#" class="dropdown-item">Promoção</a></li>
+                                <li><a href="{{ route('produto.promocao', ['id' => $produto->id]) }}"
+                                        class="dropdown-item">Promoção</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -44,14 +45,24 @@
 
                             </ul>
                         </div>
-                        <img src="{{ asset('storage/'.$data['restaurante']->nome.'/imagens_produtos/'.$produto->imagem) }}" style="max-width: 100%;"
-                            class="">
+                        <img src="{{ asset('storage/'.$data['restaurante']->nome.'/imagens_produtos/'.$produto->imagem) }}"
+                            style="max-width: 100%;" class="">
                         <div class="card-body">
                             <h5 class="card-title text-truncate m-0">{{$produto->nome}}</h5>
                             <p class="text-truncate text-secondary m-0">{{$produto->descricao}}</p>
                             <p class="text-truncate m-0">Serve {{$produto->quantidade_pessoa}}
                                 {{$produto->quantidade_pessoa == 1 ? 'pessoa' : 'pessoas'}}</p>
+                            @if($produto->preco_promocao != null)
+                            <div class="d-flex">
+                                <p class="fw-regular text-secondary text-truncate m-0 text-decoration-line-through">R$
+                                    {{number_format($produto->preco, 2, ',', '.')}}</p>
+                                <p class="mx-2">por</p>
+                                <p class="fw-semibold text-truncate m-0">R$
+                                    {{number_format($produto->preco_promocao, 2, ',', '.')}}</p>
+                            </div>
+                            @else
                             <p class="fw-semibold text-truncate">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
+                            @endif
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$produto->id}}" tabindex="-1"
