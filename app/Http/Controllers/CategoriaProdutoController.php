@@ -13,7 +13,7 @@ class CategoriaProdutoController extends Controller
     //LISTAGEM
     public function index(){
         //Sessão do restaurante que está conectado
-        $restauranteIdConectado = session('restaurante_id');
+        $restauranteIdConectado = session('restauranteConectado')['id'];
 
         $categorias = DB::table('categoria_produto as cp')
         ->select(

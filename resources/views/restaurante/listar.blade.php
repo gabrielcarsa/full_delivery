@@ -12,7 +12,7 @@
             @if($restaurantes->isNotEmpty())
             @foreach($restaurantes as $restaurante)
             <div
-                class="row align-items-center m-2 p-1 {{session('restaurante_id')==$restaurante->id ? 'border-3' : 'border-3 border-success'}}">
+                class="row align-items-center m-2 p-1 {{ session('restauranteConectado') && session('restauranteConectado')['id'] == $restaurante->id ? 'border-3' : 'border-3 border-success' }}">
                 <div class="col-2">
                     <!-- Button trigger modal -->
                     <a class="position-absolute bg-dark p-1 text-white rounded" data-bs-toggle="modal"
@@ -71,13 +71,13 @@
                     <a href="{{route('restaurante.configurar', ['id' => $restaurante->id])}}"
                         class="btn btn-primary mb-1">Configurações</a>
 
-                    @if(session('restaurante_id') != $restaurante->id)
+                    @if(session('restauranteConectado') != null && session('restauranteConectado')['id'] == $restaurante->id)
+                    <button type="button" class="btn btn-info">Conectado</button>
+                    @else
                     <form action="{{'/escolher-restaurante/'.$restaurante->id}}" method="post">
                         @csrf
                         <button type="submit" class="btn btn-success">Conectar</button>
                     </form>
-                    @else
-                    <button type="button" class="btn btn-info">Conectado</button>
                     @endif
 
 

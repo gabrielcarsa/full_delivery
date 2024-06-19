@@ -12,13 +12,18 @@ class RestauranteController extends Controller
 {
      //ESCOLHER RESTAURANTE
      public function choose(Request $request, $id){
-        session(['restaurante_id' => $id]);
-        $restaurante = Restaurante::where('id', $id);
-        return redirect()->route('restaurante')->with('success', 'Conectado como {{$restaurante->nome}}');
+        //Buscando restaurante
+        $restaurante = Restaurante::where('id', $id)->get();
+
+        //Definindo variavel de sessão de restaurante
+        session(['restauranteConectado' => ['id'=> $id, 'nome'=> $restaurante[0]->nome]]);
+
+        return redirect()->route('restaurante')->with('success', 'Conectado como ');
     }
 
     //LISTAGEM
     public function index(){
+        //dd(session('restauranteConectado')['nome']);
         $restaurantes = Restaurante::all();
         $horarios_funcionamento = HorarioFuncionamento::all();
         return view('restaurante/listar', compact('restaurantes', 'horarios_funcionamento'));

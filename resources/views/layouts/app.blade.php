@@ -41,10 +41,16 @@
                 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #FF014B ">
                     <div
                         class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                        <a href="/"
-                            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <span class="fs-5 d-none d-sm-inline">Foomy - #1</span>
+                        <h4 class="ml-1 d-none d-sm-inline">
+                            {{session('restauranteConectado') != null ? session('restauranteConectado')['nome'] : '---'}}
+                        </h4>
+                        <a href="{{ route('restaurante') }}" class="d-flex align-items-center align-middle fs-6 text-decoration-none text-secondary">
+                            <span class="material-symbols-outlined fs-6">
+                                change_circle
+                            </span>
+                            <span>{{session('restauranteConectado') != null ? 'Trocar restaurante': 'Selecionar restaurante'}}</span>
                         </a>
+                        <hr>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                             id="menu">
 
