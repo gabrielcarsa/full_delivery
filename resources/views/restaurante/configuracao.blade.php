@@ -61,14 +61,14 @@
                                         <label for="inputNome" class="form-label">Nome</label>
                                         <input type="text" name="nome"
                                             value="{{!empty($restaurante) ? $restaurante->nome : old('nome')}}"
-                                            class="form-control @error('nome') is-invalid @enderror" id="inputNome">
+                                            class="form-control @error('nome') is-invalid @enderror" id="inputNome" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="inputDescricao" class="form-label">Descrição</label>
                                         <input type="text" name="descricao"
                                             value="{{!empty($restaurante) ? $restaurante->descricao : old('descricao')}}"
                                             class="form-control @error('descricao') is-invalid @enderror"
-                                            id="inputDescricao">
+                                            id="inputDescricao" required>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                         <label for="inputCep" class="form-label">CEP</label>
                                         <input type="text" name="cep"
                                             value="{{!empty($restaurante) ? $restaurante->cep : old('cep')}}"
-                                            class="form-control" id="inputCep">
+                                            class="form-control" id="inputCep" required>
                                     </div>
                                 </div>
                                 <hr>
@@ -100,19 +100,19 @@
                                         <label for="inputRua" class="form-label">Rua</label>
                                         <input type="text" name="rua"
                                             value="{{!empty($restaurante) ? $restaurante->rua : old('rua')}}"
-                                            class="form-control" id="inputRua">
+                                            class="form-control" id="inputRua" required>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="inputBairro" class="form-label">Bairro</label>
                                         <input type="text" name="bairro"
                                             value="{{!empty($restaurante) ? $restaurante->bairro : old('bairro')}}"
-                                            class="form-control" id="inputBairro">
+                                            class="form-control" id="inputBairro" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label for="inputNumero" class="form-label">Número</label>
                                         <input type="text" name="numero"
                                             value="{{!empty($restaurante) ? $restaurante->numero : old('numero')}}"
-                                            class="form-control" id="inputNumero">
+                                            class="form-control" id="inputNumero" required>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="inputComplemento" class="form-label">Complemento</label>
@@ -124,13 +124,13 @@
                                         <label for="inputCidade" class="form-label">Cidade</label>
                                         <input type="text" name="cidade"
                                             value="{{!empty($restaurante) ? $restaurante->cidade : old('cidade')}}"
-                                            class="form-control" id="inputCidade">
+                                            class="form-control" id="inputCidade" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label for="inputEstado" class="form-label">Estado</label>
                                         <input type="text" name="estado"
                                             value="{{!empty($restaurante) ? $restaurante->estado : old('estado')}}"
-                                            class="form-control" id="inputEstado">
+                                            class="form-control" id="inputEstado" required>
                                     </div>
                                 </div>
                             </div>
@@ -157,13 +157,13 @@
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="1_abertura"
                                             value="{{!empty($horario) ? $horario->hora_abertura : old('1_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="1_fechamento"
                                             value="{{!empty($horario) ? $horario->hora_fechamento : old('1_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @elseif($horario->dia_semana == 2 && $horario->restaurante_id == $restaurante->id)
@@ -172,12 +172,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="2_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('2_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="2_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('2_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @elseif($horario->dia_semana == 3 && $horario->restaurante_id == $restaurante->id)
@@ -186,12 +186,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="3_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('3_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="3_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('3_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @elseif($horario->dia_semana == 4 && $horario->restaurante_id == $restaurante->id)
@@ -200,12 +200,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="4_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('4_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="4_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('4_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @elseif($horario->dia_semana == 5 && $horario->restaurante_id == $restaurante->id)
@@ -214,12 +214,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="5_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('5_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="5_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('5_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @elseif($horario->dia_semana == 6 && $horario->restaurante_id == $restaurante->id)
@@ -228,12 +228,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="6_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('6_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="6_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('6_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @elseif($horario->dia_semana == 0 && $horario->restaurante_id == $restaurante->id)
@@ -242,12 +242,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="0_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('0_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="0_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('0_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @endif
@@ -261,13 +261,13 @@
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="1_abertura"
                                             value="{{!empty($horario) ? $horario->hora_abertura : old('1_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="1_fechamento"
                                             value="{{!empty($horario) ? $horario->hora_fechamento : old('1_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
 
@@ -276,12 +276,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="2_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('2_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="2_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('2_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
 
@@ -290,12 +290,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="3_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('3_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="3_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('3_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
 
@@ -304,12 +304,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="4_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('4_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="4_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('4_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
 
@@ -318,12 +318,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="5_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('5_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="5_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('5_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
 
@@ -332,12 +332,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="6_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('6_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="6_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('6_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
 
@@ -346,12 +346,12 @@
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Abertura</label>
                                         <input type="time" name="0_abertura" value="{{!empty($horario) ? $horario->hora_abertura : old('0_abertura')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="inputDiaSemana" class="form-label">Fechamento</label>
                                         <input type="time" name="0_fechamento" value="{{!empty($horario) ? $horario->hora_fechamento : old('0_fechamento')}}"
-                                            class="form-control" id="inputDiaSemana">
+                                            class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
                                 @endif

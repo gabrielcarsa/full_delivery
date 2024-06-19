@@ -49,6 +49,13 @@ class RestauranteController extends Controller
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
+            'cep' => 'required|string|max:100',
+            'rua' => 'required|string|max:100',
+            'bairro' => 'required|string|max:500',
+            'numero' => 'required|string|max:100',
+            'cidade' => 'required|string|max:100',
+            'estado' => 'required|string|max:100',
+
         ]);
 
         // Se a validação falhar
