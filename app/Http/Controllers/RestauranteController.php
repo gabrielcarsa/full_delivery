@@ -45,7 +45,6 @@ class RestauranteController extends Controller
     public function store(Request $request, $usuario_id){
         // Validação do formulário
         $validator = Validator::make($request->all(), [
-            //TODO: fazer validações
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
@@ -55,7 +54,6 @@ class RestauranteController extends Controller
             'numero' => 'required|string|max:100',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|max:100',
-
         ]);
 
         // Se a validação falhar
@@ -106,11 +104,16 @@ class RestauranteController extends Controller
     //ALTERAR
     public function update(Request $request, $usuario_id, $restaurante_id){
         
-        // Validação do formulário
-        $validator = Validator::make($request->all(), [
-            //TODO: fazer validações
+       // Validação do formulário
+       $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
+            'cep' => 'required|string|max:100',
+            'rua' => 'required|string|max:100',
+            'bairro' => 'required|string|max:500',
+            'numero' => 'required|string|max:100',
+            'cidade' => 'required|string|max:100',
+            'estado' => 'required|string|max:100',
         ]);
 
         // Se a validação falhar

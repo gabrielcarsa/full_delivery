@@ -38,7 +38,8 @@ class CategoriaProdutoController extends Controller
 
     //CADASTRAR
     public function store(Request $request, $usuario_id){
-
+        
+        //validação dos campos
         $validator = Validator::make($request->all(), [
             //TODO: fazer validações
             'nome' => 'required|string|max:100',
@@ -67,6 +68,12 @@ class CategoriaProdutoController extends Controller
 
     //ALTERAR
     public function update(Request $request, $usuario_id, $id){
+        //validação dos campos
+        $validator = Validator::make($request->all(), [
+            //TODO: fazer validações
+            'nome' => 'required|string|max:100',
+            'descricao' => 'required|string|max:100',
+        ]);
 
          //alterando categoria
          $categoria = CategoriaProduto::find($id);
