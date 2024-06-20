@@ -45,7 +45,8 @@
                         <h4 class="p-0 m-0 fs-3 fw-bold">
                             {{session('restauranteConectado') != null ? session('restauranteConectado')['nome'] : '---'}}
                         </h4>
-                        <a href="{{ route('restaurante') }}" class="d-flex align-items-center align-middle fs-6 text-decoration-none text-dark">
+                        <a href="{{ route('restaurante') }}"
+                            class="d-flex align-items-center align-middle fs-6 text-decoration-none text-dark">
                             <span class="material-symbols-outlined fs-6">
                                 change_circle
                             </span>
@@ -105,6 +106,16 @@
                                 </a>
                             </li>
 
+                            <li class="nav-item">
+                                <a href=""
+                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('painel-pedidos') ? 'nav-link-active' : 'nav-link-desactive'}}">
+                                    <span class="material-symbols-outlined">
+                                        sports_motorsports
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">Entregas</span>
+                                </a>
+                            </li>
+
                             <!-- Nav Item - CARDAPIO DROPEND -->
                             <li class="nav-item dropend">
                                 <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
@@ -116,20 +127,35 @@
                                     <span class="ml-1 d-none d-sm-inline">Cardápio</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li><a class="dropdown-item" href="#">Visual</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('categoria_produto') }}">Categoria de
-                                            produtos</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Visual</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('categoria_produto') }}">
+                                            Categorias e produtos
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('notificacoes') ? 'nav-link-active' : 'nav-link-desactive'}}"
-                                    href="">
+                            <!-- Nav Item - FINANCEIRO DROPEND -->
+                            <li class="nav-item dropend">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
+                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <span class="material-symbols-outlined">
                                         payments
                                     </span>
                                     <span class="ml-1 d-none d-sm-inline">Financeiro</span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Vendas</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="">Formas de pagamento</a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="nav-item">

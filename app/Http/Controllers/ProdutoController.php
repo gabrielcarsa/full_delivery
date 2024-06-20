@@ -169,8 +169,8 @@ class ProdutoController extends Controller
         return view('produto/promocao', compact('produto'));
     }
 
-     //ALTERAR
-     public function update_promocao(Request $request, $id){
+    //PROMOÇÃO
+    public function update_promocao(Request $request, $id){
         
         $request->merge([
             'preco_promocao' => str_replace(['.', ','], ['', '.'], $request->input('preco_promocao')),
@@ -187,5 +187,21 @@ class ProdutoController extends Controller
         $produto->preco_promocao = (double) $request->input('preco_promocao'); // Converter a string diretamente para um número em ponto flutuante
         $produto->save();
         return redirect()->back()->with('success', 'Promoção cadastrada');
+    }
+
+    //DESTACAR  
+    public function destacar(Request $request){
+        $id = $request->input('id');
+
+        //Alterando produto
+        $produto = Produto::find($id);
+
+        if($produto->destacar == null || $produto->destacar == false){
+            $produto->destacar = true; 
+        }else{
+            $produto->destacar = false; 
+        }
+        $produto->save();
+        return redirect()->back()->with('success', 'Produto em destaque');
     }
 }

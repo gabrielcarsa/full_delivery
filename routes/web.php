@@ -67,6 +67,7 @@ Route::middleware([
         Route::delete('/produto/apagar/{id}', [ProdutoController::class, 'destroy'])->name('produto.excluir');
         Route::get('/produto/promocao', [ProdutoController::class, 'edit_promocao'])->name('produto.promocao');
         Route::post('/produto/promocao/{produto_id}', [ProdutoController::class, 'update_promocao']);
+        Route::post('/produto/destacar', [ProdutoController::class, 'destacar'])->name('produto.destacar');
         
         //OPCIONAL PRODUTO
         Route::get('/opcional_produto', [OpcionalProdutoController::class, 'index'])->name('opcional_produto');
