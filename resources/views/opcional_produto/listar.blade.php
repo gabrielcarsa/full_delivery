@@ -1,15 +1,18 @@
 <x-app-layout>
 
+    <!-- CARD -->
     @if(isset($opcionais))
     <div class="card mb-4 mt-4">
-        <!-- Card Header  -->
+        <!-- CARD HEADER -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
             <h2 class="m-0 fw-semibold fs-5">Opcionais de {{$produto->nome}}</h2>
             <a class="btn btn-primary"
                 href="{{ route('opcional_produto.novo', ['produto_id' => $produto->id]) }}">Cadastrar</a>
 
         </div>
-        <!-- Card Body -->
+        <!-- FIM CARD HEAD -->
+
+        <!-- CARD BODY -->
         <div class="card-body">
             <table class="table table-striped table-bordered">
                 <thead>
@@ -22,6 +25,8 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    <!-- OPCIONAIS -->
                     @foreach ($opcionais as $opcional)
                     <tr>
                         <th scope="row">{{$opcional->id}}</th>
@@ -29,20 +34,21 @@
                         <td>{{$opcional->descricao}}</td>
                         <td>R$ {{number_format($opcional->preco, 2, ',', '.')}}</td>
                         <td>
-                            <a href="" class="acoes-listar text-decoration-none">
+                            <a href="{{ route('opcional_produto.editar', ['id' => $opcional->id]) }}"
+                                class="acoes-listar text-decoration-none">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
                             </a>
-                            <a href="" data-bs-toggle="modal"
-                                class="acoes-listar text-decoration-none text-danger"
+                            <a href="" data-bs-toggle="modal" class="acoes-listar text-decoration-none text-danger"
                                 data-bs-target="#exampleModal{{$opcional->id}}">
                                 <span class="material-symbols-outlined">
                                     delete
                                 </span>
                             </a>
                         </td>
-                        <!-- Modal -->
+
+                        <!-- MODAL EXCLUIR -->
                         <div class="modal fade" id="exampleModal{{$opcional->id}}" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -71,11 +77,18 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- FIM MODAL EXCLUIR -->
+
                     </tr>
                     @endforeach
+                    <!-- FIM OPCIONAIS -->
+
                 </tbody>
             </table>
         </div>
+        <!-- FIM CARD BODY -->
     </div>
     @endif
+    <!-- FIM CARD -->
+
 </x-app-layout>

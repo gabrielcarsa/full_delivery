@@ -20,6 +20,7 @@ class OpcionalProdutoController extends Controller
 
         return view('opcional_produto/listar', compact('produto', 'opcionais'));
     }
+    
     //RETORNAR VIEW PARA CADASTRO
     public function create(Request $request){
 
@@ -40,7 +41,7 @@ class OpcionalProdutoController extends Controller
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:100',
-            'descricao' => 'required|string|max:500',
+            'descricao' => 'required|string|max:200',
             'preco' => 'required|numeric',
         ]);
 
@@ -63,12 +64,12 @@ class OpcionalProdutoController extends Controller
         return redirect()->back()->with('success', 'Cadastro de opcional feito com sucesso');
 
     }
-/*
+
     //ALTERAR VIEW
     public function edit(Request $request){
         $id = $request->input('id');
-        $produto = Produto::find($id);
-        return view('produto/novo', compact('produto'));
+        $opcional = OpcionalProduto::find($id);
+        return view('opcional_produto/novo', compact('opcional'));
     }
 
 
@@ -82,24 +83,22 @@ class OpcionalProdutoController extends Controller
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:100',
-            'descricao' => 'required|string|max:500',
+            'descricao' => 'required|string|max:200',
             'preco' => 'required|numeric',
-            'quantidade_pessoa' => 'required|numeric|min:1',
         ]);
 
-        //Alterando produto
-        $produto = Produto::find($id);
-        $produto->nome = $request->input('nome');
-        $produto->descricao = $request->input('descricao');
-        $produto->disponibilidade = $request->input('disponibilidade');
+        //Alterando opcional
+        $opcional = OpcionalProduto::find($id);
+        $opcional->nome = $request->input('nome');
+        $opcional->descricao = $request->input('descricao');
 
-        $produto->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
+        $opcional->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
 
-        $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
-        $produto->alterado_usuario_id = $usuario_id;
-        $produto->save();
+        $opcional->alterado_usuario_id = $usuario_id;
+
+        $opcional->save();
         return redirect()->back()->with('success', 'Alteração feita com sucesso');
-    }*/
+    }
 
     //EXCLUIR
     public function destroy($id){

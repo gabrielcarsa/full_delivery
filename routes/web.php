@@ -74,5 +74,7 @@ Route::middleware([
         Route::get('/opcional_produto/novo', [OpcionalProdutoController::class, 'create'])->name('opcional_produto.novo');
         Route::post('/opcional_produto/cadastrar/{produto_id}/{usuario_id}', [OpcionalProdutoController::class, 'store']);
         Route::delete('/opcional_produto/apagar/{id}', [OpcionalProdutoController::class, 'destroy'])->name('opcional_produto.excluir');
+        Route::get('/opcional_produto/editar', [OpcionalProdutoController::class, 'edit'])->name('opcional_produto.editar');
+        Route::put('/opcional_produto/alterar/{usuario_id}/{produto_id}', [OpcionalProdutoController::class, 'update']);
  
 });

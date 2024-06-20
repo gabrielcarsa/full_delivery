@@ -1,13 +1,19 @@
 <x-app-layout>
 
-    <!-- Dropdown Card -->
+    <!-- CARD -->
     <div class="card mb-4 mt-4">
-        <!-- Card Header  -->
+
+        <!-- CARD HEADER-->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 fw-semibold fs-5">Cadastro Opcional de {{ $produto->nome }}</h2>
+            <h2 class="m-0 fw-semibold fs-5">
+                {{ empty($opcional) ? 'Cadastro Opcional de '.$produto->nome : 'Alterar '.$opcional->nome }}</h2>
         </div>
-        <!-- Card Body -->
+        <!-- FIM CARD HEADER-->
+
+        <!-- CARD BODY-->
         <div class="card-body">
+
+            <!-- MENSAGENS SUCESSO OU ERRO-->
             @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -27,7 +33,9 @@
                 </ul>
             </div>
             @endif
+            <!-- FIM MENSAGENS SUCESSO OU ERRO-->
 
+            <!-- FORM -->
             <form class="row g-3"
                 action="{{!empty($opcional) ? '/opcional_produto/alterar/' . Auth::user()->id . '/' . $opcional->id : '/opcional_produto/cadastrar/' . $produto->id . '/' . Auth::user()->id}}"
                 method="post" autocomplete="off" enctype="multipart/form-data">
@@ -36,6 +44,7 @@
                 @method('PUT')
                 @endif
 
+                <!-- CAMPOS -->
                 <div class="col-md-6">
                     <label for="inputNome" class="form-label">Nome</label>
                     <input type="text" name="nome" value="{{!empty($opcional) ? $opcional->nome : old('nome')}}"
@@ -53,8 +62,10 @@
                         value="{{!empty($opcional) ? number_format($opcional->preco, 2, ',', '.') : old('preco')}}"
                         class="form-control" id="inputPreco" required>
                 </div>
-                <div class="col-md-8">
-                    <div class="card text-bg-info" style="width: 100%;">
+
+                <!-- DICA -->
+                <div class="d-flex">
+                    <div class="card" style="width: 100%;">
                         <div class="card-header">Dica</div>
                         <div class="card-body">
                             <h5 class="card-title">Opcionais</h5>
@@ -66,16 +77,19 @@
                         </div>
                     </div>
                 </div>
-
-
-
+                <!-- FIM DICA -->
 
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </div>
             </form>
+            <!-- FIM FORM -->
+
         </div>
+        <!-- FIM CARD BODY -->
     </div>
+    <!-- FIM CARD -->
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
