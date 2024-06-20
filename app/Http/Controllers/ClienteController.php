@@ -20,10 +20,19 @@ class ClienteController extends Controller
 
     //CADASTRAR
     public function store(Request $request){
+        //Definindo data para cadastrar
+        date_default_timezone_set('America/Cuiaba');
+
+        //Limpando o campo CPF
+        $request->merge([
+            'cpf' => str_replace(['.', '-'], '', $request->input('cpf')),
+            'telefone' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone')),
+        ]);
+         
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:100',
-            'cpf' => 'required|string|max:20',
+            'cpf' => 'required|max:14|unique:cliente',
             'email' => 'required|string|max:100',
             'telefone' => 'nullable|string|max:100',
             'cep' => 'nullable|max:100',
@@ -71,11 +80,19 @@ class ClienteController extends Controller
 
     //ALTERAR
     public function update(Request $request, $cliente_id){
-        
+        //Definindo data para cadastrar
+        date_default_timezone_set('America/Cuiaba');
+
+        //Limpando o campo CPF
+        $request->merge([
+            'cpf' => str_replace(['.', '-'], '', $request->input('cpf')),
+            'telefone' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone')),
+        ]);
+
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:100',
-            'cpf' => 'required|string|max:20',
+            'cpf' => 'required|max:14|unique:cliente,cpf,'.$cliente_id,
             'email' => 'required|string|max:100',
             'telefone' => 'nullable|string|max:100',
             'cep' => 'nullable|max:100',

@@ -37,8 +37,8 @@
 
             <!-- FORM -->
             <form class="row g-3"
-                action="{{!empty($cliente) ? '/cliente/alterar/' . $cliente->id : '/cliente/cadastrar/'}}"
-                method="post" autocomplete="off" enctype="multipart/form-data">
+                action="{{!empty($cliente) ? '/cliente/alterar/' . $cliente->id : '/cliente/cadastrar/'}}" method="post"
+                autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 @if(!empty($cliente))
                 @method('PUT')
@@ -174,4 +174,57 @@
     </div>
     <!-- FIM CARD -->
 
+
+    <script>
+    // Função para aplicar a máscara de CPF
+    document.getElementById('inputCPF').addEventListener('input', function(e) {
+        let input = e.target;
+        let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+        let formattedValue = '';
+
+        if (value.length > 0) {
+            formattedValue = value.slice(0, 3);
+
+            if (value.length > 3) {
+                formattedValue += '.' + value.slice(3, 6);
+            }
+
+            if (value.length > 6) {
+                formattedValue += '.' + value.slice(6, 9);
+            }
+
+            if (value.length > 9) {
+                formattedValue += '-' + value.slice(9, 11);
+            }
+        }
+
+        input.value = formattedValue;
+    });
+
+    // Função para aplicar a máscara de telefone
+    function aplicarMascaraTelefone(inputId) {
+        const input = document.getElementById(inputId);
+
+        input.addEventListener('input', function(e) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue = '(' + value.slice(0, 2);
+
+                if (value.length > 2) {
+                    formattedValue += ') ' + value.slice(2, 7);
+                }
+
+                if (value.length > 7) {
+                    formattedValue += '-' + value.slice(7, 11);
+                }
+            }
+
+            input.value = formattedValue;
+        });
+    }
+    // Aplicar a máscara para os campos de telefone 1 e telefone 2
+    aplicarMascaraTelefone('inputTelefone');
+    </script>
 </x-app-layout>
