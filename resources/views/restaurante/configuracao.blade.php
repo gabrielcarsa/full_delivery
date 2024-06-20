@@ -103,6 +103,11 @@
                                             value="{{!empty($restaurante) ? $restaurante->cep : old('cep')}}"
                                             class="form-control" id="inputCep" required>
                                     </div>
+                                    <div class="col-3">
+                                        <label for="" class="form-label">Buscar CEP</label>
+                                        <button type="button" class="btn btn-outline-secondary d-block"
+                                            onclick="buscarEndereco()">Buscar</button>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -409,4 +414,29 @@
     </div>
     <!-- FIM CARD -->
 
+    <script>
+    // Função para buscar endereço pelo CEP
+    async function buscarEndereco() {
+        const cep = document.getElementById('inputCep').value.replace(/\D/g, '');
+        if (cep.length !== 8) {
+            alert('CEP inválido!');
+            return;
+        }
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
+            if (!data.erro) {
+                document.getElementById('inputRua').value = data.logradouro;
+                document.getElementById('inputBairro').value = data.bairro;
+                document.getElementById('inputCidade').value = data.localidade;
+                document.getElementById('inputEstado').value = data.uf;
+                document.getElementById('inputComplemento').value = data.complemento;
+            } else {
+                alert('CEP não encontrado!');
+            }
+        } catch (error) {
+            alert('Erro ao buscar o CEP!');
+        }
+    }
+    </script>
 </x-app-layout>

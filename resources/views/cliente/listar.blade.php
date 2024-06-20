@@ -2,6 +2,27 @@
 
     <!-- CARD -->
     <div class="card mb-4 mt-4">
+        <!-- MENSAGENS -->
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        <!-- FIM MENSAGENS -->
 
         <!-- CARD HEADER -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
@@ -53,6 +74,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">CPF</th>
                         <th scope="col">Telefone</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -65,6 +87,7 @@
                         <td>{{$cliente->nome}}</td>
                         <td>{{$cliente->cpf}}</td>
                         <td>{{$cliente->telefone}}</td>
+                        <td>{{$cliente->email}}</td>
                         <td>
                             <a href="{{ route('cliente.editar', ['id' => $cliente->id]) }}"
                                 class="acoes-listar text-decoration-none">
@@ -97,8 +120,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Não</button>
-                                        <form
-                                            action="{{ route('cliente.excluir', ['id' => $cliente->id]) }}"
+                                        <form action="{{ route('cliente.excluir', ['id' => $cliente->id]) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
