@@ -88,7 +88,7 @@
 
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('clientes') ? 'nav-link-active' : 'nav-link-desactive'}}"
-                                    href="">
+                                    href="{{ route('cliente') }}">
                                     <span class="material-symbols-outlined">
                                         groups
                                     </span>

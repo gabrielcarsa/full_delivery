@@ -5,17 +5,17 @@
 
         <!-- CARD HEADER -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 fw-semibold fs-5">Categoria de produtos</h2>
-            <a class="btn btn-primary" href="{{ route('categoria_produto.novo') }}">Cadastrar</a>
+            <h2 class="m-0 fw-semibold fs-5">Pesquisar Clientes</h2>
+            <a class="btn btn-primary" href="{{ route('cliente.novo') }}">Cadastrar</a>
         </div>
         <!-- FIM CARD HEADER -->
 
         <!-- CARD BODY -->
         <div class="card-body">
-            <form class="row g-3" action="/categoria_produto" method="get" autocomplete="off">
+            <form class="row g-3" action="/cliente" method="get" autocomplete="off">
                 @csrf
                 <div class="col-md-6">
-                    <label for="inputNome" class="form-label">Nome da categoria</label>
+                    <label for="inputNome" class="form-label">Nome</label>
                     <input type="text" name="nome" value="{{request('nome')}}" class="form-control" id="inputNome">
                 </div>
 
@@ -28,11 +28,12 @@
     </div>
 
     <!-- CARD CONSULTA -->
-    @if(isset($categorias))
+    @if(isset($clientes))
     <div class="card mb-4 mt-4">
 
         <!-- CARD HEADER -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between dropdown">
+            <h2 class="m-0 fw-semibold fs-5">Consulta Clientes</h2>
             <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Exportar
@@ -50,33 +51,29 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col">Ordem de exibição</th>
-                        <th scope="col">Restaurante</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Telefone</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <!-- CATEGORIAS -->
-                    @foreach ($categorias as $categoria)
+                    <!-- CLIENTES -->
+                    @foreach ($clientes as $cliente)
                     <tr>
-                        <th scope="row">{{$categoria->id}}</th>
-                        <td><a class="btn btn-outline-primary"
-                                href="{{ route('produtos', ['categoria_id' => $categoria->id]) }}">{{$categoria->nome}}</a>
-                        </td>
-                        <td>{{$categoria->descricao}}</td>
-                        <td>{{$categoria->ordem}}</td>
-                        <td>{{$categoria->restaurante}}</td>
+                        <th scope="row">{{$cliente->id}}</th>
+                        <td>{{$cliente->nome}}</td>
+                        <td>{{$cliente->cpf}}</td>
+                        <td>{{$cliente->telefone}}</td>
                         <td>
-                            <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}"
+                            <a href="{{ route('cliente.editar', ['id' => $cliente->id]) }}"
                                 class="acoes-listar text-decoration-none">
                                 <span class="material-symbols-outlined">
                                     edit
                                 </span>
                             </a>
                             <a href="" data-bs-toggle="modal" class="acoes-listar text-danger"
-                                data-bs-target="#exampleModal{{$categoria->id}}">
+                                data-bs-target="#exampleModal{{$cliente->id}}">
                                 <span class="material-symbols-outlined">
                                     delete
                                 </span>
@@ -84,13 +81,13 @@
                         </td>
 
                         <!-- MODAL EXCLUIR -->
-                        <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"
+                        <div class="modal fade" id="exampleModal{{$cliente->id}}" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                                            {{$categoria->nome}}?</h1>
+                                            {{$cliente->nome}}?</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -101,7 +98,7 @@
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Não</button>
                                         <form
-                                            action="{{ route('categoria_produto.excluir', ['id' => $categoria->id]) }}"
+                                            action="{{ route('cliente.excluir', ['id' => $cliente->id]) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
@@ -117,7 +114,7 @@
 
                     </tr>
                     @endforeach
-                    <!-- FIM CATEGORIAS -->
+                    <!-- FIM CLIENTES -->
 
                 </tbody>
             </table>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\RestauranteController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
+use App\Http\Controllers\ClienteController;
 
 
 
@@ -77,4 +78,13 @@ Route::middleware([
         Route::get('/opcional_produto/editar', [OpcionalProdutoController::class, 'edit'])->name('opcional_produto.editar');
         Route::put('/opcional_produto/alterar/{usuario_id}/{produto_id}', [OpcionalProdutoController::class, 'update']);
  
+        //CLIENTE
+        Route::get('/cliente', [ClienteController::class, 'index'])->name('cliente');
+        Route::get('/cliente/novo', [ClienteController::class, 'create'])->name('cliente.novo');
+        Route::post('/cliente/cadastrar', [ClienteController::class, 'store']);
+        Route::get('/cliente/editar', [ClienteController::class, 'edit'])->name('cliente.editar');
+        Route::put('/cliente/alterar/{cliente_id}', [ClienteController::class, 'update']);
+        Route::delete('/cliente/apagar/{id}', [ClienteController::class, 'destroy'])->name('cliente.excluir');
+
+         
 });
