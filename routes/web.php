@@ -51,10 +51,12 @@ Route::middleware([
         Route::put('/restaurante/alterar-logo/{restaurante_id}', [RestauranteController::class, 'update_logo']);
        
         //ENTREGAS RESTAURANTE
-        Route::get('/entregas', [RestauranteController::class, 'show_entrega'])->name('restaurante.entrega');
+        Route::get('/entregas-taxas', [RestauranteController::class, 'show_entrega_taxas'])->name('restaurante.entrega_taxas');
+        Route::get('/entregas-areas', [RestauranteController::class, 'show_entrega_areas'])->name('restaurante.entrega_areas');
         Route::post('/entregas/gratuita', [RestauranteController::class, 'taxa_entrega_free'])->name('restaurante.taxa_entrega_free');
         Route::post('/entregas/por-km', [RestauranteController::class, 'taxa_por_km_entrega'])->name('restaurante.taxa_por_km_entrega');
         Route::post('/entregas/fixa', [RestauranteController::class, 'taxa_entrega_fixa'])->name('restaurante.taxa_entrega_fixa');
+        Route::post('/entregas/areas-metros', [RestauranteController::class, 'area_entrega_metros'])->name('restaurante.area_entrega_metros');
 
 
         //CATEGORIA PRODUTO

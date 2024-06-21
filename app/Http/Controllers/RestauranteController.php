@@ -68,6 +68,7 @@ class RestauranteController extends Controller
         //Informações Gerais
         $restaurante->nome = $request->input('nome');
         $restaurante->descricao = $request->input('descricao');
+        $restaurante->area_entrega_metros = 5000; // valor padrão
         $restaurante->is_taxa_entrega_free = true;
         $restaurante->cadastrado_usuario_id = $usuario_id;
         if ($request->hasFile('imagem')) {
@@ -184,8 +185,8 @@ class RestauranteController extends Controller
 
     }
 
-    //LISTAGEM
-    public function show_entrega(){
+    //LISTAGEM ENTREGAS TAXAS
+    public function show_entrega_taxas(){
         //Verificar se há restaurante selecionado
         if(!session('restauranteConectado')){
             return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
@@ -195,26 +196,7 @@ class RestauranteController extends Controller
         $id = session('restauranteConectado')['id'];
         $restaurante = Restaurante::where('id', $id)->first();
 
-        //API KEY
-        $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
-        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$restaurante->cep}&key={$apiKey}");
-        $data = $response->json();
-
-        if ($data['status'] == 'OK') {
-            $location = $data['results'][0]['geometry']['location'];
-            $latitude = $location['lat'];
-            $longitude = $location['lng'];
-
-            $data_maps = [
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-                'cep' => $restaurante->cep,
-            ];
-
-            return view('restaurante/entrega', compact('restaurante', 'data_maps'));
-        } else {
-            return "CEP não encontrado.";
-        }
+        return view('restaurante/entrega_taxas', compact('restaurante'));    
     }
 
     //DEFINIR TAXA DE ENTREGA FREE  
@@ -260,7 +242,7 @@ class RestauranteController extends Controller
         return redirect()->back()->with('success', 'Definido taxa de entrega por km');
     }
 
-    //DEFINIR TAXA DE ENTREGA POR KM  
+    //DEFINIR TAXA DE ENTREGA FIXA  
     public function taxa_entrega_fixa(Request $request){
         $id = $request->input('id');
 
@@ -286,6 +268,61 @@ class RestauranteController extends Controller
         $restaurante->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega fixa');
+    }
+
+     //LISTAGEM ENTREGAS AREAS
+     public function show_entrega_areas(){
+        //Verificar se há restaurante selecionado
+        if(!session('restauranteConectado')){
+            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        }
+
+        //Dados do restaurante
+        $id = session('restauranteConectado')['id'];
+        $restaurante = Restaurante::where('id', $id)->first();
+
+        //API KEY
+        $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
+        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$restaurante->cep}&key={$apiKey}");
+        $data = $response->json();
+
+        if ($data['status'] == 'OK') {
+            $location = $data['results'][0]['geometry']['location'];
+            $latitude = $location['lat'];
+            $longitude = $location['lng'];
+
+            $data_maps = [
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'cep' => $restaurante->cep,
+            ];
+
+            return view('restaurante/entrega_areas', compact('restaurante', 'data_maps'));
+        } else {
+            return "CEP não encontrado.";
+        }
+    }
+
+     //DEFINIR AREA DE ENTREGA POR METROS
+     public function area_entrega_metros(Request $request){
+        $id = $request->input('id');
+            
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'area_entrega_metros' => 'required|numeric',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        //Alterando
+        $restaurante = Restaurante::find($id);
+        $restaurante->area_entrega_metros = $request->input('area_entrega_metros'); 
+        $restaurante->save();
+
+        return redirect()->back()->with('success', 'Definido área em metros');
     }
 
 }

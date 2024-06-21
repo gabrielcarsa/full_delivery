@@ -107,16 +107,31 @@
                                     <span class="ml-1 d-none d-sm-inline">Restaurante</span>
                                 </a>
                             </li>
-
-                            <li class="nav-item">
-                                <a href="{{ route('restaurante.entrega') }}"
-                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('painel-pedidos') ? 'nav-link-active' : 'nav-link-desactive'}}">
+                            
+                            <!-- Nav Item - ENTREGAS DROPEND -->
+                            <li class="nav-item dropend">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
+                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <span class="material-symbols-outlined">
                                         sports_motorsports
                                     </span>
                                     <span class="ml-1 d-none d-sm-inline">Entregas</span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('restaurante.entrega_taxas') }}">
+                                            Taxas
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('restaurante.entrega_areas') }}">
+                                            Áreas
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
+
 
                             <!-- Nav Item - CARDAPIO DROPEND -->
                             <li class="nav-item dropend">
