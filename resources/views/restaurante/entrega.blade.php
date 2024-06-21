@@ -53,7 +53,7 @@
             <div class="card-header">Taxa de Entrega</div>
             <div class="card-body">
                 <h5 class="card-title fw-bold fs-2">
-                    R$ {{number_format($restaurante->taxa_por_km_entrega, 2, ',', '.')}}
+                    R$ {{number_format($restaurante->taxa_entrega_fixa, 2, ',', '.')}}
                 </h5>
                 <p class="card-text text-secondary">
                     A taxa de entrega atual é fixa para qualquer localidade.
@@ -177,10 +177,9 @@
                             method="POST" class="my-2">
                             @csrf
                             <div class="form-floating mt-1">
-                                <input type="text"
-                                    class="form-control @error('taxa_entrega_fixa') is-invalid @enderror"
-                                    id="inputTaxaPorKM" placeholder="1,00" name="taxa_entrega_fixa">
-                                <label for="inputTaxaPorKM">Preço fixo</label>
+                                <input type="text" class="form-control @error('taxa_entrega_fixa') is-invalid @enderror"
+                                    id="inputTaxaFixa" placeholder="1,00" name="taxa_entrega_fixa">
+                                <label for="inputTaxaFixa">Preço fixo</label>
                             </div>
                             <button type="submit" class="btn btn-primary px-5 mt-2">
                                 Escolher
@@ -212,6 +211,26 @@
     <script>
     $(document).ready(function() {
         $(document).on('input', 'input[id^="inputTaxaPorKM"]', function() {
+            // Remova os caracteres não numéricos
+            var unmaskedValue = $(this).val().replace(/\D/g, '');
+
+            // Adicione a máscara apenas ao input de valor relacionado à mudança
+            $(this).val(mask(unmaskedValue));
+        });
+
+        function mask(value) {
+            // Converte o valor para número
+            var numberValue = parseFloat(value) / 100;
+
+            // Formata o número com vírgula como separador decimal e duas casas decimais
+            return numberValue.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2
+            });
+        }
+    });
+
+    $(document).ready(function() {
+        $(document).on('input', 'input[id^="inputTaxaFixa"]', function() {
             // Remova os caracteres não numéricos
             var unmaskedValue = $(this).val().replace(/\D/g, '');
 

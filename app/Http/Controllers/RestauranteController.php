@@ -245,7 +245,6 @@ class RestauranteController extends Controller
         $request->merge([
             'taxa_entrega_fixa' => str_replace(['.', ','], ['', '.'], $request->input('taxa_entrega_fixa')),
         ]);
-
             
         // Validação do formulário
         $validator = Validator::make($request->all(), [
