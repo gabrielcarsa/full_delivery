@@ -182,4 +182,11 @@ class RestauranteController extends Controller
 
     }
 
+    //LISTAGEM
+    public function show_entrega(){
+        $id = session('restauranteConectado')['id'];
+        $restaurante = Restaurante::where('id', $id)->first();
+        return view('restaurante/entrega', compact('restaurante'));
+    }
+
 }

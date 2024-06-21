@@ -107,7 +107,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href=""
+                                <a href="{{ route('restaurante.entrega') }}"
                                     class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('painel-pedidos') ? 'nav-link-active' : 'nav-link-desactive'}}">
                                     <span class="material-symbols-outlined">
                                         sports_motorsports

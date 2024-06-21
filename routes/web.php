@@ -49,6 +49,9 @@ Route::middleware([
         Route::post('/restaurante/cadastrar/{usuario_id}', [RestauranteController::class, 'store']);
         Route::put('/restaurante/alterar/{usuario_id}/{restaurante_id}', [RestauranteController::class, 'update']);
         Route::put('/restaurante/alterar-logo/{restaurante_id}', [RestauranteController::class, 'update_logo']);
+       
+        //ENTREGAS RESTAURANTE
+        Route::get('/entregas', [RestauranteController::class, 'show_entrega'])->name('restaurante.entrega');
 
         //CATEGORIA PRODUTO
         Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
@@ -85,6 +88,5 @@ Route::middleware([
         Route::get('/cliente/editar', [ClienteController::class, 'edit'])->name('cliente.editar');
         Route::put('/cliente/alterar/{cliente_id}', [ClienteController::class, 'update']);
         Route::delete('/cliente/apagar/{id}', [ClienteController::class, 'destroy'])->name('cliente.excluir');
-
-         
+        
 });

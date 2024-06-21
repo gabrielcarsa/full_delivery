@@ -12,7 +12,7 @@
 
         <!-- CARD BODY -->
         <div class="card-body">
-            
+
             @if($restaurantes->isNotEmpty())
 
             <!-- RESTAURANTES -->
@@ -20,7 +20,7 @@
             <div
                 class="row align-items-center m-2 p-1 {{ session('restauranteConectado') && session('restauranteConectado')['id'] == $restaurante->id ? 'border-3 border-success' : 'border-3' }}">
                 <div class="col-2">
-                    
+
                     <!-- BTN EDITAR IMG -->
                     <a class="position-absolute bg-dark p-1 text-white rounded" data-bs-toggle="modal"
                         data-bs-target="#modalEditarImagem">
@@ -75,13 +75,15 @@
                 <div class="col-8">
                     <h2 class="fs-2 fw-bold">{{$restaurante->nome}}</h2>
                     <p class="text-secondary">{{$restaurante->descricao}}</p>
-                    <p><i class="fa-solid fa-location-dot mr-2"></i>{{$restaurante->rua}}, {{$restaurante->numero}} -
-                        {{$restaurante->bairro}}, {{$restaurante->cidade}} {{$restaurante->estado}}
-                        {{$restaurante->cep}}</p>
+                    <p>{{$restaurante->rua}}, {{$restaurante->numero}} -
+                        {{$restaurante->bairro}}, {{$restaurante->cidade}} {{$restaurante->estado}}.
+                        {{$restaurante->cep}}
+                    </p>
                     <a href="{{route('restaurante.configurar', ['id' => $restaurante->id])}}"
                         class="btn btn-primary mb-1">Configurações</a>
 
-                    @if(session('restauranteConectado') != null && session('restauranteConectado')['id'] == $restaurante->id)
+                    @if(session('restauranteConectado') != null && session('restauranteConectado')['id'] ==
+                    $restaurante->id)
                     <button type="button" class="btn btn-info">Conectado</button>
                     @else
                     <form action="{{'/escolher-restaurante/'.$restaurante->id}}" method="post">
