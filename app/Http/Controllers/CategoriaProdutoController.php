@@ -13,6 +13,11 @@ class CategoriaProdutoController extends Controller
 {
     //LISTAGEM
     public function index(){
+
+        if(!session('restauranteConectado')){
+            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        }
+
         //Sessão do restaurante que está conectado
         $restauranteIdConectado = session('restauranteConectado')['id'];
 
