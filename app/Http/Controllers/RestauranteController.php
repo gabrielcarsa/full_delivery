@@ -18,7 +18,7 @@ class RestauranteController extends Controller
         //Definindo variavel de sessão de restaurante
         session(['restauranteConectado' => ['id'=> $id, 'nome'=> $restaurante[0]->nome]]);
 
-        return redirect()->route('restaurante')->with('success', 'Conectado como ');
+        return redirect()->route('restaurante')->with('success', 'Conectado como '.session('restauranteConectado')['nome']);
     }
 
     //LISTAGEM
@@ -67,6 +67,7 @@ class RestauranteController extends Controller
         //Informações Gerais
         $restaurante->nome = $request->input('nome');
         $restaurante->descricao = $request->input('descricao');
+        $restaurante->is_taxa_entrega_free = true;
         $restaurante->cadastrado_usuario_id = $usuario_id;
         if ($request->hasFile('imagem')) {
             //Colocando nome único no arquivo
@@ -184,9 +185,86 @@ class RestauranteController extends Controller
 
     //LISTAGEM
     public function show_entrega(){
+        //Verificar se há restaurante selecionado
+        if(!session('restauranteConectado')){
+            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        }
+
         $id = session('restauranteConectado')['id'];
         $restaurante = Restaurante::where('id', $id)->first();
         return view('restaurante/entrega', compact('restaurante'));
+    }
+
+    //DEFINIR TAXA DE ENTREGA FREE  
+    public function taxa_entrega_free(Request $request){
+        $id = $request->input('id');
+
+        //Alterando
+        $restaurante = Restaurante::find($id);
+        $restaurante->taxa_por_km_entrega = null; 
+        $restaurante->is_taxa_entrega_free = true; 
+        $restaurante->taxa_entrega_fixa = null; 
+        $restaurante->save();
+
+        return redirect()->back()->with('success', 'Definido taxa de entrega gratuita');
+    }
+
+    //DEFINIR TAXA DE ENTREGA POR KM  
+    public function taxa_por_km_entrega(Request $request){
+        $id = $request->input('id');
+
+        $request->merge([
+            'taxa_por_km_entrega' => str_replace(['.', ','], ['', '.'], $request->input('taxa_por_km_entrega')),
+        ]);
+
+            
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'taxa_por_km_entrega' => 'required|numeric',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        //Alterando
+        $restaurante = Restaurante::find($id);
+        $restaurante->taxa_por_km_entrega = (double) $request->input('taxa_por_km_entrega'); 
+        $restaurante->is_taxa_entrega_free = false; 
+        $restaurante->taxa_entrega_fixa = null; 
+        $restaurante->save();
+
+        return redirect()->back()->with('success', 'Definido taxa de entrega por km');
+    }
+
+    //DEFINIR TAXA DE ENTREGA POR KM  
+    public function taxa_entrega_fixa(Request $request){
+        $id = $request->input('id');
+
+        $request->merge([
+            'taxa_entrega_fixa' => str_replace(['.', ','], ['', '.'], $request->input('taxa_entrega_fixa')),
+        ]);
+
+            
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'taxa_entrega_fixa' => 'required|numeric',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        //Alterando
+        $restaurante = Restaurante::find($id);
+        $restaurante->taxa_por_km_entrega = null; 
+        $restaurante->is_taxa_entrega_free = false; 
+        $restaurante->taxa_entrega_fixa = (double) $request->input('taxa_entrega_fixa'); 
+        $restaurante->save();
+
+        return redirect()->back()->with('success', 'Definido taxa de entrega fixa');
     }
 
 }

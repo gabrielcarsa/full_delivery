@@ -52,6 +52,10 @@ Route::middleware([
        
         //ENTREGAS RESTAURANTE
         Route::get('/entregas', [RestauranteController::class, 'show_entrega'])->name('restaurante.entrega');
+        Route::post('/entregas/gratuita', [RestauranteController::class, 'taxa_entrega_free'])->name('restaurante.taxa_entrega_free');
+        Route::post('/entregas/por-km', [RestauranteController::class, 'taxa_por_km_entrega'])->name('restaurante.taxa_por_km_entrega');
+        Route::post('/entregas/fixa', [RestauranteController::class, 'taxa_entrega_fixa'])->name('restaurante.taxa_entrega_fixa');
+
 
         //CATEGORIA PRODUTO
         Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
