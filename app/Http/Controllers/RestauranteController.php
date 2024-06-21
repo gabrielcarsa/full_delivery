@@ -7,6 +7,7 @@ use App\Models\Restaurante;
 use App\Models\HorarioFuncionamento;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class RestauranteController extends Controller
 {
@@ -190,9 +191,30 @@ class RestauranteController extends Controller
             return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
         }
 
+        //Dados do restaurante
         $id = session('restauranteConectado')['id'];
         $restaurante = Restaurante::where('id', $id)->first();
-        return view('restaurante/entrega', compact('restaurante'));
+
+        //API KEY
+        $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
+        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$restaurante->cep}&key={$apiKey}");
+        $data = $response->json();
+
+        if ($data['status'] == 'OK') {
+            $location = $data['results'][0]['geometry']['location'];
+            $latitude = $location['lat'];
+            $longitude = $location['lng'];
+
+            $data_maps = [
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'cep' => $restaurante->cep,
+            ];
+
+            return view('restaurante/entrega', compact('restaurante', 'data_maps'));
+        } else {
+            return "CEP não encontrado.";
+        }
     }
 
     //DEFINIR TAXA DE ENTREGA FREE  
