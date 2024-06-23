@@ -41,6 +41,7 @@
         </div>
         <!-- FIM HEADER -->
 
+        <!-- HEADER TABLE -->
         <div class="row">
             <div class="col mb-3">
                 <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -70,11 +71,12 @@
                 </form>
             </div>
         </div>
+        <!-- FIM HEADER TABLE -->
 
         <!-- TABLE -->
         @if(isset($clientes))
 
-        <table class="table table-padrao border-top">
+        <table class="table table-padrao border-top table align-middle">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -94,7 +96,7 @@
                     <td>{{$cliente->cpf}}</td>
                     <td>{{$cliente->telefone}}</td>
                     <td>{{$cliente->email}}</td>
-                    <td style="background-color: #F3F4F6 !important;">
+                    <td>
                         <a href="{{ route('cliente.editar', ['id' => $cliente->id]) }}"
                             class="acoes-listar text-decoration-none">
                             <span class="material-symbols-outlined">
