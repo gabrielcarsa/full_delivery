@@ -43,7 +43,7 @@
     <div class="container">
 
         <!-- HEADER -->
-        <h2 class="my-3 fw-bold fs-1">Áreas de entrega</h2>
+        <h2 class="my-3 fw-bolder fs-1">Áreas de entrega</h2>
         <!-- FIM HEADER -->
 
         <!-- BODY -->

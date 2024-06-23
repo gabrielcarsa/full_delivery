@@ -11,9 +11,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Madimi+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -40,15 +39,14 @@
         <!-- Page Content -->
         <main>
             <div class="flex">
-                <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #FF014B ">
-                    <div
-                        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 border-end" style="background-color: #FFFFFF">
+                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
                         <p class="p-0 m-0 fw-regular" style="font-size: 14px">conectado como</p>
                         <h4 class="p-0 m-0 fs-3 fw-bold">
                             {{session('restauranteConectado') != null ? session('restauranteConectado')['nome'] : '---'}}
                         </h4>
                         <a href="{{ route('restaurante') }}"
-                            class="d-flex align-items-center align-middle fs-6 text-decoration-none text-dark">
+                            class="d-flex align-items-center align-middle fs-6 text-decoration-none">
                             <span class="material-symbols-outlined fs-6">
                                 change_circle
                             </span>
@@ -60,7 +58,7 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('dashboard') }}"
-                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('dashboard') ? 'nav-link-active' : 'nav-link-desactive'}}">
+                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('dashboard') ? 'nav-link-active' : 'nav-link-desactive'}} text-black">
                                     <span class="material-symbols-outlined">
                                         dashboard
                                     </span>
@@ -70,7 +68,7 @@
 
                             <li class="nav-item">
                                 <a href=""
-                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('painel-pedidos') ? 'nav-link-active' : 'nav-link-desactive'}}">
+                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('painel-pedidos') ? 'nav-link-active' : 'nav-link-desactive'}} text-black">
                                     <span class="material-symbols-outlined">
                                         receipt_long
                                     </span>
@@ -79,7 +77,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('register') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('register') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
                                     href="{{ route('register') }}">
                                     <span class="material-symbols-outlined">
                                         person_add
@@ -89,7 +87,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('clientes') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('cliente') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
                                     href="{{ route('cliente') }}">
                                     <span class="material-symbols-outlined">
                                         groups
@@ -99,7 +97,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('restaurante') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('restaurante') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
                                     href="{{ route('restaurante') }}">
                                     <span class="material-symbols-outlined">
                                         storefront
@@ -107,10 +105,10 @@
                                     <span class="ml-1 d-none d-sm-inline">Restaurante</span>
                                 </a>
                             </li>
-                            
+
                             <!-- Nav Item - ENTREGAS DROPEND -->
                             <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
                                     href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     <span class="material-symbols-outlined">
@@ -135,7 +133,7 @@
 
                             <!-- Nav Item - CARDAPIO DROPEND -->
                             <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
                                     href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     <span class="material-symbols-outlined">
@@ -157,7 +155,7 @@
 
                             <!-- Nav Item - FINANCEIRO DROPEND -->
                             <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
                                     href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     <span class="material-symbols-outlined">
@@ -176,7 +174,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('notificacoes') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('notificacoes') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
                                     href="">
                                     <span class="material-symbols-outlined">
                                         campaign
@@ -186,7 +184,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('assinaturas') ? 'nav-link-active' : 'nav-link-desactive'}}"
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('assinaturas') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
                                     href="">
                                     <span class="material-symbols-outlined">
                                         favorite

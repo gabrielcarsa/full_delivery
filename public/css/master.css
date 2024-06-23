@@ -1,3 +1,15 @@
+/*GRAL*/
+
+*{
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.table-padrao th, td{
+    background-color: #F3F4F6 !important;
+}
+.table-padrao th{
+    font-weight: 800 !important;
+}
 
 .nav-link-active{
     color: #FFFF !important;
