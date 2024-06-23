@@ -26,10 +26,10 @@
 
         <!-- HEADER -->
         <div class="row">
-            <div class="col-md-4">
-                <h2 class="my-3 fw-bolder fs-1">Clientes</h2>
+            <div class="col">
+                <h2 class="my-3 fw-bolder fs-1">Clientes <span class="text-secondary fs-3">({{$clientes->count()}})</span></h2>
             </div>
-            <div class="col-md-2 d-flex align-items-center">
+            <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
                     href="{{ route('cliente.novo') }}">
                     <span class="material-symbols-outlined mr-1">
@@ -42,7 +42,7 @@
         <!-- FIM HEADER -->
 
         <div class="row">
-            <div class="col-md-6 mb-3">
+            <div class="col mb-3">
                 <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     Exportar
@@ -51,7 +51,7 @@
                     <li><a class="dropdown-item" href="#">PDF</a></li>
                 </ul>
             </div>
-            <div class="col-md-6 d-flex justify-content-end p-0 m-0">
+            <div class="col d-flex align-items-center justify-content-end">
                 <form class="row" action="/cliente" method="get" autocomplete="off">
                     @csrf
                     <div class="col-8">
@@ -59,9 +59,9 @@
                             placeholder="Buscar por nome">
                     </div>
 
-                    <div class="col-3">
-                        <button type="submit" class="btn btn-primary fw-semibold d-flex align-items-center px-3">
-                            <span class="material-symbols-outlined">
+                    <div class="col d-flex align-items-center justify-content-end p-0">
+                        <button type="submit" class="btn btn-primary fw-semibold d-flex align-items-center justify-content-center py-1 m-0 w-100">
+                            <span class="material-symbols-outlined mr-1">
                                 search
                             </span>
                             Consultar
