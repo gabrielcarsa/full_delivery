@@ -27,7 +27,7 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Categoria de produtos
+                <h2 class="my-3 fw-bolder fs-1">Categoria e produtos
                     <span class="text-secondary fs-3">
                         ({{$categorias->count()}})
                     </span>

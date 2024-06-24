@@ -52,34 +52,71 @@
         @if($restaurante != null)
 
         <!-- CARD AREA EM METROS -->
-        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">Área de entrega</div>
-            <div class="card-body">
-                <h5 class="card-title fw-bold fs-2 m-0 p-0">{{$restaurante->area_entrega_metros}}</h5>
-                <p class="mb-1 p-0">
-                    metros
-                </p>
-                <p class="card-text text-secondary">
-                    Raio da área de entrega definida em metros.
-                </p>
+        
+        <div class="bg-white text-bg-light mb-3 p-3 rounded border relative" style="max-width: 18rem;">
+
+            <!-- BTN MODAL EDIT -->
+            <button type="button" class="btn btn-primary absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <span class="material-symbols-outlined d-flex align-items-center justify-content-center fs-3">
+                    edit_location
+                </span>
+            </button>
+
+            <!-- MODAL -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <!-- FORM ACAO -->
+                    <form action="{{ route('restaurante.area_entrega_metros', ['id' => $restaurante->id]) }}" method="POST" class="my-2">
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar raio de entrega</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="px-4">
+                                    Defina o raio de entrega em metros. Lembrando que pedidos fora desse raio de 
+                                    entrega não serão aceitos e mesmo os pedidos feitos dentro desse raio você pode optar 
+                                    por rejeitar.
+                                </p>
+                                <div class="form-floating mt-1">
+                                    <input type="text" class="form-control @error('area_entrega_metros') is-invalid @enderror"
+                                        id="inputArea" name="area_entrega_metros" autocomplete="off">
+                                    <label for="inputArea">Área de entrega (metros)</label>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary px-5">
+                                    Editar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- FIM FORM -->
+                </div>
+            </div>
+            <!-- FIM MODAL -->
+
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined fs-1 fw-bolder">
+                        share_location
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <h5 class="card-title fw-bold fs-2 m-0 p-0">
+                        {{$restaurante->area_entrega_metros}}
+                    </h5>
+                    <p class="mb-1 p-0 text-secondary">
+                        Raio em metros
+                    </p>
+
+                </div>
             </div>
         </div>
-        <!-- BTN ACAO -->
-        <form action="{{ route('restaurante.area_entrega_metros', ['id' => $restaurante->id]) }}" method="POST"
-            class="my-2">
-            @csrf
-            <div class="form-floating mt-1">
-                <input type="text" class="form-control @error('area_entrega_metros') is-invalid @enderror"
-                    id="inputArea" name="area_entrega_metros" autocomplete="off">
-                <label for="inputArea">Área de entrega (metros)</label>
-            </div>
-            
-            <button type="submit" class="btn btn-primary px-5 mt-2">
-                Escolher
-            </button>
-        </form>
 
-        <!-- FIM BTN -->
         @endif
         <!-- FIM SE HOUVER RESTAURANTE -->
 

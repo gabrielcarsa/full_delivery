@@ -1,5 +1,5 @@
 <x-app-layout>
-  
+
     <!-- CONTEUDO -->
     <div class="container">
 
@@ -16,48 +16,65 @@
         @if($restaurante->is_taxa_entrega_free == true )
 
         <!-- GRATUITA -->
-        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">Taxa de Entrega</div>
-            <div class="card-body">
-                <h5 class="card-title fw-bold fs-2">R$ 0,00</h5>
-                <p class="card-text text-secondary">
-                    A taxa de entrega atual é gratuita para qualquer localidade.
-                </p>
+        <div class="bg-white text-bg-light mb-3 p-3 rounded border" style="max-width: 18rem;">
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined fs-1 fw-bolder">
+                        sports_motorsports
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <h5 class="card-title fw-bold fs-2 m-0 p-0">
+                        R$ 0,00
+                    </h5>
+                    <p class="mb-1 p-0 text-secondary">
+                        qualquer localidade
+                    </p>
+                </div>
             </div>
         </div>
 
         @elseif($restaurante->taxa_por_km_entrega != null)
 
         <!-- POR KM -->
-        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">Taxa de Entrega</div>
-            <div class="card-body">
-                <h5 class="card-title fw-bold fs-2 m-0 p-0">
-                    R$ {{number_format($restaurante->taxa_por_km_entrega, 2, ',', '.')}}
-                </h5>
-                <p class="mb-1 p-0">
-                    por km
-                </p>
-                <p class="card-text text-secondary">
-                    Se a entrega for um distância de 2 km o valor será calculado em
-                    preço por km x 2 =
-                    R$ {{number_format($restaurante->taxa_por_km_entrega * 2, 2, ',', '.')}}
-                </p>
+        <div class="bg-white text-bg-light mb-3 p-3 rounded border" style="max-width: 18rem;">
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined fs-1 fw-bolder">
+                        sports_motorsports
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <h5 class="card-title fw-bold fs-2 m-0 p-0">
+                        R$ {{number_format($restaurante->taxa_por_km_entrega, 2, ',', '.')}}
+                    </h5>
+                    <p class="mb-1 p-0 text-secondary">
+                        por km
+                    </p>
+
+                </div>
             </div>
         </div>
 
         @elseif($restaurante->taxa_entrega_fixa != null)
 
-        <!-- TAXA FIXA     -->
-        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">Taxa de Entrega</div>
-            <div class="card-body">
-                <h5 class="card-title fw-bold fs-2">
-                    R$ {{number_format($restaurante->taxa_entrega_fixa, 2, ',', '.')}}
-                </h5>
-                <p class="card-text text-secondary">
-                    A taxa de entrega atual é fixa para qualquer localidade.
-                </p>
+        <!-- TAXA FIXA -->
+        <div class="bg-white text-bg-light mb-3 p-3 rounded border" style="max-width: 18rem;">
+            <div class="row">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined fs-1 fw-bolder">
+                        sports_motorsports
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <h5 class="card-title fw-bold fs-2 m-0 p-0">
+                        R$ {{number_format($restaurante->taxa_entrega_fixa, 2, ',', '.')}}
+                    </h5>
+                    <p class="mb-1 p-0 text-secondary">
+                        qualquer localidade
+                    </p>
+
+                </div>
             </div>
         </div>
 
@@ -80,7 +97,6 @@
 
         @endif
 
-        <hr>
         <h6 class="fw-regular fs-4">Escolha outras opções de taxas de entrega:</h6>
 
         <div class="row">
@@ -88,7 +104,7 @@
             <!-- CARDS ENTREGA -->
 
             <div class="col-sm-3">
-                <div class="bg-white p-3 text-center rounded shadow">
+                <div class="bg-white p-3 text-center rounded shadow relative" style="height: 300px;">
                     <p class="text-secondary fs-6 m-0 p-0">taxa de entrega</p>
                     <h3 class="fw-bold">GRÁTIS</h3>
                     <div class="my-2">
@@ -100,9 +116,11 @@
                         <form action="{{ route('restaurante.taxa_entrega_free', ['id' => $restaurante->id]) }}"
                             method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-primary px-5">
-                                Escolher
-                            </button>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary px-5 absolute bottom-0 mb-3">
+                                    Escolher
+                                </button>
+                            </div>
                         </form>
                         <!-- FIM BTN -->
 
@@ -119,7 +137,7 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="bg-white p-3 text-center rounded shadow">
+                <div class="bg-white p-3 text-center rounded shadow relative" style="height: 300px;">
                     <p class="text-secondary fs-6 m-0 p-0">taxa de entrega</p>
                     <h3 class="fw-bold">Por KM</h3>
                     <div class="my-2">
@@ -146,9 +164,11 @@
                                     id="inputTaxaPorKM" placeholder="1,00" name="taxa_por_km_entrega">
                                 <label for="inputTaxaPorKM">Preço por km</label>
                             </div>
-                            <button type="submit" class="btn btn-primary px-5 mt-2">
-                                Escolher
-                            </button>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary px-5 mt-2 absolute bottom-0 mb-3">
+                                    Escolher
+                                </button>
+                            </div>
                         </form>
                         <!-- FIM BTN -->
 
@@ -164,7 +184,7 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="bg-white p-3 text-center rounded shadow">
+                <div class="bg-white p-3 text-center rounded shadow relative" style="height: 300px;">
                     <p class="text-secondary fs-6 m-0 p-0">taxa de entrega</p>
                     <h3 class="fw-bold">FIXA</h3>
                     <div class="my-2">
@@ -181,9 +201,11 @@
                                     id="inputTaxaFixa" placeholder="1,00" name="taxa_entrega_fixa">
                                 <label for="inputTaxaFixa">Preço fixo</label>
                             </div>
-                            <button type="submit" class="btn btn-primary px-5 mt-2">
-                                Escolher
-                            </button>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary px-5 mt-2 absolute bottom-0 mb-3">
+                                    Escolher
+                                </button>
+                            </div>
                         </form>
                         <!-- FIM BTN -->
 
@@ -248,6 +270,5 @@
             });
         }
     });
-
     </script>
 </x-app-layout>
