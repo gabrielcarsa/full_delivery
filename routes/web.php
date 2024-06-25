@@ -97,5 +97,7 @@ Route::middleware([
 
         //PEDIDO
         Route::get('/pedido', [PedidoController::class, 'painel'])->name('pedido.painel');
+        Route::get('/pedido/novo-simulador', [PedidoController::class, 'create'])->name('pedido.novo');
+        Route::post('/pedido/cadastrar', [PedidoController::class, 'store'])->name('pedido.cadastrar');
         
 });
