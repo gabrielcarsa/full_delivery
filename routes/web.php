@@ -8,7 +8,7 @@ use App\Http\Controllers\RestauranteController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
-
+use App\Http\Controllers\PedidoController;
 
 
 /*
@@ -94,5 +94,8 @@ Route::middleware([
         Route::get('/cliente/editar', [ClienteController::class, 'edit'])->name('cliente.editar');
         Route::put('/cliente/alterar/{cliente_id}', [ClienteController::class, 'update']);
         Route::delete('/cliente/apagar/{id}', [ClienteController::class, 'destroy'])->name('cliente.excluir');
+
+        //PEDIDO
+        Route::get('/pedido', [PedidoController::class, 'painel'])->name('pedido.painel');
         
 });
