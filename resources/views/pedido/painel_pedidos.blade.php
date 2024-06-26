@@ -11,7 +11,7 @@
                 <div class="p-0 m-0">
                     <div class="row">
                         <div class="col d-flex justify-content-center w100">
-                            <a href="{{ route('pedido.novo') }}" class="btn btn-warning">
+                            <a href="{{ route('pedido.novo') }}" class="btn btn-primary">
                                 Simular pedido
                             </a>
                         </div>
@@ -21,6 +21,7 @@
                             </a>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col d-flex align-items-center">
                             <div class="dropdown">
@@ -55,70 +56,87 @@
                 </div>
                 <!-- FIM HEADER -->
 
-                <!-- OPÇÃO PEDIDOS -->
-                @if(isset($data['pedidos']))
+                <!-- MENU PEDIDOS -->
+                <div style="overflow-y: auto; overflow-x: hidden;">
+                    @if(isset($data['pedidos']))
 
-                @foreach($data['pedidos'] as $pedido)
+                    @foreach($data['pedidos'] as $pedido)
 
-                <!-- COLLAPSE PEDIDOS -->
-                <div class="bg-light rounded border p-2 m-2">
-                    <p class="text-secondary fs-6 p-0 m-0"># {{$pedido->id}}</p>
-
-                    <!-- HEADER COLLAPSE PEDIDOS -->
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h4 class="fw-bold fs-4">{{$pedido->cliente->nome}}</h4>
+                    <!-- COLLAPSE PEDIDOS -->
+                    <div class="bg-light rounded border m-2">
+                        @if($pedido->status == 0)
+                        <div class="bg-warning m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold">PENDENTE</p>
                         </div>
-                        <div class="col-md-4 d-flex justify-content-end">
-                            <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
-                        </div>
-                    </div>
-                    <!-- FIM HEADER COLLAPSE PEDIDOS -->
+                        @elseif($pedido->status == 1)
 
-                    <!-- CORPO COLLAPSE PEDIDOS -->
-                    <div class="text-secondary fw-medium">
-                        @if($pedido->consumo_local_viagem_delivery == 1)
-                        <p class="p-0 m-0">
-                            Consumo no local
-                        </p>
+                        @elseif($pedido->status == 2)
 
-                        @elseif($pedido->consumo_local_viagem_delivery == 2)
-                        <p class="p-0 m-0">
-                            Para viagem
-                        </p>
+                        @elseif($pedido->status == 3)
 
-                        @elseif($pedido->consumo_local_viagem_delivery == 3)
-                        <p class="p-0 m-0">
-                            {{$pedido->entrega->rua}},
-                            {{$pedido->entrega->bairro}},
-                            {{$pedido->entrega->numero}}
-                        </p>
+                        @elseif($pedido->status == 4)
+
+                        @elseif($pedido->status == 5)
 
                         @endif
-                        <p class="p-0 m-0">{{$pedido->forma_pagamento_entrega->forma}}</p>
-                    </div>
-                    <!-- FIM CORPO COLLAPSE PEDIDOS -->
+                        <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
-                    <!-- BTN COLLAPSE PEDIDOS -->
-                    <div class="row m-3">
-                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-primary">Ver
-                            detalhes</a>
+                        <!-- HEADER COLLAPSE PEDIDOS -->
+                        <div class="row px-2">
+                            <div class="col-md-8">
+                                <h4 class="fw-bold fs-4">{{$pedido->cliente->nome}}</h4>
+                            </div>
+                            <div class="col-md-4 d-flex justify-content-end">
+                                <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
+                            </div>
+                        </div>
+                        <!-- FIM HEADER COLLAPSE PEDIDOS -->
+
+                        <!-- CORPO COLLAPSE PEDIDOS -->
+                        <div class="text-secondary fw-medium px-2">
+                            @if($pedido->consumo_local_viagem_delivery == 1)
+                            <p class="p-0 m-0">
+                                Consumo no local
+                            </p>
+
+                            @elseif($pedido->consumo_local_viagem_delivery == 2)
+                            <p class="p-0 m-0">
+                                Para viagem
+                            </p>
+
+                            @elseif($pedido->consumo_local_viagem_delivery == 3)
+                            <p class="p-0 m-0">
+                                {{$pedido->entrega->rua}},
+                                {{$pedido->entrega->bairro}},
+                                {{$pedido->entrega->numero}}
+                            </p>
+
+                            @endif
+                            <p class="p-0 m-0">{{$pedido->forma_pagamento_entrega->forma}}</p>
+                        </div>
+                        <!-- FIM CORPO COLLAPSE PEDIDOS -->
+
+                        <!-- BTN COLLAPSE PEDIDOS -->
+                        <div class="row m-3">
+                            <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-primary">Ver
+                                detalhes</a>
+                        </div>
+
                     </div>
+
+                    @endforeach
+
+                    @endif
 
                 </div>
-
-                @endforeach
-
-                @endif
-                
-                <!-- FIM OPÇÃO PEDIDOS -->
+                <!-- FIM MENU PEDIDOS -->
 
             </div>
         </div>
         <!-- FIM MENU LATERAL PEDIDOS -->
 
         <!-- CONTEUDO PEDIDOS -->
-        <div class="col m-0 p-3">
+        <div class="col m-0 p-3" style="overflow-y: auto; overflow-x: hidden;">
             <!-- MENSAGENS -->
             @if(session('success'))
             <div class="alert alert-success">
