@@ -1,11 +1,11 @@
 <x-app-layout>
 
     <!-- PEDIDOS -->
-    <div class="row">
+    <div class="row m-0">
 
         <!-- MENU LATERAL PEDIDOS -->
-        <div class="col-md-4">
-            <div class="bg-white border-end m-0 p-2" style="max-width: 400px">
+        <div class="col-md-auto m-0 p-0">
+            <div class="bg-white border-end m-0 p-3" style="max-width: 400px">
 
                 <!-- HEADER -->
                 <div class="p-0 m-0">
@@ -60,36 +60,65 @@
 
                 @foreach($data['pedidos'] as $pedido)
 
-                <!-- COLLAPSE PEDIDOS PENDENTES -->
-                <div class="bg-light rounded shadow-sm p-2 m-2">
+                <!-- COLLAPSE PEDIDOS -->
+                <div class="bg-light rounded border p-2 m-2">
                     <p class="text-secondary fs-6 p-0 m-0"># {{$pedido->id}}</p>
+
+                    <!-- HEADER COLLAPSE PEDIDOS -->
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="fw-bold fs-4">{{$pedido->cliente}}</h4>
+                            <h4 class="fw-bold fs-4">{{$pedido->cliente->nome}}</h4>
                         </div>
                         <div class="col-md-4 d-flex justify-content-end">
                             <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
                         </div>
                     </div>
+                    <!-- FIM HEADER COLLAPSE PEDIDOS -->
+
+                    <!-- CORPO COLLAPSE PEDIDOS -->
                     <div class="text-secondary fw-medium">
-                        <p class="p-0 m-0">{{$pedido->rua}}, {{$pedido->bairro}}, {{$pedido->numero}}</p>
-                        <p class="p-0 m-0">{{$pedido->forma_pagamento}}</p>
+                        @if($pedido->consumo_local_viagem_delivery == 1)
+                        <p class="p-0 m-0">
+                            Consumo no local
+                        </p>
+
+                        @elseif($pedido->consumo_local_viagem_delivery == 2)
+                        <p class="p-0 m-0">
+                            Para viagem
+                        </p>
+
+                        @elseif($pedido->consumo_local_viagem_delivery == 3)
+                        <p class="p-0 m-0">
+                            {{$pedido->entrega->rua}},
+                            {{$pedido->entrega->bairro}},
+                            {{$pedido->entrega->numero}}
+                        </p>
+
+                        @endif
+                        <p class="p-0 m-0">{{$pedido->forma_pagamento_entrega->forma}}</p>
                     </div>
+                    <!-- FIM CORPO COLLAPSE PEDIDOS -->
+
+                    <!-- BTN COLLAPSE PEDIDOS -->
                     <div class="row m-3">
-                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-primary">Ver detalhes</a>
+                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-primary">Ver
+                            detalhes</a>
                     </div>
+
                 </div>
 
                 @endforeach
 
                 @endif
+                
+                <!-- FIM OPÇÃO PEDIDOS -->
 
             </div>
         </div>
         <!-- FIM MENU LATERAL PEDIDOS -->
 
         <!-- CONTEUDO PEDIDOS -->
-        <div class="col-md-8">
+        <div class="col m-0 p-3">
             <!-- MENSAGENS -->
             @if(session('success'))
             <div class="alert alert-success">
@@ -112,11 +141,11 @@
             @endif
             <!-- FIM MENSAGENS -->
 
-            <!-- PEDIDO DETALHE --> 
-            @if(isset($data['pedido']))  
-            <x-show-pedido :pedido="$data['pedido']"/>
+            <!-- PEDIDO DETALHE -->
+            @if(isset($data['pedido']))
+            <x-show-pedido :pedido="$data['pedido']" />
             @endif
-            
+
         </div>
         <!-- FIM CONTEUDO PEDIDOS -->
 

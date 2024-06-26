@@ -21,12 +21,12 @@ class Pedido extends Model
         return $this->belongsTo(Restaurante::class);
     }
 
-    public function forma_pagamento()
+    public function forma_pagamento_entrega()
     {
         return $this->belongsTo(FormaPagamentoEntrega::class);
     }
 
-    public function meio_pagamento()
+    public function meio_pagamento_entrega()
     {
         return $this->belongsTo(MeioPagamentoEntrega::class);
     }

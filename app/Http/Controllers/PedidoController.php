@@ -26,27 +26,12 @@ class PedidoController extends Controller
         $id_restaurante  = session('restauranteConectado')['id'];
         $restaurante = Restaurante::where('id', $id_restaurante)->first();
 
-        $pedidos =  DB::table('pedido AS p')
-        ->select(
-            'p.*',
-            'c.nome as cliente',
-            'r.nome as restaurante',
-            'forma.forma as forma_pagamento',
-            'e.rua as rua',
-            'e.bairro as bairro',
-            'e.numero as numero',
-            'e.complemento as complemento',
-        ) 
-        ->join('restaurante AS r', 'r.id', '=', 'p.restaurante_id')
-        ->join('cliente AS c', 'c.id', '=', 'p.cliente_id')
-        ->join('forma_pagamento_entrega AS forma', 'forma.id', '=', 'p.forma_pagamento_entrega_id')
-        ->join('item_pedido AS i', 'i.pedido_id', '=', 'p.id')
-        ->join('produto AS prod', 'prod.id', '=', 'i.produto_id')
-        ->join('entrega AS e', 'e.pedido_id', '=', 'p.id')
-        ->where('r.id', $id_restaurante)
-        ->orderBy('p.data_pedido', 'ASC') 
+        $pedidos = Pedido::where('restaurante_id', $id_restaurante)
+        ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->orderBy('data_pedido', 'ASC')
         ->get();
         
+
         $data = [
             'restaurante' => $restaurante,
             'pedidos' => $pedidos,
@@ -169,29 +154,13 @@ class PedidoController extends Controller
         //Dados pedido
         $pedido_id = $request->input('id');
 
-        $pedidos =  DB::table('pedido AS p')
-        ->select(
-            'p.*',
-            'c.nome as cliente',
-            'r.nome as restaurante',
-            'forma.forma as forma_pagamento',
-            'e.rua as rua',
-            'e.bairro as bairro',
-            'e.numero as numero',
-            'e.complemento as complemento',
-        ) 
-        ->join('restaurante AS r', 'r.id', '=', 'p.restaurante_id')
-        ->join('cliente AS c', 'c.id', '=', 'p.cliente_id')
-        ->join('forma_pagamento_entrega AS forma', 'forma.id', '=', 'p.forma_pagamento_entrega_id')
-        ->join('item_pedido AS i', 'i.pedido_id', '=', 'p.id')
-        ->join('produto AS prod', 'prod.id', '=', 'i.produto_id')
-        ->join('entrega AS e', 'e.pedido_id', '=', 'p.id')
-        ->where('r.id', $id_restaurante)
-        ->orderBy('p.data_pedido', 'ASC') 
+        $pedidos = Pedido::where('restaurante_id', $id_restaurante)
+        ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->orderBy('data_pedido', 'ASC')
         ->get();
         
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('restaurante', 'forma_pagamento', 'item_pedido', 'produto', 'cliente', 'entrega', 'meio_pagamento')
+        ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
         ->orderBy('data_pedido', 'ASC')
         ->first();
 
