@@ -76,7 +76,7 @@
                         <p class="p-0 m-0">{{$pedido->forma_pagamento}}</p>
                     </div>
                     <div class="row m-3">
-                        <a href="" class="btn btn-primary">Ver detalhes</a>
+                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-primary">Ver detalhes</a>
                     </div>
                 </div>
 
@@ -111,7 +111,12 @@
             </div>
             @endif
             <!-- FIM MENSAGENS -->
-            @yield('pedido')
+
+            <!-- PEDIDO DETALHE --> 
+            @if(isset($data['pedido']))  
+            <x-show-pedido :pedido="$data['pedido']"/>
+            @endif
+            
         </div>
         <!-- FIM CONTEUDO PEDIDOS -->
 

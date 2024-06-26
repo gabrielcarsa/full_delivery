@@ -10,4 +10,21 @@ class HorarioFuncionamento extends Model
     use HasFactory;
     protected $table = 'horario_funcionamento';
 
+      //RELACIONAMENTOS
+    
+      public function restaurante()
+      {
+          return $this->belongsTo(Restaurante::class);
+      }
+  
+      public function usuarioCadastrador()
+      {
+          return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+      }
+  
+      public function usuarioAlterador()
+      {
+          return $this->belongsTo(User::class, 'alterado_usuario_id');
+      }
+
 }

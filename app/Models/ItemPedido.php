@@ -10,4 +10,20 @@ class ItemPedido extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'item_pedido';
+
+    public function pedido()
+    {
+        return $this->belongsTo(Pedido::class);
+    }
+
+    public function produto()
+    {
+        return $this->belongsTo(Produto::class);
+    }
+
+    // Relação um para muitos com Opcionais de Item
+    public function opcionaisItem()
+    {
+        return $this->hasMany(OpcionalItem::class, 'item_pedido_id');
+    }
 }

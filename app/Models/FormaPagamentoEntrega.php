@@ -9,4 +9,10 @@ class FormaPagamentoEntrega extends Model
 {
     use HasFactory;
     protected $table = 'forma_pagamento_entrega';
+
+
+    public function forma_pagamento()
+    {
+        return $this->hasMany(FormaPagamentoEntrega::class);
+    }
 }

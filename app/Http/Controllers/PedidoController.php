@@ -32,7 +32,6 @@ class PedidoController extends Controller
             'c.nome as cliente',
             'r.nome as restaurante',
             'forma.forma as forma_pagamento',
-            'prod.*',
             'e.rua as rua',
             'e.bairro as bairro',
             'e.numero as numero',
@@ -154,5 +153,55 @@ class PedidoController extends Controller
 
         return redirect()->route('pedido.painel')->with('success', 'Cadastro feito com sucesso');
 
+    }
+
+    //PAINEL DE PEDIDOS
+    public function show(Request $request){
+        //Verificar se há restaurante selecionado
+        if(!session('restauranteConectado')){
+            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        }
+
+        //Dados do restaurante
+        $id_restaurante  = session('restauranteConectado')['id'];
+        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+
+        //Dados pedido
+        $pedido_id = $request->input('id');
+
+        $pedidos =  DB::table('pedido AS p')
+        ->select(
+            'p.*',
+            'c.nome as cliente',
+            'r.nome as restaurante',
+            'forma.forma as forma_pagamento',
+            'e.rua as rua',
+            'e.bairro as bairro',
+            'e.numero as numero',
+            'e.complemento as complemento',
+        ) 
+        ->join('restaurante AS r', 'r.id', '=', 'p.restaurante_id')
+        ->join('cliente AS c', 'c.id', '=', 'p.cliente_id')
+        ->join('forma_pagamento_entrega AS forma', 'forma.id', '=', 'p.forma_pagamento_entrega_id')
+        ->join('item_pedido AS i', 'i.pedido_id', '=', 'p.id')
+        ->join('produto AS prod', 'prod.id', '=', 'i.produto_id')
+        ->join('entrega AS e', 'e.pedido_id', '=', 'p.id')
+        ->where('r.id', $id_restaurante)
+        ->orderBy('p.data_pedido', 'ASC') 
+        ->get();
+        
+        $pedido = Pedido::where('id', $pedido_id)
+        ->with('restaurante', 'forma_pagamento', 'item_pedido', 'produto', 'cliente', 'entrega', 'meio_pagamento')
+        ->orderBy('data_pedido', 'ASC')
+        ->first();
+
+        
+        $data = [
+            'restaurante' => $restaurante,
+            'pedido' => $pedido,
+            'pedidos' => $pedidos,
+        ];
+
+        return view('pedido/painel_pedidos', compact('data'));       
     }
 }

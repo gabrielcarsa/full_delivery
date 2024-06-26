@@ -9,4 +9,10 @@ class MeioPagamentoEntrega extends Model
 {
     use HasFactory;
     protected $table = 'meio_pagamento_entrega';
+
+
+    public function pedido()
+    {
+        return $this->hasMany(Pedido::class);
+    }
 }

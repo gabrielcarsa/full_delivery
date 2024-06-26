@@ -10,4 +10,9 @@ class Entrega extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'entrega';
+
+    public function pedido()
+    {
+        return $this->belongsTo(Pedido::class);
+    }
 }
