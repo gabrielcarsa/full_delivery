@@ -86,6 +86,7 @@ Route::middleware([
         Route::delete('/opcional_produto/apagar/{id}', [OpcionalProdutoController::class, 'destroy'])->name('opcional_produto.excluir');
         Route::get('/opcional_produto/editar', [OpcionalProdutoController::class, 'edit'])->name('opcional_produto.editar');
         Route::put('/opcional_produto/alterar/{usuario_id}/{produto_id}', [OpcionalProdutoController::class, 'update']);
+        Route::get('/opcional_produto/listar/{produto_id}', [OpcionalProdutoController::class, 'opcionais']);
  
         //CLIENTE
         Route::get('/cliente', [ClienteController::class, 'index'])->name('cliente');

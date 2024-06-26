@@ -108,4 +108,10 @@ class OpcionalProdutoController extends Controller
         return redirect()->back()->with('success', 'Opcional excluido com sucesso');
     }
 
+    //RETORNA UM JSON COM A CONTA CORRENTE ESPECÍFICA
+    function opcionais($produto_id){
+        $opcionais = OpcionalProduto::where('produto_id',$produto_id)->get();
+        return response()->json($opcionais);
+    }
+
 }

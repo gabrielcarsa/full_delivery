@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class OpcionalItem extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'opcional_item';
 
     // Relação muitos para um com Item de Pedido
-    public function itemPedido()
+    public function item_pedido()
     {
-        return $this->belongsTo(ItemPedido::class, 'item_pedido_id');
+        return $this->belongsTo(ItemPedido::class);
     }
 
     // Relação muitos para um com Cliente que cadastrou
@@ -29,7 +30,7 @@ class OpcionalItem extends Model
     }
 
     // Relação muitos para um com Opcional de Produto
-    public function opcionalProduto()
+    public function opcional_produto()
     {
         return $this->belongsTo(OpcionalProduto::class, 'opcional_produto_id');
     }

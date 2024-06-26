@@ -76,6 +76,21 @@
                 <p class="m-0 p-0 text-end">R$ {{number_format($item->subtotal, 2, ',', '.')}}</p>
             </div>
         </div>
+        @foreach ($item->opcional_item as $opcional)
+        <div class="">
+            <div class="row fs-5">
+                <div class="col col-2">
+                    <p class="m-0 p-0 text-start">{{ $opcional->quantidade }}x</p>
+                </div>
+                <div class="col">
+                    <p class="fw-semibold text-start m-0 p-0"> {{ $opcional->opcional_produto->nome }}</p>
+                </div>
+                <div class="col col-2">
+                    <p class="m-0 p-0 text-end">R$ {{number_format($opcional->subtotal, 2, ',', '.')}}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
     @endforeach
 
@@ -86,7 +101,8 @@
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
     <div class="">
-        <p class="m-0 p-0">Cobrar do cliente na entrega <strong>{{ $pedido->forma_pagamento_entrega->forma }}</strong></p>
+        <p class="m-0 p-0">Cobrar do cliente na entrega <strong>{{ $pedido->forma_pagamento_entrega->forma }}</strong>
+        </p>
         <p class="text-secondary m-0 p-0">O entregador deve cobrar esse valor no ato da entrega. </p>
     </div>
 

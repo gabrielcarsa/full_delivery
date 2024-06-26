@@ -40,13 +40,13 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-4">
-                    <label for="inputQtd" class="form-label">Quantidade</label>
-                    <input type="text" name="quantidade" class="form-control" id="inputQtd" required>
+                <div class="col-md-2">
+                    <label for="inputQtd" class="form-label">Qntd</label>
+                    <input type="text" name="quantidade" class="form-control" id="inputQtd" required >
                 </div>
 
                 @if(!empty($data['produtos']))
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <label for="inputProduto" class="form-label">Produto</label>
                     <select required id="inputProduto" name="produto_id" class="form-select form-control">
                         <option value="" {{ old('produto_id') == null ? 'selected' : '' }}>-- Selecione --</option>
@@ -58,6 +58,18 @@
                     </select>
                 </div>
                 @endif
+                
+                <div class="col-md-2">
+                    <label for="inputQtd" class="form-label">Qntd Opcional</label>
+                    <input type="text" name="quantidade_opcional" class="form-control" id="inputQtd">
+                </div>
+
+                <div class="col-md-4" id="OpcionalField">
+                    <label for="inputOpcional" class="form-label">Opcional</label>
+                    <select id="inputOpcional" name="opcional_produto_id" class="form-select form-control">
+                        <option value="" selected> Selecione --</option>
+                    </select>
+                </div>
             </div>
 
             <div class="row my-3">
@@ -190,6 +202,8 @@
     </div>
     <!-- FIM CONTAINER -->
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
     // Função para buscar endereço pelo CEP
     async function buscarEndereco() {
@@ -214,5 +228,49 @@
             alert('Erro ao buscar o CEP!');
         }
     }
+
+    $(document).ready(function() {
+
+        // Quando o produto é selecionado
+        $('#inputProduto').change(function() {
+            var selectedInputProdutoId = $('#inputProduto').val();
+
+            if (selectedInputProdutoId > 0) {
+                // Fazer uma solicitação AJAX para obter as contas bancárias do titular da conta selecionado
+                $.get('/opcional_produto/listar/' + selectedInputProdutoId, function(
+                    data) {
+                    var OpcionalField = $('#OpcionalField');
+                    var inputOpcional = $('#inputOpcional');
+                    inputOpcional.empty();
+
+                    inputOpcional.append($('<option>', {
+                        value: 0,
+                        text: '-- Opcional do produto --'
+                    }));
+
+                    // Adicionar as opções de contas bancárias
+                    $.each(data, function(key, value) {
+                        inputOpcional.append($('<option>', {
+                            value: value.id,
+                            text: value.nome + ' / R$ ' + value.preco,
+                        }));
+                    });
+
+                    // Mostrar o campo de contas bancárias
+                    OpcionalField.show();
+                });
+            } else {
+                // Se o titular da conta não for selecionado, ocultar o campo de contas bancárias e defina a opção padrão
+                var OpcionalField = $('#OpcionalField');
+                var inputOpcional = $('#inputOpcional');
+                inputOpcional.empty();
+                inputOpcional.append($('<option>', {
+                    value: 0,
+                    text: '-- Selecione o Produto --'
+                }));
+                OpcionalField.hide();
+            }
+        });
+    });
     </script>
 </x-app-layout>

@@ -22,8 +22,8 @@ class ItemPedido extends Model
     }
 
     // Relação um para muitos com Opcionais de Item
-    public function opcionaisItem()
+    public function opcional_item()
     {
-        return $this->hasMany(OpcionalItem::class, 'item_pedido_id');
+        return $this->hasMany(OpcionalItem::class);
     }
 }

@@ -10,6 +10,8 @@ use App\Models\Pedido;
 use App\Models\Cliente;
 use App\Models\Entrega;
 use App\Models\ItemPedido;
+use App\Models\OpcionalItem;
+use App\Models\OpcionalProduto;
 use App\Models\FormaPagamentoEntrega;
 use Carbon\Carbon;
 
@@ -121,6 +123,23 @@ class PedidoController extends Controller
         $item_pedido->preco_unitario = $produto->preco; 
         $item_pedido->subtotal = $produto->preco * $qtd_produto; 
         $item_pedido->save();
+
+        if($request->input('opcional_produto_id') != 0){
+            //Buscando opcional
+            $opcional_id = $request->input('opcional_produto_id');
+            $opcional = OpcionalProduto::where('id', $opcional_id)->first();
+            $qtd_opcional = $request->input('quantidade');
+
+            $opcional_item_pedido = new OpcionalItem();
+            $opcional_item_pedido->item_pedido_id = $item_pedido->id;
+            $opcional_item_pedido->opcional_produto_id = $request->input('opcional_produto_id');
+            $opcional_item_pedido->quantidade = $request->input('quantidade_opcional');
+            $opcional_item_pedido->quantidade = $qtd_opcional;
+            $opcional_item_pedido->preco_unitario = $opcional->preco; 
+            $opcional_item_pedido->subtotal = $opcional->preco * $qtd_opcional; 
+            $opcional_item_pedido->save();
+
+        }
 
         //Cadastro entrega
         if($pedido->consumo_local_viagem_delivery == 3){
