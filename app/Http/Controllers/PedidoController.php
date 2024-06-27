@@ -75,8 +75,8 @@ class PedidoController extends Controller
         return view('pedido/novo_simulador', compact('data'));
     }
 
-      //CADASTRAR
-      public function store(Request $request){
+    //CADASTRAR
+    public function store(Request $request){
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba');   
 
@@ -84,6 +84,25 @@ class PedidoController extends Controller
         $validator = Validator::make($request->all(), [
             //todo
         ]);
+
+        // Função calcular a distância
+        function getDistance($origem, $destino, $apiKey) {
+            // URL da API de Distância do Google Maps
+            $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins={$origem}&destinations={$destino}&key={$apiKey}";
+        
+            // Fazendo a solicitação HTTP
+            $response = file_get_contents($url);
+            $data = json_decode($response);
+        
+            // Verificando se a solicitação foi bem-sucedida
+            if ($data->status == 'OK') {
+                // Obtendo a distância em metros
+                $distance = $data->rows[0]->elements[0]->distance->value;
+                return $distance;
+            } else {
+                return false;
+            }
+        }
 
         // Se a validação falhar
         if ($validator->fails()) {
@@ -96,6 +115,7 @@ class PedidoController extends Controller
         }
 
         $id_restaurante  = session('restauranteConectado')['id'];
+        $restaurante = Restaurante::where('id', $id_restaurante)->first();
 
         //Cadastro de pedido
         $pedido = new Pedido();
@@ -143,6 +163,14 @@ class PedidoController extends Controller
 
         //Cadastro entrega
         if($pedido->consumo_local_viagem_delivery == 3){
+            // Variáveis para calcular distância
+            $origem = $restaurante->cep;
+            $destino = $request->input('cep'); 
+            $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
+
+            // Obtendo a distância em metros
+            $distancia = getDistance($origem, $destino, $apiKey);
+
             $entrega = new Entrega();
             $entrega->pedido_id = $pedido->id;
             $entrega->cep = $request->input('cep');
@@ -151,8 +179,38 @@ class PedidoController extends Controller
             $entrega->cidade = $request->input('cidade');
             $entrega->estado = $request->input('estado');
             $entrega->numero = $request->input('numero');
-            $entrega->complemento = $request->input('complemento');
+            $entrega->complemento = $request->input('complemento'); 
+            $entrega->distancia_metros = $distancia; 
+       
+            // Taxa de entrega gratuita
+            if($restaurante->is_taxa_entrega_free == true){
+                $entrega->taxa_entrega = 0;
+
+            // Taxa de entrega calculada por km
+            }elseif($restaurante->taxa_por_km_entrega != null){
+    
+                // Verificar se deu certo a requisição
+                if ($distancia !== false) {
+
+                    // se distancia for maior que 1 km
+                    if($distancia >= 1000){
+                        $distancia_km = $distancia / 1000;
+                        $entrega->taxa_entrega = $distancia_km * $restaurante->taxa_por_km_entrega;
+                    }else{
+                        $entrega->taxa_entrega = $restaurante->taxa_por_km_entrega;
+                    
+                    }
+                }else{
+                    return redirect('restaurante')->with('error', 'Erro ao calcular distância');
+                }
+    
+            // Taxa de entrega fixa
+            }elseif($restaurante->taxa_entrega_fixa != null){
+                $entrega->taxa_entrega = $restaurante->taxa_entrega_fixa;
+            }
+
             $entrega->save();
+
         }
 
         return redirect()->route('pedido.painel')->with('success', 'Cadastro feito com sucesso');
@@ -173,16 +231,17 @@ class PedidoController extends Controller
         //Dados pedido
         $pedido_id = $request->input('id');
 
+        //Pedidos
         $pedidos = Pedido::where('restaurante_id', $id_restaurante)
         ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
         ->orderBy('data_pedido', 'ASC')
         ->get();
         
+        //Pedido
         $pedido = Pedido::where('id', $pedido_id)
         ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
         ->orderBy('data_pedido', 'ASC')
         ->first();
-
         
         $data = [
             'restaurante' => $restaurante,

@@ -4,6 +4,12 @@
         <div class="col-md-auto">
             <h5 class="fw-bold fs-3 m-0 p-0">{{ $pedido->cliente->nome }}</h5>
         </div>
+        <div class="col d-flex align-items-center justify-content-center">
+            <span class="material-symbols-outlined mr-2">
+                storefront
+            </span>
+            {{ $pedido->restaurante->nome }}
+        </div>
         <div class="col d-flex justify-content-end">
             <p class="m-0 p-0">Feito às {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
         </div>
@@ -44,14 +50,10 @@
                 {{ $pedido->entrega->bairro }} -
                 {{ $pedido->entrega->cidade }}
                 {{ $pedido->entrega->estado }}.
-
+                {{ $pedido->entrega->complemento }}
             </p>
-        </div>
-    </div>
-    <div class="row m-0 p-0 d-flex align-items-center">
-        <div class="m-0 p-0">
             <p class="fw-regular m-0 p-0">
-                {{ $pedido->restaurante->nome }},
+                {{ $pedido->entrega->distancia_metros }} metros de distância.
             </p>
         </div>
     </div>
@@ -62,37 +64,102 @@
 <!-- PEDIDO -->
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pedido</p>
-    <!-- Exibir itens do pedido -->
-    @foreach ($pedido->item_pedido as $item)
-    <div class="px-3 py-1 m-2 border rounded">
-        <div class="row fs-5">
-            <div class="col col-2">
-                <p class="m-0 p-0 text-start">{{ $item->quantidade }}x</p>
-            </div>
-            <div class="col">
-                <p class="fw-semibold text-start m-0 p-0"> {{ $item->produto->nome }}</p>
-            </div>
-            <div class="col col-2">
-                <p class="m-0 p-0 text-end">R$ {{number_format($item->subtotal, 2, ',', '.')}}</p>
-            </div>
-        </div>
-        @foreach ($item->opcional_item as $opcional)
-        <div class="">
-            <div class="row fs-5">
-                <div class="col col-2">
-                    <p class="m-0 p-0 text-start">{{ $opcional->quantidade }}x</p>
-                </div>
-                <div class="col">
-                    <p class="fw-semibold text-start m-0 p-0"> {{ $opcional->opcional_produto->nome }}</p>
-                </div>
-                <div class="col col-2">
-                    <p class="m-0 p-0 text-end">R$ {{number_format($opcional->subtotal, 2, ',', '.')}}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
+
+    <div class="px-3 py-1 m-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Preço unitário</th>
+                    <th scope="col">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Variáveis PHP -->
+                @php
+                $total_pedido = 0;
+                @endphp
+
+                <!-- Exibir itens do pedido -->
+                @foreach ($pedido->item_pedido as $item)
+
+                <!-- Incrementando sobre valor total -->
+                @php
+                $total_pedido += $item->subtotal;
+                @endphp
+
+                <tr class="p-0 m-0">
+                    <td class="bg-white">
+                        <span>
+                            {{ $item->quantidade }}x
+                        </span><br>
+                        <span class="text-secondary">
+                            @foreach ($item->opcional_item as $opcional)
+                            {{ $opcional->quantidade }}x
+                            @endforeach
+                        </span>
+                    </td>
+                    <td class="bg-white">
+                        <span class="fw-bold">
+                            {{ $item->produto->nome }}
+                        </span><br>
+                        <span class="text-secondary">
+                            @foreach ($item->opcional_item as $opcional)
+                            {{ $opcional->opcional_produto->nome }}
+                            @endforeach
+                        </span>
+                    </td>
+                    <td class="bg-white">
+                        <span>
+                            R$ {{number_format($item->preco_unitario, 2, ',', '.')}}
+                        </span><br>
+                        <span class="text-secondary">
+                            @foreach ($item->opcional_item as $opcional)
+                            R$ {{number_format($opcional->preco_unitario, 2, ',', '.')}}
+                            @endforeach
+                        </span>
+                    </td>
+                    <td class="bg-white">
+                        <span>
+                            R$ {{number_format($item->subtotal, 2, ',', '.')}}
+                        </span><br>
+                        <span class="text-secondary">
+                            @foreach ($item->opcional_item as $opcional)
+
+                            <!-- Incrementando sobre valor total -->
+                            @php
+                            $total_pedido += $opcional->subtotal;
+                            @endphp
+
+                            R$ {{number_format($opcional->subtotal, 2, ',', '.')}}
+                            @endforeach
+                        </span>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="fw-bold">Subtotal</td>
+                    <td>R$ {{number_format($total_pedido, 2, ',', '.')}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="fw-bold">Entrega</td>
+                    @php
+                    $total_pedido += $pedido->entrega->taxa_entrega;
+                    @endphp
+                    <td>R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="fw-bold">Total</td>
+                    <td class="fw-bolder ">R$ {{number_format($total_pedido, 2, ',', '.')}}</td>
+                </tr>
+            </tfoot>
+
+        </table>
+
     </div>
-    @endforeach
 
 </div>
 <!-- FIM PEDIDO -->
