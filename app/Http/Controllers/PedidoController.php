@@ -250,4 +250,29 @@ class PedidoController extends Controller
 
         return view('pedido/painel_pedidos', compact('data'));       
     }
+
+    // 
+    public function update_status(Request $request){
+         //Verificar se há restaurante selecionado
+         if(!session('restauranteConectado')){
+            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        }
+
+        //Dados do restaurante
+        $id_restaurante  = session('restauranteConectado')['id'];
+        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+
+        //Dados pedido
+        $pedido_id = $request->input('id');
+        
+        //Pedido
+        $pedido = Pedido::find($pedido_id);
+        
+        $status_atual = $pedido->status;
+
+        $pedido->status = $status_atual + 1;
+        $pedido->save();
+        return redirect()->back()->with('success', 'Status atualizado com sucesso');
+
+    }
 }

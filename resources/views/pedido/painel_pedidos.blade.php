@@ -1,10 +1,9 @@
 <x-app-layout>
-
     <!-- PEDIDOS -->
     <div class="row m-0">
 
         <!-- MENU LATERAL PEDIDOS -->
-        <div class="col-md-auto m-0 p-0" style="overflow-y: auto; overflow-x: hidden; height: 100vh">
+        <div class="col-md-auto m-0 p-0" style="overflow-y: auto; overflow-x: hidden;">
             <div class="bg-white border-end m-0 p-3" style="max-width: 400px">
 
                 <!-- HEADER -->
@@ -69,15 +68,25 @@
                             <p class="m-0 p-0 fw-bold">PENDENTE</p>
                         </div>
                         @elseif($pedido->status == 1)
-
+                        <div class="border m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold">EM PREPARO</p>
+                        </div>
                         @elseif($pedido->status == 2)
-
+                        <div class="border m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold">A CAMINHO</p>
+                        </div>
                         @elseif($pedido->status == 3)
-
+                        <div class="bg-sucess m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold">CONCLUIDO</p>
+                        </div>
                         @elseif($pedido->status == 4)
-
+                        <div class="bg-danger m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold">REJEITADO</p>
+                        </div>
                         @elseif($pedido->status == 5)
-
+                        <div class="bg-danger m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold">CANCELADO</p>
+                        </div>
                         @endif
                         <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
 

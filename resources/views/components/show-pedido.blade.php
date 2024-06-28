@@ -1,16 +1,61 @@
 <!-- HEADER -->
-<div class="my-3">
+<div class="my-1">
     <div class="row m-0 p-0 d-flex align-items-center">
         <div class="col-md-auto">
-            <h5 class="fw-bold fs-3 m-0 p-0">
-                {{ $pedido->cliente->nome }}
-            </h5>
+            <div class="m-0 p-3 text-center">
+                <h5 class="fw-bold fs-4 m-0 p-0">
+                    {{ $pedido->cliente->nome }}
+                </h5>
+                <p class="m-0 p-0 fs-6 fw-regular text-secondary d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined mr-1 fs-5">
+                        call
+                    </span>
+                    {{ $pedido->cliente->telefone }}
+                </p>
+            </div>
         </div>
-        <div class="col d-flex align-items-center justify-content-center">
-            <span class="material-symbols-outlined mr-2">
-                storefront
-            </span>
-            {{ $pedido->restaurante->nome }}
+        <div class="col">
+            @if($pedido->status == 0)
+            <div class="m-0 p-2 text-center">
+                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
+                <p class="m-0 p-0 fs-4 fw-bold text-warning">Pendente!</p>
+            </div>
+            @elseif($pedido->status == 1)
+            <div class="m-0 p-2 text-center">
+                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
+                <p class="m-0 p-0 fs-4 fw-regular">Em preparo</p>
+            </div>
+            @elseif($pedido->status == 2)
+            <div class="m-0 p-2 text-center">
+                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
+                <p class="m-0 p-0 fs-4 fw-regular">A caminho</p>
+            </div>
+            @elseif($pedido->status == 3)
+            <div class="m-0 p-2 text-center">
+                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
+                <p class="m-0 p-0 fs-4 fw-regular text-success">Concluido</p>
+            </div>
+            @elseif($pedido->status == 4)
+            <div class="m-0 p-2 text-center">
+                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
+                <p class="m-0 p-0 fs-4 fw-regular text-warning">REJEITADO</p>
+            </div>
+            @elseif($pedido->status == 5)
+            <div class="m-0 p-2 text-center">
+                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
+                <p class="m-0 p-0 fs-4 fw-regular text-danger">CANCELADO</p>
+            </div>
+            @endif
+        </div>
+        <div class="col m-0 text-center">
+            <p class="m-0 p-0 fw-bold fs-6">Restaurante</p>
+            <p class="m-0 p-0 fs-6 fw-regular text-secondary d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-2">
+                    storefront
+                </span>
+                {{ $pedido->restaurante->nome }}
+            </p>
+
         </div>
         <div class="col d-flex justify-content-end">
             <p class="m-0 p-0">Feito às {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
@@ -22,13 +67,17 @@
 <!-- AÇÕES -->
 <div class="bg-white rounded border p-3">
     <div class="row">
+
+        <!-- STATUS DO PEDIDO -->
+        @if($pedido->status == 0)
         <div class="col">
-            <a href="" class="btn btn-success d-flex align-items-center justify-content-center">
+            <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                class="btn btn-success d-flex align-items-center justify-content-center">
                 <span class="material-symbols-outlined mr-1">
                     task_alt
                 </span>
                 <span>
-                    Confirmar pedido
+                    Aceitar pedido
                 </span>
             </a>
         </div>
@@ -42,6 +91,54 @@
                 </span>
             </a>
         </div>
+
+        @elseif($pedido->status == 1)
+        <div class="col">
+            <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                class="btn btn-primary d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined">
+                    sports_motorsports
+                </span>
+                <span>
+                    Enviar para entrega
+                </span>
+            </a>
+        </div>
+        <div class="col">
+            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    dangerous
+                </span>
+                <span>
+                    Cancelar pedido
+                </span>
+            </a>
+        </div>
+
+        @elseif($pedido->status == 2)
+        <div class="col">
+            <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                class="btn btn-success d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    task_alt
+                </span>
+                <span>
+                    Pedido entregue
+                </span>
+            </a>
+        </div>
+        <div class="col">
+            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    dangerous
+                </span>
+                <span>
+                    Cancelar pedido
+                </span>
+            </a>
+        </div>
+
+        @endif
         <div class="col">
             <a href="" class="btn btn-outline-primary d-flex align-items-center justify-content-center">
                 <span class="material-symbols-outlined mr-1">
