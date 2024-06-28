@@ -148,12 +148,11 @@ class PedidoController extends Controller
             //Buscando opcional
             $opcional_id = $request->input('opcional_produto_id');
             $opcional = OpcionalProduto::where('id', $opcional_id)->first();
-            $qtd_opcional = $request->input('quantidade');
+            $qtd_opcional = $request->input('quantidade_opcional');
 
             $opcional_item_pedido = new OpcionalItem();
             $opcional_item_pedido->item_pedido_id = $item_pedido->id;
             $opcional_item_pedido->opcional_produto_id = $request->input('opcional_produto_id');
-            $opcional_item_pedido->quantidade = $request->input('quantidade_opcional');
             $opcional_item_pedido->quantidade = $qtd_opcional;
             $opcional_item_pedido->preco_unitario = $opcional->preco; 
             $opcional_item_pedido->subtotal = $opcional->preco * $qtd_opcional; 

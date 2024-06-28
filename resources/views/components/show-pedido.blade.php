@@ -2,7 +2,9 @@
 <div class="my-3">
     <div class="row m-0 p-0 d-flex align-items-center">
         <div class="col-md-auto">
-            <h5 class="fw-bold fs-3 m-0 p-0">{{ $pedido->cliente->nome }}</h5>
+            <h5 class="fw-bold fs-3 m-0 p-0">
+                {{ $pedido->cliente->nome }}
+            </h5>
         </div>
         <div class="col d-flex align-items-center justify-content-center">
             <span class="material-symbols-outlined mr-2">
@@ -16,6 +18,43 @@
     </div>
 </div>
 <!-- FIM HEADER -->
+
+<!-- AÇÕES -->
+<div class="bg-white rounded border p-3">
+    <div class="row">
+        <div class="col">
+            <a href="" class="btn btn-success d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    task_alt
+                </span>
+                <span>
+                    Confirmar pedido
+                </span>
+            </a>
+        </div>
+        <div class="col">
+            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    dangerous
+                </span>
+                <span>
+                    Rejeitar pedido
+                </span>
+            </a>
+        </div>
+        <div class="col">
+            <a href="" class="btn btn-outline-primary d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    print
+                </span>
+                <span>
+                    Imprimir
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- FIM AÇÕES -->
 
 <!-- ENTREGA -->
 <div class="bg-white rounded border p-3">

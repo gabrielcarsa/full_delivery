@@ -4,7 +4,7 @@
     <div class="row m-0">
 
         <!-- MENU LATERAL PEDIDOS -->
-        <div class="col-md-auto m-0 p-0">
+        <div class="col-md-auto m-0 p-0" style="overflow-y: auto; overflow-x: hidden; height: 100vh">
             <div class="bg-white border-end m-0 p-3" style="max-width: 400px">
 
                 <!-- HEADER -->
@@ -57,13 +57,13 @@
                 <!-- FIM HEADER -->
 
                 <!-- MENU PEDIDOS -->
-                <div style="overflow-y: auto; overflow-x: hidden;">
+                <div>
                     @if(isset($data['pedidos']))
 
                     @foreach($data['pedidos'] as $pedido)
 
                     <!-- COLLAPSE PEDIDOS -->
-                    <div class="bg-light rounded border m-2">
+                    <div class="bg-light rounded border m-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'border-dark border-4' : '' }}">
                         @if($pedido->status == 0)
                         <div class="bg-warning m-0 p-0 text-center">
                             <p class="m-0 p-0 fw-bold">PENDENTE</p>
@@ -136,7 +136,7 @@
         <!-- FIM MENU LATERAL PEDIDOS -->
 
         <!-- CONTEUDO PEDIDOS -->
-        <div class="col m-0 p-3" style="overflow-y: auto; overflow-x: hidden;">
+        <div class="col m-0 p-3" style="overflow-y: auto; overflow-x: hidden; height: 100vh">
             <!-- MENSAGENS -->
             @if(session('success'))
             <div class="alert alert-success">
