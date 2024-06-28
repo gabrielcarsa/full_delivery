@@ -76,8 +76,8 @@
                             <p class="m-0 p-0 fw-bold">A CAMINHO</p>
                         </div>
                         @elseif($pedido->status == 3)
-                        <div class="bg-sucess m-0 p-0 text-center">
-                            <p class="m-0 p-0 fw-bold">CONCLUIDO</p>
+                        <div class="bg-success m-0 p-0 text-center">
+                            <p class="m-0 p-0 fw-bold text-white">CONCLUIDO</p>
                         </div>
                         @elseif($pedido->status == 4)
                         <div class="bg-danger m-0 p-0 text-center">
@@ -127,7 +127,7 @@
 
                         <!-- BTN COLLAPSE PEDIDOS -->
                         <div class="row m-3">
-                            <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-primary">Ver
+                            <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-outline-dark">Ver
                                 detalhes</a>
                         </div>
 
