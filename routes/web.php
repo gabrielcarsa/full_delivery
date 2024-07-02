@@ -102,5 +102,6 @@ Route::middleware([
         Route::post('/pedido/cadastrar', [PedidoController::class, 'store'])->name('pedido.cadastrar');
         Route::get('/pedido/detalhes', [PedidoController::class, 'show'])->name('pedido.show');
         Route::get('/pedido/update-status', [PedidoController::class, 'update_status'])->name('pedido.update_status');
+        Route::post('/pedido/rejeitar', [PedidoController::class, 'rejeitar'])->name('pedido.rejeitar');
         
 });

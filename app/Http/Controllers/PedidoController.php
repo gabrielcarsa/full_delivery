@@ -251,7 +251,7 @@ class PedidoController extends Controller
         return view('pedido/painel_pedidos', compact('data'));       
     }
 
-    // 
+    // ATUALIZAR STATUS PEDIDO
     public function update_status(Request $request){
          //Verificar se há restaurante selecionado
          if(!session('restauranteConectado')){
@@ -275,4 +275,28 @@ class PedidoController extends Controller
         return redirect()->back()->with('success', 'Status atualizado com sucesso');
 
     }
+
+    // REJEITAR PEDIDO
+        // ATUALIZAR STATUS PEDIDO
+        public function rejeitar(Request $request){
+            //Verificar se há restaurante selecionado
+            if(!session('restauranteConectado')){
+               return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+           }
+   
+           //Dados do restaurante
+           $id_restaurante  = session('restauranteConectado')['id'];
+           $restaurante = Restaurante::where('id', $id_restaurante)->first();
+   
+           //Dados pedido
+           $pedido_id = $request->input('id');
+           
+           //Pedido
+           $pedido = Pedido::find($pedido_id);
+           $pedido->status = 4;
+           $pedido->mensagem_cancelamento_rejeicao = $request->input('motivo');
+           $pedido->save();
+           return redirect()->back()->with('error', 'Pedido rejeitado');
+   
+       }
 }

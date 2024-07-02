@@ -38,7 +38,7 @@
             @elseif($pedido->status == 4)
             <div class="m-0 p-2 text-center">
                 <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-regular text-warning">REJEITADO</p>
+                <p class="m-0 p-0 fs-4 fw-regular text-danger">REJEITADO</p>
             </div>
             @elseif($pedido->status == 5)
             <div class="m-0 p-2 text-center">
@@ -64,6 +64,29 @@
 </div>
 <!-- FIM HEADER -->
 
+
+@if($pedido->status == 4)
+<div class="col">
+    <div class="card text-bg-danger">
+        <div class="card-header fw-bold">Motivo rejeição</div>
+        <div class="card-body">
+            <p class="card-text">{{ $pedido->mensagem_cancelamento_rejeicao }}</p>
+        </div>
+    </div>
+</div>
+
+@elseif($pedido->status == 5)
+<div class="col">
+    <div class="card text-bg-danger">
+        <div class="card-header fw-bold">Motivo cancelamento</div>
+        <div class="card-body">
+            <p class="card-text">{{ $pedido->mensagem_cancelamento_rejeicao }}</p>
+        </div>
+    </div>
+</div>
+
+@endif
+
 <!-- AÇÕES -->
 <div class="bg-white rounded border p-3">
     <div class="row">
@@ -82,7 +105,8 @@
             </a>
         </div>
         <div class="col">
-            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center">
+            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center" data-bs-toggle="modal"
+                data-bs-target="#rejeitarModal">
                 <span class="material-symbols-outlined mr-1">
                     dangerous
                 </span>
@@ -91,6 +115,42 @@
                 </span>
             </a>
         </div>
+
+        <!-- MODAL REJEITAR PEDIDO -->
+        <div class="modal fade" id="rejeitarModal" tabindex="-1" aria-labelledby="rejeitarModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- FORM ACAO -->
+                <form action="{{route('pedido.rejeitar', ['id' => $pedido->id])}}" method="POST" class="my-2">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="rejeitarModal">Deseja mesmo rejeitar esse pedido?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="px-4">
+                                Após rejeitar pedido essa ação não poderá ser desfeita!
+                            </p>
+                            <div class="form-floating mt-1">
+                                <input type="text" class="form-control @error('motivo') is-invalid @enderror"
+                                    id="inputArea" name="motivo" autocomplete="off" required>
+                                <label for="inputArea">Qual o motivo?</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-danger px-5">
+                                Rejeitar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- FIM FORM -->
+            </div>
+        </div>
+        <!-- FIM MODAL REJEITAR -->
 
         @elseif($pedido->status == 1)
         <div class="col">
@@ -105,7 +165,8 @@
             </a>
         </div>
         <div class="col">
-            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center">
+            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center" data-bs-toggle="modal"
+                data-bs-target="#cancelarModal">
                 <span class="material-symbols-outlined mr-1">
                     dangerous
                 </span>
@@ -114,6 +175,43 @@
                 </span>
             </a>
         </div>
+
+        <!-- MODAL REJEITAR PEDIDO -->
+        <div class="modal fade" id="cancelarModal" tabindex="-1" aria-labelledby="cancelarModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- FORM ACAO -->
+                <form action="{{route('pedido.cancelar', ['id' => $pedido->id])}}" method="POST" class="my-2">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="cancelarModal">Deseja mesmo cancelar esse pedido?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="px-4">
+                                Após cancelar esse pedido essa ação não poderá ser desfeita!
+                            </p>
+                            <div class="form-floating mt-1">
+                                <input type="text" class="form-control @error('motivo') is-invalid @enderror"
+                                    id="inputArea" name="motivo" autocomplete="off" required>
+                                <label for="inputArea">Qual o motivo?</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-danger px-5">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- FIM FORM -->
+            </div>
+        </div>
+        <!-- FIM MODAL REJEITAR -->
+
 
         @elseif($pedido->status == 2)
         <div class="col">
