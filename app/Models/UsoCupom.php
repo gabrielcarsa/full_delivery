@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UsoCupom extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'uso_cupom';
 
     public function cupom()

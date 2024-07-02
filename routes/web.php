@@ -9,6 +9,7 @@ use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\CupomController;
 
 
 /*
@@ -105,5 +106,8 @@ Route::middleware([
         Route::post('/pedido/rejeitar', [PedidoController::class, 'rejeitar'])->name('pedido.rejeitar');
         Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar'])->name('pedido.cancelar');
 
-        
+        //CUPOM
+        Route::get('/cupom', [CupomController::class, 'index'])->name('cupom');
+        Route::get('/cupom/novo', [CupomController::class, 'create'])->name('cupom.novo');
+
 });

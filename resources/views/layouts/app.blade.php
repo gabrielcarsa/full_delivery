@@ -201,7 +201,7 @@
                                         <a class="dropdown-item" href="">Assinaturas</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="">Cupons</a>
+                                        <a class="dropdown-item" href="{{ route('cupom') }}">Cupons</a>
                                     </li>
                                 </ul>
                             </li>
