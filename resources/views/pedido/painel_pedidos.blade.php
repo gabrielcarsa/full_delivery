@@ -3,8 +3,8 @@
     <div class="row m-0">
 
         <!-- MENU LATERAL PEDIDOS -->
-        <div class="col-md-auto m-0 p-0 bg-white" style="overflow-y: auto; overflow-x: hidden;">
-            <div class="bg-white border-end m-0" style="max-width: 400px">
+        <div class="col-md-auto m-0 p-0 vh-100" style="overflow-y: auto; overflow-x: hidden;">
+            <div class="bg-dark border-end m-0 h-100" style="max-width: 400px">
 
                 <!-- HEADER -->
                 <div class="p-2 m-0">
@@ -20,36 +20,42 @@
                             </a>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col d-flex align-items-center">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Pendentes</a></li>
-                                    <li><a class="dropdown-item" href="#">Em preparo</a></li>
-                                    <li><a class="dropdown-item" href="#">A caminho</a></li>
-                                    <li><a class="dropdown-item" href="#">Concluido</a></li>
-                                    <li><a class="dropdown-item" href="#">Rejeitado</a></li>
-                                    <li><a class="dropdown-item" href="#">Cancelado</a></li>
-                                </ul>
-                            </div>
-                            <div class="m-1">
-                                <a href="" class="btn btn-primary d-flex align-items-center">
-                                    <span class="material-symbols-outlined">
-                                        search
-                                    </span>
-                                </a>
 
-                            </div>
+                    <!-- HEADER -->
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="m-3 fw-bolder fs-1 text-white">
+                                Pedidos
+                                <span class="text-white-50 fs-3">
+                                    ({{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}})
+                                </span>
+                            </h2>
                         </div>
-                        <div class="col fw-semibold fs-4 text-secondary d-flex align-items-center justify-content-end">
-                            <p class="">
-                                {{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}}
-                            </p>
+                    </div>
+                    <!-- FIM HEADER -->
+
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Filtrar
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Pendentes</a></li>
+                                <li><a class="dropdown-item" href="#">Em preparo</a></li>
+                                <li><a class="dropdown-item" href="#">A caminho</a></li>
+                                <li><a class="dropdown-item" href="#">Concluido</a></li>
+                                <li><a class="dropdown-item" href="#">Rejeitado</a></li>
+                                <li><a class="dropdown-item" href="#">Cancelado</a></li>
+                            </ul>
+                        </div>
+                        <div class="m-1">
+                            <a href="" class="btn btn-primary d-flex align-items-center">
+                                <span class="material-symbols-outlined">
+                                    search
+                                </span>
+                            </a>
+
                         </div>
                     </div>
                 </div>
@@ -62,7 +68,8 @@
                     @foreach($data['pedidos'] as $pedido)
 
                     <!-- COLLAPSE PEDIDOS -->
-                    <div class="bg-light my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'border-end-0 border-top-0 border-bottom-0 border-dark border-4' : '' }}">
+                    <div
+                        class="bg-black my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'border-end-0 border-top-0 border-bottom-0 border-light border-5' : '' }}">
                         @if($pedido->status == 0)
                         <div class="bg-warning m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold">PENDENTE</p>
@@ -81,28 +88,28 @@
                         </div>
                         @elseif($pedido->status == 4)
                         <div class="bg-danger m-0 p-0 text-center rounded">
-                            <p class="m-0 p-0 fw-bold">REJEITADO</p>
+                            <p class="m-0 p-0 fw-bold text-white">REJEITADO</p>
                         </div>
                         @elseif($pedido->status == 5)
                         <div class="bg-danger m-0 p-0 text-center rounded">
-                            <p class="m-0 p-0 fw-bold">CANCELADO</p>
+                            <p class="m-0 p-0 fw-bold text-white">CANCELADO</p>
                         </div>
                         @endif
-                        <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
+                        <p class="text-white-50 fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
-                        <!-- HEADER COLLAPSE PEDIDOS -->
+                        <!-- HEADER PEDIDOS -->
                         <div class="row px-2">
                             <div class="col-md-8">
-                                <h4 class="fw-bold fs-4">{{$pedido->cliente->nome}}</h4>
+                                <h4 class="fw-bold fs-4 text-white">{{$pedido->cliente->nome}}</h4>
                             </div>
-                            <div class="col-md-4 d-flex justify-content-end">
+                            <div class="col-md-4 d-flex justify-content-end text-light">
                                 <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
                             </div>
                         </div>
-                        <!-- FIM HEADER COLLAPSE PEDIDOS -->
+                        <!-- FIM COLLAPSE PEDIDOS -->
 
                         <!-- CORPO COLLAPSE PEDIDOS -->
-                        <div class="text-secondary fw-medium px-2">
+                        <div class="text-white-50 fw-medium px-2">
                             @if($pedido->consumo_local_viagem_delivery == 1)
                             <p class="p-0 m-0">
                                 Consumo no local
@@ -127,7 +134,7 @@
 
                         <!-- BTN COLLAPSE PEDIDOS -->
                         <div class="row m-3">
-                            <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-outline-dark">Ver
+                            <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="btn btn-outline-light">Ver
                                 detalhes</a>
                         </div>
 
