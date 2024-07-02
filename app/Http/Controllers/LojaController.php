@@ -3,42 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Restaurante;
+use App\Models\Loja;
 use App\Models\HorarioFuncionamento;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class RestauranteController extends Controller
+class LojaController extends Controller
 {
      //ESCOLHER RESTAURANTE
      public function choose(Request $request, $id){
-        //Buscando restaurante
-        $restaurante = Restaurante::where('id', $id)->get();
+        //Buscando loja
+        $loja = Loja::where('id', $id)->get();
 
-        //Definindo variavel de sessão de restaurante
-        session(['restauranteConectado' => ['id'=> $id, 'nome'=> $restaurante[0]->nome]]);
+        //Definindo variavel de sessão de loja
+        session(['lojaConectado' => ['id'=> $id, 'nome'=> $loja[0]->nome]]);
 
-        return redirect()->route('restaurante')->with('success', 'Conectado como '.session('restauranteConectado')['nome']);
+        return redirect()->route('loja')->with('success', 'Conectado como '.session('lojaConectado')['nome']);
     }
 
     //LISTAGEM
     public function index(){
-        //dd(session('restauranteConectado')['nome']);
-        $restaurantes = Restaurante::all();
+        //dd(session('lojaConectado')['nome']);
+        $lojas = Loja::all();
         $horarios_funcionamento = HorarioFuncionamento::all();
-        return view('restaurante/listar', compact('restaurantes', 'horarios_funcionamento'));
+        return view('loja/listar', compact('lojas', 'horarios_funcionamento'));
     }
 
     //RETORNAR VIEW PARA CONFIGURAÇÕES
     public function configuracao(Request $request){
         $id = $request->input('id');
         if($id != null){
-            $restaurante = Restaurante::where('id' , $id)->first();
-            $horarios = HorarioFuncionamento::where('restaurante_id' , $id)->get();
-            return view('restaurante.configuracao', compact('restaurante', 'horarios'));
+            $loja = Loja::where('id' , $id)->first();
+            $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+            return view('loja.configuracao', compact('loja', 'horarios'));
         }else{
-            return view('restaurante.configuracao');
+            return view('loja.configuracao');
         }
     }
 
@@ -62,37 +62,37 @@ class RestauranteController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        //Cadastro de restaurante
-        $restaurante = new Restaurante();
+        //Cadastro de loja
+        $loja = new Loja();
 
         //Informações Gerais
-        $restaurante->nome = $request->input('nome');
-        $restaurante->descricao = $request->input('descricao');
-        $restaurante->area_entrega_metros = 5000; // valor padrão
-        $restaurante->is_taxa_entrega_free = true;
-        $restaurante->cadastrado_usuario_id = $usuario_id;
+        $loja->nome = $request->input('nome');
+        $loja->descricao = $request->input('descricao');
+        $loja->area_entrega_metros = 5000; // valor padrão
+        $loja->is_taxa_entrega_free = true;
+        $loja->cadastrado_usuario_id = $usuario_id;
         if ($request->hasFile('imagem')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "logo";
-            $request->file('imagem')->storeAs('public/'.$restaurante->nome, $nomeArquivo);
-            $restaurante->logo = $nomeArquivo;
+            $request->file('imagem')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            $loja->logo = $nomeArquivo;
         }
 
         //Endereço
-        $restaurante->cep = $request->input('cep');
-        $restaurante->rua = $request->input('rua');
-        $restaurante->bairro = $request->input('bairro');
-        $restaurante->numero = $request->input('numero');
-        $restaurante->complemento = $request->input('complemento');
-        $restaurante->cidade = $request->input('cidade');
-        $restaurante->estado = $request->input('estado');
-        $restaurante->save();
+        $loja->cep = $request->input('cep');
+        $loja->rua = $request->input('rua');
+        $loja->bairro = $request->input('bairro');
+        $loja->numero = $request->input('numero');
+        $loja->complemento = $request->input('complemento');
+        $loja->cidade = $request->input('cidade');
+        $loja->estado = $request->input('estado');
+        $loja->save();
 
         //Horario Funcionamento
         $i = 0;
         for($i; $i < 7; $i++){
             $horario_funcionamento = new HorarioFuncionamento();
-            $horario_funcionamento->restaurante_id = $restaurante->id;
+            $horario_funcionamento->loja_id = $loja->id;
             $horario_funcionamento->dia_semana = $i;
             $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
             $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
@@ -101,11 +101,11 @@ class RestauranteController extends Controller
         }
 
 
-        return redirect()->route('restaurante')->with('success', 'Cadastro feito com sucesso');
+        return redirect()->route('loja')->with('success', 'Cadastro feito com sucesso');
     }
 
     //ALTERAR
-    public function update(Request $request, $usuario_id, $restaurante_id){
+    public function update(Request $request, $usuario_id, $loja_id){
         
        // Validação do formulário
        $validator = Validator::make($request->all(), [
@@ -124,29 +124,29 @@ class RestauranteController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        //Alterar restaurante
-        $restaurante = Restaurante::where('id', $restaurante_id)->first();
+        //Alterar loja
+        $loja = Loja::where('id', $loja_id)->first();
 
         //Informações Gerais
-        $restaurante->nome = $request->input('nome');
-        $restaurante->descricao = $request->input('descricao');
-        $restaurante->cadastrado_usuario_id = $usuario_id;
+        $loja->nome = $request->input('nome');
+        $loja->descricao = $request->input('descricao');
+        $loja->cadastrado_usuario_id = $usuario_id;
 
         //Endereço
-        $restaurante->cep = $request->input('cep');
-        $restaurante->rua = $request->input('rua');
-        $restaurante->bairro = $request->input('bairro');
-        $restaurante->numero = $request->input('numero');
-        $restaurante->complemento = $request->input('complemento');
-        $restaurante->cidade = $request->input('cidade');
-        $restaurante->estado = $request->input('estado');
-        $restaurante->save();
+        $loja->cep = $request->input('cep');
+        $loja->rua = $request->input('rua');
+        $loja->bairro = $request->input('bairro');
+        $loja->numero = $request->input('numero');
+        $loja->complemento = $request->input('complemento');
+        $loja->cidade = $request->input('cidade');
+        $loja->estado = $request->input('estado');
+        $loja->save();
 
         //Horario Funcionamento
         $i = 0;
         for($i; $i < 7; $i++){
-            $horario_funcionamento = HorarioFuncionamento::where('restaurante_id', $restaurante_id)->where('dia_semana', $i)->first();
-            $horario_funcionamento->restaurante_id = $restaurante->id;
+            $horario_funcionamento = HorarioFuncionamento::where('loja_id', $loja_id)->where('dia_semana', $i)->first();
+            $horario_funcionamento->loja_id = $loja->id;
             $horario_funcionamento->dia_semana = $i;
             $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
             $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
@@ -155,11 +155,11 @@ class RestauranteController extends Controller
         }
 
 
-        return redirect()->route('restaurante')->with('success', 'Alteração feita com sucesso');
+        return redirect()->route('loja')->with('success', 'Alteração feita com sucesso');
     }
 
     //ALTERAR LOGO
-    public function update_logo(Request $request, $restaurante_id){
+    public function update_logo(Request $request, $loja_id){
          // Validação do formulário
          $validator = Validator::make($request->all(), [
             //TODO: fazer validações
@@ -171,32 +171,32 @@ class RestauranteController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }  
         
-        //Alterar restaurante
-        $restaurante = Restaurante::find($restaurante_id)->first();
+        //Alterar loja
+        $loja = Loja::find($loja_id)->first();
 
         if ($request->hasFile('logo')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "logo";
             $request->file('logo')->storeAs('public/logo', $nomeArquivo);
-            $restaurante->logo = $nomeArquivo;
+            $loja->logo = $nomeArquivo;
         }
 
-        return redirect()->route('restaurante')->with('success', 'Logo alterada com sucesso');
+        return redirect()->route('loja')->with('success', 'Logo alterada com sucesso');
 
     }
 
     //LISTAGEM ENTREGAS TAXAS
     public function show_entrega_taxas(){
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
-        //Dados do restaurante
-        $id = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id)->first();
+        //Dados do loja
+        $id = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id)->first();
 
-        return view('restaurante/entrega_taxas', compact('restaurante'));    
+        return view('loja/entrega_taxas', compact('loja'));    
     }
 
     //DEFINIR TAXA DE ENTREGA FREE  
@@ -204,11 +204,11 @@ class RestauranteController extends Controller
         $id = $request->input('id');
 
         //Alterando
-        $restaurante = Restaurante::find($id);
-        $restaurante->taxa_por_km_entrega = null; 
-        $restaurante->is_taxa_entrega_free = true; 
-        $restaurante->taxa_entrega_fixa = null; 
-        $restaurante->save();
+        $loja = Loja::find($id);
+        $loja->taxa_por_km_entrega = null; 
+        $loja->is_taxa_entrega_free = true; 
+        $loja->taxa_entrega_fixa = null; 
+        $loja->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega gratuita');
     }
@@ -233,11 +233,11 @@ class RestauranteController extends Controller
         }
 
         //Alterando
-        $restaurante = Restaurante::find($id);
-        $restaurante->taxa_por_km_entrega = (double) $request->input('taxa_por_km_entrega'); 
-        $restaurante->is_taxa_entrega_free = false; 
-        $restaurante->taxa_entrega_fixa = null; 
-        $restaurante->save();
+        $loja = Loja::find($id);
+        $loja->taxa_por_km_entrega = (double) $request->input('taxa_por_km_entrega'); 
+        $loja->is_taxa_entrega_free = false; 
+        $loja->taxa_entrega_fixa = null; 
+        $loja->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega por km');
     }
@@ -261,29 +261,29 @@ class RestauranteController extends Controller
         }
 
         //Alterando
-        $restaurante = Restaurante::find($id);
-        $restaurante->taxa_por_km_entrega = null; 
-        $restaurante->is_taxa_entrega_free = false; 
-        $restaurante->taxa_entrega_fixa = (double) $request->input('taxa_entrega_fixa'); 
-        $restaurante->save();
+        $loja = Loja::find($id);
+        $loja->taxa_por_km_entrega = null; 
+        $loja->is_taxa_entrega_free = false; 
+        $loja->taxa_entrega_fixa = (double) $request->input('taxa_entrega_fixa'); 
+        $loja->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega fixa');
     }
 
      //LISTAGEM ENTREGAS AREAS
      public function show_entrega_areas(){
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
-        //Dados do restaurante
-        $id = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id)->first();
+        //Dados do loja
+        $id = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id)->first();
 
         //API KEY
         $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
-        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$restaurante->cep}&key={$apiKey}");
+        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$loja->cep}&key={$apiKey}");
         $data = $response->json();
 
         if ($data['status'] == 'OK') {
@@ -294,10 +294,10 @@ class RestauranteController extends Controller
             $data_maps = [
                 'latitude' => $latitude,
                 'longitude' => $longitude,
-                'cep' => $restaurante->cep,
+                'cep' => $loja->cep,
             ];
 
-            return view('restaurante/entrega_areas', compact('restaurante', 'data_maps'));
+            return view('loja/entrega_areas', compact('loja', 'data_maps'));
         } else {
             return "CEP não encontrado.";
         }
@@ -318,9 +318,9 @@ class RestauranteController extends Controller
         }
 
         //Alterando
-        $restaurante = Restaurante::find($id);
-        $restaurante->area_entrega_metros = $request->input('area_entrega_metros'); 
-        $restaurante->save();
+        $loja = Loja::find($id);
+        $loja->area_entrega_metros = $request->input('area_entrega_metros'); 
+        $loja->save();
 
         return redirect()->back()->with('success', 'Definido área em metros');
     }

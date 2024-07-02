@@ -48,12 +48,12 @@
             @endif
         </div>
         <div class="col m-0 text-center">
-            <p class="m-0 p-0 fw-bold fs-6">Restaurante</p>
+            <p class="m-0 p-0 fw-bold fs-6">Loja</p>
             <p class="m-0 p-0 fs-6 fw-regular text-secondary d-flex align-items-center justify-content-center">
                 <span class="material-symbols-outlined mr-2">
                     storefront
                 </span>
-                {{ $pedido->restaurante->nome }}
+                {{ $pedido->loja->nome }}
             </p>
 
         </div>

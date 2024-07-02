@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\RestauranteController;
+use App\Http\Controllers\LojaController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
@@ -43,20 +43,20 @@ Route::middleware([
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
         
         //RESTAURANTE
-        Route::post('/escolher-restaurante/{id}', [RestauranteController::class, 'choose']);
-        Route::get('/restaurante', [RestauranteController::class, 'index'])->name('restaurante');
-        Route::get('/restaurante/configurar', [RestauranteController::class, 'configuracao'])->name('restaurante.configurar');
-        Route::post('/restaurante/cadastrar/{usuario_id}', [RestauranteController::class, 'store']);
-        Route::put('/restaurante/alterar/{usuario_id}/{restaurante_id}', [RestauranteController::class, 'update']);
-        Route::put('/restaurante/alterar-logo/{restaurante_id}', [RestauranteController::class, 'update_logo']);
+        Route::post('/escolher-loja/{id}', [LojaController::class, 'choose']);
+        Route::get('/loja', [LojaController::class, 'index'])->name('loja');
+        Route::get('/loja/configurar', [LojaController::class, 'configuracao'])->name('loja.configurar');
+        Route::post('/loja/cadastrar/{usuario_id}', [LojaController::class, 'store']);
+        Route::put('/loja/alterar/{usuario_id}/{loja_id}', [LojaController::class, 'update']);
+        Route::put('/loja/alterar-logo/{loja_id}', [LojaController::class, 'update_logo']);
        
         //ENTREGAS RESTAURANTE
-        Route::get('/entregas-taxas', [RestauranteController::class, 'show_entrega_taxas'])->name('restaurante.entrega_taxas');
-        Route::get('/entregas-areas', [RestauranteController::class, 'show_entrega_areas'])->name('restaurante.entrega_areas');
-        Route::post('/entregas/gratuita', [RestauranteController::class, 'taxa_entrega_free'])->name('restaurante.taxa_entrega_free');
-        Route::post('/entregas/por-km', [RestauranteController::class, 'taxa_por_km_entrega'])->name('restaurante.taxa_por_km_entrega');
-        Route::post('/entregas/fixa', [RestauranteController::class, 'taxa_entrega_fixa'])->name('restaurante.taxa_entrega_fixa');
-        Route::post('/entregas/areas-metros', [RestauranteController::class, 'area_entrega_metros'])->name('restaurante.area_entrega_metros');
+        Route::get('/entregas-taxas', [LojaController::class, 'show_entrega_taxas'])->name('loja.entrega_taxas');
+        Route::get('/entregas-areas', [LojaController::class, 'show_entrega_areas'])->name('loja.entrega_areas');
+        Route::post('/entregas/gratuita', [LojaController::class, 'taxa_entrega_free'])->name('loja.taxa_entrega_free');
+        Route::post('/entregas/por-km', [LojaController::class, 'taxa_por_km_entrega'])->name('loja.taxa_por_km_entrega');
+        Route::post('/entregas/fixa', [LojaController::class, 'taxa_entrega_fixa'])->name('loja.taxa_entrega_fixa');
+        Route::post('/entregas/areas-metros', [LojaController::class, 'area_entrega_metros'])->name('loja.area_entrega_metros');
 
 
         //CATEGORIA PRODUTO

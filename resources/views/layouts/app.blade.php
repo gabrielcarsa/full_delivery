@@ -43,14 +43,14 @@
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
                         <p class="p-0 m-0 fw-regular" style="font-size: 14px">conectado como</p>
                         <h4 class="p-0 m-0 fs-3 fw-bold">
-                            {{session('restauranteConectado') != null ? session('restauranteConectado')['nome'] : '---'}}
+                            {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : '---'}}
                         </h4>
-                        <a href="{{ route('restaurante') }}"
+                        <a href="{{ route('loja') }}"
                             class="d-flex align-items-center align-middle fs-6 text-decoration-none">
                             <span class="material-symbols-outlined fs-6">
                                 change_circle
                             </span>
-                            <span>{{session('restauranteConectado') != null ? 'Trocar restaurante': 'Selecionar restaurante'}}</span>
+                            <span>{{session('lojaConectado') != null ? 'Trocar loja': 'Selecionar loja'}}</span>
                         </a>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
@@ -97,12 +97,12 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('restaurante') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
-                                    href="{{ route('restaurante') }}">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('loja') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
+                                    href="{{ route('loja') }}">
                                     <span class="material-symbols-outlined">
                                         storefront
                                     </span>
-                                    <span class="ml-1 d-none d-sm-inline">Restaurante</span>
+                                    <span class="ml-1 d-none d-sm-inline">Loja</span>
                                 </a>
                             </li>
 
@@ -118,12 +118,12 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('restaurante.entrega_taxas') }}">
+                                        <a class="dropdown-item" href="{{ route('loja.entrega_taxas') }}">
                                             Taxas
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('restaurante.entrega_areas') }}">
+                                        <a class="dropdown-item" href="{{ route('loja.entrega_areas') }}">
                                             Áreas
                                         </a>
                                     </li>

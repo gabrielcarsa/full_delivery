@@ -5,7 +5,7 @@
 
         <!-- CARD HEADER -->
         <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between dropdown">
-            <h2 class="m-0 fw-semibold fs-5">Restaurante</h2>
+            <h2 class="m-0 fw-semibold fs-5">Loja</h2>
 
         </div>
         <!-- FIM CARD HEADER -->
@@ -37,10 +37,10 @@
 
             <!-- FORM -->
             <form class="row g-3"
-                action="{{!empty($restaurante) ? '/restaurante/alterar/' . Auth::user()->id . '/' . $restaurante->id : '/restaurante/cadastrar/' . Auth::user()->id}}"
+                action="{{!empty($loja) ? '/loja/alterar/' . Auth::user()->id . '/' . $loja->id : '/loja/cadastrar/' . Auth::user()->id}}"
                 method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
-                @if(!empty($restaurante))
+                @if(!empty($loja))
                 @method('PUT')
                 @endif
 
@@ -56,7 +56,7 @@
                         </h2>
                         <div id="panelsStayOpen-geral" class="accordion-collapse collapse show">
                             <div class="accordion-body">
-                                @if(empty($restaurante))
+                                @if(empty($loja))
                                 <div class="input-group">
                                     <label class="input-group-text" for="inputImagem">Logo</label>
                                     <input type="file" class="form-control @error('imagem') is-invalid @enderror"
@@ -69,14 +69,14 @@
                                     <div class="col-md-6">
                                         <label for="inputNome" class="form-label">Nome</label>
                                         <input type="text" name="nome"
-                                            value="{{!empty($restaurante) ? $restaurante->nome : old('nome')}}"
+                                            value="{{!empty($loja) ? $loja->nome : old('nome')}}"
                                             class="form-control @error('nome') is-invalid @enderror" id="inputNome"
                                             required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="inputDescricao" class="form-label">Descrição</label>
                                         <input type="text" name="descricao"
-                                            value="{{!empty($restaurante) ? $restaurante->descricao : old('descricao')}}"
+                                            value="{{!empty($loja) ? $loja->descricao : old('descricao')}}"
                                             class="form-control @error('descricao') is-invalid @enderror"
                                             id="inputDescricao" required>
                                     </div>
@@ -100,7 +100,7 @@
                                     <div class="col-5">
                                         <label for="inputCep" class="form-label">CEP</label>
                                         <input type="text" name="cep"
-                                            value="{{!empty($restaurante) ? $restaurante->cep : old('cep')}}"
+                                            value="{{!empty($loja) ? $loja->cep : old('cep')}}"
                                             class="form-control" id="inputCep" required>
                                     </div>
                                     <div class="col-3">
@@ -114,37 +114,37 @@
                                     <div class="col-md-5">
                                         <label for="inputRua" class="form-label">Rua</label>
                                         <input type="text" name="rua"
-                                            value="{{!empty($restaurante) ? $restaurante->rua : old('rua')}}"
+                                            value="{{!empty($loja) ? $loja->rua : old('rua')}}"
                                             class="form-control" id="inputRua" required>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="inputBairro" class="form-label">Bairro</label>
                                         <input type="text" name="bairro"
-                                            value="{{!empty($restaurante) ? $restaurante->bairro : old('bairro')}}"
+                                            value="{{!empty($loja) ? $loja->bairro : old('bairro')}}"
                                             class="form-control" id="inputBairro" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label for="inputNumero" class="form-label">Número</label>
                                         <input type="text" name="numero"
-                                            value="{{!empty($restaurante) ? $restaurante->numero : old('numero')}}"
+                                            value="{{!empty($loja) ? $loja->numero : old('numero')}}"
                                             class="form-control" id="inputNumero" required>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="inputComplemento" class="form-label">Complemento</label>
                                         <input type="text" name="complemento"
-                                            value="{{!empty($restaurante) ? $restaurante->complemento : old('complemento')}}"
+                                            value="{{!empty($loja) ? $loja->complemento : old('complemento')}}"
                                             class="form-control" id="inputComplemento">
                                     </div>
                                     <div class="col-md-5">
                                         <label for="inputCidade" class="form-label">Cidade</label>
                                         <input type="text" name="cidade"
-                                            value="{{!empty($restaurante) ? $restaurante->cidade : old('cidade')}}"
+                                            value="{{!empty($loja) ? $loja->cidade : old('cidade')}}"
                                             class="form-control" id="inputCidade" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label for="inputEstado" class="form-label">Estado</label>
                                         <input type="text" name="estado"
-                                            value="{{!empty($restaurante) ? $restaurante->estado : old('estado')}}"
+                                            value="{{!empty($loja) ? $loja->estado : old('estado')}}"
                                             class="form-control" id="inputEstado" required>
                                     </div>
                                 </div>
@@ -165,10 +165,10 @@
                             <div class="accordion-body">
 
                                 <!-- se já houver cadastro -->
-                                @if(!empty($restaurante))
+                                @if(!empty($loja))
 
                                 @foreach($horarios as $horario)
-                                @if($horario->dia_semana == 1 && $horario->restaurante_id == $restaurante->id)
+                                @if($horario->dia_semana == 1 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Segunda-feira</h4>
                                     <div class="col-md-3">
@@ -184,7 +184,7 @@
                                             class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
-                                @elseif($horario->dia_semana == 2 && $horario->restaurante_id == $restaurante->id)
+                                @elseif($horario->dia_semana == 2 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Terça-feira</h4>
                                     <div class="col-md-3">
@@ -200,7 +200,7 @@
                                             class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
-                                @elseif($horario->dia_semana == 3 && $horario->restaurante_id == $restaurante->id)
+                                @elseif($horario->dia_semana == 3 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Quarta-feira</h4>
                                     <div class="col-md-3">
@@ -216,7 +216,7 @@
                                             class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
-                                @elseif($horario->dia_semana == 4 && $horario->restaurante_id == $restaurante->id)
+                                @elseif($horario->dia_semana == 4 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Quinta-feira</h4>
                                     <div class="col-md-3">
@@ -232,7 +232,7 @@
                                             class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
-                                @elseif($horario->dia_semana == 5 && $horario->restaurante_id == $restaurante->id)
+                                @elseif($horario->dia_semana == 5 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Sexta-feira</h4>
                                     <div class="col-md-3">
@@ -248,7 +248,7 @@
                                             class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
-                                @elseif($horario->dia_semana == 6 && $horario->restaurante_id == $restaurante->id)
+                                @elseif($horario->dia_semana == 6 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Sabádo</h4>
                                     <div class="col-md-3">
@@ -264,7 +264,7 @@
                                             class="form-control" id="inputDiaSemana" required>
                                     </div>
                                 </div>
-                                @elseif($horario->dia_semana == 0 && $horario->restaurante_id == $restaurante->id)
+                                @elseif($horario->dia_semana == 0 && $horario->loja_id == $loja->id)
                                 <div class="row mt-3">
                                     <h4>Domingo</h4>
                                     <div class="col-md-3">

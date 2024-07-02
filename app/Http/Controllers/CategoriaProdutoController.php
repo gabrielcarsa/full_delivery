@@ -7,28 +7,28 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\CategoriaProduto;
-use App\Models\Restaurante;
+use App\Models\Loja;
 
 class CategoriaProdutoController extends Controller
 {
     //LISTAGEM
     public function index(){
 
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar as categorias e produtos');
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
-        //Sessão do restaurante que está conectado
-        $restauranteIdConectado = session('restauranteConectado')['id'];
+        //Sessão do loja que está conectado
+        $lojaIdConectado = session('lojaConectado')['id'];
 
         $categorias = DB::table('categoria_produto as cp')
         ->select(
             'cp.*',
-            'r.nome as restaurante'
+            'r.nome as loja'
         )
-        ->join('restaurante as r', 'r.id', '=', 'cp.restaurante_id')
+        ->join('loja as r', 'r.id', '=', 'cp.loja_id')
         ->orderBy('cp.ordem')
-        ->where('cp.restaurante_id', $restauranteIdConectado)
+        ->where('cp.loja_id', $lojaIdConectado)
         ->get();
         return view('categoria_produto/listar', compact('categorias'));
     }
@@ -36,9 +36,9 @@ class CategoriaProdutoController extends Controller
     //RETORNAR VIEW PARA CADASTRO
     public function create(Request $request){
 
-        $restaurantes = Restaurante::all();
+        $lojas = Loja::all();
 
-        return view('categoria_produto/novo', compact('restaurantes'));
+        return view('categoria_produto/novo', compact('lojas'));
     }
 
     //CADASTRAR
@@ -56,7 +56,7 @@ class CategoriaProdutoController extends Controller
         $categoria->nome = $request->input('nome');
         $categoria->descricao = $request->input('descricao');
         $categoria->ordem = $request->input('ordem');
-        $categoria->restaurante_id = $request->input('restaurante_id');
+        $categoria->loja_id = $request->input('loja_id');
         $categoria->cadastrado_usuario_id = $usuario_id;
         $categoria->save();
 
@@ -85,7 +85,7 @@ class CategoriaProdutoController extends Controller
          $categoria->nome = $request->input('nome');
          $categoria->descricao = $request->input('descricao');
          $categoria->ordem = $request->input('ordem');
-         $categoria->restaurante_id = $request->input('restaurante_id');
+         $categoria->loja_id = $request->input('loja_id');
          $categoria->alterado_usuario_id = $usuario_id;
          $categoria->save();
  

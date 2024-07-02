@@ -138,7 +138,7 @@
                                 <div class="col-5">
                                     <label for="inputCep" class="form-label">CEP</label>
                                     <input type="text" name="cep"
-                                        value="{{!empty($restaurante) ? $restaurante->cep : old('cep')}}"
+                                        value="{{!empty($loja) ? $loja->cep : old('cep')}}"
                                         class="form-control" id="inputCep" required>
                                 </div>
                                 <div class="col-3">
@@ -152,37 +152,37 @@
                                 <div class="col-md-5">
                                     <label for="inputRua" class="form-label">Rua</label>
                                     <input type="text" name="rua"
-                                        value="{{!empty($restaurante) ? $restaurante->rua : old('rua')}}"
+                                        value="{{!empty($loja) ? $loja->rua : old('rua')}}"
                                         class="form-control" id="inputRua" required>
                                 </div>
                                 <div class="col-md-5">
                                     <label for="inputBairro" class="form-label">Bairro</label>
                                     <input type="text" name="bairro"
-                                        value="{{!empty($restaurante) ? $restaurante->bairro : old('bairro')}}"
+                                        value="{{!empty($loja) ? $loja->bairro : old('bairro')}}"
                                         class="form-control" id="inputBairro" required>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="inputNumero" class="form-label">Número</label>
                                     <input type="text" name="numero"
-                                        value="{{!empty($restaurante) ? $restaurante->numero : old('numero')}}"
+                                        value="{{!empty($loja) ? $loja->numero : old('numero')}}"
                                         class="form-control" id="inputNumero" required>
                                 </div>
                                 <div class="col-md-5">
                                     <label for="inputComplemento" class="form-label">Complemento</label>
                                     <input type="text" name="complemento"
-                                        value="{{!empty($restaurante) ? $restaurante->complemento : old('complemento')}}"
+                                        value="{{!empty($loja) ? $loja->complemento : old('complemento')}}"
                                         class="form-control" id="inputComplemento">
                                 </div>
                                 <div class="col-md-5">
                                     <label for="inputCidade" class="form-label">Cidade</label>
                                     <input type="text" name="cidade"
-                                        value="{{!empty($restaurante) ? $restaurante->cidade : old('cidade')}}"
+                                        value="{{!empty($loja) ? $loja->cidade : old('cidade')}}"
                                         class="form-control" id="inputCidade" required>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="inputEstado" class="form-label">Estado</label>
                                     <input type="text" name="estado"
-                                        value="{{!empty($restaurante) ? $restaurante->estado : old('estado')}}"
+                                        value="{{!empty($loja) ? $loja->estado : old('estado')}}"
                                         class="form-control" id="inputEstado" required>
                                 </div>
                             </div>

@@ -26,12 +26,12 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Restaurante <span
-                        class="text-secondary fs-3">({{$restaurantes->count()}})</span></h2>
+                <h2 class="my-3 fw-bolder fs-1">Loja <span
+                        class="text-secondary fs-3">({{$lojas->count()}})</span></h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
-                    href="{{route('restaurante.configurar')}}">
+                    href="{{route('loja.configurar')}}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>
@@ -43,11 +43,11 @@
 
 
         <!-- RESTAURANTES -->
-        @if($restaurantes->isNotEmpty())
+        @if($lojas->isNotEmpty())
 
-        @foreach($restaurantes as $restaurante)
+        @foreach($lojas as $loja)
         <div
-            class="row align-items-center {{ session('restauranteConectado') && session('restauranteConectado')['id'] == $restaurante->id ? 'border-3 border-success' : 'border-3' }} bg-white p-3 rounded m-3">
+            class="row align-items-center {{ session('lojaConectado') && session('lojaConectado')['id'] == $loja->id ? 'border-3 border-success' : 'border-3' }} bg-white p-3 rounded m-3">
             <div class="col-2">
 
                 <!-- BTN EDITAR IMG -->
@@ -65,11 +65,11 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar logo restaurante</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Editar logo loja</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{'/restaurante/alterar-logo/' . $restaurante->id}}" method="post"
+                            <form action="{{'/loja/alterar-logo/' . $loja->id}}" method="post"
                                 autocomplete="off" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
@@ -94,27 +94,27 @@
                 <!-- FIM MODAL -->
 
                 <!-- LOGO RESTAURANTE -->
-                <img src='{{asset("storage/$restaurante->nome/$restaurante->logo")}}' width="250"
-                    alt="Logo {{$restaurante->nome}}" class="shadow-sm rounded">
+                <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250"
+                    alt="Logo {{$loja->nome}}" class="shadow-sm rounded">
 
             </div>
 
             <!-- INFO RESTAURANTE -->
             <div class="col-7">
-                <h2 class="fs-2 fw-bold">{{$restaurante->nome}}</h2>
-                <p class="text-secondary">{{$restaurante->descricao}}</p>
-                <p>{{$restaurante->rua}}, {{$restaurante->numero}} -
-                    {{$restaurante->bairro}}, {{$restaurante->cidade}} {{$restaurante->estado}}.
-                    {{$restaurante->cep}}
+                <h2 class="fs-2 fw-bold">{{$loja->nome}}</h2>
+                <p class="text-secondary">{{$loja->descricao}}</p>
+                <p>{{$loja->rua}}, {{$loja->numero}} -
+                    {{$loja->bairro}}, {{$loja->cidade}} {{$loja->estado}}.
+                    {{$loja->cep}}
                 </p>
-                <a href="{{route('restaurante.configurar', ['id' => $restaurante->id])}}"
+                <a href="{{route('loja.configurar', ['id' => $loja->id])}}"
                     class="btn btn-primary mb-1">Configurações</a>
 
-                @if(session('restauranteConectado') != null && session('restauranteConectado')['id'] ==
-                $restaurante->id)
+                @if(session('lojaConectado') != null && session('lojaConectado')['id'] ==
+                $loja->id)
                 <button type="button" class="btn btn-info">Conectado</button>
                 @else
-                <form action="{{'/escolher-restaurante/'.$restaurante->id}}" method="post">
+                <form action="{{'/escolher-loja/'.$loja->id}}" method="post">
                     @csrf
                     <button type="submit" class="btn btn-success">Conectar</button>
                 </form>
@@ -128,19 +128,19 @@
                 @if($horarios_funcionamento->isNotEmpty())
 
                 @foreach($horarios_funcionamento as $horario)
-                @if($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 0)
+                @if($horario->loja_id == $loja->id && $horario->dia_semana == 0)
                 <p class="m-0">Dom: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 1)
+                @elseif($horario->loja_id == $loja->id && $horario->dia_semana == 1)
                 <p class="m-0">Seg: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 2)
+                @elseif($horario->loja_id == $loja->id && $horario->dia_semana == 2)
                 <p class="m-0">Ter: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 3)
+                @elseif($horario->loja_id == $loja->id && $horario->dia_semana == 3)
                 <p class="m-0">Qua: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 4)
+                @elseif($horario->loja_id == $loja->id && $horario->dia_semana == 4)
                 <p class="m-0">Qui: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 5)
+                @elseif($horario->loja_id == $loja->id && $horario->dia_semana == 5)
                 <p class="m-0">Sex: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
-                @elseif($horario->restaurante_id == $restaurante->id && $horario->dia_semana == 6)
+                @elseif($horario->loja_id == $loja->id && $horario->dia_semana == 6)
                 <p class="m-0">Sab: {{$horario->hora_abertura}} - {{$horario->hora_fechamento}}</p>
                 @endif
                 @endforeach
@@ -157,8 +157,8 @@
         <div class="container-fluid mt-5 mb-5 d-flex flex-column align-items-center">
             <img src="{{asset("storage/images/logo.png")}}" width="150px" alt="Foomy"></a>
             <h3 class="fw-semibold fs-4 mt-4">Bem vindo! Vamos começar essa jornada com o Foomy?</h3>
-            <p>Comece configurando as informações do seu restaurante!</p>
-            <a href="{{route('restaurante.configurar')}}" class="btn btn-primary px-5">Iniciar</a>
+            <p>Comece configurando as informações do seu loja!</p>
+            <a href="{{route('loja.configurar')}}" class="btn btn-primary px-5">Iniciar</a>
         </div>
         <!-- FIM SE NÃO HOUVER RESTAURANTES -->
 

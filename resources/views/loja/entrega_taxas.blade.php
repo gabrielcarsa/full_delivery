@@ -10,10 +10,10 @@
         <!-- BODY -->
 
         <!-- SE HOUVER RESTAURANTE -->
-        @if($restaurante != null)
+        @if($loja != null)
 
         <!-- VERIFICAR QUAL OPÇÃO DE ENTREGA -->
-        @if($restaurante->is_taxa_entrega_free == true )
+        @if($loja->is_taxa_entrega_free == true )
 
         <!-- GRATUITA -->
         <div class="bg-white text-bg-light mb-3 p-3 rounded border" style="max-width: 18rem;">
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        @elseif($restaurante->taxa_por_km_entrega != null)
+        @elseif($loja->taxa_por_km_entrega != null)
 
         <!-- POR KM -->
         <div class="bg-white text-bg-light mb-3 p-3 rounded border" style="max-width: 18rem;">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-8">
                     <h5 class="card-title fw-bold fs-2 m-0 p-0">
-                        R$ {{number_format($restaurante->taxa_por_km_entrega, 2, ',', '.')}}
+                        R$ {{number_format($loja->taxa_por_km_entrega, 2, ',', '.')}}
                     </h5>
                     <p class="mb-1 p-0 text-secondary">
                         por km
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        @elseif($restaurante->taxa_entrega_fixa != null)
+        @elseif($loja->taxa_entrega_fixa != null)
 
         <!-- TAXA FIXA -->
         <div class="bg-white text-bg-light mb-3 p-3 rounded border" style="max-width: 18rem;">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-8">
                     <h5 class="card-title fw-bold fs-2 m-0 p-0">
-                        R$ {{number_format($restaurante->taxa_entrega_fixa, 2, ',', '.')}}
+                        R$ {{number_format($loja->taxa_entrega_fixa, 2, ',', '.')}}
                     </h5>
                     <p class="mb-1 p-0 text-secondary">
                         qualquer localidade
@@ -110,10 +110,10 @@
                     <div class="my-2">
                         <p>Entrega grátis para todas localidades.</p>
 
-                        @if($restaurante->is_taxa_entrega_free != true)
+                        @if($loja->is_taxa_entrega_free != true)
 
                         <!-- BTN ACAO -->
-                        <form action="{{ route('restaurante.taxa_entrega_free', ['id' => $restaurante->id]) }}"
+                        <form action="{{ route('loja.taxa_entrega_free', ['id' => $loja->id]) }}"
                             method="POST">
                             @csrf
                             <div class="d-flex justify-content-center">
@@ -152,10 +152,10 @@
                             P: Preço por km
                         </p>
 
-                        @if($restaurante->taxa_por_km_entrega == null)
+                        @if($loja->taxa_por_km_entrega == null)
 
                         <!-- BTN ACAO -->
-                        <form action="{{ route('restaurante.taxa_por_km_entrega', ['id' => $restaurante->id]) }}"
+                        <form action="{{ route('loja.taxa_por_km_entrega', ['id' => $loja->id]) }}"
                             method="POST" class="my-2">
                             @csrf
                             <div class="form-floating mt-1">
@@ -190,10 +190,10 @@
                     <div class="my-2">
                         <p>Taxa de entrega fixa para todas localidades.</p>
 
-                        @if($restaurante->taxa_entrega_fixa == null)
+                        @if($loja->taxa_entrega_fixa == null)
 
                         <!-- BTN ACAO -->
-                        <form action="{{ route('restaurante.taxa_entrega_fixa', ['id' => $restaurante->id]) }}"
+                        <form action="{{ route('loja.taxa_entrega_fixa', ['id' => $loja->id]) }}"
                             method="POST" class="my-2">
                             @csrf
                             <div class="form-floating mt-1">

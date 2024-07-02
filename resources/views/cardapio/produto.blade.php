@@ -17,7 +17,7 @@
             </div>
             <div class="col-md-6">
                 <p class="text-secondary">{{$produto[0]->descricao}}</p>
-                <form action="/adicionar-carrinho/{{$produto[0]->id}}?restaurante_id={{$restaurante_id}}" method="post">
+                <form action="/adicionar-carrinho/{{$produto[0]->id}}?loja_id={{$loja_id}}" method="post">
                     @csrf
 
                     <div class="bg-body-tertiary p-3 ">

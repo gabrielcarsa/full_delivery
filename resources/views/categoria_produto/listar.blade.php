@@ -87,7 +87,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Ordem de exibição</th>
-                    <th scope="col">Restaurante</th>
+                    <th scope="col">Loja</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -102,7 +102,7 @@
                     </td>
                     <td>{{$categoria->descricao}}</td>
                     <td>{{$categoria->ordem}}</td>
-                    <td>{{$categoria->restaurante}}</td>
+                    <td>{{$categoria->loja}}</td>
                     <td>
                         <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}"
                             class="acoes-listar text-decoration-none">

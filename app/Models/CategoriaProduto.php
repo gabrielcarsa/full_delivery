@@ -12,9 +12,9 @@ class CategoriaProduto extends Model
 
     //RELACIONAMENTOS
     
-    public function restaurante()
+    public function loja()
     {
-        return $this->belongsTo(Restaurante::class);
+        return $this->belongsTo(Loja::class);
     }
 
     public function usuarioCadastrador()

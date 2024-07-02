@@ -110,7 +110,7 @@
                     <!-- FIM DROPDOWN PRODUTO AÇOES -->
 
                     <!-- IMAGEM PRODUTO -->
-                    <img src="{{ asset('storage/'.$data['restaurante']->nome.'/imagens_produtos/'.$produto->imagem) }}"
+                    <img src="{{ asset('storage/'.$data['loja']->nome.'/imagens_produtos/'.$produto->imagem) }}"
                         style="max-width: 100%;" class="">
                     <!-- FIM IMAGEM PRODUTO -->
 

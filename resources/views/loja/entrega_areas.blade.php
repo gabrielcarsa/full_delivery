@@ -49,7 +49,7 @@
         <!-- BODY -->
 
         <!-- SE HOUVER RESTAURANTE -->
-        @if($restaurante != null)
+        @if($loja != null)
 
         <!-- CARD AREA EM METROS -->
         
@@ -66,7 +66,7 @@
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <!-- FORM ACAO -->
-                    <form action="{{ route('restaurante.area_entrega_metros', ['id' => $restaurante->id]) }}" method="POST" class="my-2">
+                    <form action="{{ route('loja.area_entrega_metros', ['id' => $loja->id]) }}" method="POST" class="my-2">
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-md-8">
                     <h5 class="card-title fw-bold fs-2 m-0 p-0">
-                        {{$restaurante->area_entrega_metros}}
+                        {{$loja->area_entrega_metros}}
                     </h5>
                     <p class="mb-1 p-0 text-secondary">
                         Raio em metros
@@ -135,7 +135,7 @@
         let map;
 
         async function initMap() {
-            // The location of Restaurante
+            // The location of Loja
             const position = {
                 lat: {{$data_maps['latitude']}},
                 lng: {{$data_maps['longitude']}}
@@ -145,7 +145,7 @@
             const { Map } = await google.maps.importLibrary("maps");
             const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-            // The map, centered at Restaurante
+            // The map, centered at Loja
             map = new Map(document.getElementById("map"), {
                 zoom: 12,
                 center: position,
@@ -156,7 +156,7 @@
             const marker = new AdvancedMarkerElement({
                 map: map,
                 position: position,
-                title: "Restaurante",
+                title: "Loja",
             });
 
             // The circle
@@ -168,7 +168,7 @@
                 fillOpacity: 0.35,
                 map: map,
                 center: position,
-                radius: {{$restaurante->area_entrega_metros}},
+                radius: {{$loja->area_entrega_metros}},
             });
         }
 

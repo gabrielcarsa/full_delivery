@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
 use App\Models\CategoriaProduto;
-use App\Models\Restaurante;
+use App\Models\Loja;
 use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
@@ -21,12 +21,12 @@ class ProdutoController extends Controller
 
         $produtos = Produto::where('categoria_id', $categoria_id)->get();
 
-        $restaurante = Restaurante::where('id', $categoria->restaurante_id)->first();
+        $loja = Loja::where('id', $categoria->loja_id)->first();
 
         $data = [
             'produtos' => $produtos,
             'categoria' => $categoria,
-            'restaurante' => $restaurante,
+            'loja' => $loja,
         ];
       
         return view('produto/listar', compact('data'));
@@ -85,7 +85,7 @@ class ProdutoController extends Controller
         }
 
         $categoria = CategoriaProduto::where('id', $categoria_id)->first();
-        $restaurante = Restaurante::where('id', $categoria->restaurante_id)->first();
+        $loja = Loja::where('id', $categoria->loja_id)->first();
 
         //Cadastro de produto
         $produto = new Produto();
@@ -104,7 +104,7 @@ class ProdutoController extends Controller
             $imagemNome = pathinfo($imagemNome, PATHINFO_FILENAME);
             $nomeArquivo = $imagemNome . '_' . time() . '.' . $request->file('imagem')->getClientOriginalExtension();
 
-            $request->file('imagem')->storeAs('public/'.$restaurante->nome.'/imagens_produtos', $nomeArquivo);
+            $request->file('imagem')->storeAs('public/'.$loja->nome.'/imagens_produtos', $nomeArquivo);
             $produto->imagem = $nomeArquivo;
         }
         $produto->save();

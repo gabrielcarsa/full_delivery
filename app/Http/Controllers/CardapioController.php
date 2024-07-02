@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CategoriaProduto;
-use App\Models\Restaurante;
+use App\Models\Loja;
 use App\Models\HorarioFuncionamento;
 use App\Models\Produto;
 use App\Models\OpcionalProduto;
@@ -16,7 +16,7 @@ class CardapioController extends Controller
     //
     public function index(Request $request){
 
-        $restaurante_id = $request->get('restaurante_id');
+        $loja_id = $request->get('loja_id');
 
         $cardapio_resultados = DB::table('produto as p')
         ->select(
@@ -29,24 +29,24 @@ class CardapioController extends Controller
             'cp.nome as nome_categoria'
             )
         ->rightjoin('categoria_produto as cp', 'cp.id', '=', 'p.categoria_id')
-        ->rightjoin('restaurante as r', 'r.id', '=', 'cp.restaurante_id')
+        ->rightjoin('loja as r', 'r.id', '=', 'cp.loja_id')
         ->get();
 
         $categoria_cardapio = CategoriaProduto::orderBy('ordem')->get();
         
-        if($restaurante_id != null){
-            $restaurantes = Restaurante::find($restaurante_id)->first();
+        if($loja_id != null){
+            $lojas = Loja::find($loja_id)->first();
         }else{
-            $restaurantes = Restaurante::all();
+            $lojas = Loja::all();
         }
 
         $horarios_funcionamento = HorarioFuncionamento::all();
 
         $data = [
             'cardapio_resultados' => $cardapio_resultados,
-            'restaurantes' => $restaurantes,
+            'lojas' => $lojas,
             'horarios_funcionamento' => $horarios_funcionamento,
-            'restaurante_id' => $restaurante_id,
+            'loja_id' => $loja_id,
             'categoria_cardapio' => $categoria_cardapio,
         ];
 
@@ -57,17 +57,17 @@ class CardapioController extends Controller
 
     public function indexCarrinho(Request $request){
         
-        $restaurante_id = $request->get('restaurante_id');
+        $loja_id = $request->get('loja_id');
 
         $carrinho = session()->get('carrinho', []);
 
-        return view('cardapio/carrinho', compact('carrinho'))->with('restaurante_id', $restaurante_id);
+        return view('cardapio/carrinho', compact('carrinho'))->with('loja_id', $loja_id);
     }
 
     public function storeCarrinho(Request $request, $produto_id){
         $observacao = $request->input('observacao');
         $opcional_id = $request->input('opcionais');
-        $restaurante_id = $request->get('restaurante_id');
+        $loja_id = $request->get('loja_id');
 
         $produto = Produto::find($produto_id);
 
@@ -82,7 +82,7 @@ class CardapioController extends Controller
         // Adicionando o item ao carrinho na sessão
         $request->session()->push('carrinho', $itensCarrinho);
 
-        return redirect()->action([CardapioController::class, 'index'], ['restaurante_id' => $restaurante_id]);
+        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id]);
     }
 
     public function destroyCarrinho(){
@@ -92,7 +92,7 @@ class CardapioController extends Controller
     }
 
     public function showProduto(Request $request){
-        $restaurante_id = $request->get('restaurante_id');
+        $loja_id = $request->get('loja_id');
         $produto_id = $request->get('produto_id');
         
         $produto = DB::table('produto as p')
@@ -107,6 +107,6 @@ class CardapioController extends Controller
         ->where('p.id', $produto_id)
         ->get();
 
-        return view('cardapio/produto', compact('produto'))->with('restaurante_id', $restaurante_id);
+        return view('cardapio/produto', compact('produto'))->with('loja_id', $loja_id);
     }
 }

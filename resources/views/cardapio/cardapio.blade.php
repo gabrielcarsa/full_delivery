@@ -1,13 +1,13 @@
 <x-layout-cardapio>
-    @if($data['restaurante_id'] == null)
+    @if($data['loja_id'] == null)
 
     <div class="container my-3 mx-3 bg-body-tertiary">
 
-        <h2 class="madimi-one-regular fs-2">Escolha o restaurante:</h2>
+        <h2 class="madimi-one-regular fs-2">Escolha o loja:</h2>
 
-        @foreach($data['restaurantes'] as $restaurante)
+        @foreach($data['lojas'] as $loja)
 
-        <a href="?restaurante_id={{$restaurante->id}}" class="btn btn-dark">{{$restaurante->nome}}</a>
+        <a href="?loja_id={{$loja->id}}" class="btn btn-dark">{{$loja->nome}}</a>
 
         @endforeach
 
@@ -15,7 +15,7 @@
 
     @else
     <div class="carrinho-botao fixed-top m-1">
-        <a href="{{ route('cardapio.carrinho', ['restaurante_id' => $data['restaurante_id']]) }}"
+        <a href="{{ route('cardapio.carrinho', ['loja_id' => $data['loja_id']]) }}"
             class="btn btn-primary shadow-lg">
             <span class="fas fa-shopping-cart fs-3">
                 @if(!empty($carrinho))
@@ -28,18 +28,18 @@
     </div>
 
 
-    <div class="restaurante-section">
+    <div class="loja-section">
 
         <div class="banner-img" style="background-image: url({{ asset('storage/images/banner.jpg')}});');">
         </div>
 
         <div class="container d-flex p-3 align-items-center justify-content-center">
             <div class="p-2">
-                <img src="{{ asset('storage/logo/'.$data['restaurantes']->imagem) }}" class="logo-cardapio">
+                <img src="{{ asset('storage/logo/'.$data['lojas']->imagem) }}" class="logo-cardapio">
             </div>
             <div class="p-4">
-                <h2>{{$data['restaurantes']->nome}}</h2>
-                <p class="text-secondary">{{$data['restaurantes']->descricao}}</p>
+                <h2>{{$data['lojas']->nome}}</h2>
+                <p class="text-secondary">{{$data['lojas']->descricao}}</p>
             </div>
         </div>
         <div class="m-3 text-center">
@@ -94,7 +94,7 @@
                     @if($categoria->id == $produto->categoria_id)
 
                     <div class="col-md-6">
-                        <a href="{{ route('cardapio.produto', ['restaurante_id' => $data['restaurante_id'], 'produto_id' => $produto->id_produto]) }}"
+                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id_produto]) }}"
                             class="text-decoration-none text-reset">
                             <div class="card mb-2 px-3">
                                 <div class="card-grid">
@@ -135,7 +135,7 @@
             <ul class="nav justify-content-around">
                 <li class="nav-item">
                     <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
-                        href="{{ route('cardapio', ['restaurante_id' => request('restaurante_id')]) }}">
+                        href="{{ route('cardapio', ['loja_id' => request('loja_id')]) }}">
                         <i class="fa-solid fa-book-open"></i> <span>Cardápio</span></a>
                 </li>
                 <li class="nav-item">

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Restaurante;
+use App\Models\Loja;
 use App\Models\Produto;
 use App\Models\Pedido;
 use App\Models\Cliente;
@@ -19,23 +19,23 @@ class PedidoController extends Controller
 {
     //PAINEL DE PEDIDOS
     public function painel(){
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar os pedidos');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar os pedidos');
         }
 
-        //Dados do restaurante
-        $id_restaurante  = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+        //Dados do loja
+        $id_loja  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id_loja)->first();
 
-        $pedidos = Pedido::where('restaurante_id', $id_restaurante)
-        ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        $pedidos = Pedido::where('loja_id', $id_loja)
+        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
         ->orderBy('data_pedido', 'ASC')
         ->get();
         
 
         $data = [
-            'restaurante' => $restaurante,
+            'loja' => $loja,
             'pedidos' => $pedidos,
         ];
 
@@ -45,19 +45,19 @@ class PedidoController extends Controller
       //RETORNAR VIEW PARA CADASTRO
       public function create(Request $request){
 
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
         }
 
-        $id_restaurante  = session('restauranteConectado')['id'];
+        $id_loja  = session('lojaConectado')['id'];
         $produtos = DB::table('produto AS p')
         ->select(
             'p.*',
         ) 
         ->join('categoria_produto AS cp', 'cp.id', '=', 'p.categoria_id')
-        ->join('restaurante AS r', 'r.id', '=', 'cp.restaurante_id')
-        ->where('r.id', $id_restaurante)
+        ->join('loja AS r', 'r.id', '=', 'cp.loja_id')
+        ->where('r.id', $id_loja)
         ->orderBy('p.nome', 'ASC') 
         ->get();
         
@@ -109,13 +109,13 @@ class PedidoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
         }
 
-        $id_restaurante  = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+        $id_loja  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id_loja)->first();
 
         //Cadastro de pedido
         $pedido = new Pedido();
@@ -125,7 +125,7 @@ class PedidoController extends Controller
         $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
         $pedido->is_simulacao = true;
         $pedido->cliente_id = $request->input('cliente_id');
-        $pedido->restaurante_id = $id_restaurante;
+        $pedido->loja_id = $id_loja;
         $pedido->is_pagamento_entrega = true;
         $pedido->forma_pagamento_entrega_id = $request->input('forma_pagamento_entrega_id');
         $pedido->save();
@@ -163,7 +163,7 @@ class PedidoController extends Controller
         //Cadastro entrega
         if($pedido->consumo_local_viagem_delivery == 3){
             // Variáveis para calcular distância
-            $origem = $restaurante->cep;
+            $origem = $loja->cep;
             $destino = $request->input('cep'); 
             $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
 
@@ -182,11 +182,11 @@ class PedidoController extends Controller
             $entrega->distancia_metros = $distancia; 
        
             // Taxa de entrega gratuita
-            if($restaurante->is_taxa_entrega_free == true){
+            if($loja->is_taxa_entrega_free == true){
                 $entrega->taxa_entrega = 0;
 
             // Taxa de entrega calculada por km
-            }elseif($restaurante->taxa_por_km_entrega != null){
+            }elseif($loja->taxa_por_km_entrega != null){
     
                 // Verificar se deu certo a requisição
                 if ($distancia !== false) {
@@ -194,18 +194,18 @@ class PedidoController extends Controller
                     // se distancia for maior que 1 km
                     if($distancia >= 1000){
                         $distancia_km = $distancia / 1000;
-                        $entrega->taxa_entrega = $distancia_km * $restaurante->taxa_por_km_entrega;
+                        $entrega->taxa_entrega = $distancia_km * $loja->taxa_por_km_entrega;
                     }else{
-                        $entrega->taxa_entrega = $restaurante->taxa_por_km_entrega;
+                        $entrega->taxa_entrega = $loja->taxa_por_km_entrega;
                     
                     }
                 }else{
-                    return redirect('restaurante')->with('error', 'Erro ao calcular distância');
+                    return redirect('loja')->with('error', 'Erro ao calcular distância');
                 }
     
             // Taxa de entrega fixa
-            }elseif($restaurante->taxa_entrega_fixa != null){
-                $entrega->taxa_entrega = $restaurante->taxa_entrega_fixa;
+            }elseif($loja->taxa_entrega_fixa != null){
+                $entrega->taxa_entrega = $loja->taxa_entrega_fixa;
             }
 
             $entrega->save();
@@ -218,32 +218,32 @@ class PedidoController extends Controller
 
     //PAINEL DE PEDIDOS
     public function show(Request $request){
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro para visualizar pedidos');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar pedidos');
         }
 
-        //Dados do restaurante
-        $id_restaurante  = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+        //Dados do loja
+        $id_loja  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id_loja)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');
 
         //Pedidos
-        $pedidos = Pedido::where('restaurante_id', $id_restaurante)
-        ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        $pedidos = Pedido::where('loja_id', $id_loja)
+        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
         ->orderBy('data_pedido', 'ASC')
         ->get();
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('restaurante', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
         ->orderBy('data_pedido', 'ASC')
         ->first();
         
         $data = [
-            'restaurante' => $restaurante,
+            'loja' => $loja,
             'pedido' => $pedido,
             'pedidos' => $pedidos,
         ];
@@ -253,14 +253,14 @@ class PedidoController extends Controller
 
     // ATUALIZAR STATUS PEDIDO
     public function update_status(Request $request){
-         //Verificar se há restaurante selecionado
-         if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro');
+         //Verificar se há loja selecionado
+         if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
         }
 
-        //Dados do restaurante
-        $id_restaurante  = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+        //Dados do loja
+        $id_loja  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id_loja)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');
@@ -278,14 +278,14 @@ class PedidoController extends Controller
 
     // REJEITAR PEDIDO
     public function rejeitar(Request $request){
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
         }
 
-        //Dados do restaurante
-        $id_restaurante  = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+        //Dados do loja
+        $id_loja  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id_loja)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');
@@ -301,14 +301,14 @@ class PedidoController extends Controller
 
     // REJEITAR PEDIDO
     public function cancelar(Request $request){
-        //Verificar se há restaurante selecionado
-        if(!session('restauranteConectado')){
-            return redirect('restaurante')->with('error', 'Selecione um restaurante primeiro');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
         }
 
-        //Dados do restaurante
-        $id_restaurante  = session('restauranteConectado')['id'];
-        $restaurante = Restaurante::where('id', $id_restaurante)->first();
+        //Dados do loja
+        $id_loja  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $id_loja)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');

@@ -53,13 +53,13 @@
                 </div>
                 @if(empty($categoria))
                 <div class="col-md-6">
-                    <label for="inputRestaurante" class="form-label">Restaurante</label>
-                    <select required id="inputRestaurante" name="restaurante_id" class="form-select form-control">
-                        <option value="" {{ old('restaurante_id') == null ? 'selected' : '' }}>-- Selecione --</option>
-                        @foreach ($restaurantes as $restaurante)
-                        <option value="{{ $restaurante->id }}"
-                            {{ old('restaurante_id') == $restaurante->id ? 'selected' : '' }}>
-                            {{$restaurante->nome}}
+                    <label for="inputLoja" class="form-label">Loja</label>
+                    <select required id="inputLoja" name="loja_id" class="form-select form-control">
+                        <option value="" {{ old('loja_id') == null ? 'selected' : '' }}>-- Selecione --</option>
+                        @foreach ($lojas as $loja)
+                        <option value="{{ $loja->id }}"
+                            {{ old('loja_id') == $loja->id ? 'selected' : '' }}>
+                            {{$loja->nome}}
                         </option>
                         @endforeach
                     </select>
