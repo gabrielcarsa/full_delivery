@@ -37,4 +37,8 @@ class Loja extends Model
         return $this->hasMany(HorarioFuncionamento::class);
      }
  
+     public function cupons()
+     {
+        return $this->hasMany(Cupom::class);
+     }
 }

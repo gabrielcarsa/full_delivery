@@ -41,6 +41,11 @@ class Pedido extends Model
         return $this->hasMany(ItemPedido::class); // UM PARA MUITOS (Um pedido pode ter muitos itens)
     }
 
+    public function uso_cupom()
+    {
+        return $this->belongsToMany(UsoCupom::class);
+    }
+
     /*public function produto()
     {
         return $this->hasManyThrough(Produto::class, ItemPedido::class, 'pedido_id', 'id', 'id', 'produto_id'); //MUITOS PARA MUITOS (um produto pode ter muitos pedidos e um pedido por ter muitos produtos)
