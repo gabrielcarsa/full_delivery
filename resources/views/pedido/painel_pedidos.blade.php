@@ -3,11 +3,11 @@
     <div class="row m-0">
 
         <!-- MENU LATERAL PEDIDOS -->
-        <div class="col-md-auto m-0 p-0" style="overflow-y: auto; overflow-x: hidden;">
-            <div class="bg-white border-end m-0 p-3" style="max-width: 400px">
+        <div class="col-md-auto m-0 p-0 bg-white" style="overflow-y: auto; overflow-x: hidden;">
+            <div class="bg-white border-end m-0" style="max-width: 400px">
 
                 <!-- HEADER -->
-                <div class="p-0 m-0">
+                <div class="p-2 m-0">
                     <div class="row">
                         <div class="col d-flex justify-content-center w100">
                             <a href="{{ route('pedido.novo') }}" class="btn btn-primary">
@@ -62,29 +62,29 @@
                     @foreach($data['pedidos'] as $pedido)
 
                     <!-- COLLAPSE PEDIDOS -->
-                    <div class="bg-light rounded border m-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'border-dark border-4' : '' }}">
+                    <div class="bg-light my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'border-end-0 border-top-0 border-bottom-0 border-dark border-4' : '' }}">
                         @if($pedido->status == 0)
-                        <div class="bg-warning m-0 p-0 text-center">
+                        <div class="bg-warning m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold">PENDENTE</p>
                         </div>
                         @elseif($pedido->status == 1)
-                        <div class="border m-0 p-0 text-center">
+                        <div class="border m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold">EM PREPARO</p>
                         </div>
                         @elseif($pedido->status == 2)
-                        <div class="border m-0 p-0 text-center">
+                        <div class="border m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold">A CAMINHO</p>
                         </div>
                         @elseif($pedido->status == 3)
-                        <div class="bg-success m-0 p-0 text-center">
+                        <div class="bg-success m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold text-white">CONCLUIDO</p>
                         </div>
                         @elseif($pedido->status == 4)
-                        <div class="bg-danger m-0 p-0 text-center">
+                        <div class="bg-danger m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold">REJEITADO</p>
                         </div>
                         @elseif($pedido->status == 5)
-                        <div class="bg-danger m-0 p-0 text-center">
+                        <div class="bg-danger m-0 p-0 text-center rounded">
                             <p class="m-0 p-0 fw-bold">CANCELADO</p>
                         </div>
                         @endif
