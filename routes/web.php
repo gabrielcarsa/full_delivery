@@ -103,5 +103,7 @@ Route::middleware([
         Route::get('/pedido/detalhes', [PedidoController::class, 'show'])->name('pedido.show');
         Route::get('/pedido/update-status', [PedidoController::class, 'update_status'])->name('pedido.update_status');
         Route::post('/pedido/rejeitar', [PedidoController::class, 'rejeitar'])->name('pedido.rejeitar');
+        Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar'])->name('pedido.cancelar');
+
         
 });
