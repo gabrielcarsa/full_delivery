@@ -121,6 +121,39 @@ class CupomController extends Controller
         return redirect()->back()->with('success', 'Alteração feita com sucesso');
     }
 
+    //EXCLUIR
+    public function destroy($id){
+        $cupom = Cupom::find($id);
+        $cupom->delete();
+        return redirect()->back()->with('success', 'Cupom excluido com sucesso');
+    }
+
+     // ATUALIZAR STATUS 
+     public function status(Request $request){
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+           return redirect('loja')->with('error', 'Selecione um loja primeiro');
+       }
+
+       //ID cupom
+       $cupom_id = $request->input('id');
+       
+       //Cupom
+       $cupom = Cupom::find($cupom_id);
+       
+       $status_atual = $cupom->is_ativo;
+
+        if($status_atual){
+            $cupom->is_ativo = false;
+        }else{
+            $cupom->is_ativo = true;
+        }
+       $cupom->save();
+       return redirect()->back()->with('success', 'Status atualizado com sucesso');
+
+   }
+
+
 
 
 }

@@ -27,7 +27,8 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Cupons <span class="text-secondary fs-3">({{$cupons->count()}})</span></h2>
+                <h2 class="my-3 fw-bolder fs-1">Cupons <span class="text-secondary fs-3">({{$cupons->count()}})</span>
+                </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
@@ -49,6 +50,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Código</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Desconto</th>
                     <th scope="col">Tipo desconto</th>
@@ -62,15 +64,24 @@
                 <!-- CUPONS -->
                 @foreach ($cupons as $cupom)
                 <tr>
-                    <th scope="row">{{$cupom->id}}</th>
-                    <td>{{$cupom->codigo}}</td>
+                    <td>{{$cupom->id}}</td>
+                    <td class="fw-semibold">{{$cupom->codigo}}</td>
+                    <td class="fw-semibold {{$cupom->is_ativo ? 'text-success' : 'text-danger'}}">
+                        {{$cupom->is_ativo ? 'Ativo' : 'Desativado'}}</td>
                     <td>{{$cupom->descricao}}</td>
-                    <td>{{$cupom->tipo_desconto == 1 ? 'R$ '.number_format($cupom->desconto, 2, ',', '.') : $cupom->desconto . '%' }}</td>
+                    <td>{{$cupom->tipo_desconto == 1 ? 'R$ '.number_format($cupom->desconto, 2, ',', '.') : $cupom->desconto . '%' }}
+                    </td>
                     <td>{{$cupom->tipo_desconto == 1 ? 'Valor fixo' : 'Porcentagem'}}</td>
                     <td>{{\Carbon\Carbon::parse($cupom->data_validade)->format('d/m/Y')}}</td>
                     <td>{{$cupom->limite_uso}}</td>
                     <td>{{$cupom->usos}}</td>
                     <td>
+                        <a href="{{ route('cupom.status', ['id' => $cupom->id]) }}"
+                            class="acoes-listar text-decoration-none">
+                            <span class="material-symbols-outlined {{$cupom->is_ativo ? 'text-danger' : 'text-success'}}">
+                                {{$cupom->is_ativo ? 'cancel' : 'check_circle'}}
+                            </span>
+                        </a>
                         <a href="{{ route('cupom.editar', ['id' => $cupom->id]) }}"
                             class="acoes-listar text-decoration-none">
                             <span class="material-symbols-outlined">
