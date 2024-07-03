@@ -46,15 +46,15 @@
             <div class="col-md-6 form-floating">
                 <input type="text" class="form-control @error('codigo') is-invalid @enderror" name="codigo"
                     id="floatingInput" value="{{!empty($cupom) ? $cupom->codigo : old('codigo')}}" placeholder="TESTE10"
-                    required>
+                    required {{!empty($cupom) ? 'readonly disabled' : ''}}>
                 <label for="floatingInput" class="text-secondary fw-semibold">Código</label>
             </div>
             <div class="col-md-6 form-floating">
                 <select class="form-select" id="tipo_desconto" name="tipo_desconto" aria-label="Tipo desconto"
-                    required>
-                    <option selected>Selecione uma opção</option>
-                    <option value="1">Valor fixo</option>
-                    <option value="2">Porcentagem</option>
+                    required {{!empty($cupom) ? 'readonly disabled' : ''}}>
+                    <option {{ !empty($cupom) ? '' : 'selected' }}>Selecione uma opção</option>
+                    <option value="1" {{!empty($cupom) && $cupom->tipo_desconto == 1 ? 'selected' : '' }}>Valor fixo</option>
+                    <option value="2" {{!empty($cupom) && $cupom->tipo_desconto == 2 ? 'selected' : '' }}>Porcentagem</option>
                 </select>
                 <label for="tipo_desconto">Tipo de desconto</label>
             </div>
@@ -68,7 +68,7 @@
             <div class="col-md-4 form-floating">
                 <input type="date" class="form-control @error('data_validade') is-invalid @enderror"
                     name="data_validade" id="floatingInput" required
-                    value="{{!empty($cupom) ? $cupom->data_validade : old('data_validade')}}" placeholder="10/10/2025">
+                    value="{{!empty($cupom) ? \Carbon\Carbon::parse($cupom->data_validade)->format('Y-m-d') : old('data_validade')}}" placeholder="10/10/2025">
                 <label for="floatingInput" class="text-secondary fw-semibold">Data de validade</label>
             </div>
             <div class="col-md-4 form-floating">
@@ -81,7 +81,7 @@
 
             <div class="col-12 form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                    style="height: 100px" name="descricao"></textarea>
+                    style="height: 100px" name="descricao">{{!empty($cupom) ? $cupom->descricao : old('descricao')}}</textarea>
                 <label for="floatingTextarea2" class="text-secondary fw-semibold">Descrição</label>
             </div>
 
@@ -89,8 +89,8 @@
             <!-- BTN SUBMIT -->
             <div class="col-6"></div>
             <div class="col d-flex justify-content-end">
-                <a href="" class="btn active w-100 mx-1">Voltar</a>
-                <button type="submit" class="btn btn-primary w-100 mx-1">Cadastrar</button>
+                <a href="{{url()->previous()}}" class="btn active w-100 mx-1">Voltar</a>
+                <button type="submit" class="btn btn-primary w-100 mx-1">{{!empty($cupom) ? 'Editar' : 'Cadastrar'}}</button>
 
             </div>
 
