@@ -109,5 +109,10 @@ Route::middleware([
         //CUPOM
         Route::get('/cupom', [CupomController::class, 'index'])->name('cupom');
         Route::get('/cupom/novo', [CupomController::class, 'create'])->name('cupom.novo');
+        Route::post('/cupom/cadastrar', [CupomController::class, 'store']);
+        Route::get('/cupom/editar', [CupomController::class, 'edit'])->name('cupom.editar');
+        Route::put('/cupom/alterar/{cupom_id}', [CupomController::class, 'update']);
+        Route::delete('/cupom/apagar/{id}', [CupomController::class, 'destroy'])->name('cupom.excluir');
+
 
 });

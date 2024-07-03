@@ -65,9 +65,9 @@
                     <th scope="row">{{$cupom->id}}</th>
                     <td>{{$cupom->codigo}}</td>
                     <td>{{$cupom->descricao}}</td>
-                    <td>{{$cupom->desconto}}</td>
-                    <td>{{$cupom->tipo_desconto}}</td>
-                    <td>{{$cupom->data_validade}}</td>
+                    <td>{{$cupom->tipo_desconto == 1 ? 'R$ '.number_format($cupom->desconto, 2, ',', '.') : $cupom->desconto . '%' }}</td>
+                    <td>{{$cupom->tipo_desconto == 1 ? 'Valor fixo' : 'Porcentagem'}}</td>
+                    <td>{{\Carbon\Carbon::parse($cupom->data_validade)->format('d/m/Y')}}</td>
                     <td>{{$cupom->limite_uso}}</td>
                     <td>{{$cupom->usos}}</td>
                     <td>

@@ -58,7 +58,7 @@
 
         </div>
         <div class="col d-flex justify-content-end">
-            <p class="m-0 p-0">Feito às {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
+            <p class="m-0 p-0 fw-semibold">{{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
         </div>
     </div>
 </div>
