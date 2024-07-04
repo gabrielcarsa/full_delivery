@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Helpers\DistanciaEntregaHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +13,7 @@ use App\Models\Entrega;
 use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
 use App\Models\OpcionalProduto;
+use App\Models\Cupom;
 use App\Models\FormaPagamentoEntrega;
 use Carbon\Carbon;
 
@@ -80,30 +82,13 @@ class PedidoController extends Controller
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba');   
 
-        // Validação do formulário
+        /*
+        --- Validação do formulário ---
+        */
+        
         $validator = Validator::make($request->all(), [
             //todo
         ]);
-
-        // Função calcular a distância
-        function getDistance($origem, $destino, $apiKey) {
-            // URL da API de Distância do Google Maps
-            $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins={$origem}&destinations={$destino}&key={$apiKey}";
-        
-            // Fazendo a solicitação HTTP
-            $response = file_get_contents($url);
-            $data = json_decode($response);
-        
-            // Verificando se a solicitação foi bem-sucedida
-            if ($data->status == 'OK') {
-                // Obtendo a distância em metros
-                $distance = $data->rows[0]->elements[0]->distance->value;
-                return $distance;
-            } else {
-                return false;
-            }
-        }
-
         // Se a validação falhar
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -117,7 +102,26 @@ class PedidoController extends Controller
         $id_loja  = session('lojaConectado')['id'];
         $loja = Loja::where('id', $id_loja)->first();
 
-        //Cadastro de pedido
+        //Total pedido
+        $total_geral = 0;
+
+        /*
+        --- Calcular Entrega ---
+        */
+
+        // Variáveis para calcular distância
+        $origem = $loja->cep;
+        $destino = $request->input('cep'); 
+        $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
+
+        // Obtendo a distância em metros
+        $distancia = DistanciaEntregaHelper::getDistance($origem, $destino, $apiKey);
+
+
+        /*
+        --- Cadastro de pedido ---
+        */
+
         $pedido = new Pedido();
         $pedido->status = 0;
         $pedido->consumo_local_viagem_delivery = $request->input('entrega');//1. Local, 2. Viagem, 3. Delivery
@@ -130,12 +134,16 @@ class PedidoController extends Controller
         $pedido->forma_pagamento_entrega_id = $request->input('forma_pagamento_entrega_id');
         $pedido->save();
 
+
+        /*
+        --- Cadastro de item do pedido ---
+        */
+
         //Buscando produto
         $produto_id = $request->input('produto_id');
         $produto = Produto::where('id', $produto_id)->first();
         $qtd_produto = $request->input('quantidade');
 
-        //Cadastro de item do pedido
         $item_pedido = new ItemPedido();
         $item_pedido->pedido_id = $pedido->id;
         $item_pedido->produto_id = $produto->id; 
@@ -143,6 +151,9 @@ class PedidoController extends Controller
         $item_pedido->preco_unitario = $produto->preco; 
         $item_pedido->subtotal = $produto->preco * $qtd_produto; 
         $item_pedido->save();
+
+        //Total pedido
+        $total_geral += $item_pedido->subtotal;
 
         if($request->input('opcional_produto_id') != 0){
             //Buscando opcional
@@ -158,17 +169,15 @@ class PedidoController extends Controller
             $opcional_item_pedido->subtotal = $opcional->preco * $qtd_opcional; 
             $opcional_item_pedido->save();
 
-        }
+            //Total pedido
+            $total_geral += $opcional_item_pedido->subtotal;
+        } 
 
-        //Cadastro entrega
+        /*
+        --- Cadastro de entrega ---
+        */
+
         if($pedido->consumo_local_viagem_delivery == 3){
-            // Variáveis para calcular distância
-            $origem = $loja->cep;
-            $destino = $request->input('cep'); 
-            $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
-
-            // Obtendo a distância em metros
-            $distancia = getDistance($origem, $destino, $apiKey);
 
             $entrega = new Entrega();
             $entrega->pedido_id = $pedido->id;
@@ -195,10 +204,12 @@ class PedidoController extends Controller
                     if($distancia >= 1000){
                         $distancia_km = $distancia / 1000;
                         $entrega->taxa_entrega = $distancia_km * $loja->taxa_por_km_entrega;
+
                     }else{
                         $entrega->taxa_entrega = $loja->taxa_por_km_entrega;
                     
                     }
+
                 }else{
                     return redirect('loja')->with('error', 'Erro ao calcular distância');
                 }
@@ -210,7 +221,30 @@ class PedidoController extends Controller
 
             $entrega->save();
 
+            //Total pedido
+            $total_geral += $entrega->taxa_entrega;
+
         }
+
+        /*
+        --- Verificando Cupom ---
+        */
+
+        $cupom = Cupom::where('codigo', $request->input('cupom'))->first();
+        if($cupom){
+
+            if($cupom->tipo_desconto == 1){//valor fixo
+                //Total pedido
+                $total_geral -= $cupom->desconto;
+            }elseif($cupom->tipo_desconto == 2){
+                $valor_desconto = ($pedido->total * $cupom->desconto)/100;
+                //Total pedido
+                $total_geral -= $valor_desconto;
+            }
+        }
+
+        $pedido->total = $total_geral;
+        $pedido->save();
 
         return redirect()->route('pedido.painel')->with('success', 'Cadastro feito com sucesso');
 

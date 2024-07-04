@@ -36,90 +36,91 @@
         <!-- FIM HEADER -->
 
         <!-- FORMULARIO -->
-        <form class="" action="{{ route('pedido.cadastrar') }}" method="post" autocomplete="off">
+        <form class="row g-3" action="{{ route('pedido.cadastrar') }}" method="post" autocomplete="off">
             @csrf
 
-            <div class="row">
-                <div class="col-md-2">
-                    <label for="inputQtd" class="form-label">Qntd</label>
-                    <input type="text" name="quantidade" class="form-control" id="inputQtd" required >
-                </div>
-
-                @if(!empty($data['produtos']))
-                <div class="col-md-4">
-                    <label for="inputProduto" class="form-label">Produto</label>
-                    <select required id="inputProduto" name="produto_id" class="form-select form-control">
-                        <option value="" {{ old('produto_id') == null ? 'selected' : '' }}>-- Selecione --</option>
-                        @foreach ($data['produtos'] as $produto)
-                        <option value="{{ $produto->id }}" {{ old('produto_id') == $produto->id ? 'selected' : '' }}>
-                            {{$produto->nome}} / R$ {{$produto->preco}}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-                @endif
-                
-                <div class="col-md-2">
-                    <label for="inputQtd" class="form-label">Qntd Opcional</label>
-                    <input type="text" name="quantidade_opcional" class="form-control" id="inputQtd">
-                </div>
-
-                <div class="col-md-4" id="OpcionalField">
-                    <label for="inputOpcional" class="form-label">Opcional</label>
-                    <select id="inputOpcional" name="opcional_produto_id" class="form-select form-control">
-                        <option value="" selected> Selecione --</option>
-                    </select>
-                </div>
+            <div class="col-md-2 form-floating">
+                <input type="text" class="form-control @error('quantidade') is-invalid @enderror" name="quantidade"
+                    id="inputQtd" placeholder="2">
+                <label for="inputQtd" class="text-secondary fw-semibold">Qntd</label>
             </div>
 
-            <div class="row my-3">
-                <div class="col-md-4">
-                    <label for="inputEntrega" class="form-label">Entrega</label>
-                    <select required id="inputEntrega" name="entrega" class="form-select form-control">
-                        <option value="0">-- Selecione --</option>
-                        <option value="1">
-                            Comer no local
-                        </option>
-                        <option value="2">
-                            Para viagem
-                        </option>
-                        <option value="3">
-                            Delivery
-                        </option>
-                    </select>
-                </div>
+            @if(!empty($data['produtos']))
+            <div class="col-md-4 form-floating">
+                <select required id="inputProduto" name="produto_id" class="form-select form-control">
+                    <option value="" {{ old('produto_id') == null ? 'selected' : '' }}>-- Selecione --</option>
+                    @foreach ($data['produtos'] as $produto)
+                    <option value="{{ $produto->id }}" {{ old('produto_id') == $produto->id ? 'selected' : '' }}>
+                        {{$produto->nome}} / R$ {{$produto->preco}}
+                    </option>
+                    @endforeach
+                </select>
+                <label for="inputProduto" class="form-label">Produto</label>
+            </div>
+            @endif
 
-                @if(!empty($data['clientes']))
-                <div class="col-md-8">
-                    <label for="inputCliente" class="form-label">Cliente</label>
-                    <select required id="inputCliente" name="cliente_id" class="form-select form-control">
-                        <option value="" {{ old('cliente_id') == null ? 'selected' : '' }}>-- Selecione --</option>
-                        @foreach ($data['clientes'] as $cliente)
-                        <option value="{{ $cliente->id }}" {{ old('cliente_id') == $produto->id ? 'selected' : '' }}>
-                            {{$cliente->nome}}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-                @endif
+            <div class="col-md-2 form-floating">
+                <input type="text" name="quantidade_opcional" class="form-control" id="inputQtd" placeholder="">
+                <label for="inputQtd" class="text-secondary fw-semibold">Qntd Opcional</label>
             </div>
 
-            <div class="row my-3">
-                @if(!empty($data['forma_pagamento_entrega']))
-                <div class="col-md-4">
-                    <label for="inputForma" class="form-label">Forma de pagamento</label>
-                    <select required id="inputForma" name="forma_pagamento_entrega_id" class="form-select form-control">
-                        <option value="" {{ old('forma_pagamento_entrega_id') == null ? 'selected' : '' }}>-- Selecione
-                            --</option>
-                        @foreach ($data['forma_pagamento_entrega'] as $forma)
-                        <option value="{{ $forma->id }}"
-                            {{ old('forma_pagamento_entrega_id') == $forma->id ? 'selected' : '' }}>
-                            {{$forma->forma}}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-                @endif
+            <div class="col-md-4 form-floating" id="OpcionalField">
+                <select id="inputOpcional" name="opcional_produto_id" class="form-select form-control">
+                    <option value="" selected> Selecione --</option>
+                </select>
+                <label for="inputOpcional" class="form-label">Opcional</label>
+            </div>
+
+            <div class="col-md-4 form-floating">
+                <select required id="inputEntrega" name="entrega" class="form-select form-control">
+                    <option value="0">-- Selecione --</option>
+                    <option value="1">
+                        Comer no local
+                    </option>
+                    <option value="2">
+                        Para viagem
+                    </option>
+                    <option value="3">
+                        Delivery
+                    </option>
+                </select>
+                <label for="inputEntrega" class="form-label">Entrega</label>
+            </div>
+
+            @if(!empty($data['clientes']))
+            <div class="col-md-8 form-floating">
+                <select required id="inputCliente" name="cliente_id" class="form-select form-control">
+                    <option value="" {{ old('cliente_id') == null ? 'selected' : '' }}>-- Selecione --</option>
+                    @foreach ($data['clientes'] as $cliente)
+                    <option value="{{ $cliente->id }}" {{ old('cliente_id') == $produto->id ? 'selected' : '' }}>
+                        {{$cliente->nome}}
+                    </option>
+                    @endforeach
+                </select>
+                <label for="inputCliente" class="form-label">Cliente</label>
+            </div>
+            @endif
+
+            @if(!empty($data['forma_pagamento_entrega']))
+            <div class="col-md-4 form-floating">
+                <select required id="inputForma" name="forma_pagamento_entrega_id" class="form-select form-control">
+                    <option value="" {{ old('forma_pagamento_entrega_id') == null ? 'selected' : '' }}>-- Selecione
+                        --</option>
+                    @foreach ($data['forma_pagamento_entrega'] as $forma)
+                    <option value="{{ $forma->id }}"
+                        {{ old('forma_pagamento_entrega_id') == $forma->id ? 'selected' : '' }}>
+                        {{$forma->forma}}
+                    </option>
+                    @endforeach
+                </select>
+                <label for="inputForma" class="form-label">Forma de pagamento</label>
+            </div>
+            @endif
+
+            <div class="col-md-2 form-floating">
+                <input type="text" class="form-control @error('cupom') is-invalid @enderror" name="cupom"
+                    id="inputCupom" placeholder="2">
+                <label for="inputCupom" class="text-secondary fw-semibold">Cupom</label>
             </div>
 
             <!-- ACCORDION ENDEREÇO -->
@@ -134,12 +135,11 @@
                     </h2>
                     <div id="panelsStayOpen-endereco" class="accordion-collapse collapse">
                         <div class="accordion-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label for="inputCep" class="form-label">CEP</label>
-                                    <input type="text" name="cep"
-                                        value="{{!empty($loja) ? $loja->cep : old('cep')}}"
-                                        class="form-control" id="inputCep" required>
+                            <div class="row g-3">
+                                <div class="col-md-5 form-floating">
+                                    <input type="text" name="cep" value="{{!empty($loja) ? $loja->cep : old('cep')}}"
+                                        class="form-control" id="inputCep" required placeholder="">
+                                    <label for="inputCep" class="text-secondary fw-semibold">CEP</label>
                                 </div>
                                 <div class="col-3">
                                     <label for="" class="form-label">Buscar CEP</label>
@@ -148,42 +148,46 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <label for="inputRua" class="form-label">Rua</label>
-                                    <input type="text" name="rua"
-                                        value="{{!empty($loja) ? $loja->rua : old('rua')}}"
-                                        class="form-control" id="inputRua" required>
+
+                            <div class="row g-3 my-2">
+                                <div class="col-md-5 form-floating">
+                                    <input type="text" name="rua" value="{{!empty($loja) ? $loja->rua : old('rua')}}"
+                                        class="form-control" id="inputRua" required placeholder="">
+                                    <label for="inputRua" class="text-secondary fw-semibold ml-1">Rua</label>
                                 </div>
-                                <div class="col-md-5">
-                                    <label for="inputBairro" class="form-label">Bairro</label>
+                                <div class="col-md-5 form-floating">
                                     <input type="text" name="bairro"
-                                        value="{{!empty($loja) ? $loja->bairro : old('bairro')}}"
-                                        class="form-control" id="inputBairro" required>
+                                        value="{{!empty($loja) ? $loja->bairro : old('bairro')}}" class="form-control"
+                                        id="inputBairro" required placeholder="">
+                                    <label for="inputBairro" class="text-secondary fw-semibold ml-1">Bairro</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="inputNumero" class="form-label">Número</label>
+                                <div class="col-md-2 form-floating">
                                     <input type="text" name="numero"
-                                        value="{{!empty($loja) ? $loja->numero : old('numero')}}"
-                                        class="form-control" id="inputNumero" required>
+                                        value="{{!empty($loja) ? $loja->numero : old('numero')}}" class="form-control"
+                                        id="inputNumero" required placeholder="">
+                                    <label for="inputNumero" class="text-secondary fw-semibold ml-1">Número</label>
                                 </div>
-                                <div class="col-md-5">
-                                    <label for="inputComplemento" class="form-label">Complemento</label>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-md-5 form-floating">
                                     <input type="text" name="complemento"
                                         value="{{!empty($loja) ? $loja->complemento : old('complemento')}}"
-                                        class="form-control" id="inputComplemento">
+                                        class="form-control" id="inputComplemento" placeholder="">
+                                    <label for="inputComplemento"
+                                        class="text-secondary fw-semibold ml-1">Complemento</label>
                                 </div>
-                                <div class="col-md-5">
-                                    <label for="inputCidade" class="form-label">Cidade</label>
+                                <div class="col-md-5 form-floating">
                                     <input type="text" name="cidade"
-                                        value="{{!empty($loja) ? $loja->cidade : old('cidade')}}"
-                                        class="form-control" id="inputCidade" required>
+                                        value="{{!empty($loja) ? $loja->cidade : old('cidade')}}" class="form-control"
+                                        id="inputCidade" required placeholder="">
+                                    <label for="inputCidade" class="text-secondary fw-semibold ml-1">Cidade</label>
                                 </div>
-                                <div class="col-md-2">
-                                    <label for="inputEstado" class="form-label">Estado</label>
+                                <div class="col-md-2 form-floating">
                                     <input type="text" name="estado"
-                                        value="{{!empty($loja) ? $loja->estado : old('estado')}}"
-                                        class="form-control" id="inputEstado" required>
+                                        value="{{!empty($loja) ? $loja->estado : old('estado')}}" class="form-control"
+                                        id="inputEstado" required placeholder="">
+                                    <label for="inputEstado" class="text-secondary fw-semibold ml-1">Estado</label>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +240,7 @@
             var selectedInputProdutoId = $('#inputProduto').val();
 
             if (selectedInputProdutoId > 0) {
-                // Fazer uma solicitação AJAX para obter as contas bancárias do titular da conta selecionado
+                // Fazer uma solicitação AJAX para obter 
                 $.get('/opcional_produto/listar/' + selectedInputProdutoId, function(
                     data) {
                     var OpcionalField = $('#OpcionalField');
@@ -248,7 +252,7 @@
                         text: '-- Opcional do produto --'
                     }));
 
-                    // Adicionar as opções de contas bancárias
+                    // Adicionar as opções 
                     $.each(data, function(key, value) {
                         inputOpcional.append($('<option>', {
                             value: value.id,
@@ -256,11 +260,11 @@
                         }));
                     });
 
-                    // Mostrar o campo de contas bancárias
+                    // Mostrar o campo 
                     OpcionalField.show();
                 });
             } else {
-                // Se o titular da conta não for selecionado, ocultar o campo de contas bancárias e defina a opção padrão
+                // Se o titular da conta não for selecionado, ocultar o campo e defina a opção padrão
                 var OpcionalField = $('#OpcionalField');
                 var inputOpcional = $('#inputOpcional');
                 inputOpcional.empty();

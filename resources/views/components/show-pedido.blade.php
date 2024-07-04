@@ -349,7 +349,7 @@
             <tbody>
                 <!-- Variáveis PHP -->
                 @php
-                $total_pedido = 0;
+                $total_sem_entrega = 0;
                 @endphp
 
                 <!-- Exibir itens do pedido -->
@@ -357,7 +357,7 @@
 
                 <!-- Incrementando sobre valor total -->
                 @php
-                $total_pedido += $item->subtotal;
+                $total_sem_entrega += $item->subtotal;
                 @endphp
 
                 <tr class="p-0 m-0">
@@ -400,7 +400,7 @@
 
                             <!-- Incrementando sobre valor total -->
                             @php
-                            $total_pedido += $opcional->subtotal;
+                            $total_sem_entrega += $opcional->subtotal;
                             @endphp
 
                             R$ {{number_format($opcional->subtotal, 2, ',', '.')}}
@@ -413,18 +413,15 @@
             <tfoot>
                 <tr>
                     <td colspan="3" class="fw-bold">Subtotal</td>
-                    <td>R$ {{number_format($total_pedido, 2, ',', '.')}}</td>
+                    <td>R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
                 </tr>
                 <tr>
                     <td colspan="3" class="fw-bold">Entrega</td>
-                    @php
-                    $total_pedido += $pedido->entrega->taxa_entrega;
-                    @endphp
                     <td>R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                 </tr>
                 <tr>
                     <td colspan="3" class="fw-bold">Total</td>
-                    <td class="fw-bolder ">R$ {{number_format($total_pedido, 2, ',', '.')}}</td>
+                    <td class="fw-bolder "> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
                 </tr>
             </tfoot>
 
