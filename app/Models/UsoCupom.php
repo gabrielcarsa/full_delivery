@@ -23,6 +23,6 @@ class UsoCupom extends Model
 
     public function pedido()
     {
-        return $this->belongsToMany(Pedido::class);
+        return $this->belongsTo(Pedido::class);
     }
 }

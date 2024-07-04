@@ -14,6 +14,7 @@ use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
 use App\Models\OpcionalProduto;
 use App\Models\Cupom;
+use App\Models\UsoCupom;
 use App\Models\FormaPagamentoEntrega;
 use Carbon\Carbon;
 
@@ -241,6 +242,14 @@ class PedidoController extends Controller
                 //Total pedido
                 $total_geral -= $valor_desconto;
             }
+
+            $uso_cupom = new UsoCupom();
+            $uso_cupom->pedido_id = $pedido->id;
+            $uso_cupom->cliente_id = $request->input('cliente_id');
+            $uso_cupom->cupom_id = $cupom->id;
+            $uso_cupom->data_uso = Carbon::now()->format('Y-m-d H:i:s');
+            $uso_cupom->save();
+
         }
 
         $pedido->total = $total_geral;
@@ -272,7 +281,7 @@ class PedidoController extends Controller
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega', 'uso_cupom')
         ->orderBy('data_pedido', 'ASC')
         ->first();
         

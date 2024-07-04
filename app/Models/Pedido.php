@@ -43,7 +43,7 @@ class Pedido extends Model
 
     public function uso_cupom()
     {
-        return $this->belongsToMany(UsoCupom::class);
+        return $this->hasOne(UsoCupom::class);
     }
 
     /*public function produto()

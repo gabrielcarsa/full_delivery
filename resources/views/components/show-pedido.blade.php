@@ -419,6 +419,12 @@
                     <td colspan="3" class="fw-bold">Entrega</td>
                     <td>R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                 </tr>
+                @if(!empty($pedido->uso_cupom))
+                <tr>
+                    <td colspan="3" class="fw-regular">Cupons</td>
+                    <td class="text-danger">- R$ {{ $pedido->uso_cupom->cupom->desconto }}</td>
+                </tr>
+                @endif
                 <tr>
                     <td colspan="3" class="fw-bold">Total</td>
                     <td class="fw-bolder "> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
