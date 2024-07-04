@@ -238,7 +238,7 @@ class PedidoController extends Controller
                 //Total pedido
                 $total_geral -= $cupom->desconto;
             }elseif($cupom->tipo_desconto == 2){
-                $valor_desconto = ($pedido->total * $cupom->desconto)/100;
+                $valor_desconto = ($total_geral * $cupom->desconto)/100;
                 //Total pedido
                 $total_geral -= $valor_desconto;
             }

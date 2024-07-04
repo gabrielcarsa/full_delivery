@@ -421,8 +421,12 @@
                 </tr>
                 @if(!empty($pedido->uso_cupom))
                 <tr>
-                    <td colspan="3" class="fw-regular">Cupons</td>
-                    <td class="text-danger">- R$ {{ $pedido->uso_cupom->cupom->desconto }}</td>
+                    <td colspan="3" class="fw-regular">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
+                    @if($pedido->uso_cupom->cupom->tipo_desconto == 1)
+                    <td class="text-danger">- R$ {{ number_format($pedido->uso_cupom->cupom->desconto, 2, ',', '.') }}</td>
+                    @else
+                    <td class="text-danger">- {{ $pedido->uso_cupom->cupom->desconto }} %</td>
+                    @endif
                 </tr>
                 @endif
                 <tr>

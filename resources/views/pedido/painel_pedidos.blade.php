@@ -76,11 +76,11 @@
                         </div>
                         @elseif($pedido->status == 1)
                         <div class="border m-0 p-0 text-center rounded">
-                            <p class="m-0 p-0 fw-bold">EM PREPARO</p>
+                            <p class="m-0 p-0 fw-bold text-light">EM PREPARO</p>
                         </div>
                         @elseif($pedido->status == 2)
-                        <div class="border m-0 p-0 text-center rounded">
-                            <p class="m-0 p-0 fw-bold">A CAMINHO</p>
+                        <div class="bg-primary border m-0 p-0 text-center rounded">
+                            <p class="m-0 p-0 fw-bold text-light">A CAMINHO</p>
                         </div>
                         @elseif($pedido->status == 3)
                         <div class="bg-success m-0 p-0 text-center rounded">
