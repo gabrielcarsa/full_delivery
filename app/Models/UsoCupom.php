@@ -18,7 +18,7 @@ class UsoCupom extends Model
 
     public function cliente()
     {
-        return $this->belongsToMany(Cliente::class);
+        return $this->belongsTo(Cliente::class);
     }
 
     public function pedido()

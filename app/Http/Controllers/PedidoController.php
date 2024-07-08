@@ -232,7 +232,7 @@ class PedidoController extends Controller
         */
 
         $cupom = Cupom::where('codigo', $request->input('cupom'))->first();
-        if($cupom){
+        if($cupom && $cupom->is_ativo == true){
 
             if($cupom->tipo_desconto == 1){//valor fixo
                 //Total pedido
@@ -250,6 +250,10 @@ class PedidoController extends Controller
             $uso_cupom->data_uso = Carbon::now()->format('Y-m-d H:i:s');
             $uso_cupom->save();
 
+            $uso_cupom_atual = $cupom->usos;
+            $cupom->usos = $uso_cupom_atual++;
+            $cupom->save();
+            $pedido->total_sem_desconto = $pedido->total;
         }
 
         $pedido->total = $total_geral;

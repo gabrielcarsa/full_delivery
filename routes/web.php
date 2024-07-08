@@ -114,6 +114,7 @@ Route::middleware([
         Route::put('/cupom/alterar/{cupom_id}', [CupomController::class, 'update']);
         Route::delete('/cupom/apagar/{id}', [CupomController::class, 'destroy'])->name('cupom.excluir');
         Route::get('/cupom/status', [CupomController::class, 'status'])->name('cupom.status');
+        Route::get('/cupom/detalhes', [CupomController::class, 'show'])->name('cupom.show');
 
 
 });

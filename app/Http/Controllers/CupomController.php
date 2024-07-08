@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cupom;
+use App\Models\UsoCupom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,12 +17,12 @@ class CupomController extends Controller
             return redirect('loja')->with('error', 'Selecione um loja primeiro para ver os cupons');
         }
         $cupons = Cupom::all();
-        return view('vantagens/cupom', compact('cupons'));
+        return view('cupom/listar', compact('cupons'));
     }
 
     //RETORNAR VIEW CADASTRO
     public function create(Request $request){
-        return view('vantagens/novo_cupom');
+        return view('cupom/novo');
     }
 
     //CADASTRAR
@@ -76,7 +77,7 @@ class CupomController extends Controller
     public function edit(Request $request){
         $id = $request->input('id');
         $cupom = Cupom::find($id);
-        return view('vantagens/novo_cupom', compact('cupom'));
+        return view('cupom/novo', compact('cupom'));
     }
 
     //ALTERAR
@@ -152,6 +153,17 @@ class CupomController extends Controller
        return redirect()->back()->with('success', 'Status atualizado com sucesso');
 
    }
+
+    //ALTERAR VIEW
+    public function show(Request $request){
+        $cupom_id = $request->input('id');
+
+        $cupom = Cupom::where('id', $cupom_id)
+        ->with('uso_cupom.pedido')
+        ->first();
+        
+        return view('cupom/show', compact('cupom'));
+    }
 
 
 

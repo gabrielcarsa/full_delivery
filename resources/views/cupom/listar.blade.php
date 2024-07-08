@@ -65,7 +65,7 @@
                 @foreach ($cupons as $cupom)
                 <tr>
                     <td>{{$cupom->id}}</td>
-                    <td class="fw-semibold">{{$cupom->codigo}}</td>
+                    <td><a class="fw-bold" href="{{ route('cupom.show', ['id' => $cupom->id]) }}">{{$cupom->codigo}}</a></td>
                     <td class="fw-semibold {{$cupom->is_ativo ? 'text-success' : 'text-danger'}}">
                         {{$cupom->is_ativo ? 'Ativo' : 'Desativado'}}</td>
                     <td>{{$cupom->descricao}}</td>
