@@ -203,7 +203,7 @@
                                             {{$produto->descricao}}
                                         </p>
                                         <p class="my-1" style="font-size: 13px">
-                                            Serve {{$produto->quantidade_pessoa}} 
+                                            Serve {{$produto->quantidade_pessoa}}
                                             {{$produto->quantidade_pessoa > 1 ? 'pessoas' : 'pessoa'}}
                                         </p>
                                         <p class="fw-800 fs-6">
@@ -246,58 +246,57 @@
     </div>
     <!-- FIM CARDAPIO -->
 
+    <!-- MENU APPBAR -->
+    <div class="fixed-bottom bg-white border-top p-2">
+        <ul class="nav justify-content-around">
+            <li class="nav-item">
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
+                    href="{{ route('cardapio', ['loja_id' => request('loja_id')]) }}" style="font-size:13px">
+                    <span class="material-symbols-outlined">
+                        menu_book
+                    </span>
+                    <span>
+                        Cardápio
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio.carrinho') ? 'text-reset' : 'text-secondary'}}"
+                    href="{{ route('cardapio.carrinho', ['loja_id' => $data['loja_id']]) }}" style="font-size:13px">
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                    </span>
+                    <span>
+                        Carrinho
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}"
+                    href="#" style="font-size:13px">
+                    <span class="material-symbols-outlined">
+                        receipt_long
+                    </span>
+                    <span>
+                        Pedidos
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}"
+                    href="#" style="font-size:13px">
+                    <span class="material-symbols-outlined">
+                        account_circle
+                    </span>
+                    <span>
+                        Conta
+                    </span>
+                </a>
 
-    <div class="app-bar fixed-bottom bg-white border-top p-2">
-        <div class="container">
-            <ul class="nav justify-content-around">
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
-                        href="{{ route('cardapio', ['loja_id' => request('loja_id')]) }}">
-                        <span class="material-symbols-outlined">
-                            menu_book
-                        </span>
-                        <span>
-                            Cardápio
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio.carrinho') ? 'text-reset' : 'text-secondary'}}"
-                        href="{{ route('cardapio.carrinho', ['loja_id' => $data['loja_id']]) }}">
-                        <span class="material-symbols-outlined">
-                            shopping_cart
-                        </span>
-                        <span>
-                            Carrinho
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}"
-                        href="#">
-                        <span class="material-symbols-outlined">
-                            receipt_long
-                        </span>
-                        <span>
-                            Pedidos
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}"
-                        href="#">
-                        <span class="material-symbols-outlined">
-                            account_circle
-                        </span>
-                        <span>
-                            Conta
-                        </span>
-                    </a>
-
-                </li>
-            </ul>
-        </div>
+            </li>
+        </ul>
     </div>
+    <!-- FIM MENU APPBAR -->
 
     @endif
 
