@@ -93,7 +93,7 @@ class ProdutoController extends Controller
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
 
-        $produto->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
+        $produto->preco = $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
 
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
         $produto->categoria_produto_id = $categoria_produto_id;
@@ -155,7 +155,9 @@ class ProdutoController extends Controller
         $produto = Produto::find($id);
          // Excluir a imagem do armazenamento, se existir
         if ($produto->imagem) {
-            Storage::delete('public/imagens_produtos/' . $produto->imagem);
+            $categoria = CategoriaProduto::where('id', $produto->categoria_produto_id)->first();
+            $loja = Loja::where('id', $categoria->loja_id)->first();
+            Storage::delete('public/'. $loja->nome .'/imagens_produtos/' . $produto->imagem);
         }
         $produto->delete();
         return redirect()->back()->with('success', 'Produto excluido com sucesso');
