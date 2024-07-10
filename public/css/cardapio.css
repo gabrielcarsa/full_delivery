@@ -1,7 +1,13 @@
-*{
+* {
     font-family: "Inter", sans-serif;
 }
 
-.wallpaper-cardapio{
-background-color: #fd0146;
+.wallpaper-cardapio {
+    background-color: #fd0146;
+}
+
+.cardapio-loja {
+    background-image: url('/storage/images/wallpaper-cardapio.png');
+    background-position: center;
+    background-repeat: no-repeat;
 }

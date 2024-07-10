@@ -29,7 +29,7 @@
                             location_on
                         </span>
                         <span>
-                            {{$loja->rua}}, {{$loja->numero}} {{$loja->bairro}}
+                            {{$loja->rua}}, {{$loja->numero}} {{$loja->bairro}} - {{$loja->cidade}} {{$loja->estado}}
                         </span>
                     </p>
 
@@ -49,23 +49,22 @@
     <!-- RESTAURANTE SELECIONADO ## CARDAPIO ## -->
 
     @else
+    <div class="cardapio-loja d-flex align-items-center justify-content-center">
 
-    <div class="d-flex align-items-center justify-content-center">
+        <div class="bg-white m-3 p-3 rounded border" style="max-width: 400px;">
 
-        <div class="m-3 p-3 rounded border" style="max-width: 600px;">
+            <div class="d-flex align-items-center justify-content-center">
+                <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
+                    class="rounded-circle" style="max-width: 80px;">
+            </div>
+            <div class="px-3">
+                <h2 class="fs-2 fw-bolder my-2">{{$data['categoria_produto'][0]->loja->nome}}</h2>
+                <p class="text-secondary m-0 p-0 mb-2">{{$data['categoria_produto'][0]->loja->descricao}}</p>
 
-            <div class="row p-3">
-                <div class="col-sm-6 d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
-                        class="rounded" style="max-width: 250px;">
-                </div>
-                <div class="col-sm-6 ">
-                    <h2 class="fs-2 fw-bolder my-2">{{$data['categoria_produto'][0]->loja->nome}}</h2>
-                    <p class="text-secondary">{{$data['categoria_produto'][0]->loja->descricao}}</p>
-
+                <div class="" style="font-size: 13px">
                     <!-- VERIFICAR SE ESTÁ ABERTO -->
                     @if($data['categoria_produto'][0]->loja->is_open)
-                    <p class="d-flex align-items-center text-success fw-semibold">
+                    <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
                         <span class="material-symbols-outlined">
                             radio_button_checked
                         </span>
@@ -75,44 +74,65 @@
                     </p>
 
                     @else
-                    <p class="d-flex align-items-center text-danger fw-semibold">
-                        <span class="material-symbols-outlined">
+                    <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
+                        <span class="material-symbols-outlined mr-1">
                             radio_button_unchecked
                         </span>
                         <span>
                             Fechado
                         </span>
                     </p>
-
                     @endif
-                    <p class=""><i class="fa-solid fa-dollar-sign"></i> Pedido minímo: R$ 20,00</p>
-                    <!-- Button trigger modal -->
-                    <a href="" class="btn border" data-bs-toggle="modal" data-bs-target="#modalHorarios">
-                        Mais sobre
-                    </a>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
+                    <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                        <span class="material-symbols-outlined mr-1">
+                            attach_money
+                        </span>
+                        <span>
+                            Pedido minímo: R$ 20,00
+                        </span>
+                    </p>
+                    <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                        <span class="material-symbols-outlined mr-1">
+                            location_on
+                        </span>
+                        <span>
+                            {{$data['categoria_produto'][0]->loja->rua}},
+                            {{$data['categoria_produto'][0]->loja->numero}}
+                            {{$data['categoria_produto'][0]->loja->bairro}} -
+                            {{$data['categoria_produto'][0]->loja->cidade}}
+                            {{$data['categoria_produto'][0]->loja->estado}}
+                        </span>
+                    </p>
+
+                </div>
+
+                <!-- Button trigger modal -->
+                <a href="" class="btn border d-flex justify-content-center mt-3" data-bs-toggle="modal"
+                    data-bs-target="#modalHorarios">
+                    Mais sobre
+                </a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
 
         </div>
@@ -140,25 +160,24 @@
 
                     @foreach($categoria->produto as $produto)
 
-                    @if($categoria->id == $produto->categoria_id)
-
                     <div class="col-md-6">
                         <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id_produto]) }}"
                             class="text-decoration-none text-reset">
                             <div class="card mb-2 px-3">
                                 <div class="card-grid">
                                     <div class="centralizar-img">
-                                        <img src="{{ asset('storage/imagens_produtos/'.$produto->imagem_produto) }}"
-                                            class="rounded img-produto" alt="{{$produto->nome_produto}}">
+                                        <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
+                                            class="rounded img-produto" alt="{{$produto->nome}}"
+                                            style="min-width: 80px;">
                                     </div>
                                     <div class="card-texto-grid">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{$produto->nome_produto}}</h5>
-                                            <p class="text-secondary text-truncate">{{$produto->descricao_produto}}
+                                            <h5 class="card-title">{{$produto->nome}}</h5>
+                                            <p class="text-secondary text-truncate">{{$produto->descricao}}
                                             </p>
                                             <p>Serve 1 pessoa</p>
                                             <p class="fw-800"><strong>R$
-                                                    {{number_format($produto->preco_produto, 2, ',', '.')}}</strong>
+                                                    {{number_format($produto->preco, 2, ',', '.')}}</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -167,7 +186,6 @@
                         </a>
 
                     </div>
-                    @endif
                     @endforeach
 
                 </div>
