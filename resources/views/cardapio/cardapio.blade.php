@@ -160,8 +160,8 @@
         <div class="p-3 container">
 
             <!-- CATEGORIAS -->
-            <div class="bg-white rounded border shadow-sm d-flex align-items-center justify-content-center sticky-top">
-                <ul class="nav nav-underline" id="category-nav">
+            <div class="bg-white rounded border shadow-sm overflow-x-scroll sticky-top w100">
+                <ul class="nav nav-tabs d-flex flex-nowrap py-3" id="category-nav">
                     @foreach($data['categoria_produto'] as $categoria)
                     <li class="nav-item">
                         <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}" class="nav-link text-dark mx-3">
@@ -321,7 +321,7 @@
             let currentSection = '';
 
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 1; // Ajuste conforme necessário
+                const sectionTop = section.offsetTop - 50; // Ajuste conforme necessário
                 if (window.pageYOffset >= sectionTop) {
                     currentSection = section.getAttribute('id');
                 }
