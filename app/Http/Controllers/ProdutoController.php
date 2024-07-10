@@ -15,11 +15,11 @@ class ProdutoController extends Controller
      public function index(Request $request){
 
         //Exibir produtos de uma categoria
-        $categoria_id = $request->get('categoria_id');
+        $categoria_produto_id = $request->get('categoria_produto_id');
 
-        $categoria = CategoriaProduto::find($categoria_id);
-
-        $produtos = Produto::where('categoria_id', $categoria_id)->get();
+        $categoria = CategoriaProduto::find($categoria_produto_id);
+        
+        $produtos = Produto::where('categoria_produto_id', $categoria_produto_id)->get();
 
         $loja = Loja::where('id', $categoria->loja_id)->first();
 
@@ -35,15 +35,15 @@ class ProdutoController extends Controller
     //RETORNAR VIEW PARA CADASTRO
     public function create(Request $request){
 
-        $categoria_id = $request->input('categoria_id');
+        $categoria_produto_id = $request->input('categoria_produto_id');
 
-        $categoria = CategoriaProduto::find($categoria_id);
+        $categoria = CategoriaProduto::find($categoria_produto_id);
 
         return view('produto/novo', compact('categoria'));
     }
 
     //CADASTRAR
-    public function store(Request $request, $categoria_id, $usuario_id){
+    public function store(Request $request, $categoria_produto_id, $usuario_id){
 
         $request->merge([
             'preco' => str_replace(['.', ','], ['', '.'], $request->input('preco')),
@@ -84,7 +84,7 @@ class ProdutoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $categoria = CategoriaProduto::where('id', $categoria_id)->first();
+        $categoria = CategoriaProduto::where('id', $categoria_produto_id)->first();
         $loja = Loja::where('id', $categoria->loja_id)->first();
 
         //Cadastro de produto
@@ -96,7 +96,7 @@ class ProdutoController extends Controller
         $produto->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
 
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
-        $produto->categoria_id = $categoria_id;
+        $produto->categoria_produto_id = $categoria_produto_id;
         $produto->cadastrado_usuario_id = $usuario_id;
         if ($request->hasFile('imagem')) {
             //Colocando nome único no arquivo

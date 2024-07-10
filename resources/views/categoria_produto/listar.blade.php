@@ -98,7 +98,7 @@
                 <tr>
                     <th scope="row">{{$categoria->id}}</th>
                     <td><a class="btn btn-outline-primary"
-                            href="{{ route('produtos', ['categoria_id' => $categoria->id]) }}">{{$categoria->nome}}</a>
+                            href="{{ route('produtos', ['categoria_produto_id' => $categoria->id]) }}">{{$categoria->nome}}</a>
                     </td>
                     <td>{{$categoria->descricao}}</td>
                     <td>{{$categoria->ordem}}</td>

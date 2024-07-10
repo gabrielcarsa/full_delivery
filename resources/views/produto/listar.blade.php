@@ -35,7 +35,7 @@
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
-                    href="{{ route('produto.novo', ['categoria_id' => $data['categoria']->id]) }}">
+                    href="{{ route('produto.novo', ['categoria_produto_id' => $data['categoria']->id]) }}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>

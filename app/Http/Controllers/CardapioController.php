@@ -18,36 +18,19 @@ class CardapioController extends Controller
 
         $loja_id = $request->get('loja_id');
 
-        $cardapio_resultados = DB::table('produto as p')
-        ->select(
-            'p.id as id_produto',
-            'p.nome as nome_produto',
-            'p.descricao as descricao_produto',
-            'p.imagem as imagem_produto',
-            'p.preco as preco_produto',
-            'p.categoria_id as categoria_id',
-            'cp.nome as nome_categoria'
-            )
-        ->rightjoin('categoria_produto as cp', 'cp.id', '=', 'p.categoria_id')
-        ->rightjoin('loja as r', 'r.id', '=', 'cp.loja_id')
-        ->get();
+        $lojas = Loja::all();
 
-        $categoria_cardapio = CategoriaProduto::orderBy('ordem')->get();
-        
-        if($loja_id != null){
-            $lojas = Loja::find($loja_id)->first();
-        }else{
-            $lojas = Loja::all();
-        }
+        $categoria_produto = CategoriaProduto::where('loja_id', $loja_id)
+        ->with('loja', 'produto')
+        ->get();
 
         $horarios_funcionamento = HorarioFuncionamento::all();
 
         $data = [
-            'cardapio_resultados' => $cardapio_resultados,
+            'categoria_produto' => $categoria_produto,
             'lojas' => $lojas,
             'horarios_funcionamento' => $horarios_funcionamento,
             'loja_id' => $loja_id,
-            'categoria_cardapio' => $categoria_cardapio,
         ];
 
         $carrinho = session()->get('carrinho', []);

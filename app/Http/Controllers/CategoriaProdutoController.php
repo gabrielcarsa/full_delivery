@@ -85,7 +85,6 @@ class CategoriaProdutoController extends Controller
          $categoria->nome = $request->input('nome');
          $categoria->descricao = $request->input('descricao');
          $categoria->ordem = $request->input('ordem');
-         $categoria->loja_id = $request->input('loja_id');
          $categoria->alterado_usuario_id = $usuario_id;
          $categoria->save();
  
