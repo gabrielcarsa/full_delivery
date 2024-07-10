@@ -49,18 +49,26 @@
     <!-- RESTAURANTE SELECIONADO ## CARDAPIO ## -->
 
     @else
+
+    <!-- FUNDO LOJA CARDAPIO -->
     <div class="cardapio-loja d-flex align-items-center justify-content-center">
 
+        <!-- LOJA CARD -->
         <div class="bg-white m-3 p-3 rounded border" style="max-width: 400px;">
 
+            <!-- IMAGEM LOJA -->
             <div class="d-flex align-items-center justify-content-center">
                 <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
                     class="rounded-circle" style="max-width: 80px;">
             </div>
+            <!-- FIM IMAGEM LOJA -->
+
+            <!-- SOBRE A LOJA -->
             <div class="px-3">
                 <h2 class="fs-2 fw-bolder my-2">{{$data['categoria_produto'][0]->loja->nome}}</h2>
                 <p class="text-secondary m-0 p-0 mb-2">{{$data['categoria_produto'][0]->loja->descricao}}</p>
 
+                <!-- INFORMAÇÕES LOJA -->
                 <div class="" style="font-size: 13px">
                     <!-- VERIFICAR SE ESTÁ ABERTO -->
                     @if($data['categoria_produto'][0]->loja->is_open)
@@ -106,14 +114,16 @@
                     </p>
 
                 </div>
+                <!-- FIM INFORMAÇÕES LOJA -->
 
-                <!-- Button trigger modal -->
+                <!-- BOTAO HORARIO FUNCIONAMENTO LOJA -->
                 <a href="" class="btn border d-flex justify-content-center mt-3" data-bs-toggle="modal"
                     data-bs-target="#modalHorarios">
                     Mais sobre
                 </a>
+                <!-- FIM BOTAO HORARIO FUNCIONAMENTO LOJA -->
 
-                <!-- Modal -->
+                <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
                 <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -132,71 +142,110 @@
                         </div>
                     </div>
                 </div>
+                <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
 
             </div>
+            <!-- FIM SOBRE A LOJA -->
 
         </div>
+        <!-- FIM LOJA CARD -->
+
     </div>
+    <!-- FIM FUNDO LOJA CARDAPIO -->
 
 
+    <!-- CARDAPIO -->
     <div class="bg-body-tertiary">
+
         <div class="p-3 container">
 
-            <div class="d-flex align-items-center justify-content-center">
-
-                @foreach($data['categoria_produto'] as $categoria)
-
-                <a href="#{{$categoria->nome}}" class="btn btn-dark m-1">{{$categoria->nome}}</a>
-
-                @endforeach
+            <!-- CATEGORIAS -->
+            <div class="bg-white rounded border shadow-sm d-flex align-items-center justify-content-center sticky-top">
+                <ul class="nav nav-underline" id="category-nav">
+                    @foreach($data['categoria_produto'] as $categoria)
+                    <li class="nav-item">
+                        <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}" class="nav-link text-dark mx-3">
+                            {{$categoria->nome}}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
             </div>
+            <!-- FIM CATEGORIAS -->
 
+            <!-- CARDAPIO LISTA -->
             <div class="cardapio-lista bg-body-body">
 
+                <!-- CATEGORIA DOS PRODUTOS -->
                 @foreach($data['categoria_produto'] as $categoria)
+
+                @if($categoria->produto != null)
 
                 <h3 id="{{$categoria->nome}}" class="my-3 fw-bolder">{{$categoria->nome}}</h3>
                 <div class="row">
 
+                    <!-- PRODUTOS GRID -->
                     @foreach($categoria->produto as $produto)
-
                     <div class="col-md-6">
+
+                        <!-- PRODUTO -->
                         <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id_produto]) }}"
                             class="text-decoration-none text-reset">
-                            <div class="card mb-2 px-3">
-                                <div class="card-grid">
-                                    <div class="centralizar-img">
-                                        <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
-                                            class="rounded img-produto" alt="{{$produto->nome}}"
-                                            style="min-width: 80px;">
-                                    </div>
-                                    <div class="card-texto-grid">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{$produto->nome}}</h5>
-                                            <p class="text-secondary text-truncate">{{$produto->descricao}}
-                                            </p>
-                                            <p>Serve 1 pessoa</p>
-                                            <p class="fw-800"><strong>R$
-                                                    {{number_format($produto->preco, 2, ',', '.')}}</strong>
-                                            </p>
-                                        </div>
+
+                            <!-- CARD PRODUTO -->
+                            <div class="row bg-white border rounded p-1 m-1">
+
+                                <!-- CARD PRODUTO DESCRIÇÃO -->
+                                <div class="col-6 p-1">
+                                    <div class="">
+                                        <h5 class="fs-5 fw-bolder">{{$produto->nome}}</h5>
+                                        <p class="text-secondary text-truncate m-0" style="font-size: 13px">
+                                            {{$produto->descricao}}
+                                        </p>
+                                        <p class="my-1" style="font-size: 13px">
+                                            Serve {{$produto->quantidade_pessoa}} 
+                                            {{$produto->quantidade_pessoa > 1 ? 'pessoas' : 'pessoa'}}
+                                        </p>
+                                        <p class="fw-800 fs-6">
+                                            <strong>
+                                                R$ {{number_format($produto->preco, 2, ',', '.')}}
+                                            </strong>
+                                        </p>
                                     </div>
                                 </div>
+                                <!-- FIM CARD PRODUTO DESCRIÇÃO -->
+
+                                <!-- IMG PRODUTO -->
+                                <div class="col-6 d-flex align-items-center justify-content-center">
+                                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
+                                        class="rounded img-produto" alt="{{$produto->nome}}" width="90px">
+                                </div>
+                                <!-- FIM IMG PRODUTO -->
+
                             </div>
+                            <!-- FIM CARD PRODUTO -->
+
                         </a>
+                        <!-- FIM PRODUTO -->
 
                     </div>
+
                     @endforeach
+                    <!-- FIM PRODUTOS GRID -->
 
                 </div>
+                @endif
 
                 @endforeach
 
             </div>
-
+            <!-- CARDAPIO LISTA -->
 
         </div>
+
     </div>
+    <!-- FIM CARDAPIO -->
+
 
     <div class="app-bar fixed-bottom bg-white border-top p-2">
         <div class="container">
@@ -251,5 +300,43 @@
     </div>
 
     @endif
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('.cardapio-lista h3');
+        const navItems = document.querySelectorAll('#category-nav .nav-link');
+
+        function removeActiveClasses() {
+            navItems.forEach(item => item.classList.remove('active'));
+        }
+
+        function addActiveClass(id) {
+            const navItem = document.querySelector(`#nav-${id}`);
+            if (navItem) {
+                navItem.classList.add('active');
+            }
+        }
+
+        function handleScroll() {
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 1; // Ajuste conforme necessário
+                if (window.pageYOffset >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            removeActiveClasses();
+            addActiveClass(currentSection);
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Call handleScroll initially to set the active link on page load
+        handleScroll();
+    });
+    </script>
+
 
 </x-layout-cardapio>
