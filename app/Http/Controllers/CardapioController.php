@@ -77,19 +77,12 @@ class CardapioController extends Controller
     public function showProduto(Request $request){
         $loja_id = $request->get('loja_id');
         $produto_id = $request->get('produto_id');
-        
-        $produto = DB::table('produto as p')
-        ->select(
-            'op.id as id_opcional',
-            'op.nome as nome_opcional',
-            'op.descricao as descricao_opcional',
-            'op.preco as preco_opcional',
-            'p.*'
-        )
-        ->leftjoin('opcional_produto as op', 'op.produto_id', '=', 'p.id')
-        ->where('p.id', $produto_id)
-        ->get();
 
-        return view('cardapio/produto', compact('produto'))->with('loja_id', $loja_id);
+        $produto = Produto::where('id', $produto_id)
+        ->with('opcional_produto', 'categoria')
+        ->first();
+
+        $loja = Loja::find($loja_id);
+        return view('cardapio/produto', compact('produto', 'loja'))->with('loja_id', $loja_id);
     }
 }

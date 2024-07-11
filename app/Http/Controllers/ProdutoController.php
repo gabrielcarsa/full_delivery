@@ -93,7 +93,7 @@ class ProdutoController extends Controller
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
 
-        $produto->preco = $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
+        $produto->preco = $request->input('preco');
 
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
         $produto->categoria_produto_id = $categoria_produto_id;

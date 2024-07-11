@@ -164,7 +164,7 @@
                 <ul class="nav nav-tabs d-flex flex-nowrap py-3" id="category-nav">
                     @foreach($data['categoria_produto'] as $categoria)
                     <li class="nav-item">
-                        <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}" class="nav-link text-dark mx-3">
+                        <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}" class="nav-link text-dark">
                             {{$categoria->nome}}
                         </a>
                     </li>
@@ -189,7 +189,7 @@
                     <div class="col-md-6">
 
                         <!-- PRODUTO -->
-                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id_produto]) }}"
+                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id]) }}"
                             class="text-decoration-none text-reset">
 
                             <!-- CARD PRODUTO -->
@@ -198,7 +198,7 @@
                                 <!-- CARD PRODUTO DESCRIÇÃO -->
                                 <div class="col-6 p-1">
                                     <div class="">
-                                        <h5 class="fs-5 fw-bolder">{{$produto->nome}}</h5>
+                                        <h5 class="fs-5 fw-semibold">{{$produto->nome}}</h5>
                                         <p class="text-secondary text-truncate m-0" style="font-size: 13px">
                                             {{$produto->descricao}}
                                         </p>
@@ -247,55 +247,7 @@
     <!-- FIM CARDAPIO -->
 
     <!-- MENU APPBAR -->
-    <div class="fixed-bottom bg-white border-top p-2">
-        <ul class="nav justify-content-around">
-            <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
-                    href="{{ route('cardapio', ['loja_id' => request('loja_id')]) }}" style="font-size:13px">
-                    <span class="material-symbols-outlined">
-                        menu_book
-                    </span>
-                    <span>
-                        Cardápio
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio.carrinho') ? 'text-reset' : 'text-secondary'}}"
-                    href="{{ route('cardapio.carrinho', ['loja_id' => $data['loja_id']]) }}" style="font-size:13px">
-                    <span class="material-symbols-outlined">
-                        shopping_cart
-                    </span>
-                    <span>
-                        Carrinho
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}"
-                    href="#" style="font-size:13px">
-                    <span class="material-symbols-outlined">
-                        receipt_long
-                    </span>
-                    <span>
-                        Pedidos
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}"
-                    href="#" style="font-size:13px">
-                    <span class="material-symbols-outlined">
-                        account_circle
-                    </span>
-                    <span>
-                        Conta
-                    </span>
-                </a>
-
-            </li>
-        </ul>
-    </div>
+    <x-appbar-cardapio :data="$data"/>
     <!-- FIM MENU APPBAR -->
 
     @endif
