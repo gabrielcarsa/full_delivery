@@ -1,7 +1,7 @@
 <x-layout-cardapio>
 
     <!-- NAVBAR PRODUTO -->
-    <div class="nav-produto d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
+    <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
         <a href="#" onclick="history.go(-1); return false;"
             class="btn btn-light rounded-circle d-flex align-items-center">
             <span class="material-symbols-outlined">
@@ -109,5 +109,5 @@
         });
     });
     </script>
-    
+
 </x-layout-cardapio>

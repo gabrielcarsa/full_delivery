@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class CardapioController extends Controller
 {
-    //
+    // CARDAPIO
     public function index(Request $request){
 
         $loja_id = $request->get('loja_id');
@@ -38,15 +38,21 @@ class CardapioController extends Controller
         return view('cardapio/cardapio', compact('data', 'carrinho'));
     }
 
+    // CARRINHO
     public function indexCarrinho(Request $request){
         
         $loja_id = $request->get('loja_id');
 
         $carrinho = session()->get('carrinho', []);
 
-        return view('cardapio/carrinho', compact('carrinho'))->with('loja_id', $loja_id);
+        $data = [
+            'loja_id' => $loja_id,
+        ];
+
+        return view('cardapio/carrinho', compact('carrinho', 'data'))->with('loja_id', $loja_id);
     }
 
+    // ADICIONAR AO CARRINHO
     public function storeCarrinho(Request $request, $produto_id){
         $observacao = $request->input('observacao');
         $opcional_id = $request->input('opcionais');
@@ -68,12 +74,14 @@ class CardapioController extends Controller
         return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id]);
     }
 
+    // APAGAR CARRINHO
     public function destroyCarrinho(){
         Session::forget('carrinho');
 
         return redirect()->back();
     }
 
+    //EXIBIR PRODUTO
     public function showProduto(Request $request){
         $loja_id = $request->get('loja_id');
         $produto_id = $request->get('produto_id');

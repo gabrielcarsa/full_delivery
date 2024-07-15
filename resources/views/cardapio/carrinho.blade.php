@@ -1,22 +1,35 @@
 <x-layout-cardapio>
-    <div class="nav-produto d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
-        <div class="d-flex align-items-center">
-            <a href="#" onclick="history.go(-1); return false;" class="btn btn-light rounded-circle"><i
-                    class="fas fa-arrow-left"></i></a>
-        </div>
-        <div class="d-flex align-items-center justify-content-center text-center" style="flex: 1;">
-            <h2 class="fs-5">Carrinho de Compras</h2>
+
+    <!-- NAVBAR PRODUTO -->
+    <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
+        <a href="#" onclick="history.go(-1); return false;"
+            class="btn btn-light rounded-circle d-flex align-items-center">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+        </a>
+        <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
+            <h2 class="fs-5 fw-bold">Carrinho de Compras</h2>
         </div>
     </div>
+    <!-- FIM NAVBAR PRODUTO -->
+
 
     @if(empty($carrinho))
-    <div class="d-flex justify-content-center align-items-center" style="padding-top: 70px;">
+
+    <!-- CARRINHO VAZIO -->
+    <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="m-5">
+            <span class="material-symbols-outlined" style="font-size: 60px;">
+                shopping_cart_off
+            </span>
             <h3>Ops!</h3>
             <p>Parece que seu carrinho está vazio!</p>
             <a href="#" onclick="history.go(-1); return false;" class="btn btn-primary">Ir para cardápio</a>
         </div>
     </div>
+    <!-- FIM CARRINHO VAZIO -->
+
     @else
     <div class="container">
         <div class="row" style="padding-top: 70px;">
@@ -74,5 +87,9 @@
     </div>
 
     @endif
+
+    <!-- MENU APPBAR -->
+    <x-appbar-cardapio :data="$data" />
+    <!-- FIM MENU APPBAR -->
 
 </x-layout-cardapio>
