@@ -95,7 +95,7 @@
                         </p>
                         <p>
                             @if (Route::has('login'))
-                            @auth
+                            @auth('web')
                             <a href="{{ url('/dashboard') }}" class="text-reset text-decoration-none">Interno -
                                 Dashboard</a>
                             @else

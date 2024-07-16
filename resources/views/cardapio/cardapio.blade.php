@@ -180,13 +180,12 @@
                         Para viagem
                     </span>
                 </a>
-                <a href="" class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                <a href=" {{route('cliente.login')}} " class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports
                     </span>
                     <span>
                         Para entrega
-
                     </span>
                 </a>
             </div>

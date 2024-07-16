@@ -10,7 +10,7 @@ use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\CupomController;
-
+use App\Http\Controllers\ClienteAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,17 @@ Route::get('/carrinho', [CardapioController::class, 'indexCarrinho'])->name('car
 Route::get('/produto', [CardapioController::class, 'showProduto'])->name('cardapio.produto');
 Route::post('/adicionar-carrinho/{produto_id}', [CardapioController::class, 'storeCarrinho']);
 Route::get('/limpar-carrinho', [CardapioController::class, 'destroyCarrinho'])->name('cardapio.esvaziarCarrinho');
+
+Route::middleware('auth:cliente')->group(function () {
+
+});
+
+Route::get('cliente/login', [ClienteAuthController::class, 'showLoginForm'])->name('cliente.login');
+Route::post('cliente/login', [ClienteAuthController::class, 'login']);
+Route::post('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
+Route::get('cliente/register', [ClienteAuthController::class, 'showRegistrationForm'])->name('cliente.register');
+Route::post('cliente/register', [ClienteAuthController::class, 'register']);
+
 
 
 Route::middleware([
