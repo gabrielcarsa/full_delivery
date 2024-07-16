@@ -15,7 +15,7 @@
     <!-- FIM NAVBAR PRODUTO -->
 
     <!-- PRODUTO -->
-    <div class="container" style="margin-top: 70px;">
+    <div class="container mb-5" style="margin-top: 70px;">
         <div class="row">
 
             <!-- IMAGEM PRODUTO -->
@@ -30,7 +30,7 @@
                 <p class="text-secondary">{{$produto->descricao}}</p>
 
                 <!-- FORM PRODUTO OPCINAL -->
-                <form action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$loja_id}}" method="post">
+                <form action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}" method="post">
 
                     @csrf
                     <div class="bg-body-tertiary p-3 ">

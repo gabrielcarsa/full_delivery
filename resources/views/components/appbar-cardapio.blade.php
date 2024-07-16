@@ -5,7 +5,7 @@
             <!-- ITEM APPBAR -->
             <li class="nav-item">
                 <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
-                    href="{{ route('cardapio', ['loja_id' => request('loja_id')]) }}" style="font-size:13px">
+                    href="{{ route('cardapio', ['loja_id' => request('loja_id'), 'consumo_local_viagem' => request('consumo_local_viagem')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         menu_book
                     </span>
@@ -19,7 +19,7 @@
             <!-- ITEM APPBAR -->
             <li class="nav-item">
                 <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio.carrinho') ? 'text-reset' : 'text-secondary'}}"
-                    href="{{ route('cardapio.carrinho', ['loja_id' => request('loja_id')]) }}" style="font-size:13px">
+                    href="{{ route('cardapio.carrinho', ['loja_id' => request('loja_id'), 'consumo_local_viagem' => request('consumo_local_viagem')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         shopping_cart
                     </span>

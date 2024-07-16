@@ -60,27 +60,36 @@ class CardapioController extends Controller
     // CARRINHO
     public function indexCarrinho(Request $request){
         
+        //Variaveis via GET
         $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
 
+        //Carrinho
         $carrinho = session()->get('carrinho', []);
 
+        // Array para passar variaveis
         $data = [
+            'consumo_local_viagem' => $consumo_local_viagem,
             'loja_id' => $loja_id,
         ];
 
-        return view('cardapio/carrinho', compact('carrinho', 'data'))->with('loja_id', $loja_id);
+        return view('cardapio/carrinho', compact('carrinho', 'data'));
     }
 
     // ADICIONAR AO CARRINHO
     public function storeCarrinho(Request $request, $produto_id){
+        //Variaveis via GET
+        $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
         $observacao = $request->input('observacao');
         $opcional_id = $request->input('opcionais');
-        $loja_id = $request->get('loja_id');
 
+        //Produto
         $produto = Produto::find($produto_id);
-
+        //Opcional
         $opcionais = OpcionalProduto::find($opcional_id);
 
+        //Itens do carrinho
         $itensCarrinho = [
             'opcionais' => $opcionais,
             'observacao' => $observacao,
@@ -90,7 +99,8 @@ class CardapioController extends Controller
         // Adicionando o item ao carrinho na sessão
         $request->session()->push('carrinho', $itensCarrinho);
 
-        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id]);
+        //Redirecionando com rota laravel
+        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem]);
     }
 
     // APAGAR CARRINHO
@@ -102,14 +112,24 @@ class CardapioController extends Controller
 
     //EXIBIR PRODUTO
     public function showProduto(Request $request){
+        //Variaveis via GET
         $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
         $produto_id = $request->get('produto_id');
 
+        //Produto
         $produto = Produto::where('id', $produto_id)
         ->with('opcional_produto', 'categoria')
         ->first();
 
+        // Array para passar variaveis
+        $data = [
+            'consumo_local_viagem' => $consumo_local_viagem,
+            'loja_id' => $loja_id,
+        ];
+
         $loja = Loja::find($loja_id);
-        return view('cardapio/produto', compact('produto', 'loja'))->with('loja_id', $loja_id);
+        
+        return view('cardapio/produto', compact('produto', 'data'))->with('loja', $loja);
     }
 }
