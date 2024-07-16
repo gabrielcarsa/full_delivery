@@ -34,26 +34,26 @@ class ClienteAuthController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('cliente.auth.register');
+        return view('cliente.register');
     }
 
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:clientes',
-            'password' => 'required|string|min:8|confirmed',
+            'nome' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:cliente',
+            'senha' => 'required|string|min:8|confirmed',
         ]);
 
         $cliente = Cliente::create([
-            'name' => $request->name,
+            'nome' => $request->nome,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'senha' => Hash::make($request->senha),
         ]);
 
         Auth::guard('cliente')->login($cliente);
 
-        return redirect()->route('cliente.dashboard');
+        return redirect()->route('cardapio');
     }
 }
 
