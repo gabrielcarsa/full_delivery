@@ -33,6 +33,16 @@ class Cliente extends Authenticatable
         'two_factor_secret',
     ];
 
+     /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->senha;
+    }
+
     public function pedido()
     {
         return $this->hasMany(Pedido::class);

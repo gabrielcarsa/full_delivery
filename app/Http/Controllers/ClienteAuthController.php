@@ -18,7 +18,7 @@ class ClienteAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('cliente')->attempt($credentials)) {
-            return redirect()->intended('/cliente/dashboard');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -38,16 +38,23 @@ class ClienteAuthController extends Controller
     }
 
     public function register(Request $request)
+    
     {
+        $request->merge([
+            'telefone' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone')),
+        ]);
+
         $request->validate([
             'nome' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:cliente',
+            'telefone' => 'required|string|max:100',
             'senha' => 'required|string|min:8|confirmed',
         ]);
 
         $cliente = Cliente::create([
             'nome' => $request->nome,
             'email' => $request->email,
+            'telefone' => $request->telefone,
             'senha' => Hash::make($request->senha),
         ]);
 

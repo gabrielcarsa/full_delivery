@@ -4,6 +4,29 @@
 
         <!-- CARD LOGIN -->
         <div class="bg-white p-3 rounded border" style="width: 350px;">
+
+           <!-- MENSAGENS -->
+           @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            <!-- FIM MENSAGENS -->
+
             <p class="fs-5 fw-semibold">Entrar</p>
 
             <div class="d-flex my-3">
@@ -21,7 +44,7 @@
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" name="senha" class="form-control" id="floatingPassword"
+                    <input type="password" name="password" class="form-control" id="floatingPassword"
                         placeholder="Password">
                     <label for="floatingPassword">Senha</label>
                 </div>
