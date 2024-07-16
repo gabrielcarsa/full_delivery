@@ -2,7 +2,7 @@
 
     <!-- NENHUM RESTAURANTE SELECIONADO -->
 
-    @if($data['loja_id'] == null)
+    @if(empty($data['loja_id']))
 
     <div class="vh-100 d-flex align-items-center justify-content-center wallpaper-cardapio">
 
@@ -34,7 +34,8 @@
                     </p>
 
                     <div class="d-flex justify-content-center">
-                        <a href="{{ route('cardapio', ['loja_id' => $loja->id,]) }}" class="btn btn-primary px-5">Escolher</a>
+                        <a href="{{ route('cardapio', ['loja_id' => $loja->id,]) }}"
+                            class="btn btn-primary px-5">Escolher</a>
                     </div>
 
                 </div>
@@ -48,7 +49,7 @@
 
     <!-- RESTAURANTE SELECIONADO ## CARDAPIO ## -->
 
-    @else
+    @elseif(!$data['categoria_produto']->isEmpty())
 
     <!-- FUNDO LOJA CARDAPIO -->
     <div class="cardapio-loja d-flex align-items-center justify-content-center">
@@ -161,7 +162,8 @@
         <div class="px-3 py-4 m-3 border rounded shadow-sm" style="min-width: 300px">
             <p class="text-secondary text-center">Selecione uma opção</p>
             <div class="">
-                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}" class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}"
+                    class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         storefront
                     </span>
@@ -169,7 +171,8 @@
                         Comer no local
                     </span>
                 </a>
-                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}" class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}"
+                    class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         room_service
                     </span>
@@ -291,6 +294,18 @@
     <!-- FIM MENU APPBAR -->
 
     @endif
+
+    <!-- ERRO LOJA OU CARDAPIO -->
+    @else
+
+    <div class="wallpaper-erro vh-100 d-flex justify-content-center align-items-center">
+        <div>
+            <h2>Loja não encontrada!</h2>
+            <p>Selecione novamente</p>
+            <a href="/" class="btn btn-primary">Escolher loja</a>
+        </div>
+    </div>
+    <!-- FIM ERRO LOJA OU CARDAPIO -->
 
 
     @endif

@@ -20,3 +20,9 @@
     font-weight: 700;
     border-radius: 0.5rem;
 }
+
+.wallpaper-erro{
+    background-image: url('/storage/images/wallpaper-erro.png');
+    background-position: center;
+    background-size: cover;
+}
