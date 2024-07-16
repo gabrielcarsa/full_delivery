@@ -34,7 +34,7 @@
                     </p>
 
                     <div class="d-flex justify-content-center">
-                        <a href="?loja_id={{$loja->id}}" class="btn btn-primary px-5">Escolher</a>
+                        <a href="{{ route('cardapio', ['loja_id' => $loja->id,]) }}" class="btn btn-primary px-5">Escolher</a>
                     </div>
 
                 </div>
@@ -153,6 +153,46 @@
     </div>
     <!-- FIM FUNDO LOJA CARDAPIO -->
 
+    @if(empty($data['consumo_local_viagem']))
+
+    <!-- SELECIONAR OPÇÃO -->
+
+    <div class="container d-flex justify-content-center">
+        <div class="px-3 py-4 m-3 border rounded shadow-sm" style="min-width: 300px">
+            <p class="text-secondary text-center">Selecione uma opção</p>
+            <div class="">
+                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}" class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined mr-1">
+                        storefront
+                    </span>
+                    <span>
+                        Comer no local
+                    </span>
+                </a>
+                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}" class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined mr-1">
+                        room_service
+                    </span>
+                    <span>
+                        Para viagem
+                    </span>
+                </a>
+                <a href="" class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined mr-1">
+                        sports_motorsports
+                    </span>
+                    <span>
+                        Para entrega
+
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <!-- FIM SELECIONAR OPÇÃO -->
+
+    @else
 
     <!-- CARDAPIO -->
     <div class="bg-body-tertiary">
@@ -247,8 +287,11 @@
     <!-- FIM CARDAPIO -->
 
     <!-- MENU APPBAR -->
-    <x-appbar-cardapio :data="$data"/>
+    <x-appbar-cardapio :data="$data" />
     <!-- FIM MENU APPBAR -->
+
+    @endif
+
 
     @endif
 

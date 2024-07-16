@@ -31,60 +31,128 @@
     <!-- FIM CARRINHO VAZIO -->
 
     @else
+
+    <!-- CARRINHO -->
     <div class="container">
-        <div class="row" style="padding-top: 70px;">
-            <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        Itens no Carrinho
-                    </div>
-                    <div class="card-body">
 
-                        <ul class="list-group">
-                            @php
-                            $valor_total = 0;
-                            @endphp
-                            @foreach($carrinho as $item)
-                            @php
-                            $valor_total += $item['produto']->preco;
-                            @endphp
-                            <li class="list-group-item">
-                                <p class="m-0 p-0 text-truncate"><strong>1x</strong> {{$item['produto']->nome}}</p>
-                                <p class="m-0 p-0 text-secondary text-truncate">{{$item['observacao']}}</p>
-                                <p class="m-0 p-0 text-truncate">R$
-                                    {{number_format($item['produto']->preco, 2, ',', '.')}}</p>
-
-                                @if(!empty($item['opcionais']))
-                                <div class="border p-1 rounded">
-                                    @foreach($item['opcionais'] as $opcional)
-                                    <p class="m-0 p-0 text-truncate text-secondary"> - {{$opcional->nome}} R$
-                                        {{number_format($opcional->preco, 2, ',', '.')}}</p>
-                                    @endforeach
-                                </div>
-                                @endif
-
-                            </li>
-                            @endforeach
-
-                            <div class="mt-3">
-                                <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="btn btn-danger">Limpar
-                                    carrinho</a>
-                            </div>
-
-                        </ul>
-                    </div>
-                </div>
+        <!-- ROW CARRINHO -->
+        <div class="row my-3" style="padding-top: 70px;">
+            <div class="mt-3">
+                <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="btn btn-danger">Limpar
+                    carrinho</a>
             </div>
 
+            <!-- COLUNA CARRINHO -->
+            <div class="col-md-8 p-3 bg-white">
+
+                <h3 class="fw-bolder fs-3">Itens</h3>
+                <hr>
+                <!-- TABELA ITENS -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Qtd</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Preço unitário</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Variáveis PHP -->
+                        @php
+                        $valor_total = 0;
+
+                        @endphp
+
+                        <!-- Exibir itens do pedido -->
+                        @foreach ($carrinho as $item)
+                        @php
+                        $valor_total += $item['produto']->preco;
+
+                        @endphp
+
+                        <!-- Incrementando sobre valor total -->
+
+                        <tr class="p-0 m-0">
+                            <td class="bg-white">
+                                <span>
+                                    1x
+                                </span><br>
+                                <span class="text-secondary">
+
+                                </span>
+                            </td>
+                            <td class="bg-white">
+                                <span class="fw-bold">
+                                    {{ $item['produto']->nome }}
+                                </span><br>
+                                <span class="text-secondary">
+
+                                </span>
+                            </td>
+                            <td class="bg-white">
+                                <span>
+                                    R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
+                                </span><br>
+                                <span class="text-secondary">
+
+                                </span>
+                            </td>
+
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+
+
+
+                    </tfoot>
+
+                </table>
+                <!-- FIM TABELA ITENS -->
+
+            </div>
+            <!-- FIM COLUNA CARRINHO -->
+
+            <!-- COLUNA RESUMO -->
+            <div class="col-md-4 p-3 bg-light rounded">
+                <h3 class="fw-bolder fs-3">Resumo</h3>
+                <hr>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingCupom" placeholder="Cupom">
+                    <label for="floatingCupom">Cupom</label>
+                </div>
+
+                <div class="my-1">
+                    <p class="fs-6 text-secondary m-0">
+                        Total dos itens
+                    </p>
+                    <p class="m-0 fs-5 fw-semibold">
+                        R$ {{number_format($valor_total, 2, ',', '.')}}
+                    </p>
+                </div>
+                <div class="my-1">
+                    <p class="fs-6 text-secondary m-0">
+                        Entrega
+                    </p>
+                    <p class="m-0 fs-5 fw-semibold">
+                        R$ 2,00
+                    </p>
+                </div>
+
+                <div class="">
+                    <a href="" class="btn btn-success">
+                        Finalizar pedido
+                    </a>
+                </div>
+            </div>
+            <!-- FIM COLUNA RESUMO -->
+
         </div>
+        <!-- FIM ROW CARRINHO -->
+
     </div>
 
-    <div class="mt-3 fixed-bottom p-3 shadow-sm bg-light">
-        <div class="">
-            <a href="" class="btn btn-success">Adicionar R$
-                {{number_format($valor_total, 2, ',', '.')}}</a>
-        </div>
-    </div>
+    <!-- FIM CARRINHO -->
 
     @endif
 

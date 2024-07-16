@@ -16,23 +16,42 @@ class CardapioController extends Controller
     // CARDAPIO
     public function index(Request $request){
 
+        //Variaveis via GET
         $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
 
-        $lojas = Loja::all();
+        //Declarando variaveis zeradas
+        $categoria_produto = null;
+        $lojas = null;
+        $horarios_funcionamento = null;
 
-        $categoria_produto = CategoriaProduto::where('loja_id', $loja_id)
-        ->with('loja', 'produto')
-        ->get();
+        //Verifivar se há uma loja selecionada
+        if($loja_id == null){
+            //Buscar todas as lojas
+            $lojas = Loja::all();
 
-        $horarios_funcionamento = HorarioFuncionamento::all();
+            //Se mudar loja zerar o carrinho
+            Session::forget('carrinho');
 
+        } else{
+            //Categorias e produtos da loja selecionada
+            $categoria_produto = CategoriaProduto::where('loja_id', $loja_id)
+            ->with('loja', 'produto')
+            ->get();
+
+            $horarios_funcionamento = HorarioFuncionamento::all();
+        }
+        
+        // Array para passar variaveis
         $data = [
             'categoria_produto' => $categoria_produto,
             'lojas' => $lojas,
             'horarios_funcionamento' => $horarios_funcionamento,
             'loja_id' => $loja_id,
+            'consumo_local_viagem' => $consumo_local_viagem,
         ];
 
+        //Carrinho
         $carrinho = session()->get('carrinho', []);
 
         return view('cardapio/cardapio', compact('data', 'carrinho'));
