@@ -132,4 +132,5 @@ class CardapioController extends Controller
         
         return view('cardapio/produto', compact('produto', 'data'))->with('loja', $loja);
     }
+
 }

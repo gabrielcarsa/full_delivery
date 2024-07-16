@@ -180,7 +180,7 @@
                         Para viagem
                     </span>
                 </a>
-                <a href=" {{route('cliente.login')}} " class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                <a href=" {{ auth('cliente') ? route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) : route('cliente.login') }} " class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports
                     </span>
