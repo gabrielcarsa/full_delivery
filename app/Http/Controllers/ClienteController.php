@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\Loja;
 
 class ClienteController extends Controller
 {
@@ -34,7 +35,7 @@ class ClienteController extends Controller
             'nome' => 'required|string|max:100',
             'cpf' => 'required|max:14|unique:cliente',
             'email' => 'required|string|max:100',
-            'telefone' => 'nullable|string|max:100',
+            'telefone' => 'nullable|string|max:11',
             'cep' => 'nullable|max:100',
             'rua' => 'nullable|max:100',
             'bairro' => 'nullable|max:100',

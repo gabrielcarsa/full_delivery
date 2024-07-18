@@ -44,6 +44,12 @@ class LojaController extends Controller
 
     //CADASTRAR
     public function store(Request $request, $usuario_id){
+          //Limpando o campo telefone
+          $request->merge([
+            'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
+            'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
+        ]);
+
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
@@ -55,6 +61,8 @@ class LojaController extends Controller
             'numero' => 'required|string|max:100',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|max:100',
+            'telefone1' => 'nullable|string|max:11',
+            'telefone2' => 'nullable|string|max:11',
         ]);
 
         // Se a validação falhar
@@ -68,6 +76,8 @@ class LojaController extends Controller
         //Informações Gerais
         $loja->nome = $request->input('nome');
         $loja->descricao = $request->input('descricao');
+        $loja->telefone1 = $request->input('telefone1');
+        $loja->telefone2 = $request->input('telefone2');
         $loja->area_entrega_metros = 5000; // valor padrão
         $loja->is_taxa_entrega_free = true;
         $loja->cadastrado_usuario_id = $usuario_id;
@@ -106,6 +116,11 @@ class LojaController extends Controller
 
     //ALTERAR
     public function update(Request $request, $usuario_id, $loja_id){
+        //Limpando o campo telefone
+        $request->merge([
+            'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
+            'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
+        ]);
         
        // Validação do formulário
        $validator = Validator::make($request->all(), [
@@ -117,6 +132,8 @@ class LojaController extends Controller
             'numero' => 'required|string|max:100',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|max:100',
+            'telefone1' => 'nullable|string|max:11',
+            'telefone2' => 'nullable|string|max:11',
         ]);
 
         // Se a validação falhar
@@ -131,6 +148,8 @@ class LojaController extends Controller
         $loja->nome = $request->input('nome');
         $loja->descricao = $request->input('descricao');
         $loja->cadastrado_usuario_id = $usuario_id;
+        $loja->telefone1 = $request->input('telefone1');
+        $loja->telefone2 = $request->input('telefone2');
 
         //Endereço
         $loja->cep = $request->input('cep');

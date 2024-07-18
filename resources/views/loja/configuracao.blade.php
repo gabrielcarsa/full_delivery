@@ -81,6 +81,23 @@
                                             id="inputDescricao" required>
                                     </div>
                                 </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label for="inputTelefone1" class="form-label">Telefone 1</label>
+                                        <input type="text" name="telefone1"
+                                            value="{{!empty($loja) ? $loja->telefone1 : old('telefone1')}}"
+                                            class="form-control @error('telefone1') is-invalid @enderror"
+                                            id="inputTelefone1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputTelefone2" class="form-label">Telefone 2</label>
+                                        <input type="text" name="telefone2"
+                                            value="{{!empty($loja) ? $loja->telefone2 : old('telefone2')}}"
+                                            class="form-control @error('telefone2') is-invalid @enderror"
+                                            id="inputTelefone2">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,8 +117,8 @@
                                     <div class="col-5">
                                         <label for="inputCep" class="form-label">CEP</label>
                                         <input type="text" name="cep"
-                                            value="{{!empty($loja) ? $loja->cep : old('cep')}}"
-                                            class="form-control" id="inputCep" required>
+                                            value="{{!empty($loja) ? $loja->cep : old('cep')}}" class="form-control"
+                                            id="inputCep" required>
                                     </div>
                                     <div class="col-3">
                                         <label for="" class="form-label">Buscar CEP</label>
@@ -114,8 +131,8 @@
                                     <div class="col-md-5">
                                         <label for="inputRua" class="form-label">Rua</label>
                                         <input type="text" name="rua"
-                                            value="{{!empty($loja) ? $loja->rua : old('rua')}}"
-                                            class="form-control" id="inputRua" required>
+                                            value="{{!empty($loja) ? $loja->rua : old('rua')}}" class="form-control"
+                                            id="inputRua" required>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="inputBairro" class="form-label">Bairro</label>
@@ -438,5 +455,33 @@
             alert('Erro ao buscar o CEP!');
         }
     }
+
+    // Função para aplicar a máscara de telefone
+    function aplicarMascaraTelefone(inputId) {
+        const input = document.getElementById(inputId);
+
+        input.addEventListener('input', function(e) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue = '(' + value.slice(0, 2);
+
+                if (value.length > 2) {
+                    formattedValue += ') ' + value.slice(2, 7);
+                }
+
+                if (value.length > 7) {
+                    formattedValue += '-' + value.slice(7, 11);
+                }
+            }
+
+            input.value = formattedValue;
+        });
+    }
+    // Aplicar a máscara para os campos de telefone 1 e telefone 2
+    aplicarMascaraTelefone('inputTelefone1');
+    aplicarMascaraTelefone('inputTelefone2');
+
     </script>
 </x-app-layout>

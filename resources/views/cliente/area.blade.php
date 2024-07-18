@@ -25,7 +25,25 @@
         </div>
         <!-- FIM HEADER CLIENTE INFO -->
 
-        
+        <!-- LOJA CONTATO -->
+        <div class="rounded p-3 row">
+
+            <!-- IMAGEM LOJA -->
+            <div class="col d-flex align-items-center justify-content-center">
+                <img src="{{ asset('storage/' . $data['loja']->nome . '/' . $data['loja']->logo) }}"
+                    class="rounded-circle" style="max-width: 80px;">
+            </div>
+            <!-- FIM IMAGEM LOJA -->
+
+            <div class="col">
+                <p class="m-0 fw-bold fs-5">{{ $data['loja']->nome }}</p>
+                <p>{{ $data['loja']->telefone1 }}</p>
+                <p>{{ $data['loja']->telefone2 }}</p>
+            </div>
+
+        </div>
+        <!-- FIM LOJA CONTATO -->
+
 
         <!-- LISTA -->
         <ul class="list-group list-group-flush my-3">
