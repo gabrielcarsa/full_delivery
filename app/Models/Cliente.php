@@ -52,4 +52,10 @@ class Cliente extends Authenticatable
     {
         return $this->belongsToMany(UsoCupom::class);
     }
+
+    public function cliente_endereco()
+    {
+        return $this->hasMany(ClienteEndereco::class);
+    }
+
 }

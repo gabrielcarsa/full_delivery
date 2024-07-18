@@ -11,6 +11,8 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\CupomController;
 use App\Http\Controllers\ClienteAuthController;
+use App\Http\Controllers\ClienteEnderecoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,19 +31,25 @@ Route::get('/produto', [CardapioController::class, 'showProduto'])->name('cardap
 Route::post('/adicionar-carrinho/{produto_id}', [CardapioController::class, 'storeCarrinho']);
 Route::get('/limpar-carrinho', [CardapioController::class, 'destroyCarrinho'])->name('cardapio.esvaziarCarrinho');
 
-Route::middleware('auth:cliente')->group(function () {
-    Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
-
-});
-
+// CLIENTE CARDAPIO
 Route::get('cliente/login', [ClienteAuthController::class, 'showLoginForm'])->name('cliente.login');
 Route::post('cliente/login', [ClienteAuthController::class, 'login']);
-Route::get('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
 Route::get('cliente/register', [ClienteAuthController::class, 'showRegistrationForm'])->name('cliente.register');
 Route::post('cliente/register', [ClienteAuthController::class, 'register']);
 
+// ENDERECO CLIENTE
+Route::get('cliente-endereco', [ClienteEnderecoController::class, 'index'])->name('cliente_endereco.listar');
+Route::get('/cliente-endereco/novo', [ClienteEnderecoController::class, 'create'])->name('cliente_endereco.novo');
+Route::post('/cliente-endereco/cadastrar', [ClienteEnderecoController::class, 'store'])->name('cliente_endereco.cadastrar');
 
 
+// CLIENTE CARDAPIO LOGADO
+Route::middleware('auth:cliente')->group(function () {
+    Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
+    Route::get('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
+});
+
+// ROTAS INTERNO
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

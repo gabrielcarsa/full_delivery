@@ -55,7 +55,7 @@
 
             <!-- ITEM -->
             <li class="list-group-item">
-                <a href="" class="text-decoration-none">
+                <a href=" {{ route('cliente_endereco.listar', ['cliente_id' => $cliente->id]) }} " class="text-decoration-none">
                     <div class="row">
                         <div class="col-2 d-flex align-items-center justify-content-center">
                             <span class="material-symbols-outlined text-dark m-0 pr-3" style="font-size: 30px;">
