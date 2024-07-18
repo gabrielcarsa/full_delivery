@@ -136,4 +136,23 @@ class ClienteController extends Controller
         $cliente->delete();
         return redirect()->back()->with('success', 'Cliente excluido com sucesso');
     }
+
+    // --------- CARDAPIO CLIENTE --------------
+
+    //AREA CLIENTE
+    public function showClienteArea(Request $request){
+        //Variaveis via GET
+        $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
+
+        $loja = Loja::find($loja_id);
+
+        // Array para passar variaveis
+        $data = [
+            'consumo_local_viagem' => $consumo_local_viagem,
+            'loja_id' => $loja_id,
+            'loja' => $loja,
+        ];
+        return view('cliente/area', compact('data'));
+    }
 }

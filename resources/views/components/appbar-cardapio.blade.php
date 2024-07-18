@@ -46,8 +46,8 @@
 
             <!-- ITEM APPBAR -->
             <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('conta') ? 'text-reset' : 'text-secondary'}}"
-                    href="#" style="font-size:13px">
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cliente.area') ? 'text-reset' : 'text-secondary'}}"
+                    href="{{ route('cliente.area', ['loja_id' => request('loja_id'), 'consumo_local_viagem' => request('consumo_local_viagem')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         account_circle
                     </span>

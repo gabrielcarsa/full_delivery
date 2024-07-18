@@ -30,6 +30,7 @@ Route::post('/adicionar-carrinho/{produto_id}', [CardapioController::class, 'sto
 Route::get('/limpar-carrinho', [CardapioController::class, 'destroyCarrinho'])->name('cardapio.esvaziarCarrinho');
 
 Route::middleware('auth:cliente')->group(function () {
+    Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
 
 });
 
