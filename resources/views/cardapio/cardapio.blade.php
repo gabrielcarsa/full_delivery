@@ -57,6 +57,55 @@
         <!-- LOJA CARD -->
         <div class="bg-white m-3 p-3 rounded border" style="max-width: 400px;">
 
+            <!-- DROPDOWN TROCAR CONSUMO -->
+            @if(!empty($data['consumo_local_viagem']))
+            <div class="d-flex justify-content-center m-0">
+                <div class="dropdown m-0">
+                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if($data['consumo_local_viagem'] == 1)
+                        Comer no local
+                        @elseif($data['consumo_local_viagem'] == 2)
+                        Para viagem
+                        @elseif($data['consumo_local_viagem'] == 3)
+                        Para entrega
+                        @else
+                        Erro
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu">
+                        @if($data['consumo_local_viagem'] != 1)
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}">
+                                Comer no local
+                            </a>
+                        </li>
+                        @endif
+
+                        @if($data['consumo_local_viagem'] != 2)
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}">
+                                Para viagem
+                            </a>
+                        </li>
+                        @endif
+
+                        @if($data['consumo_local_viagem'] != 3)
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ auth('cliente') ? route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) : route('cliente.login') }}">
+                                Para entrega
+                            </a>
+                        </li>
+                        @endif
+
+                    </ul>
+                </div>
+            </div>
+            @endif
+            <!-- FIM DROPDOWN TROCAR CONSUMO -->
+
             <!-- IMAGEM LOJA -->
             <div class="d-flex align-items-center justify-content-center">
                 <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
@@ -180,7 +229,8 @@
                         Para viagem
                     </span>
                 </a>
-                <a href=" {{ auth('cliente') ? route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) : route('cliente.login') }} " class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                <a href=" {{ auth('cliente') ? route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) : route('cliente.login') }} "
+                    class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports
                     </span>
