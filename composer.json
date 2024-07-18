@@ -30,7 +30,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/DistanciaEntregaHelper.php"
+            "app/Helpers/DistanciaEntregaHelper.php",
+            "app/Helpers/MascaraTelefone.php"
         ]
     },
     "autoload-dev": {

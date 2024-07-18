@@ -26,19 +26,24 @@
         <!-- FIM HEADER CLIENTE INFO -->
 
         <!-- LOJA CONTATO -->
-        <div class="rounded p-3 row">
-
+        <div class="border rounded p-3 row m-3">
+            <p class="fw-semibold m-0">
+                Contato com a loja
+            </p>
             <!-- IMAGEM LOJA -->
-            <div class="col d-flex align-items-center justify-content-center">
+            <div class="col-2 d-flex align-items-center justify-content-center">
                 <img src="{{ asset('storage/' . $data['loja']->nome . '/' . $data['loja']->logo) }}"
-                    class="rounded-circle" style="max-width: 80px;">
+                    class="rounded-circle" style="max-width: 70px;">
             </div>
             <!-- FIM IMAGEM LOJA -->
 
             <div class="col">
                 <p class="m-0 fw-bold fs-5">{{ $data['loja']->nome }}</p>
-                <p>{{ $data['loja']->telefone1 }}</p>
-                <p>{{ $data['loja']->telefone2 }}</p>
+                <p class="m-0 text-secondary">
+                    {{ \App\Helpers\MascaraTelefone::formatPhoneNumber($data['loja']->telefone1) }}</p>
+                <p class="m-0 text-secondary">
+                    {{ \App\Helpers\MascaraTelefone::formatPhoneNumber($data['loja']->telefone2) }}</p>
+
             </div>
 
         </div>
