@@ -92,12 +92,25 @@
                         @endif
 
                         @if($data['consumo_local_viagem'] != 3)
+
+                        @if (Route::has('login'))
+                        @auth('cliente')
                         <li>
                             <a class="dropdown-item"
-                                href="{{ auth('cliente') ? route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) : route('cliente.login') }}">
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
                                 Para entrega
                             </a>
                         </li>
+                        @else
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('cliente.login') }}">
+                                Para entrega
+                            </a>
+                        </li>
+                        @endauth
+                        @endif
+
                         @endif
 
                     </ul>
@@ -229,7 +242,9 @@
                         Para viagem
                     </span>
                 </a>
-                <a href=" {{ auth('cliente') ? route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) : route('cliente.login') }} "
+                @if (Route::has('login'))
+                @auth('cliente')
+                <a href=" {{route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}"
                     class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports
@@ -238,6 +253,18 @@
                         Para entrega
                     </span>
                 </a>
+                @else
+                <a href=" {{ route('cliente.login') }}"
+                    class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                    <span class="material-symbols-outlined mr-1">
+                        sports_motorsports
+                    </span>
+                    <span>
+                        Para entrega
+                    </span>
+                </a>
+                @endauth
+                @endif
             </div>
 
         </div>

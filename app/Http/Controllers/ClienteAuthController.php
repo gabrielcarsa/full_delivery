@@ -29,7 +29,7 @@ class ClienteAuthController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('cliente')->logout();
-        return redirect()->route('cliente.login');
+        return redirect()->route('cardapio');
     }
 
     public function showRegistrationForm()

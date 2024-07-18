@@ -36,7 +36,7 @@ Route::middleware('auth:cliente')->group(function () {
 
 Route::get('cliente/login', [ClienteAuthController::class, 'showLoginForm'])->name('cliente.login');
 Route::post('cliente/login', [ClienteAuthController::class, 'login']);
-Route::post('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
+Route::get('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
 Route::get('cliente/register', [ClienteAuthController::class, 'showRegistrationForm'])->name('cliente.register');
 Route::post('cliente/register', [ClienteAuthController::class, 'register']);
 
