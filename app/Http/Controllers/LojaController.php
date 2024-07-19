@@ -54,10 +54,10 @@ class LojaController extends Controller
         $validator = Validator::make($request->all(), [
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
             'nome' => 'required|string|max:100',
-            'descricao' => 'required|string|max:500',
+            'descricao' => 'required|string|max:255',
             'cep' => 'required|string|max:100',
             'rua' => 'required|string|max:100',
-            'bairro' => 'required|string|max:500',
+            'bairro' => 'required|string|max:100',
             'numero' => 'required|string|max:100',
             'cidade' => 'required|string|max:100',
             'estado' => 'required|string|max:100',

@@ -1,6 +1,6 @@
 <x-layout-cardapio>
 
-    <!-- NAVBAR PRODUTO -->
+    <!-- NAVBAR CARRINHO -->
     <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
         <a href="#" onclick="history.go(-1); return false;"
             class="btn btn-light rounded-circle d-flex align-items-center">
@@ -12,7 +12,7 @@
             <h2 class="fs-5 fw-bold">Carrinho de Compras</h2>
         </div>
     </div>
-    <!-- FIM NAVBAR PRODUTO -->
+    <!-- FIM NAVBAR CARRINHO -->
 
 
     @if(empty($carrinho))
