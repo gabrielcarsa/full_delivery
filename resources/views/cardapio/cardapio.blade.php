@@ -104,7 +104,7 @@
                         @else
                         <li>
                             <a class="dropdown-item"
-                                href="{{ route('cliente.login') }}">
+                                href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
                                 Para entrega
                             </a>
                         </li>
@@ -254,7 +254,7 @@
                     </span>
                 </a>
                 @else
-                <a href=" {{ route('cliente.login') }}"
+                <a href=" {{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}"
                     class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports

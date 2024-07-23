@@ -8,8 +8,23 @@ use Illuminate\Support\Facades\Hash;
 
 class ClienteAuthController extends Controller
 {
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
+        //Variaveis via GET
+        $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
+
+        // Se já houver escolhido a loja e o consumo
+        if($loja_id != null && $consumo_local_viagem != null){
+
+            $data = [
+                'loja_id' => $loja_id,
+                'consumo_local_viagem' => $consumo_local_viagem,
+            ];
+            return view('cliente.login', compact('data'));
+
+        }
+
         return view('cliente.login');
     }
 
@@ -18,6 +33,19 @@ class ClienteAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('cliente')->attempt($credentials)) {
+            //Variaveis via GET
+            $loja_id = $request->get('loja_id');
+            $consumo_local_viagem = $request->get('consumo_local_viagem');
+
+            // Se já houver escolhido a loja e o consumo
+            if($loja_id != null && $consumo_local_viagem != null){
+
+                return redirect()->route('cardapio', [
+                    'loja_id' => $loja_id,
+                    'consumo_local_viagem' => $consumo_local_viagem,
+                ]);
+
+            }
             return redirect()->intended('/');
         }
 
@@ -63,4 +91,3 @@ class ClienteAuthController extends Controller
         return redirect()->route('cardapio');
     }
 }
-
