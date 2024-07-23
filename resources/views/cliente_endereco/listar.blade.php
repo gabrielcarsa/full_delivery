@@ -25,15 +25,46 @@
             <h3>Ops!</h3>
             <p>Parece que você não tem nenum endereço cadastrado!</p>
             <a href="{{ route('cliente_endereco.novo', ['cliente_id' => Auth::guard('cliente')->user()->id]) }}"
-                class="btn btn-primary">Cadastrar endereço de entrega</a>
+                class="btn btn-primary">
+                Cadastrar endereço de entrega
+            </a>
         </div>
     </div>
     <!-- FIM CARRINHO VAZIO -->
 
     @else
 
-    <div class="container">
-        s
+    <!-- CONTAINER ENDEREÇOS -->
+    <div class="container vh-100" style="margin-top: 80px;">
+
+        <a href="{{ route('cliente_endereco.novo', ['cliente_id' => Auth::guard('cliente')->user()->id]) }}"
+            class="btn btn-primary">
+            Cadastrar endereço de entrega
+        </a>
+
+        <!-- LISTA DE ENDEREÇOS -->
+        <ul class="list-group my-3">
+
+            <!-- ENDEREÇOS FOREACH -->
+            @foreach($enderecos as $endereco)
+
+            <!-- ENDEREÇO -->
+            <li class="list-group-item p-3">
+                <h4 class="fs-5 fw-semibold m-0">{{$endereco->nome}}</h4>
+                <p class="m-0 text-secondary">{{$endereco->rua}}, {{$endereco->numero}} - {{$endereco->bairro}}</p>
+                <p class="m-0 text-secondary">{{$endereco->cidade}}, {{$endereco->estado}}</p>
+                <p class="m-0 text-secondary">{{$endereco->complemento}}</p>
+            </li>
+            <!-- FIM ENDEREÇO -->
+
+            @endforeach
+            <!-- FIM ENDEREÇOS FOREACH -->
+
+        </ul>
+        <!-- FIM LISTA DE ENDEREÇOS -->
+
     </div>
+    <!-- FIM CONTAINER ENDEREÇOS -->
+
     @endif
 </x-layout-cardapio>

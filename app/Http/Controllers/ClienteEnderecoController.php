@@ -53,8 +53,9 @@ class ClienteEnderecoController extends Controller
         $endereco->complemento = $request->input('complemento');
         $endereco->cidade = $request->input('cidade');
         $endereco->estado = $request->input('estado');
+        $endereco->cliente_id = $cliente_id;
         $endereco->save();
 
-        return redirect()->route('cliente_endereco.listar')->with('success', 'Cadastro feito com sucesso');
+        return redirect()->route('cliente_endereco.listar', ['cliente_id' => $cliente_id])->with('success', 'Cadastro feito com sucesso');
     }
 }
