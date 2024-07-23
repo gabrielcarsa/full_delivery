@@ -49,11 +49,23 @@
             @foreach($enderecos as $endereco)
 
             <!-- ENDEREÇO -->
-            <li class="list-group-item p-3">
-                <h4 class="fs-5 fw-semibold m-0">{{$endereco->nome}}</h4>
-                <p class="m-0 text-secondary">{{$endereco->rua}}, {{$endereco->numero}} - {{$endereco->bairro}}</p>
-                <p class="m-0 text-secondary">{{$endereco->cidade}}, {{$endereco->estado}}</p>
-                <p class="m-0 text-secondary">{{$endereco->complemento}}</p>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                    <h4 class="fs-5 fw-semibold m-0">{{$endereco->nome}}</h4>
+                    <p class="m-0 text-secondary">{{$endereco->rua}}, {{$endereco->numero}} - {{$endereco->bairro}}</p>
+                    <p class="m-0 text-secondary">{{$endereco->cidade}}, {{$endereco->estado}}</p>
+                    <p class="m-0 text-secondary">{{$endereco->complemento}}</p>
+                </div>
+                <form action="{{ route('cliente_endereco.excluir', ['id' => $endereco->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger p-2 m-0">
+                        <span class="material-symbols-outlined d-flex justify-content-center align-items-center">
+                            delete
+                        </span>
+                    </button>
+                </form>
+       
             </li>
             <!-- FIM ENDEREÇO -->
 

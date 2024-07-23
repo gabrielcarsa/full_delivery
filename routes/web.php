@@ -37,16 +37,17 @@ Route::post('cliente/login', [ClienteAuthController::class, 'login']);
 Route::get('cliente/register', [ClienteAuthController::class, 'showRegistrationForm'])->name('cliente.register');
 Route::post('cliente/register', [ClienteAuthController::class, 'register']);
 
-// ENDERECO CLIENTE
-Route::get('cliente-endereco', [ClienteEnderecoController::class, 'index'])->name('cliente_endereco.listar');
-Route::get('/cliente-endereco/novo', [ClienteEnderecoController::class, 'create'])->name('cliente_endereco.novo');
-Route::post('/cliente-endereco/cadastrar', [ClienteEnderecoController::class, 'store'])->name('cliente_endereco.cadastrar');
-
-
 // CLIENTE CARDAPIO LOGADO
 Route::middleware('auth:cliente')->group(function () {
     Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
     Route::get('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
+
+    // ENDERECO CLIENTE
+    Route::get('cliente-endereco', [ClienteEnderecoController::class, 'index'])->name('cliente_endereco.listar');
+    Route::get('/cliente-endereco/novo', [ClienteEnderecoController::class, 'create'])->name('cliente_endereco.novo');
+    Route::post('/cliente-endereco/cadastrar', [ClienteEnderecoController::class, 'store'])->name('cliente_endereco.cadastrar');
+    Route::delete('/cliente-endereco/apagar/{id}', [ClienteEnderecoController::class, 'destroy'])->name('cliente_endereco.excluir');
+
 });
 
 // ROTAS INTERNO

@@ -58,4 +58,11 @@ class ClienteEnderecoController extends Controller
 
         return redirect()->route('cliente_endereco.listar', ['cliente_id' => $cliente_id])->with('success', 'Cadastro feito com sucesso');
     }
+
+    //EXCLUIR
+    public function destroy($id){
+        $endereco = ClienteEndereco::find($id);
+        $endereco->delete();
+        return redirect()->back()->with('success', 'Endereço excluido com sucesso');
+    }
 }
