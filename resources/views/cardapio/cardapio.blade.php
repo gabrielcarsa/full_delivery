@@ -51,73 +51,97 @@
 
     @elseif(!$data['categoria_produto']->isEmpty())
 
+    <!-- DROPDOWN TROCAR CONSUMO -->
+    @if(!empty($data['consumo_local_viagem']))
+    <div class="d-flex justify-content-center m-0">
+        <div class="dropdown m-0">
+            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                @if($data['consumo_local_viagem'] == 1)
+                Comer no local
+                @elseif($data['consumo_local_viagem'] == 2)
+                Para viagem
+                @elseif($data['consumo_local_viagem'] == 3)
+                Para entrega
+                @else
+                Erro
+                @endif
+            </button>
+            <ul class="dropdown-menu">
+                @if($data['consumo_local_viagem'] != 1)
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}">
+                        Comer no local
+                    </a>
+                </li>
+                @endif
+
+                @if($data['consumo_local_viagem'] != 2)
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}">
+                        Para viagem
+                    </a>
+                </li>
+                @endif
+
+                @if($data['consumo_local_viagem'] != 3)
+
+                @if (Route::has('login'))
+                @auth('cliente')
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
+                        Para entrega
+                    </a>
+                </li>
+                @else
+                <li>
+                    <a class="dropdown-item"
+                        href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
+                        Para entrega
+                    </a>
+                </li>
+                @endauth
+                @endif
+
+                @endif
+
+            </ul>
+        </div>
+    </div>
+    @endif
+    <!-- FIM DROPDOWN TROCAR CONSUMO -->
+
     <!-- FUNDO LOJA CARDAPIO -->
     <div class="cardapio-loja d-flex align-items-center justify-content-center">
 
         <!-- LOJA CARD -->
         <div class="bg-white m-3 p-3 rounded border" style="max-width: 400px;">
 
-            <!-- DROPDOWN TROCAR CONSUMO -->
-            @if(!empty($data['consumo_local_viagem']))
-            <div class="d-flex justify-content-center m-0">
-                <div class="dropdown m-0">
-                    <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        @if($data['consumo_local_viagem'] == 1)
-                        Comer no local
-                        @elseif($data['consumo_local_viagem'] == 2)
-                        Para viagem
-                        @elseif($data['consumo_local_viagem'] == 3)
-                        Para entrega
-                        @else
-                        Erro
-                        @endif
-                    </button>
-                    <ul class="dropdown-menu">
-                        @if($data['consumo_local_viagem'] != 1)
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}">
-                                Comer no local
-                            </a>
-                        </li>
-                        @endif
+            <!-- ENDEREÇO ENTREGA SE HOUVER -->
+            @if (Route::has('login'))
+            @auth('cliente')
 
-                        @if($data['consumo_local_viagem'] != 2)
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}">
-                                Para viagem
-                            </a>
-                        </li>
-                        @endif
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Endereço
+                </a>
 
-                        @if($data['consumo_local_viagem'] != 3)
-
-                        @if (Route::has('login'))
-                        @auth('cliente')
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
-                                Para entrega
-                            </a>
-                        </li>
-                        @else
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
-                                Para entrega
-                            </a>
-                        </li>
-                        @endauth
-                        @endif
-
-                        @endif
-
-                    </ul>
-                </div>
+                <ul class="dropdown-menu">
+                    @foreach($data['cliente_enderecos'] as $endereco)
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}} {{$endereco->numero}}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
             </div>
+            @endauth
             @endif
-            <!-- FIM DROPDOWN TROCAR CONSUMO -->
+            <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
+
 
             <!-- IMAGEM LOJA -->
             <div class="d-flex align-items-center justify-content-center">

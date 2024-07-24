@@ -8,8 +8,10 @@ use App\Models\Loja;
 use App\Models\HorarioFuncionamento;
 use App\Models\Produto;
 use App\Models\OpcionalProduto;
+use App\Models\ClienteEndereco;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class CardapioController extends Controller
 {
@@ -41,6 +43,15 @@ class CardapioController extends Controller
 
             $horarios_funcionamento = HorarioFuncionamento::all();
         }
+
+        $cliente_enderecos = null;
+
+        //Enderecos Clientes
+        if( Auth::guard('cliente')->user()){
+            $cliente_id = Auth::guard('cliente')->user()->id;
+            $cliente_enderecos = ClienteEndereco::where('cliente_id', $cliente_id)->get();
+        }
+
         
         // Array para passar variaveis
         $data = [
@@ -49,6 +60,7 @@ class CardapioController extends Controller
             'horarios_funcionamento' => $horarios_funcionamento,
             'loja_id' => $loja_id,
             'consumo_local_viagem' => $consumo_local_viagem,
+            'cliente_enderecos' => $cliente_enderecos,
         ];
 
         //Carrinho
