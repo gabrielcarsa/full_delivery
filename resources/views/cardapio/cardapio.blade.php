@@ -55,7 +55,7 @@
     @if(!empty($data['consumo_local_viagem']))
     <div class="d-flex justify-content-center m-0">
         <div class="dropdown m-0">
-            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="dropdown-toggle fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @if($data['consumo_local_viagem'] == 1)
                 Comer no local
                 @elseif($data['consumo_local_viagem'] == 2)
@@ -117,24 +117,47 @@
     <div class="cardapio-loja d-flex align-items-center justify-content-center">
 
         <!-- LOJA CARD -->
-        <div class="bg-white m-3 p-3 rounded border" style="max-width: 400px;">
+        <div class="bg-white m-3 p-3 rounded border">
 
             <!-- ENDEREÇO ENTREGA SE HOUVER -->
             @if (Route::has('login'))
             @auth('cliente')
 
-            <div class="dropdown">
-                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Endereço
+            <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
+                <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                    @if($data['endereco_selecionado'] == null)
+
+                    Selecione endereço entrega
+
+                    <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                    @else
+
+                    <!--EXIBIR APENAS SELECIONADO-->
+                    @foreach($data['cliente_enderecos'] as $endereco)
+                    @if($endereco->id == $data['endereco_selecionado'])
+
+                    {{$endereco->rua}}, {{$endereco->numero}}
+
+                    @endif
+                    @endforeach
+                    <!--FIM EXIBIR APENAS SELECIONADO-->
+
+                    @endif
+                    <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
                 </a>
 
                 <ul class="dropdown-menu">
                     @foreach($data['cliente_enderecos'] as $endereco)
+                    @if($endereco != $data['endereco_selecionado'])
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item"
+                            href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
                             <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}} {{$endereco->numero}}
                         </a>
                     </li>
+                    @endif
                     @endforeach
                 </ul>
             </div>

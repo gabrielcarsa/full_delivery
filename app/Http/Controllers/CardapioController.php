@@ -21,6 +21,7 @@ class CardapioController extends Controller
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
         $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $endereco_selecionado = $request->get('endereco_selecionado');
 
         //Declarando variaveis zeradas
         $categoria_produto = null;
@@ -60,6 +61,7 @@ class CardapioController extends Controller
             'horarios_funcionamento' => $horarios_funcionamento,
             'loja_id' => $loja_id,
             'consumo_local_viagem' => $consumo_local_viagem,
+            'endereco_selecionado' => $endereco_selecionado,
             'cliente_enderecos' => $cliente_enderecos,
         ];
 
@@ -75,6 +77,7 @@ class CardapioController extends Controller
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
         $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $endereco_selecionado = $request->get('endereco_selecionado');
 
         //Carrinho
         $carrinho = session()->get('carrinho', []);
@@ -93,6 +96,7 @@ class CardapioController extends Controller
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
         $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $endereco_selecionado = $request->get('endereco_selecionado');
         $observacao = $request->input('observacao');
         $opcional_id = $request->input('opcionais');
 
@@ -127,6 +131,7 @@ class CardapioController extends Controller
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
         $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $endereco_selecionado = $request->get('endereco_selecionado');
         $produto_id = $request->get('produto_id');
 
         //Produto
@@ -138,6 +143,7 @@ class CardapioController extends Controller
         $data = [
             'consumo_local_viagem' => $consumo_local_viagem,
             'loja_id' => $loja_id,
+            'endereco_selecionado' => $endereco_selecionado,
         ];
 
         $loja = Loja::find($loja_id);
