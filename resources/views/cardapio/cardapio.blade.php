@@ -355,7 +355,7 @@
                     <div class="col-md-6">
 
                         <!-- PRODUTO -->
-                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id, 'consumo_local_viagem' => $data['consumo_local_viagem']]) }}"
+                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id, 'consumo_local_viagem' => $data['consumo_local_viagem'], 'endereco_selecionado' => $data['endereco_selecionado']]) }}"
                             class="text-decoration-none text-reset">
 
                             <!-- CARD PRODUTO -->
