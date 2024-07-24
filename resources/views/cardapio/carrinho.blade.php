@@ -59,14 +59,14 @@
                     <tbody>
                         <!-- Variáveis PHP -->
                         @php
-                        $valor_total = 0;
+                        $subtotal = 0;
 
                         @endphp
 
                         <!-- Exibir itens do pedido -->
                         @foreach ($carrinho as $item)
                         @php
-                        $valor_total += $item['produto']->preco;
+                        $subtotal += $item['produto']->preco;
 
                         @endphp
 
@@ -124,22 +124,30 @@
 
                 <div class="my-1">
                     <p class="fs-6 text-secondary m-0">
-                        Total dos itens
+                        Subtotal
                     </p>
-                    <p class="m-0 fs-5 fw-semibold">
-                        R$ {{number_format($valor_total, 2, ',', '.')}}
+                    <p class="m-0 fs-6 fw-medium">
+                        R$ {{number_format($subtotal, 2, ',', '.')}}
                     </p>
                 </div>
                 <div class="my-1">
                     <p class="fs-6 text-secondary m-0">
                         Entrega
                     </p>
-                    <p class="m-0 fs-5 fw-semibold">
-                        R$ 2,00
+                    <p class="m-0 fs-6 fw-medium">
+                        R$ {{number_format($data['taxa_entrega'], 2, ',', '.')}}
+                    </p>
+                </div>
+                <div class="my-1">
+                    <p class="fs-6 text-dark m-0">
+                        Total
+                    </p>
+                    <p class="m-0 fs-5 fw-bold">
+                        R$ {{number_format($data['taxa_entrega'] + $subtotal, 2, ',', '.')}}
                     </p>
                 </div>
 
-                <div class="">
+                <div class="my-2">
                     <a href="" class="btn btn-success">
                         Finalizar pedido
                     </a>

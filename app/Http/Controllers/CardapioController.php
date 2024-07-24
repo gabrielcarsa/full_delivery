@@ -12,6 +12,7 @@ use App\Models\ClienteEndereco;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\DistanciaEntregaHelper;
 
 class CardapioController extends Controller
 {
@@ -82,10 +83,59 @@ class CardapioController extends Controller
         //Carrinho
         $carrinho = session()->get('carrinho', []);
 
+        $taxa_entrega = null;
+
+        /*
+        --- Calcular Entrega ---
+        */
+        if($endereco_selecionado != null){
+
+            $loja = Loja::find($loja_id);
+            $cliente_endereco = ClienteEndereco::find($endereco_selecionado);
+
+            // Variáveis para calcular distância
+            $origem = $loja->cep;
+            $destino = $cliente_endereco->cep; 
+            $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
+
+            // Obtendo a distância em metros
+            $distancia = DistanciaEntregaHelper::getDistance($origem, $destino, $apiKey);
+
+            // Taxa de entrega gratuita
+            if($loja->is_taxa_entrega_free == true){
+                $taxa_entrega = 0;
+
+            // Taxa de entrega calculada por km
+            }elseif($loja->taxa_por_km_entrega != null){
+
+                // Verificar se deu certo a requisição
+                if ($distancia !== false) {
+
+                    // se distancia for maior que 1 km
+                    if($distancia >= 1000){
+                        $distancia_km = $distancia / 1000;
+                        $taxa_entrega = $distancia_km * $loja->taxa_por_km_entrega;
+
+                    }else{
+                        $taxa_entrega = $loja->taxa_por_km_entrega;
+                    
+                    }
+
+                }else{
+                    $taxa_entrega = 'Erro: favor contate o suporte';
+                }
+
+            // Taxa de entrega fixa
+            }elseif($loja->taxa_entrega_fixa != null){
+                $taxa_entrega = $loja->taxa_entrega_fixa;
+            }
+        }
+
         // Array para passar variaveis
         $data = [
             'consumo_local_viagem' => $consumo_local_viagem,
             'loja_id' => $loja_id,
+            'taxa_entrega' => $taxa_entrega,
         ];
 
         return view('cardapio/carrinho', compact('carrinho', 'data'));

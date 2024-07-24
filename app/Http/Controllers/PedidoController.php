@@ -58,7 +58,7 @@ class PedidoController extends Controller
         ->select(
             'p.*',
         ) 
-        ->join('categoria_produto AS cp', 'cp.id', '=', 'p.categoria_id')
+        ->join('categoria_produto AS cp', 'cp.id', '=', 'p.categoria_produto_id')
         ->join('loja AS r', 'r.id', '=', 'cp.loja_id')
         ->where('r.id', $id_loja)
         ->orderBy('p.nome', 'ASC') 
