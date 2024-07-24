@@ -120,7 +120,7 @@
         <div class="bg-white m-3 p-3 rounded border">
 
             <!-- ENDEREÇO ENTREGA SE HOUVER -->
-            @if (Route::has('login'))
+            @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
             @auth('cliente')
 
             <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
