@@ -116,7 +116,7 @@ class CardapioController extends Controller
         $request->session()->push('carrinho', $itensCarrinho);
 
         //Redirecionando com rota laravel
-        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem]);
+        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
     }
 
     // APAGAR CARRINHO

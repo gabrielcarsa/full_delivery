@@ -30,7 +30,7 @@
                 <p class="text-secondary">{{$produto->descricao}}</p>
 
                 <!-- FORM PRODUTO OPCINAL -->
-                <form action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}" method="post">
+                <form action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}&endereco_selecionado={{$data['endereco_selecionado']}}" method="post">
 
                     @csrf
                     <div class="bg-body-tertiary p-3 ">
