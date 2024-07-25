@@ -107,8 +107,6 @@ Route::middleware([
         Route::get('/categoria_opcional/novo', [CategoriaOpcionalController::class, 'create'])->name('categoria_opcional.novo');
         Route::post('/categoria_opcional/cadastrar/{produto_id}/{usuario_id}', [CategoriaOpcionalController::class, 'store']);
         Route::delete('/categoria_opcional/apagar/{id}', [CategoriaOpcionalController::class, 'destroy'])->name('categoria_opcional.excluir');
-        Route::get('/categoria_opcional/editar', [CategoriaOpcionalController::class, 'edit'])->name('categoria_opcional.editar');
-        Route::put('/categoria_opcional/alterar/{usuario_id}/{produto_id}', [CategoriaOpcionalController::class, 'update']);
 
         //OPCIONAL PRODUTO
         Route::get('/opcional_produto/novo', [OpcionalProdutoController::class, 'create'])->name('opcional_produto.novo');

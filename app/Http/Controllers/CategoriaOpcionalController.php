@@ -75,4 +75,11 @@ class CategoriaOpcionalController extends Controller
         return redirect()->back()->with('success', 'Cadastro de categoria de opcional feito com sucesso');
 
     }
+
+    //EXCLUIR
+    public function destroy($id){
+        $categoria_opcional = CategoriaOpcional::find($id);
+        $categoria_opcional->delete();
+        return redirect()->back()->with('success', 'Categoria Opcional excluido com sucesso');
+    }
 }
