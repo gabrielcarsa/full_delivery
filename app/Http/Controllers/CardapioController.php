@@ -147,13 +147,19 @@ class CardapioController extends Controller
         $loja_id = $request->get('loja_id');
         $consumo_local_viagem = $request->get('consumo_local_viagem');
         $endereco_selecionado = $request->get('endereco_selecionado');
+
+        // Pega os opcionais selecionados
+        $opcionais = $request->input('opcionais', []);
+        
+        // Pega a quantidade
+        $quantidade = $request->input('quantidade');
+
+        // Pega a observação
         $observacao = $request->input('observacao');
-        $opcional_id = $request->input('opcionais');
 
         //Produto
         $produto = Produto::find($produto_id);
-        //Opcional
-        $opcionais = OpcionalProduto::find($opcional_id);
+
 
         //Itens do carrinho
         $itensCarrinho = [

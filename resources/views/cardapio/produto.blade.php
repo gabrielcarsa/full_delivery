@@ -1,9 +1,9 @@
 <x-layout-cardapio>
 
     <!-- NAVBAR PRODUTO -->
-    <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
+    <div class="d-flex bg-white fixed-top p-2">
         <a href="#" onclick="history.go(-1); return false;"
-            class="btn btn-light rounded-circle d-flex align-items-center">
+            class="text-dark text-decoration-none d-flex align-items-center m-0">
             <span class="material-symbols-outlined">
                 arrow_back
             </span>
