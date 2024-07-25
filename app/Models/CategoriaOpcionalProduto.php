@@ -5,24 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OpcionalProduto extends Model
+class CategoriaOpcionalProduto extends Model
 {
     use HasFactory;
-    protected $table = 'opcional_produto';
+    protected $table = 'categoria_opcional_produto';
 
-    //RELACIONAMENTOS
 
-    public function categoria_opcional_produto()
+    public function produto()
     {
-        return $this->belongsTo(CategoriaOpcionalProduto::class);
+        return $this->belongsTo(Produto::class);
     }
-
-    // Relação um para muitos com Opcionais de Item
-    public function opcionaisItem()
-    {
-        return $this->hasMany(OpcionalItem::class, 'opcional_produto_id');
-    }
-
+    
     public function usuarioCadastrador()
     {
         return $this->belongsTo(User::class, 'cadastrado_usuario_id');
