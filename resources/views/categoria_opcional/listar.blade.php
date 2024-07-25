@@ -50,22 +50,29 @@
         @foreach ($categorias_opcionais as $categoria_opcional)
 
         <div class="bg-white border rounded p-3">
-            <h4>{{$categoria_opcional->nome}}</h4>
-            <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
-                href="{{ route('opcional_produto.novo', ['produto_id' => $produto->id]) }}">
-                <span class="material-symbols-outlined mr-1">
-                    add
-                </span>
-                Cadastrar
-            </a>
+            <div class="row d-flex align-items-center">
+                <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
+                <div class="col-6 d-flex justify-content-end">
+                    <a class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                        href="{{ route('opcional_produto.novo', ['produto_id' => $produto->id]) }}">
+                        <span class="material-symbols-outlined mr-1">
+                            add
+                        </span>
+                        Cadastrar opcionais
+                    </a>
+                    <a href="" data-bs-toggle="modal" class="ml-3 btn btn-outline-danger d-flex align-items-center"
+                        data-bs-target="#exampleModal{{$categoria_opcional->id}}">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                        Excluir categoria
+                    </a>
+                </div>
+            </div>
+
         </div>
 
-        <a href="" data-bs-toggle="modal" class="acoes-listar text-decoration-none text-danger"
-            data-bs-target="#exampleModal{{$categoria_opcional->id}}">
-            <span class="material-symbols-outlined">
-                delete
-            </span>
-        </a>
+
         <!-- MODAL EXCLUIR -->
         <div class="modal fade" id="exampleModal{{$categoria_opcional->id}}" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">

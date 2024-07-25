@@ -32,4 +32,45 @@ class CategoriaOpcionalController extends Controller
 
         return view('categoria_opcional/listar', compact('produto', 'categorias_opcionais'));
     }
+
+     //RETORNAR VIEW PARA CADASTRO
+     public function create(Request $request){
+
+        $produto_id = $request->input('produto_id');
+
+        $produto = Produto::find($produto_id);
+
+        return view('categoria_opcional/novo', compact('produto'));
+    }
+
+    //CADASTRAR
+    public function store(Request $request, $produto_id, $usuario_id){
+
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string|max:100',
+            'limite' => 'required|numeric|min:1',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        //Cadastro de opcional
+        $categoria_opcional = new CategoriaOpcional();
+        $categoria_opcional->nome = $request->input('nome');
+        $categoria_opcional->limite = $request->input('limite');
+        $categoria_opcional->produto_id = $produto_id;
+        $categoria_opcional->cadastrado_usuario_id = $usuario_id;
+        if($request->input('preenchimentoObrigatorio') == 0){
+            $categoria_opcional->is_required = false;
+        }else{
+            $categoria_opcional->is_required = true;
+        }
+        $categoria_opcional->save();
+
+        return redirect()->back()->with('success', 'Cadastro de categoria de opcional feito com sucesso');
+
+    }
 }
