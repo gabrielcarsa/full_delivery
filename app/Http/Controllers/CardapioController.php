@@ -192,7 +192,7 @@ class CardapioController extends Controller
 
         //Produto
         $produto = Produto::where('id', $produto_id)
-        ->with('opcional_produto', 'categoria')
+        ->with('categoria_opcional', 'categoria')
         ->first();
 
         // Array para passar variaveis

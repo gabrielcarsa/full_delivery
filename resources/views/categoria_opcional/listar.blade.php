@@ -100,10 +100,14 @@
                 @endforeach
             </div>
         </div>
+        @endforeach
+        <!-- FIM CATEGORIAS E OPCIONAIS -->
 
+    </div>
+    @endif
 
-        <!-- MODAL EXCLUIR -->
-        <div class="modal fade" id="exampleModal{{$categoria_opcional->id}}" tabindex="-1"
+     <!-- MODAL EXCLUIR -->
+     <div class="modal fade" id="exampleModal{{$categoria_opcional->id}}" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -131,12 +135,5 @@
             </div>
         </div>
         <!-- FIM MODAL EXCLUIR -->
-
-        @endforeach
-        <!-- FIM CATEGORIAS E OPCIONAIS -->
-
-
-    </div>
-    @endif
 
 </x-app-layout>

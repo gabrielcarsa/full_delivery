@@ -30,20 +30,20 @@
                 <p class="text-secondary">{{$produto->descricao}}</p>
 
                 <!-- FORM PRODUTO OPCINAL -->
-                <form action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}&endereco_selecionado={{$data['endereco_selecionado']}}" method="post">
-
+                <form
+                    action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}&endereco_selecionado={{$data['endereco_selecionado']}}"
+                    method="post">
                     @csrf
-                    <div class="bg-body-tertiary p-3 ">
 
-                        <h5>Algo mais?</h5>
+                    <!-- CATEGORIAS DE OPCIONAIS -->
+                    @foreach ($produto->categoria_opcional as $categoria_opcional)
+                    <!-- CARD DE OPCIONAIS -->
+                    <div class="bg-body-tertiary p-3 my-1">
+                        <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
 
                         <!-- OPCIONAIS -->
-                        @foreach($produto->opcional_produto as $opcional)
-
-                        <!-- Se existir opcional -->
-                        @if(!empty($opcional->nome))
-                        <hr>
-                        <div class="row">
+                        @foreach($categoria_opcional->opcional_produto as $opcional)
+                        <div class="row my-2">
                             <div class="col-10">
                                 <p class="m-0">{{$opcional->nome}}</p>
                                 <p class="m-0 text-secondary">{{$opcional->descricao}}</p>
@@ -54,12 +54,15 @@
                                     value="{{$opcional->id}}">
                             </div>
                         </div>
-                        @endif
-
                         @endforeach
                         <!-- FIM OPCIONAIS -->
 
                     </div>
+                    <!-- FIM CARD DE OPCIONAIS -->
+
+                    @endforeach
+                    <!-- FIM CATEGORIAS DE OPCIONAIS -->
+
 
                     <div class="mt-2">
                         <label for="obsTextArea" class="form-label fw-semibold mt-3"><i class="fa-solid fa-message"></i>
