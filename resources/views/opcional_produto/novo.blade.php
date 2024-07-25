@@ -1,94 +1,75 @@
 <x-app-layout>
 
-    <!-- CARD -->
-    <div class="card mb-4 mt-4">
+    <!-- CONTAINER -->
+    <div class="container">
 
-        <!-- CARD HEADER-->
-        <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 fw-semibold fs-5">
-                {{ empty($opcional) ? 'Cadastro Opcional de '.$produto->nome : 'Alterar '.$opcional->nome }}</h2>
+        <!-- TITULO -->
+        <h2 class="my-3 fw-bolder fs-3">
+            {{ empty($opcional) ? 'Cadastro Opcional de "'.$categoria_opcional->nome . '"': 'Alterar '.$opcional->nome }}
+        </h2>
+        <!-- FIM TITULO -->
+
+
+        <!-- MENSAGENS SUCESSO OU ERRO-->
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
-        <!-- FIM CARD HEADER-->
-
-        <!-- CARD BODY-->
-        <div class="card-body">
-
-            <!-- MENSAGENS SUCESSO OU ERRO-->
-            @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-            <!-- FIM MENSAGENS SUCESSO OU ERRO-->
-
-            <!-- FORM -->
-            <form class="row g-3"
-                action="{{!empty($opcional) ? '/opcional_produto/alterar/' . Auth::user()->id . '/' . $opcional->id : '/opcional_produto/cadastrar/' . $produto->id . '/' . Auth::user()->id}}"
-                method="post" autocomplete="off" enctype="multipart/form-data">
-                @csrf
-                @if(!empty($opcional))
-                @method('PUT')
-                @endif
-
-                <!-- CAMPOS -->
-                <div class="col-md-6">
-                    <label for="inputNome" class="form-label">Nome</label>
-                    <input type="text" name="nome" value="{{!empty($opcional) ? $opcional->nome : old('nome')}}"
-                        class="form-control" id="inputNome" maxlength="100" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="inputDescricao" class="form-label">Descrição</label>
-                    <input type="text" name="descricao"
-                        value="{{!empty($opcional) ? $opcional->descricao : old('descricao')}}" class="form-control"
-                        id="inputDescricao" maxlength="500" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="inputPreco" class="form-label">Preço</label>
-                    <input type="text" name="preco"
-                        value="{{!empty($opcional) ? number_format($opcional->preco, 2, ',', '.') : old('preco')}}"
-                        class="form-control" id="inputPreco" required>
-                </div>
-
-                <!-- DICA -->
-                <div class="d-flex">
-                    <div class="card" style="width: 100%;">
-                        <div class="card-header">Dica</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Opcionais</h5>
-                            <p class="card-text">
-                                Estudos mostram que na hora de comprar um produto se houver opcionais com preços que
-                                impliquem benefícios para o cliente ele tem grande tendência a comprar o opcional do que
-                                comprar separadamente o mesmo produto com mesmo valor.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- FIM DICA -->
-
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                </div>
-            </form>
-            <!-- FIM FORM -->
-
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
-        <!-- FIM CARD BODY -->
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        <!-- FIM MENSAGENS SUCESSO OU ERRO-->
+
+        <!-- FORM -->
+        <form class="col-6"
+            action="{{!empty($opcional) ? '/opcional_produto/alterar/' . Auth::user()->id . '/' . $opcional->id : '/opcional_produto/cadastrar/' . $categoria_opcional->id . '/' . Auth::user()->id}}"
+            method="post" autocomplete="off" enctype="multipart/form-data">
+            @csrf
+            @if(!empty($opcional))
+            @method('PUT')
+            @endif
+
+            <!-- CAMPOS -->
+            <div class="m-1">
+                <label for="inputNome" class="form-label">Nome</label>
+                <input type="text" name="nome" value="{{!empty($opcional) ? $opcional->nome : old('nome')}}"
+                    class="form-control" id="inputNome" maxlength="100" required>
+            </div>
+            <div class="m-1">
+                <label for="inputDescricao" class="form-label">Descrição</label>
+                <input type="text" name="descricao"
+                    value="{{!empty($opcional) ? $opcional->descricao : old('descricao')}}" class="form-control"
+                    id="inputDescricao" maxlength="500" required>
+            </div>
+            <div class="m-1">
+                <label for="inputPreco" class="form-label">Preço</label>
+                <input type="text" name="preco"
+                    value="{{!empty($opcional) ? number_format($opcional->preco, 2, ',', '.') : old('preco')}}"
+                    class="form-control" id="inputPreco" required>
+            </div>
+
+            <div class="col-12 d-flex mt-3">
+                <button type="submit" class="btn btn-primary w-100">
+                    Cadastrar
+                </button>
+            </div>
+        </form>
+        <!-- FIM FORM -->
+
     </div>
-    <!-- FIM CARD -->
+    <!-- FIM CONTAINER -->
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

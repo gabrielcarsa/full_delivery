@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Produto;
 use App\Models\OpcionalProduto;
+use App\Models\CategoriaOpcional;
+
 
 class OpcionalProdutoController extends Controller
 {
@@ -24,15 +25,15 @@ class OpcionalProdutoController extends Controller
     //RETORNAR VIEW PARA CADASTRO
     public function create(Request $request){
 
-        $produto_id = $request->input('produto_id');
+        $categoria_opcional_id = $request->input('categoria_opcional_id');
 
-        $produto = Produto::find($produto_id);
+        $categoria_opcional = CategoriaOpcional::find($categoria_opcional_id);
 
-        return view('opcional_produto/novo', compact('produto'));
+        return view('opcional_produto/novo', compact('categoria_opcional'));
     }
 
     //CADASTRAR
-    public function store(Request $request, $produto_id, $usuario_id){
+    public function store(Request $request, $categoria_opcional_id, $usuario_id){
 
         $request->merge([
             'preco' => str_replace(['.', ','], ['', '.'], $request->input('preco')),
@@ -57,7 +58,7 @@ class OpcionalProdutoController extends Controller
 
         $opcional->preco = (double) $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
 
-        $opcional->produto_id = $produto_id;
+        $opcional->categoria_opcional_id = $categoria_opcional_id;
         $opcional->cadastrado_usuario_id = $usuario_id;
         $opcional->save();
 

@@ -4,7 +4,7 @@
     <div class="container">
 
         <!-- HEADER-->
-        <h2 class="my-3 fw-bolder fs-1">
+        <h2 class="my-3 fw-bolder fs-3">
             {{ empty($opcional) ? 'Cadastro Categoria Opcional de '.$produto->nome : 'Alterar '.$opcional->nome }}</h2>
         <!-- FIM HEADER-->
 

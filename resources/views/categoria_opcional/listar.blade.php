@@ -54,7 +54,7 @@
                 <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
                 <div class="col-6 d-flex justify-content-end">
                     <a class="btn btn-outline-primary d-flex align-items-center justify-content-center"
-                        href="{{ route('opcional_produto.novo', ['produto_id' => $produto->id]) }}">
+                        href="{{ route('opcional_produto.novo', ['categoria_opcional_id' => $categoria_opcional->id]) }}">
                         <span class="material-symbols-outlined mr-1">
                             add
                         </span>
@@ -69,7 +69,7 @@
                     </a>
                 </div>
             </div>
-
+            @dd($categoria_opcional->opcional)
         </div>
 
 
@@ -92,8 +92,9 @@
                             method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Sim, eu
-                                tenho</button>
+                            <button type="submit" class="btn btn-danger">
+                                Sim, eu tenho
+                            </button>
                         </form>
 
                     </div>

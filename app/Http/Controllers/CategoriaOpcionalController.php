@@ -48,7 +48,7 @@ class CategoriaOpcionalController extends Controller
 
         // Validação do formulário
         $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:100',
+            'nome' => 'required|string|max:50',
             'limite' => 'required|numeric|min:1',
         ]);
 
