@@ -37,8 +37,8 @@ class Produto extends Model
     }
 
     // Relação um para muitos com Opcionais de Produto
-    public function categoria_opcional_produto()
+    public function categoria_opcional()
     {
-        return $this->hasMany(OpcionalProduto::class, 'produto_id');
+        return $this->hasMany(CategoriaOpcional::class, 'produto_id');
     }
 }

@@ -101,6 +101,8 @@ Route::middleware([
         Route::post('/produto/promocao/{produto_id}', [ProdutoController::class, 'update_promocao']);
         Route::post('/produto/destacar', [ProdutoController::class, 'destacar'])->name('produto.destacar');
         
+        //CATEGORIA OPCIONAL
+        
         //OPCIONAL PRODUTO
         Route::get('/opcional_produto', [OpcionalProdutoController::class, 'index'])->name('opcional_produto');
         Route::get('/opcional_produto/novo', [OpcionalProdutoController::class, 'create'])->name('opcional_produto.novo');

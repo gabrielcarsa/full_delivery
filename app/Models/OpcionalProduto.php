@@ -12,9 +12,9 @@ class OpcionalProduto extends Model
 
     //RELACIONAMENTOS
 
-    public function categoria_opcional_produto()
+    public function categoria_opcional()
     {
-        return $this->belongsTo(CategoriaOpcionalProduto::class);
+        return $this->belongsTo(CategoriaOpcional::class);
     }
 
     // Relação um para muitos com Opcionais de Item

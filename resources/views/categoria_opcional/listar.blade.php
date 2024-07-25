@@ -27,7 +27,7 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Opcionais de {{$produto->nome}}
+                <h2 class="my-3 fw-bolder fs-1">Categorias de opcionais de {{$produto->nome}}
                     <span class="text-secondary fs-3">
                         ({{$opcionais->count()}})
                     </span>

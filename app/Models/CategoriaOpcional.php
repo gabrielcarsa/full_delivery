@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoriaOpcionalProduto extends Model
 {
     use HasFactory;
-    protected $table = 'categoria_opcional_produto';
+    protected $table = 'categoria_opcional';
 
 
     public function produto()
