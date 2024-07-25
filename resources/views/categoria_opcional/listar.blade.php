@@ -50,7 +50,7 @@
         @foreach ($categorias_opcionais as $categoria_opcional)
 
         <div class="bg-white border rounded p-3">
-            <div class="row d-flex align-items-center">
+            <div class="row d-flex align-items-center mb-3">
                 <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
                 <div class="col-6 d-flex justify-content-end">
                     <a class="btn btn-outline-primary d-flex align-items-center justify-content-center"
@@ -69,7 +69,36 @@
                     </a>
                 </div>
             </div>
-            @dd($categoria_opcional->opcional)
+
+            <div>
+                @foreach($categoria_opcional->opcional_produto as $opcional)
+                <div class="row my-1 mx-3 p-3 bg-light rounded">
+                    <div class="col">
+                        <p class="m-0 fw-semibold">{{$opcional->nome}}</p>
+                        <p class="m-0 text-secondary text-truncate">{{$opcional->descricao}}</p>
+                        <p class="m-0">R$ {{number_format($opcional->preco, 2, ',', '.')}}</p>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                        <a class="text-primary text-decoration-none"
+                            href="{{ route('opcional_produto.editar', ['id' => $opcional->id]) }}">
+                            <span class="material-symbols-outlined mr-1">
+                                edit
+                            </span>
+                        </a>
+                        <form action="{{ route('opcional_produto.excluir', ['id' => $opcional->id]) }}"
+                            method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="ml-3 text-danger text-decoration-none">
+                                <span class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
 
 

@@ -20,7 +20,9 @@ class CategoriaOpcionalController extends Controller
         $produto = Produto::find($produto_id);
 
         // Definindo todas as categorias de opcionais do produto 
-        $categorias_opcionais = CategoriaOpcional::where('produto_id', $produto_id)->get();
+        $categorias_opcionais = CategoriaOpcional::where('produto_id', $produto_id)
+        ->with('opcional_produto')
+        ->get();
 
         // array dos opcionais
         $opcionais = [];

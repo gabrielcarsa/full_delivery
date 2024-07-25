@@ -3,7 +3,7 @@
     <!-- CONTAINER -->
     <div class="container">
 
-        <!-- TITULO -->
+    <!-- TITULO -->
         <h2 class="my-3 fw-bolder fs-3">
             {{ empty($opcional) ? 'Cadastro Opcional de "'.$categoria_opcional->nome . '"': 'Alterar '.$opcional->nome }}
         </h2>

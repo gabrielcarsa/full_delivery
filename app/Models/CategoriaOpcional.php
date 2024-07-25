@@ -25,4 +25,11 @@ class CategoriaOpcional extends Model
     {
         return $this->belongsTo(User::class, 'alterado_usuario_id');
     }
+
+    // Relação um para muitos
+    public function opcional_produto()
+    {
+        return $this->hasMany(OpcionalProduto::class);
+    }
+   
 }
