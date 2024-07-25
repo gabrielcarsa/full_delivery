@@ -12,6 +12,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\CupomController;
 use App\Http\Controllers\ClienteAuthController;
 use App\Http\Controllers\ClienteEnderecoController;
+use App\Http\Controllers\CategoriaOpcionalController;
 
 
 /*
@@ -102,9 +103,14 @@ Route::middleware([
         Route::post('/produto/destacar', [ProdutoController::class, 'destacar'])->name('produto.destacar');
         
         //CATEGORIA OPCIONAL
-        
+        Route::get('/categoria_opcional', [CategoriaOpcionalController::class, 'index'])->name('categoria_opcional');
+        Route::get('/categoria_opcional/novo', [CategoriaOpcionalController::class, 'create'])->name('categoria_opcional.novo');
+        Route::post('/categoria_opcional/cadastrar/{produto_id}/{usuario_id}', [CategoriaOpcionalController::class, 'store']);
+        Route::delete('/categoria_opcional/apagar/{id}', [CategoriaOpcionalController::class, 'destroy'])->name('categoria_opcional.excluir');
+        Route::get('/categoria_opcional/editar', [CategoriaOpcionalController::class, 'edit'])->name('categoria_opcional.editar');
+        Route::put('/categoria_opcional/alterar/{usuario_id}/{produto_id}', [CategoriaOpcionalController::class, 'update']);
+
         //OPCIONAL PRODUTO
-        Route::get('/opcional_produto', [OpcionalProdutoController::class, 'index'])->name('opcional_produto');
         Route::get('/opcional_produto/novo', [OpcionalProdutoController::class, 'create'])->name('opcional_produto.novo');
         Route::post('/opcional_produto/cadastrar/{produto_id}/{usuario_id}', [OpcionalProdutoController::class, 'store']);
         Route::delete('/opcional_produto/apagar/{id}', [OpcionalProdutoController::class, 'destroy'])->name('opcional_produto.excluir');

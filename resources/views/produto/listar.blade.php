@@ -70,7 +70,7 @@
                             Ações
                         </button>
                         <ul class="dropdown-menu text-center">
-                            <li><a href="{{ route('opcional_produto', ['produto_id' => $produto->id]) }}"
+                            <li><a href="{{ route('categoria_opcional', ['produto_id' => $produto->id]) }}"
                                     class="dropdown-item">Opcionais</a></li>
                             <li>
                                 <hr class="dropdown-divider">
