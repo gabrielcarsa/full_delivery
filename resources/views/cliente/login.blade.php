@@ -36,7 +36,11 @@
             <hr>
 
             <!-- FORM -->
+            @if(isset($data))
             <form action="{{ route('cliente.login',  ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}" method="post">
+            @else
+            <form action="{{ route('cliente.login') }}" method="post">
+            @endif
                 @csrf
                 <div class="form-floating mb-3">
                     <input type="email" name="email" class="form-control" id="floatingInput"

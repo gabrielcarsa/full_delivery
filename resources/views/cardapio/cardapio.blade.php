@@ -113,73 +113,38 @@
     @endif
     <!-- FIM DROPDOWN TROCAR CONSUMO -->
 
-    <!-- FUNDO LOJA CARDAPIO -->
-    <div class="cardapio-loja d-flex align-items-center justify-content-center">
 
-        <!-- LOJA CARD -->
-        <div class="bg-white m-3 p-3 rounded border">
+    <!-- EXIBIR PARA TELAS MAIORES E MENORES LOJA -->
 
-            <!-- ENDEREÇO ENTREGA SE HOUVER -->
-            @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
-            @auth('cliente')
 
-            <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
-                <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <!--SE HOUVER ENDEREÇO SELECIONADO-->
-                    @if($data['endereco_selecionado'] == null)
+    <!-- EXIBIR PARA TELAS MENORES LOJA -->
+    <div class="small-screen-content d-none">
+        <!-- BANNER E LOJA -->
+        <div class="relative">
 
-                    Selecione endereço entrega
+            <!-- BANNER -->
+            <div class="banner" style="height: 200px; background-color: #EDEDED;">
 
-                    <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
-                    @else
-
-                    <!--EXIBIR APENAS SELECIONADO-->
-                    @foreach($data['cliente_enderecos'] as $endereco)
-                    @if($endereco->id == $data['endereco_selecionado'])
-
-                    {{$endereco->rua}}, {{$endereco->numero}}
-
-                    @endif
-                    @endforeach
-                    <!--FIM EXIBIR APENAS SELECIONADO-->
-
-                    @endif
-                    <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
-                </a>
-
-                <ul class="dropdown-menu">
-                    @foreach($data['cliente_enderecos'] as $endereco)
-                    @if($endereco != $data['endereco_selecionado'])
-                    <li>
-                        <a class="dropdown-item"
-                            href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
-                            <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}} {{$endereco->numero}}
-                        </a>
-                    </li>
-                    @endif
-                    @endforeach
-                </ul>
             </div>
-            @endauth
-            @endif
-            <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
-
+            <!-- FIM BANNER -->
 
             <!-- IMAGEM LOJA -->
-            <div class="d-flex align-items-center justify-content-center">
-                <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
-                    class="rounded-circle" style="max-width: 80px;">
+            <div class="absolute top-0" style="margin: 160px 20px;">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
+                        class="rounded-circle" style="max-width: 90px;">
+                </div>
             </div>
             <!-- FIM IMAGEM LOJA -->
 
-            <!-- SOBRE A LOJA -->
-            <div class="px-3">
-                <h2 class="fs-2 fw-bolder my-2">{{$data['categoria_produto'][0]->loja->nome}}</h2>
-                <p class="text-secondary m-0 p-0 mb-2">{{$data['categoria_produto'][0]->loja->descricao}}</p>
+            <!-- LOJA TITULO -->
+            <div class="mx-3">
+                <div class="d-flex justify-content-end">
+                    <h2 class="fs-2 fw-bolder m-0">{{$data['categoria_produto'][0]->loja->nome}}</h2>
+                </div>
 
                 <!-- INFORMAÇÕES LOJA -->
-                <div class="" style="font-size: 13px">
+                <div class="d-flex justify-content-end" style="font-size: 13px">
                     <!-- VERIFICAR SE ESTÁ ABERTO -->
                     @if($data['categoria_produto'][0]->loja->is_open)
                     <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
@@ -201,67 +166,254 @@
                         </span>
                     </p>
                     @endif
-
-                    <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                        <span class="material-symbols-outlined mr-1">
-                            attach_money
-                        </span>
-                        <span>
-                            Pedido minímo: R$ 20,00
-                        </span>
-                    </p>
-                    <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                        <span class="material-symbols-outlined mr-1">
-                            location_on
-                        </span>
-                        <span>
-                            {{$data['categoria_produto'][0]->loja->rua}},
-                            {{$data['categoria_produto'][0]->loja->numero}}
-                            {{$data['categoria_produto'][0]->loja->bairro}} -
-                            {{$data['categoria_produto'][0]->loja->cidade}}
-                            {{$data['categoria_produto'][0]->loja->estado}}
-                        </span>
-                    </p>
-
                 </div>
-                <!-- FIM INFORMAÇÕES LOJA -->
+                <!-- FIM VERIFICAR SE ESTÁ ABERTO -->
+            </div>
+            <!-- FIM LOJA TITULO -->
 
-                <!-- BOTAO HORARIO FUNCIONAMENTO LOJA -->
-                <a href="" class="btn border d-flex justify-content-center mt-3" data-bs-toggle="modal"
-                    data-bs-target="#modalHorarios">
-                    Mais sobre
-                </a>
-                <!-- FIM BOTAO HORARIO FUNCIONAMENTO LOJA -->
+            <!-- INFORMAÇÕES LOJA -->
+            <div class="p-3" style="font-size: 13px">
 
-                <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
-                <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                    <span class="material-symbols-outlined mr-1">
+                        attach_money
+                    </span>
+                    <span>
+                        Pedido minímo: R$ 20,00
+                    </span>
+                </p>
+                <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                    <span class="material-symbols-outlined mr-1">
+                        location_on
+                    </span>
+                    <span>
+                        {{$data['categoria_produto'][0]->loja->rua}},
+                        {{$data['categoria_produto'][0]->loja->numero}}
+                        {{$data['categoria_produto'][0]->loja->bairro}} -
+                        {{$data['categoria_produto'][0]->loja->cidade}}
+                        {{$data['categoria_produto'][0]->loja->estado}}
+                    </span>
+                </p>
+
+            </div>
+            <!-- FIM INFORMAÇÕES LOJA -->
+
+            <!-- ENDEREÇO ENTREGA SE HOUVER -->
+            @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
+            @auth('cliente')
+
+            <div class="absolute top-0 mx-3">
+                <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
+                    <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                        @if($data['endereco_selecionado'] == null)
+
+                        Selecione endereço entrega
+
+                        <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                        @else
+
+                        <!--EXIBIR APENAS SELECIONADO-->
+                        @foreach($data['cliente_enderecos'] as $endereco)
+                        @if($endereco->id == $data['endereco_selecionado'])
+
+                        {{$endereco->rua}}, {{$endereco->numero}}
+
+                        @endif
+                        @endforeach
+                        <!--FIM EXIBIR APENAS SELECIONADO-->
+
+                        @endif
+                        <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
+                    </a>
+
+                    <ul class="dropdown-menu" style="font-size: 12px">
+                        @foreach($data['cliente_enderecos'] as $endereco)
+                        @if($endereco != $data['endereco_selecionado'])
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
+                                {{$endereco->numero}}
+                            </a>
+                        </li>
+                        @endif
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+
+            @endauth
+            @endif
+            <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
+        </div>
+        <!-- BANNER E LOJA -->
+
+    </div>
+    <!-- FIM EXIBIR PARA TELAS MENORES LOJA -->
+
+
+    <!-- EXIBIR PARA TELAS MAIORES LOJA -->
+    <div class="large-screen-content d-none">
+
+        <!-- FUNDO LOJA CARDAPIO -->
+        <div class="cardapio-loja d-flex align-items-center justify-content-center">
+
+            <!-- LOJA CARD -->
+            <div class="bg-white m-3 p-3 rounded border">
+
+                <!-- ENDEREÇO ENTREGA SE HOUVER -->
+                @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
+                @auth('cliente')
+
+                <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
+                    <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                        @if($data['endereco_selecionado'] == null)
+
+                        Selecione endereço entrega
+
+                        <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                        @else
+
+                        <!--EXIBIR APENAS SELECIONADO-->
+                        @foreach($data['cliente_enderecos'] as $endereco)
+                        @if($endereco->id == $data['endereco_selecionado'])
+
+                        {{$endereco->rua}}, {{$endereco->numero}}
+
+                        @endif
+                        @endforeach
+                        <!--FIM EXIBIR APENAS SELECIONADO-->
+
+                        @endif
+                        <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        @foreach($data['cliente_enderecos'] as $endereco)
+                        @if($endereco != $data['endereco_selecionado'])
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
+                                {{$endereco->numero}}
+                            </a>
+                        </li>
+                        @endif
+                        @endforeach
+                    </ul>
+                </div>
+                @endauth
+                @endif
+                <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
+
+
+                <!-- IMAGEM LOJA -->
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
+                        class="rounded-circle" style="max-width: 80px;">
+                </div>
+                <!-- FIM IMAGEM LOJA -->
+
+                <!-- SOBRE A LOJA -->
+                <div class="px-3">
+                    <h2 class="fs-2 fw-bolder my-2">{{$data['categoria_produto'][0]->loja->nome}}</h2>
+                    <p class="text-secondary m-0 p-0 mb-2">{{$data['categoria_produto'][0]->loja->descricao}}</p>
+
+                    <!-- INFORMAÇÕES LOJA -->
+                    <div class="" style="font-size: 13px">
+                        <!-- VERIFICAR SE ESTÁ ABERTO -->
+                        @if($data['categoria_produto'][0]->loja->is_open)
+                        <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
+                            <span class="material-symbols-outlined">
+                                radio_button_checked
+                            </span>
+                            <span>
+                                Aberto
+                            </span>
+                        </p>
+
+                        @else
+                        <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
+                            <span class="material-symbols-outlined mr-1">
+                                radio_button_unchecked
+                            </span>
+                            <span>
+                                Fechado
+                            </span>
+                        </p>
+                        @endif
+
+                        <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                            <span class="material-symbols-outlined mr-1">
+                                attach_money
+                            </span>
+                            <span>
+                                Pedido minímo: R$ 20,00
+                            </span>
+                        </p>
+                        <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                            <span class="material-symbols-outlined mr-1">
+                                location_on
+                            </span>
+                            <span>
+                                {{$data['categoria_produto'][0]->loja->rua}},
+                                {{$data['categoria_produto'][0]->loja->numero}}
+                                {{$data['categoria_produto'][0]->loja->bairro}} -
+                                {{$data['categoria_produto'][0]->loja->cidade}}
+                                {{$data['categoria_produto'][0]->loja->estado}}
+                            </span>
+                        </p>
+
+                    </div>
+                    <!-- FIM INFORMAÇÕES LOJA -->
+
+                    <!-- BOTAO HORARIO FUNCIONAMENTO LOJA -->
+                    <a href="" class="btn border d-flex justify-content-center mt-3" data-bs-toggle="modal"
+                        data-bs-target="#modalHorarios">
+                        Mais sobre
+                    </a>
+                    <!-- FIM BOTAO HORARIO FUNCIONAMENTO LOJA -->
+
+                    <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
+                    <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
+
                 </div>
-                <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
+                <!-- FIM SOBRE A LOJA -->
 
             </div>
-            <!-- FIM SOBRE A LOJA -->
+            <!-- FIM LOJA CARD -->
 
         </div>
-        <!-- FIM LOJA CARD -->
+        <!-- FIM FUNDO LOJA CARDAPIO -->
 
     </div>
-    <!-- FIM FUNDO LOJA CARDAPIO -->
+    <!-- FIM EXIBIR PARA TELAS MAIORES LOJA -->
+
+    <!-- FIM EXIBIR PARA TELAS MAIORES E MENORES LOJA -->
 
     @if(empty($data['consumo_local_viagem']))
 
@@ -434,6 +586,22 @@
     @endif
 
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var screenWidth = window.innerWidth;
+
+        if (screenWidth < 768) { // Você pode ajustar o tamanho conforme necessário
+            document.body.classList.add('small-screen');
+        } else {
+            document.body.classList.add('large-screen');
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.body.classList.contains('small-screen')) {
+            document.querySelector('.small-screen-content').classList.remove('d-none');
+        } else if (document.body.classList.contains('large-screen')) {
+            document.querySelector('.large-screen-content').classList.remove('d-none');
+        }
+    });
     document.addEventListener('DOMContentLoaded', function() {
         const sections = document.querySelectorAll('.cardapio-lista h3');
         const navItems = document.querySelectorAll('#category-nav .nav-link');
