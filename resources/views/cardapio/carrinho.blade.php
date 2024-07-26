@@ -20,6 +20,64 @@
     <!-- CARRINHO -->
     <div class="container vh-100">
 
+        <!-- ROW ENDEREÇO -->
+        <h4 class="m-0 fs-5 fw-bold pt-3">Entrega em</h4>
+        <div class="d-flex">
+            <!-- ICONE LOCALIZACAO -->
+            <div>
+                <span class="material-symbols-outlined text-secondary">
+                    location_on
+                </span>
+            </div>
+            <!-- FIM ICONE LOCALIZACAO -->
+
+            <!-- DROPDOWN ENDERECOS -->
+            <div class="dropdown mb-2">
+                <a class="text-secondary text-decoration-none dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                    @if($data['endereco_selecionado'] == null)
+
+                    Selecione endereço entrega
+
+                    <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                    @else
+
+                    <!--EXIBIR APENAS SELECIONADO-->
+                    @foreach($data['cliente_enderecos'] as $endereco)
+                    @if($endereco->id == $data['endereco_selecionado'])
+
+                    {{$endereco->rua}}, {{$endereco->numero}}
+
+                    @endif
+                    @endforeach
+                    <!--FIM EXIBIR APENAS SELECIONADO-->
+
+                    @endif
+                    <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
+                </a>
+
+                <ul class="dropdown-menu" style="font-size: 13px">
+                    @foreach($data['cliente_enderecos'] as $endereco)
+                    @if($endereco != $data['endereco_selecionado'])
+                    <li>
+                        <a class="dropdown-item"
+                            href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                            <span class="fw-bold">
+                                {{$endereco->nome}}
+                            </span> - {{$endereco->rua}}
+                            {{$endereco->numero}}
+                        </a>
+                    </li>
+                    @endif
+                    @endforeach
+                </ul>
+            </div>
+            <!-- FIM DROPDOWN ENDERECOS -->
+
+        </div>
+        <!-- FIM ENDEREÇO -->
+
         <!-- ROW CARRINHO -->
         <div class="row my-3">
 
@@ -89,6 +147,9 @@
                                 </span><br>
                                 <span class="text-secondary">
                                     @foreach($item['opcionais'] as $opcional)
+                                    @php
+                                    $subtotal += $opcional->preco;
+                                    @endphp
                                     <p class="m-0">
                                         R$ {{number_format($opcional->preco, 2, ',', '.')}}
                                     </p>

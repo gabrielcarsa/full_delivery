@@ -131,11 +131,22 @@ class CardapioController extends Controller
             }
         }
 
+        $cliente_enderecos = null;
+
+        //Enderecos Clientes
+        if( Auth::guard('cliente')->user()){
+            $cliente_id = Auth::guard('cliente')->user()->id;
+            $cliente_enderecos = ClienteEndereco::where('cliente_id', $cliente_id)->get();
+        }
+
+
         // Array para passar variaveis
         $data = [
             'consumo_local_viagem' => $consumo_local_viagem,
             'loja_id' => $loja_id,
             'taxa_entrega' => $taxa_entrega,
+            'endereco_selecionado' => $endereco_selecionado,
+            'cliente_enderecos' => $cliente_enderecos,
         ];
 
         return view('cardapio/carrinho', compact('carrinho', 'data'));
