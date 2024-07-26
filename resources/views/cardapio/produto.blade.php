@@ -27,8 +27,9 @@
 
             <!-- DESCRIÇÃO PRODUTO -->
             <div class="col-md-6">
-                <p class="text-secondary">{{$produto->descricao}}</p>
-
+                <p class="m-0 text-secondary">{{$produto->descricao}}</p>
+                <p class="mb-3 fw-semibold"> R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
+                <hr>
                 <!-- FORM PRODUTO OPCINAL -->
                 <form
                     action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}&endereco_selecionado={{$data['endereco_selecionado']}}"
@@ -43,7 +44,8 @@
                             <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
                             @if($categoria_opcional->is_required == true)
                             <div class="col-6">
-                                <p class="bg-dark rounded text-white m-0 text-center fw-bold" style="font-size: 10px">OBRIGATÓRIO</p>
+                                <p class="bg-dark rounded text-white m-0 text-center fw-bold" style="font-size: 10px">
+                                    OBRIGATÓRIO</p>
                             </div>
                             @endif
                         </div>
@@ -79,14 +81,24 @@
                     </div>
 
                     <!-- QUANTIDADE E BTN AÇÃO FIXO BOTTOM -->
-                    <div class="bg-white fixed-bottom p-3 shadow-lg d-flex">
-                        <button type="button" id="decrement-btn" class="btn btn-outline-dark">-</button>
-                        <input type="number" id="quantidade" name="quantidade" class="form-control" value="1" min="1">
-                        <button type="button" id="increment-btn" class="btn btn-outline-dark">+</button>
-                        <div class="mx-1"></div>
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-success">Adicionar R$
-                                {{number_format($produto->preco, 2, ',', '.')}}</button>
+                    <div class="bg-white fixed-bottom p-3 shadow-lg d-flex w-100">
+                        <div class="d-flex rounded px-3 py-1" style="background-color: #EDEDED">
+                            <button type="button" id="decrement-btn" class="mr-1">
+                                <span class="material-symbols-outlined fs-2 d-flex align-items-center fw-semibold" style="color: #FD0146 !important">
+                                    remove
+                                </span>
+                            </button>
+                            <input type="text" id="quantidade" name="quantidade" class="form-control" value="1" min="1">
+                            <button type="button" id="increment-btn" class="ml-1">
+                                <span class="material-symbols-outlined fs-2 d-flex align-items-center fw-semibold" style="color: #FD0146 !important">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end mx-2 w-100">
+                            <button type="submit" class="p-2 text-white fw-semibold rounded w-100" style="background-color: #FD0146 !important">
+                                Adicionar
+                            </button>
                         </div>
                     </div>
                     <!-- FIM QUANTIDADE E BTN AÇÃO FIXO BOTTOM -->
