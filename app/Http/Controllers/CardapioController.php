@@ -149,7 +149,18 @@ class CardapioController extends Controller
         $endereco_selecionado = $request->get('endereco_selecionado');
 
         // Pega os opcionais selecionados
-        $opcionais = $request->input('opcionais', []);
+        $opcionais_id = $request->input('opcionais', []);
+
+        // Inicializa um array vazio para armazenar os opcionais selecionados
+        $opcionais = [];
+
+        foreach($opcionais_id as $opcional_id){
+             // Encontra o opcional pelo id e adiciona ao array $opcionais
+            $opcional = OpcionalProduto::find($opcional_id);
+            if ($opcional) {
+                $opcionais[] = $opcional;
+            }
+        }
         
         // Pega a quantidade
         $quantidade = $request->input('quantidade');

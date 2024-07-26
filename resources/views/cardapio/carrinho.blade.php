@@ -1,20 +1,5 @@
 <x-layout-cardapio>
 
-    <!-- NAVBAR CARRINHO -->
-    <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
-        <a href="#" onclick="history.go(-1); return false;"
-            class="btn btn-light rounded-circle d-flex align-items-center">
-            <span class="material-symbols-outlined">
-                arrow_back
-            </span>
-        </a>
-        <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
-            <h2 class="fs-5 fw-bold">Carrinho de Compras</h2>
-        </div>
-    </div>
-    <!-- FIM NAVBAR CARRINHO -->
-
-
     @if(empty($carrinho))
 
     <!-- CARRINHO VAZIO -->
@@ -33,19 +18,22 @@
     @else
 
     <!-- CARRINHO -->
-    <div class="container">
+    <div class="container vh-100">
 
         <!-- ROW CARRINHO -->
-        <div class="row my-3" style="padding-top: 70px;">
-            <div class="mt-3">
-                <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="btn btn-danger">Limpar
-                    carrinho</a>
-            </div>
+        <div class="row my-3">
 
             <!-- COLUNA CARRINHO -->
             <div class="col-md-8 p-3 bg-white">
 
-                <h3 class="fw-bolder fs-3">Itens</h3>
+                <div class="row">
+                    <h3 class="fw-bolder fs-3">Itens</h3>
+                    <div class="">
+                        <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="btn btn-danger">
+                            Limpar carrinho
+                        </a>
+                    </div>
+                </div>
                 <hr>
                 <!-- TABELA ITENS -->
                 <table class="table">
@@ -77,16 +65,17 @@
                                 <span>
                                     1x
                                 </span><br>
-                                <span class="text-secondary">
-
-                                </span>
                             </td>
                             <td class="bg-white">
-                                <span class="fw-bold">
+                                <span class="fw-bold text-trucante">
                                     {{ $item['produto']->nome }}
                                 </span><br>
                                 <span class="text-secondary">
-
+                                    @foreach($item['opcionais'] as $opcional)
+                                    <p class="m-0">
+                                        {{$opcional->nome}}
+                                    </p>
+                                    @endforeach
                                 </span>
                             </td>
                             <td class="bg-white">
@@ -94,7 +83,11 @@
                                     R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
                                 </span><br>
                                 <span class="text-secondary">
-
+                                    @foreach($item['opcionais'] as $opcional)
+                                    <p class="m-0">
+                                        R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                                    </p>
+                                    @endforeach
                                 </span>
                             </td>
 
