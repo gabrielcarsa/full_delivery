@@ -18,7 +18,7 @@
     @else
 
     <!-- CARRINHO -->
-    <div class="container vh-100">
+    <div class="container">
 
         <!-- ROW ENDEREÇO -->
         <h4 class="m-0 fs-5 fw-bold pt-3">Entrega em</h4>
@@ -78,6 +78,96 @@
         </div>
         <!-- FIM ENDEREÇO -->
 
+        <!-- ITENS -->
+        <div class="my-3">
+            <h3 class="fw-bolder fs-3">Itens</h3>
+
+            <!-- LISTA -->
+            <ul class="list-group list-group-flush my-3">
+
+                <!-- Variáveis PHP -->
+                @php
+                $subtotal = 0;
+                @endphp
+
+                <!-- ITEM -->
+                @foreach ($carrinho as $item)
+
+                <!-- Incrementando sobre valor total -->
+                @php
+                $subtotal += $item['produto']->preco * $item['quantidade'];
+                @endphp
+
+                <!-- ITEM -->
+                <li class="list-group-item">
+
+                    <!-- PRODUTO -->
+                    <div class="d-flex">
+                        <div class="">
+                            <p class="m-0 fw-semibold">
+                                {{ $item['produto']->nome }}
+                            </p>
+                            <p class="m-0 text-secondary text-truncate" style="max-width: 200px;">
+                                {{ $item['produto']->descricao }}
+                            </p>
+                            <p class="m-0 fw-semibold">
+                                R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-end w-100">
+                            <p class="m-0 fw-semibold">{{$item['quantidade']}}x</p>
+                        </div>
+                    </div>
+                    <!-- FIM PRODUTO -->
+
+                    <!-- OPCIONAIS -->
+                    @if($item['opcionais'] != null)
+                    <div class="p-0 m-0 bg-light p-2 rounded">
+                        @foreach($item['opcionais'] as $opcional)
+                        <div class="d-flex m-0">
+                            <div class="d-flex align-items-center">
+                                <span class="material-symbols-outlined fs-5" style="color: #FD0146 !important">
+                                    add
+                                </span>
+                            </div>
+                            <p class="m-0 d-flex align-items-center text-secondary">
+                                {{$opcional->nome}}
+                            </p>
+                            <p class="text-secondary d-flex align-items-center justify-content-end w-100 m-0">
+                                @php
+                                $subtotal += $opcional->preco;
+                                @endphp
+
+                                R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                            </p>
+                        </div>
+
+                        @endforeach
+                    </div>
+                    @endif
+                    <!-- FIM OPCIONAIS -->
+
+                    <!-- OBSERVAÇÃO -->
+                    @if($item['observacao'] != null)
+                    <p class="">
+                        OBS.: {{$item['observacao']}}
+                    </p>
+                    @endif
+                    <!-- FIM OBSERVAÇÃO -->
+
+                </li>
+
+                @endforeach
+                <!-- FIM ITEM -->
+
+
+            </ul>
+            <!-- FIM LISTA -->
+
+        </div>
+        <!-- ITENS -->
+
+
         <!-- ROW CARRINHO -->
         <div class="row my-3">
 
@@ -93,80 +183,6 @@
                     </div>
                 </div>
                 <hr>
-                <!-- TABELA ITENS -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Qtd</th>
-                            <th scope="col">Item</th>
-                            <th scope="col">Preço</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Variáveis PHP -->
-                        @php
-                        $subtotal = 0;
-
-                        @endphp
-
-                        <!-- Exibir itens do pedido -->
-                        @foreach ($carrinho as $item)
-                        @php
-                        $subtotal += $item['produto']->preco;
-
-                        @endphp
-
-                        <!-- Incrementando sobre valor total -->
-
-                        <tr class="p-0 m-0">
-                            <td class="bg-white">
-                                <span>
-                                    {{ $item['quantidade'] }}x
-                                </span>
-                            </td>
-                            <td class="bg-white">
-                                <span class="fw-bold text-trucante">
-                                    {{ $item['produto']->nome }}
-                                </span><br>
-                                <span class="text-secondary">
-                                    @foreach($item['opcionais'] as $opcional)
-                                    <p class="m-0">
-                                        {{$opcional->nome}}
-                                    </p>
-                                    @endforeach
-                                </span>
-                                <span class="text-secondary">
-                                    <p class="m-0">
-                                        OBS.: {{$item['observacao']}}
-                                    </p>
-                                </span>
-                            </td>
-                            <td class="bg-white">
-                                <span>
-                                    R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
-                                </span><br>
-                                <span class="text-secondary">
-                                    @foreach($item['opcionais'] as $opcional)
-                                    @php
-                                    $subtotal += $opcional->preco;
-                                    @endphp
-                                    <p class="m-0">
-                                        R$ {{number_format($opcional->preco, 2, ',', '.')}}
-                                    </p>
-                                    @endforeach
-                                </span>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-
-
-
-                    </tfoot>
-
-                </table>
-                <!-- FIM TABELA ITENS -->
 
             </div>
             <!-- FIM COLUNA CARRINHO -->
