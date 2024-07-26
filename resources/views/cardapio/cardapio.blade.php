@@ -138,38 +138,50 @@
             <!-- FIM IMAGEM LOJA -->
 
             <!-- LOJA TITULO -->
-            <div class="mx-3">
-                <div class="d-flex justify-content-end">
-                    <h2 class="fs-2 fw-bolder m-0">{{$data['categoria_produto'][0]->loja->nome}}</h2>
-                </div>
+            <div class="d-flex justify-content-end align-items-center">
+                <div class="mx-3">
+                    <div class="d-flex justify-content-end">
+                        <h2 class="fs-2 fw-bolder m-0">{{$data['categoria_produto'][0]->loja->nome}}</h2>
+                    </div>
 
-                <!-- INFORMAÇÕES LOJA -->
-                <div class="d-flex justify-content-end" style="font-size: 13px">
-                    <!-- VERIFICAR SE ESTÁ ABERTO -->
-                    @if($data['categoria_produto'][0]->loja->is_open)
-                    <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
-                        <span class="material-symbols-outlined">
-                            radio_button_checked
-                        </span>
-                        <span>
-                            Aberto
-                        </span>
-                    </p>
+                    <!-- INFORMAÇÕES LOJA -->
+                    <div class="d-flex justify-content-end" style="font-size: 13px">
+                        <!-- VERIFICAR SE ESTÁ ABERTO -->
+                        @if($data['categoria_produto'][0]->loja->is_open)
+                        <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
+                            <span class="material-symbols-outlined">
+                                radio_button_checked
+                            </span>
+                            <span>
+                                Aberto
+                            </span>
+                        </p>
 
-                    @else
-                    <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
-                        <span class="material-symbols-outlined mr-1">
-                            radio_button_unchecked
-                        </span>
-                        <span>
-                            Fechado
-                        </span>
-                    </p>
-                    @endif
+                        @else
+                        <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
+                            <span class="material-symbols-outlined mr-1 fs-6">
+                                radio_button_unchecked
+                            </span>
+                            <span>
+                                Fechado
+                            </span>
+                        </p>
+                        @endif
+                    </div>
+                    <!-- FIM VERIFICAR SE ESTÁ ABERTO -->
                 </div>
-                <!-- FIM VERIFICAR SE ESTÁ ABERTO -->
+                <!-- FIM LOJA TITULO -->
+
+                <!-- ARROW INFOS -->
+                <a href="" class="d-flex justify-content-center text-decoration-none text-black mr-2" data-bs-toggle="modal"
+                    data-bs-target="#modalHorarios">
+                    <span class="material-symbols-outlined">
+                        chevron_right
+                    </span>
+                </a>
+                <!-- FIM ARROW INFOS -->
+
             </div>
-            <!-- FIM LOJA TITULO -->
 
             <!-- INFORMAÇÕES LOJA -->
             <div class="p-3" style="font-size: 13px">
@@ -202,48 +214,49 @@
             @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
             @auth('cliente')
 
-            <div class="absolute top-0 mx-3">
-                <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
-                    <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <!--SE HOUVER ENDEREÇO SELECIONADO-->
-                        @if($data['endereco_selecionado'] == null)
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="absolute top-0 mx-3">
+                    <div class="dropdown mb-2" style="font-size: 14px">
+                        <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                            @if($data['endereco_selecionado'] == null)
 
-                        Selecione endereço entrega
+                            Selecione endereço entrega
 
-                        <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
-                        @else
+                            <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                            @else
 
-                        <!--EXIBIR APENAS SELECIONADO-->
-                        @foreach($data['cliente_enderecos'] as $endereco)
-                        @if($endereco->id == $data['endereco_selecionado'])
+                            <!--EXIBIR APENAS SELECIONADO-->
+                            @foreach($data['cliente_enderecos'] as $endereco)
+                            @if($endereco->id == $data['endereco_selecionado'])
 
-                        {{$endereco->rua}}, {{$endereco->numero}}
+                            {{$endereco->rua}}, {{$endereco->numero}}
 
-                        @endif
-                        @endforeach
-                        <!--FIM EXIBIR APENAS SELECIONADO-->
+                            @endif
+                            @endforeach
+                            <!--FIM EXIBIR APENAS SELECIONADO-->
 
-                        @endif
-                        <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
-                    </a>
+                            @endif
+                            <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
+                        </a>
 
-                    <ul class="dropdown-menu" style="font-size: 12px">
-                        @foreach($data['cliente_enderecos'] as $endereco)
-                        @if($endereco != $data['endereco_selecionado'])
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
-                                <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
-                                {{$endereco->numero}}
-                            </a>
-                        </li>
-                        @endif
-                        @endforeach
-                    </ul>
+                        <ul class="dropdown-menu" style="font-size: 12px">
+                            @foreach($data['cliente_enderecos'] as $endereco)
+                            @if($endereco != $data['endereco_selecionado'])
+                            <li>
+                                <a class="dropdown-item"
+                                    href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                    <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
+                                    {{$endereco->numero}}
+                                </a>
+                            </li>
+                            @endif
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
             </div>
-
 
             @endauth
             @endif
@@ -379,28 +392,6 @@
                     </a>
                     <!-- FIM BOTAO HORARIO FUNCIONAMENTO LOJA -->
 
-                    <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
-                    <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
-
                 </div>
                 <!-- FIM SOBRE A LOJA -->
 
@@ -414,6 +405,25 @@
     <!-- FIM EXIBIR PARA TELAS MAIORES LOJA -->
 
     <!-- FIM EXIBIR PARA TELAS MAIORES E MENORES LOJA -->
+
+    <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
+    <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Horários Funcionamento</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
 
     @if(empty($data['consumo_local_viagem']))
 
