@@ -177,6 +177,7 @@ class CardapioController extends Controller
             'opcionais' => $opcionais,
             'observacao' => $observacao,
             'produto' => $produto,
+            'quantidade' => $quantidade,
         ];
 
         // Adicionando o item ao carrinho na sessão

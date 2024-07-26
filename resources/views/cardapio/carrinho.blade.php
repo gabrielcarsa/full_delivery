@@ -41,7 +41,7 @@
                         <tr>
                             <th scope="col">Qtd</th>
                             <th scope="col">Item</th>
-                            <th scope="col">Preço unitário</th>
+                            <th scope="col">Preço</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,8 +63,8 @@
                         <tr class="p-0 m-0">
                             <td class="bg-white">
                                 <span>
-                                    1x
-                                </span><br>
+                                    {{ $item['quantidade'] }}x
+                                </span>
                             </td>
                             <td class="bg-white">
                                 <span class="fw-bold text-trucante">
@@ -76,6 +76,11 @@
                                         {{$opcional->nome}}
                                     </p>
                                     @endforeach
+                                </span>
+                                <span class="text-secondary">
+                                    <p class="m-0">
+                                        OBS.: {{$item['observacao']}}
+                                    </p>
                                 </span>
                             </td>
                             <td class="bg-white">
@@ -90,7 +95,6 @@
                                     @endforeach
                                 </span>
                             </td>
-
                         </tr>
                         @endforeach
                     </tbody>
