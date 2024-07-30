@@ -38,6 +38,10 @@ Route::post('cliente/login', [ClienteAuthController::class, 'login']);
 Route::get('cliente/register', [ClienteAuthController::class, 'showRegistrationForm'])->name('cliente.register');
 Route::post('cliente/register', [ClienteAuthController::class, 'register']);
 
+// PEDIDO
+Route::post('/pedido/cadastrar-web', [PedidoController::class, 'storeWeb'])->name('pedido.cadastrarWeb');
+
+
 // CLIENTE CARDAPIO LOGADO
 Route::middleware('auth:cliente')->group(function () {
     Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
