@@ -41,7 +41,7 @@
                     <!-- CARD DE OPCIONAIS -->
                     <div class="bg-body-tertiary p-3 my-1">
                         <div class="row">
-                            <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
+                            <h4 class="col-6 fw-bold fs-6 m-0">{{$categoria_opcional->nome}}</h4>
                             @if($categoria_opcional->is_required == true)
                             <div class="col-6">
                                 <p class="bg-dark rounded text-white m-0 text-center fw-bold" style="font-size: 10px">

@@ -13,12 +13,29 @@
             <a href="#" onclick="history.go(-1); return false;" class="btn btn-primary">Ir para cardápio</a>
         </div>
     </div>
+
+    <!-- MENU APPBAR -->
+    <x-appbar-cardapio :data="$data" />
+    <!-- FIM MENU APPBAR -->
+
     <!-- FIM CARRINHO VAZIO -->
 
     @else
 
     <!-- CARRINHO -->
-    <div class="container">
+
+    <!-- NAVBAR PRODUTO -->
+    <div class="d-flex bg-white fixed-top p-2">
+        <a href="#" onclick="history.go(-1); return false;"
+            class="text-dark text-decoration-none d-flex align-items-center m-0">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+        </a>
+    </div>
+    <!-- FIM NAVBAR PRODUTO -->
+
+    <div class="p-3 mt-3">
 
         <!-- ROW ENDEREÇO -->
         <h4 class="m-0 fs-5 fw-bold pt-3">Entrega em</h4>
@@ -32,7 +49,7 @@
             <!-- FIM ICONE LOCALIZACAO -->
 
             <!-- DROPDOWN ENDERECOS -->
-            <div class="dropdown mb-2">
+            <div class="dropdown mb-3">
                 <a class="text-secondary text-decoration-none dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <!--SE HOUVER ENDEREÇO SELECIONADO-->
@@ -78,168 +95,191 @@
         </div>
         <!-- FIM ENDEREÇO -->
 
-        <!-- ITENS -->
-        <div class="my-3">
-            <h3 class="fw-bolder fs-3">Itens</h3>
-
-            <!-- LISTA -->
-            <ul class="list-group list-group-flush my-3">
-
-                <!-- Variáveis PHP -->
-                @php
-                $subtotal = 0;
-                @endphp
-
-                <!-- ITEM -->
-                @foreach ($carrinho as $item)
-
-                <!-- Incrementando sobre valor total -->
-                @php
-                $subtotal += $item['produto']->preco * $item['quantidade'];
-                @endphp
-
-                <!-- ITEM -->
-                <li class="list-group-item">
-
-                    <!-- PRODUTO -->
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="m-0 fw-semibold">
-                                {{ $item['produto']->nome }}
-                            </p>
-                            <p class="m-0 text-secondary text-truncate" style="max-width: 200px;">
-                                {{ $item['produto']->descricao }}
-                            </p>
-                            <p class="m-0 fw-semibold">
-                                R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
-                            </p>
-                        </div>
-                        <div class="d-flex justify-content-end w-100">
-                            <p class="m-0 fw-semibold">{{$item['quantidade']}}x</p>
-                        </div>
+        <div class="row">
+            <!-- ITENS -->
+            <div class="col-md-6 my-3">
+                <div class="d-flex">
+                    <div class="d-flex align-items-center">
+                        <h3 class="fw-bolder fs-3">Itens</h3>
                     </div>
-                    <!-- FIM PRODUTO -->
-
-                    <!-- OPCIONAIS -->
-                    @if($item['opcionais'] != null)
-                    <div class="p-0 m-0 bg-light p-2 rounded">
-                        @foreach($item['opcionais'] as $opcional)
-                        <div class="d-flex m-0">
-                            <div class="d-flex align-items-center">
-                                <span class="material-symbols-outlined fs-5" style="color: #FD0146 !important">
-                                    add
-                                </span>
-                            </div>
-                            <p class="m-0 d-flex align-items-center text-secondary">
-                                {{$opcional->nome}}
-                            </p>
-                            <p class="text-secondary d-flex align-items-center justify-content-end w-100 m-0">
-                                @php
-                                $subtotal += $opcional->preco;
-                                @endphp
-
-                                R$ {{number_format($opcional->preco, 2, ',', '.')}}
-                            </p>
-                        </div>
-
-                        @endforeach
-                    </div>
-                    @endif
-                    <!-- FIM OPCIONAIS -->
-
-                    <!-- OBSERVAÇÃO -->
-                    @if($item['observacao'] != null)
-                    <p class="">
-                        OBS.: {{$item['observacao']}}
-                    </p>
-                    @endif
-                    <!-- FIM OBSERVAÇÃO -->
-
-                </li>
-
-                @endforeach
-                <!-- FIM ITEM -->
-
-
-            </ul>
-            <!-- FIM LISTA -->
-
-        </div>
-        <!-- ITENS -->
-
-
-        <!-- ROW CARRINHO -->
-        <div class="row my-3">
-
-            <!-- COLUNA CARRINHO -->
-            <div class="col-md-8 p-3 bg-white">
-
-                <div class="row">
-                    <h3 class="fw-bolder fs-3">Itens</h3>
-                    <div class="">
-                        <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="btn btn-danger">
+                    <div class="d-flex align-items-center justify-content-end w-100">
+                        <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="text-danger text-decoration-none">
                             Limpar carrinho
                         </a>
                     </div>
                 </div>
-                <hr>
+
+                <!-- LISTA -->
+                <ul class="list-group list-group-flush">
+
+                    <!-- Variáveis PHP -->
+                    @php
+                    $subtotal = 0;
+                    @endphp
+
+                    <!-- ITEM -->
+                    @foreach ($carrinho as $item)
+
+                    <!-- Incrementando sobre valor total -->
+                    @php
+                    $subtotal += $item['produto']->preco * $item['quantidade'];
+                    @endphp
+
+                    <!-- ITEM -->
+                    <li class="list-group-item">
+
+                        <!-- PRODUTO -->
+                        <div class="d-flex">
+                            <div class="">
+                                <p class="m-0 fw-semibold">
+                                    {{ $item['produto']->nome }}
+                                </p>
+                                <p class="m-0 text-secondary text-truncate" style="max-width: 200px;">
+                                    {{ $item['produto']->descricao }}
+                                </p>
+                                <p class="m-0 fw-semibold">
+                                    R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-end w-100">
+                                <p class="m-0 fw-semibold">{{$item['quantidade']}}x</p>
+                            </div>
+                        </div>
+                        <!-- FIM PRODUTO -->
+
+                        <!-- OPCIONAIS -->
+                        @if($item['opcionais'] != null)
+                        <div class="p-0 m-0 bg-light p-2 rounded">
+                            @foreach($item['opcionais'] as $opcional)
+                            <div class="d-flex m-0">
+                                <div class="d-flex align-items-center">
+                                    <span class="material-symbols-outlined fs-5" style="color: #FD0146 !important">
+                                        add
+                                    </span>
+                                </div>
+                                <p class="m-0 d-flex align-items-center text-secondary">
+                                    {{$opcional->nome}}
+                                </p>
+                                <p class="text-secondary d-flex align-items-center justify-content-end w-100 m-0">
+                                    @php
+                                    $subtotal += $opcional->preco;
+                                    @endphp
+
+                                    R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                                </p>
+                            </div>
+
+                            @endforeach
+                        </div>
+                        @endif
+                        <!-- FIM OPCIONAIS -->
+
+                        <!-- OBSERVAÇÃO -->
+                        @if($item['observacao'] != null)
+                        <p class="">
+                            Obs.: {{$item['observacao']}}
+                        </p>
+                        @endif
+                        <!-- FIM OBSERVAÇÃO -->
+
+                    </li>
+
+                    @endforeach
+                    <!-- FIM ITEM -->
+
+
+                </ul>
+                <!-- FIM LISTA -->
 
             </div>
-            <!-- FIM COLUNA CARRINHO -->
+            <!-- FIM ITENS -->
 
-            <!-- COLUNA RESUMO -->
-            <div class="col-md-4 p-3 bg-light rounded">
-                <h3 class="fw-bolder fs-3">Resumo</h3>
-                <hr>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingCupom" placeholder="Cupom">
-                    <label for="floatingCupom">Cupom</label>
-                </div>
-
-                <div class="my-1">
-                    <p class="fs-6 text-secondary m-0">
-                        Subtotal
-                    </p>
-                    <p class="m-0 fs-6 fw-medium">
-                        R$ {{number_format($subtotal, 2, ',', '.')}}
-                    </p>
-                </div>
-                <div class="my-1">
-                    <p class="fs-6 text-secondary m-0">
-                        Entrega
-                    </p>
-                    <p class="m-0 fs-6 fw-medium">
-                        R$ {{number_format($data['taxa_entrega'], 2, ',', '.')}}
-                    </p>
-                </div>
-                <div class="my-1">
-                    <p class="fs-6 text-dark m-0">
-                        Total
-                    </p>
-                    <p class="m-0 fs-5 fw-bold">
-                        R$ {{number_format($data['taxa_entrega'] + $subtotal, 2, ',', '.')}}
-                    </p>
+            <!-- RESUMO -->
+            <div class="col-md-6 my-3">
+                <div class="d-flex">
+                    <div class="d-flex align-items-center">
+                        <h3 class="fw-bolder fs-3">Resumo</h3>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end w-100 ml-2">
+                        <div>
+                            <input type="text" class="form-control" placeholder="Cupom">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="my-2">
-                    <a href="" class="btn btn-success">
-                        Finalizar pedido
-                    </a>
+                <!-- TOTAIS -->
+                <div class="p-3">
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center">
+                            <p class="fs-6 text-dark m-0">
+                                Subtotal
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end w-100">
+                            <p class="m-0 fs-6">
+                                R$ {{number_format($subtotal, 2, ',', '.')}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center">
+                            <p class="fs-6 text-dark m-0">
+                                Entrega
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end w-100">
+                            <p class="m-0 fs-6">
+                                R$ {{number_format($data['taxa_entrega'], 2, ',', '.')}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center">
+                            <p class="fs-6 text-dark m-0">
+                                Descontos
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end w-100">
+                            <p class="m-0 fs-6">
+                                R$ 0,00
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center">
+                            <p class="fs-6 fw-bold m-0">
+                                Total
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end w-100">
+                            <p class="m-0 fs-6 fw-bold">
+                                R$ {{number_format($data['taxa_entrega'] + $subtotal, 2, ',', '.')}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
+                <!-- FIM TOTAIS -->
             </div>
-            <!-- FIM COLUNA RESUMO -->
-
+            <!-- FIM RESUMO -->
         </div>
-        <!-- FIM ROW CARRINHO -->
 
     </div>
-
     <!-- FIM CARRINHO -->
 
+    <div class="fixed-bottom p-3 bg-white border-top d-flex justify-content-end align-items-center">
+        <div class="mr-1">
+            <p class="m-0" style="font-size:14px">Total do pedido</p>
+            <p class="m-0 fw-bold" style="font-size:14px">
+                R$ {{number_format($data['taxa_entrega'] + $subtotal, 2, ',', '.')}}
+            </p>
+        </div>
+        <div class="ml-1">
+            <a href="" class="text-white fw-semibold rounded text-decoration-none"
+                style="background-color: #FD0146 !important; padding: 8px 25px">
+                Finalizar pedido
+            </a>
+        </div>
+    </div>
     @endif
-
-    <!-- MENU APPBAR -->
-    <x-appbar-cardapio :data="$data" />
-    <!-- FIM MENU APPBAR -->
 
 </x-layout-cardapio>
