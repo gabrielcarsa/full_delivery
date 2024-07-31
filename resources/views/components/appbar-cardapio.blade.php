@@ -32,8 +32,8 @@
 
             <!-- ITEM APPBAR -->
             <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedidos') ? 'text-reset' : 'text-secondary'}}"
-                    href="#" style="font-size:13px">
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedido.pedidoCliente') ? 'text-reset' : 'text-secondary'}}"
+                    href="{{ route('pedido.pedidoCliente', ['loja_id' => request('loja_id'), 'consumo_local_viagem' => request('consumo_local_viagem'), 'endereco_selecionado' =>  request('endereco_selecionado'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         receipt_long
                     </span>

@@ -138,8 +138,10 @@ class CardapioController extends Controller
         if( Auth::guard('cliente')->user()){
             $cliente_id = Auth::guard('cliente')->user()->id;
             $cliente_enderecos = ClienteEndereco::where('cliente_id', $cliente_id)->get();
+        }else{
+            return redirect()->route('cliente.login', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
         }
-
+    
 
         // Array para passar variaveis
         $data = [
@@ -150,7 +152,7 @@ class CardapioController extends Controller
             'distancia' => $distancia,
             'cliente_enderecos' => $cliente_enderecos,
         ];
-
+   
         return view('cardapio/carrinho', compact('carrinho', 'data'));
     }
 

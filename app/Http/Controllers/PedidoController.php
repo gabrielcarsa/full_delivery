@@ -376,8 +376,37 @@ class PedidoController extends Controller
     // CLIENTES
     // -------------
 
-     //CADASTRAR
-     public function storeWeb(Request $request){
+    // MOSTRAR PEDIDOS DO CLIENTE
+    public function indexPedidosCliente(Request $request){
+        //Variaveis via GET
+        $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $endereco_selecionado = $request->get('endereco_selecionado');
+
+        $cliente_id = null;
+
+        if( Auth::guard('cliente')->user()){
+            $cliente_id = Auth::guard('cliente')->user()->id;
+        }
+
+        $pedidos = Pedido::where('loja_id', $loja_id)
+        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->orderBy('data_pedido', 'ASC')
+        ->where('cliente_id', $cliente_id)
+        ->get();
+        
+
+        $data = [
+            'consumo_local_viagem' => $consumo_local_viagem,
+            'loja_id' => $loja_id,
+            'endereco_selecionado' => $endereco_selecionado,
+        ];
+
+        return view('cardapio/pedido', compact('data'));
+    }
+
+    //CADASTRAR WEB
+    public function storeWeb(Request $request){
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba');   
 
@@ -408,7 +437,7 @@ class PedidoController extends Controller
         $validator = Validator::make($request->all(), [
             //todo
         ]);
-        
+
         // Se a validação falhar
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
