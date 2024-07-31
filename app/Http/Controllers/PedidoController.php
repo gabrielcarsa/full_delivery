@@ -17,6 +17,8 @@ use App\Models\Cupom;
 use App\Models\UsoCupom;
 use App\Models\FormaPagamentoEntrega;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ClienteEndereco;
 
 class PedidoController extends Controller
 {
@@ -366,6 +368,167 @@ class PedidoController extends Controller
         $pedido->mensagem_cancelamento_rejeicao = $request->input('motivo');
         $pedido->save();
         return redirect()->back()->with('error', 'Pedido cancelado');
+
+    }
+
+
+    // -------------
+    // CLIENTES
+    // -------------
+
+     //CADASTRAR
+     public function storeWeb(Request $request){
+        //Definindo data para cadastrar
+        date_default_timezone_set('America/Cuiaba');   
+
+        // Receber dados do formulário
+        $carrinho = json_decode($request->input('carrinho'), true);
+        $endereco_selecionado_id = $request->input('endereco_selecionado_id');
+        $taxa_entrega = $request->input('taxa_entrega');
+        $loja_id = $request->input('loja_id');
+        $consumo_local_viagem = $request->input('consumo_local_viagem');
+        $total_geral = $request->input('subtotal');
+        $distancia = $request->input('distancia');
+
+        $cliente_id = null;
+        if( Auth::guard('cliente')->user()){
+            $cliente_id = Auth::guard('cliente')->user()->id;
+        }
+
+        // Se endereço não for selecionado
+        if($endereco_selecionado_id == null){
+            $enderecoVazio = true;
+            return redirect()->back()->withErrors(['enderecoVazio' => 'Por favor, selecione um endereço.']);
+        }
+
+        /*
+        --- Validação do formulário ---
+        */
+        
+        $validator = Validator::make($request->all(), [
+            //todo
+        ]);
+        
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $loja = Loja::where('id', $loja_id)->first();
+
+        //Verificar se há loja selecionado
+        if($loja == null){
+            return redirect()->back()->with('error', 'Selecione um loja primeiro');
+        }
+
+        /*
+        --- Cadastro de pedido ---
+        */
+
+        $pedido = new Pedido();
+        $pedido->status = 0;
+        $pedido->consumo_local_viagem_delivery = $consumo_local_viagem;//1. Local, 2. Viagem, 3. Delivery
+        $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
+        $pedido->is_simulacao = false;
+        $pedido->cliente_id = $cliente_id;
+        $pedido->loja_id = $loja_id;
+        $pedido->is_pagamento_entrega = true;
+        $pedido->forma_pagamento_entrega_id = 1;
+        $pedido->total = $total_geral;
+        //$pedido->save();
+
+
+        /*
+        --- Cadastro de item do pedido ---
+        */
+        foreach($carrinho as $item_carrinho){
+            //Buscando produto
+            $produto_id = $item_carrinho['produto']['id'];
+            $qtd_produto = $item_carrinho['quantidade'];
+
+            $item_pedido = new ItemPedido();
+            $item_pedido->pedido_id = $pedido->id;
+            $item_pedido->produto_id = $produto_id; 
+            $item_pedido->quantidade = $qtd_produto;
+            $item_pedido->preco_unitario = $item_carrinho['produto']['preco']; 
+            $item_pedido->subtotal = $item_carrinho['produto']['preco'] * $qtd_produto; 
+            $item_pedido->observacao = $item_carrinho['observacao']; 
+            //$item_pedido->save();
+
+            //Total pedido
+            $total_geral += $item_pedido->subtotal;
+
+            if($item_carrinho['opcionais'] != null){
+                
+                foreach($item_carrinho['opcionais'] as $item_opcional){
+                //Buscando opcional
+                $opcional_id = $item_opcional['id'];
+                $qtd_opcional = 1;
+
+                $opcional_item_pedido = new OpcionalItem();
+                $opcional_item_pedido->item_pedido_id = $item_pedido->id;
+                $opcional_item_pedido->opcional_produto_id = $opcional_id;
+                $opcional_item_pedido->quantidade = $qtd_opcional;
+                $opcional_item_pedido->preco_unitario = $item_opcional['preco']; 
+                $opcional_item_pedido->subtotal = $item_opcional['preco'] * $qtd_opcional; 
+                //$opcional_item_pedido->save();
+
+                }
+            } 
+
+        }
+
+       
+        /*
+        --- Cadastro de entrega ---
+        */
+
+        if($pedido->consumo_local_viagem_delivery == 3){
+            $cliente_endereco = ClienteEndereco::find($endereco_selecionado_id);
+            $entrega = new Entrega();
+            $entrega->pedido_id = $pedido->id;
+            $entrega->cep = $cliente_endereco->cep;
+            $entrega->rua = $cliente_endereco->cep;
+            $entrega->bairro = $cliente_endereco->cep;
+            $entrega->cidade = $cliente_endereco->cep;
+            $entrega->estado = $cliente_endereco->cep;
+            $entrega->numero = $cliente_endereco->cep;
+            $entrega->complemento = $cliente_endereco->cep;
+            $entrega->distancia_metros = $distancia; 
+            $entrega->taxa_entrega = 0;
+            //$entrega->save();
+        }
+
+        /*
+        --- Verificando Cupom ---
+        */
+
+        $cupom = Cupom::where('codigo', $request->input('cupom'))->first();
+        if($cupom && $cupom->is_ativo == true){
+
+            if($cupom->tipo_desconto == 1){//valor fixo
+                //Total pedido
+                $total_geral -= $cupom->desconto;
+            }elseif($cupom->tipo_desconto == 2){
+                $valor_desconto = ($total_geral * $cupom->desconto)/100;
+                //Total pedido
+                $total_geral -= $valor_desconto;
+            }
+
+            $uso_cupom = new UsoCupom();
+            $uso_cupom->pedido_id = $pedido->id;
+            $uso_cupom->cliente_id = $request->input('cliente_id');
+            $uso_cupom->cupom_id = $cupom->id;
+            $uso_cupom->data_uso = Carbon::now()->format('Y-m-d H:i:s');
+            $uso_cupom->save();
+
+            $uso_cupom_atual = $cupom->usos;
+            $cupom->usos = $uso_cupom_atual++;
+            $cupom->save();
+            $pedido->total_sem_desconto = $pedido->total;
+        }
+
+        return redirect()->route('pedido.painel')->with('success', 'Cadastro feito com sucesso');
 
     }
 }

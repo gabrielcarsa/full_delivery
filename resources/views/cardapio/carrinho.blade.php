@@ -46,7 +46,7 @@
             <div class="d-flex">
                 <!-- ICONE LOCALIZACAO -->
                 <div>
-                    <span class="material-symbols-outlined text-secondary">
+                    <span class="material-symbols-outlined {{$errors->has('enderecoVazio') ? 'text-danger' : 'text-secondary'}}">
                         location_on
                     </span>
                 </div>
@@ -54,8 +54,8 @@
 
                 <!-- DROPDOWN ENDERECOS -->
                 <div class="dropdown mb-3">
-                    <a class="text-secondary text-decoration-none dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="{{$errors->has('enderecoVazio') ? 'text-danger' : 'text-secondary'}} text-decoration-none dropdown-toggle"
+                        href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <!--SE HOUVER ENDEREÇO SELECIONADO-->
                         @if($data['endereco_selecionado'] == null)
 
@@ -98,6 +98,11 @@
 
             </div>
             <!-- FIM ENDEREÇO -->
+            @if ($errors->has('enderecoVazio'))
+            <p class="m-0 fs-6 text-danger">
+                {{ $errors->first('enderecoVazio') }}
+            </p>
+            @endif
 
             <div class="row">
                 <!-- ITENS -->
@@ -274,7 +279,10 @@
         <input type="hidden" name="carrinho" value="{{ json_encode($carrinho) }}">
         <input type="hidden" name="endereco_selecionado_id" value="{{ $data['endereco_selecionado']}}">
         <input type="hidden" name="taxa_entrega" value="{{ $data['taxa_entrega'] }}">
-        <input type="hidden" name="subtotal" value="{{ $subtotal }}">
+        <input type="hidden" name="loja_id" value="{{ $data['loja_id'] }}">
+        <input type="hidden" name="consumo_local_viagem" value="{{ $data['consumo_local_viagem'] }}">
+        <input type="hidden" name="subtotal" value="{{ $data['taxa_entrega'] + $subtotal }}">
+        <input type="hidden" name="subtotal" value="{{ $data['distancia']}}">
 
         <!-- BOTAO ACAO FIXO -->
         <div class="fixed-bottom p-3 bg-white border-top d-flex justify-content-end align-items-center">

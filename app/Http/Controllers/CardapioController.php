@@ -84,6 +84,7 @@ class CardapioController extends Controller
         $carrinho = session()->get('carrinho', []);
 
         $taxa_entrega = null;
+        $distancia = null;
 
         /*
         --- Calcular Entrega ---
@@ -146,6 +147,7 @@ class CardapioController extends Controller
             'loja_id' => $loja_id,
             'taxa_entrega' => $taxa_entrega,
             'endereco_selecionado' => $endereco_selecionado,
+            'distancia' => $distancia,
             'cliente_enderecos' => $cliente_enderecos,
         ];
 
