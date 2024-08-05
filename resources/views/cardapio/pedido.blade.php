@@ -1,6 +1,6 @@
 <x-layout-cardapio>
 
-    @if(empty($pedidos))
+    @if($pedidos->isEmpty())
 
     <!-- NÃO HOUVER PEDIDOS -->
     <div class="vh-100 d-flex justify-content-center align-items-center">
