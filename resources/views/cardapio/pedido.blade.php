@@ -14,7 +14,78 @@
     <!-- FIM NÃO HOUVER PEDIDOS -->
 
     @else
-    <p>pedido</p>
+
+    <!-- CONTAINER PEDIDOS -->
+    <div class="container my-3">
+        <h3 class="fs-3 fw-bold">
+            Meus pedidos
+        </h3>
+
+        <!-- PEDIDOS -->
+        @foreach($pedidos as $pedido)
+
+        <div class="border rounded m-3 p-3">
+            <div class="d-flex">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('storage/' . $pedido->loja->nome . '/' . $pedido->loja->logo) }}"
+                        class="rounded-circle" style="max-width: 50px;">
+                </div>
+                <div class="ml-2">
+                    <p class="m-0 fw-semibold">{{$pedido->loja->nome}}</p>
+                    <p class="m-0 text-secondary">{{$pedido->loja->rua}}, {{$pedido->loja->numero}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    @if($pedido->status == 0)
+                    <div class="d-flex">
+                        <span class="material-symbols-outlined d-flex align-items-center text-warning mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            pending
+                        </span>
+                        <p class="m-0 p-0">Pedido pendente</p>
+                    </div>
+                    @elseif($pedido->status == 1)
+                    <p class="m-0 p-0">Pedido em preparo</p>
+                    @elseif($pedido->status == 2)
+                    <p class="m-0 p-0">Pedido a caminho</p>
+                    @elseif($pedido->status == 3)
+                    <div class="d-flex">
+                        <span class="material-symbols-outlined text-success d-flex align-items-center mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            check_circle
+                        </span>
+                        <p class="m-0 p-0">Pedido Concluído</p>
+                    </div>
+                    @elseif($pedido->status == 4)
+                    <p class="m-0 p-0">REJEITADO</p>
+                    @elseif($pedido->status == 5)
+                    <p class="m-0 p-0">CANCELADO</p>
+                    @endif
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <p class="m-0 fw-bold text-secondary">
+                        ID: {{$pedido->id}}
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1" style="font-variation-settings: 'FILL' 1;">
+                    location_on
+                </span>
+                <p class="m-0 p-0 text-secondary">
+                    {{$pedido->entrega->rua}}, {{$pedido->entrega->numero}}
+                </p>
+            </div>
+        </div>
+
+        @endforeach
+        <!-- FIM PEDIDOS -->
+    </div>
+    <!-- FIM CONTAINER PEDIDOS -->
+
+
     @endif
 
     <!-- MENU APPBAR -->

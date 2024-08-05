@@ -402,7 +402,7 @@ class PedidoController extends Controller
             'endereco_selecionado' => $endereco_selecionado,
         ];
 
-        return view('cardapio/pedido', compact('data'));
+        return view('cardapio/pedido', compact('data', 'pedidos'));
     }
 
     //CADASTRAR WEB
@@ -464,7 +464,7 @@ class PedidoController extends Controller
         $pedido->is_pagamento_entrega = true;
         $pedido->forma_pagamento_entrega_id = 1;
         $pedido->total = $total_geral;
-        //$pedido->save();
+        $pedido->save();
 
 
         /*
@@ -482,7 +482,7 @@ class PedidoController extends Controller
             $item_pedido->preco_unitario = $item_carrinho['produto']['preco']; 
             $item_pedido->subtotal = $item_carrinho['produto']['preco'] * $qtd_produto; 
             $item_pedido->observacao = $item_carrinho['observacao']; 
-            //$item_pedido->save();
+            $item_pedido->save();
 
             //Total pedido
             $total_geral += $item_pedido->subtotal;
@@ -500,7 +500,7 @@ class PedidoController extends Controller
                 $opcional_item_pedido->quantidade = $qtd_opcional;
                 $opcional_item_pedido->preco_unitario = $item_opcional['preco']; 
                 $opcional_item_pedido->subtotal = $item_opcional['preco'] * $qtd_opcional; 
-                //$opcional_item_pedido->save();
+                $opcional_item_pedido->save();
 
                 }
             } 
@@ -517,15 +517,15 @@ class PedidoController extends Controller
             $entrega = new Entrega();
             $entrega->pedido_id = $pedido->id;
             $entrega->cep = $cliente_endereco->cep;
-            $entrega->rua = $cliente_endereco->cep;
-            $entrega->bairro = $cliente_endereco->cep;
-            $entrega->cidade = $cliente_endereco->cep;
-            $entrega->estado = $cliente_endereco->cep;
-            $entrega->numero = $cliente_endereco->cep;
-            $entrega->complemento = $cliente_endereco->cep;
+            $entrega->rua = $cliente_endereco->rua;
+            $entrega->bairro = $cliente_endereco->bairro;
+            $entrega->cidade = $cliente_endereco->cidade;
+            $entrega->estado = $cliente_endereco->estado;
+            $entrega->numero = $cliente_endereco->numero;
+            $entrega->complemento = $cliente_endereco->complemento;
             $entrega->distancia_metros = $distancia; 
             $entrega->taxa_entrega = 0;
-            //$entrega->save();
+            $entrega->save();
         }
 
         /*
@@ -557,7 +557,7 @@ class PedidoController extends Controller
             $pedido->total_sem_desconto = $pedido->total;
         }
 
-        return redirect()->route('pedido.painel')->with('success', 'Cadastro feito com sucesso');
+        return redirect()->route('pedido.pedidoCliente', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado_id]);
 
     }
 }
