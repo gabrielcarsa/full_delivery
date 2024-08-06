@@ -408,7 +408,7 @@ class PedidoController extends Controller
     //CADASTRAR WEB
     public function storeWeb(Request $request){
         //Definindo data para cadastrar
-        date_default_timezone_set('America/Cuiaba');   
+        date_default_timezone_set('America/Cuiaba'); 
 
         // Receber dados do formulário
         $carrinho = json_decode($request->input('carrinho'), true);
@@ -416,7 +416,7 @@ class PedidoController extends Controller
         $taxa_entrega = $request->input('taxa_entrega');
         $loja_id = $request->input('loja_id');
         $consumo_local_viagem = $request->input('consumo_local_viagem');
-        $total_geral = $request->input('subtotal');
+        $total_geral = $request->input('total');
         $distancia = $request->input('distancia');
 
         $cliente_id = null;
@@ -484,9 +484,6 @@ class PedidoController extends Controller
             $item_pedido->observacao = $item_carrinho['observacao']; 
             $item_pedido->save();
 
-            //Total pedido
-            $total_geral += $item_pedido->subtotal;
-
             if($item_carrinho['opcionais'] != null){
                 
                 foreach($item_carrinho['opcionais'] as $item_opcional){
@@ -524,7 +521,7 @@ class PedidoController extends Controller
             $entrega->numero = $cliente_endereco->numero;
             $entrega->complemento = $cliente_endereco->complemento;
             $entrega->distancia_metros = $distancia; 
-            $entrega->taxa_entrega = 0;
+            $entrega->taxa_entrega = $taxa_entrega;
             $entrega->save();
         }
 
@@ -554,7 +551,10 @@ class PedidoController extends Controller
             $uso_cupom_atual = $cupom->usos;
             $cupom->usos = $uso_cupom_atual++;
             $cupom->save();
+
             $pedido->total_sem_desconto = $pedido->total;
+            $pedido->total = $total_geral;
+            $pedido->save();
         }
 
         return redirect()->route('pedido.pedidoCliente', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado_id]);

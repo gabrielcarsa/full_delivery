@@ -58,7 +58,8 @@
 
         </div>
         <div class="col d-flex justify-content-end">
-            <p class="m-0 p-0 fw-semibold">{{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
+            <p class="m-0 p-0 fw-semibold">{{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} -
+                {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
         </div>
     </div>
 </div>
@@ -365,73 +366,111 @@
                         <span>
                             {{ $item->quantidade }}x
                         </span><br>
-                        <span class="text-secondary">
-                            @foreach ($item->opcional_item as $opcional)
-                            {{ $opcional->quantidade }}x
-                            @endforeach
-                        </span>
                     </td>
                     <td class="bg-white">
                         <span class="fw-bold">
                             {{ $item->produto->nome }}
-                        </span><br>
-                        <span class="text-secondary">
-                            @foreach ($item->opcional_item as $opcional)
-                            {{ $opcional->opcional_produto->nome }}
-                            @endforeach
                         </span>
                     </td>
                     <td class="bg-white">
                         <span>
                             R$ {{number_format($item->preco_unitario, 2, ',', '.')}}
-                        </span><br>
-                        <span class="text-secondary">
-                            @foreach ($item->opcional_item as $opcional)
-                            R$ {{number_format($opcional->preco_unitario, 2, ',', '.')}}
-                            @endforeach
                         </span>
                     </td>
                     <td class="bg-white">
                         <span>
                             R$ {{number_format($item->subtotal, 2, ',', '.')}}
-                        </span><br>
-                        <span class="text-secondary">
-                            @foreach ($item->opcional_item as $opcional)
-
-                            <!-- Incrementando sobre valor total -->
-                            @php
-                            $total_sem_entrega += $opcional->subtotal;
-                            @endphp
-
-                            R$ {{number_format($opcional->subtotal, 2, ',', '.')}}
-                            @endforeach
                         </span>
                     </td>
                 </tr>
+
+                @if($item->produto->categoria_opcional != null)
+                <tr style="font-size:14px">
+                    <td></td>
+                    <td>
+                        <!-- CATEGORIAS DE OPCIONAIS -->
+                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+                        <p class="col-6 fw-bold m-0 text-secondary">{{$categoria_opcional->nome}}</p>
+
+                        <!-- OPCIONAIS -->
+                        @foreach($categoria_opcional->opcional_produto as $opcional)
+
+                        <p class="m-0 text-secondary">
+                            {{$opcional->nome}}
+                        </p>
+
+                        <!-- Incrementando sobre valor total -->
+                        @php
+                        $total_sem_entrega += $opcional->preco;
+                        @endphp
+
+                        @endforeach
+                        <!-- FIM OPCIONAIS -->
+
+                        @endforeach
+                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
+                    </td>
+                    <td>
+                        <!-- CATEGORIAS DE OPCIONAIS -->
+                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+                        <!-- OPCIONAIS -->
+                        @foreach($categoria_opcional->opcional_produto as $opcional)
+
+                        <p class="text-secondary">
+                            + R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                        </p>
+
+                        @endforeach
+                        <!-- FIM OPCIONAIS -->
+
+                        @endforeach
+                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
+                    </td>
+                    <td>
+                        <!-- CATEGORIAS DE OPCIONAIS -->
+                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+                        <!-- OPCIONAIS -->
+                        @foreach($categoria_opcional->opcional_produto as $opcional)
+
+                        <p class="text-secondary">
+                            + R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                        </p>
+
+                        @endforeach
+                        <!-- FIM OPCIONAIS -->
+
+                        @endforeach
+                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
+                    </td>
+                </tr>
+                @endif
+
                 @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3" class="fw-bold">Subtotal</td>
-                    <td>R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
+                    <td colspan="3" class="fw-bold bg-white">Subtotal</td>
+                    <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="fw-bold">Entrega</td>
-                    <td>R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
+                    <td colspan="3" class="fw-bold bg-white">Entrega</td>
+                    <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                 </tr>
                 @if(!empty($pedido->uso_cupom))
                 <tr>
-                    <td colspan="3" class="fw-regular">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
+                    <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
                     @if($pedido->uso_cupom->cupom->tipo_desconto == 1)
-                    <td class="text-danger">- R$ {{ number_format($pedido->uso_cupom->cupom->desconto, 2, ',', '.') }}</td>
+                    <td class="text-danger bg-white">
+                        - R$ {{ number_format($pedido->uso_cupom->cupom->desconto, 2, ',', '.') }}
+                    </td>
                     @else
-                    <td class="text-danger">- {{ $pedido->uso_cupom->cupom->desconto }} %</td>
+                    <td class="text-danger bg-white">- {{ $pedido->uso_cupom->cupom->desconto }} %</td>
                     @endif
                 </tr>
                 @endif
                 <tr>
-                    <td colspan="3" class="fw-bold">Total</td>
-                    <td class="fw-bolder "> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
+                    <td colspan="3" class="fw-bold bg-white">Total</td>
+                    <td class="fw-bolder bg-white"> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
                 </tr>
             </tfoot>
 

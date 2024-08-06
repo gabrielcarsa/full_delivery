@@ -25,14 +25,20 @@
         @foreach($pedidos as $pedido)
 
         <div class="border rounded m-3 p-3">
-            <div class="d-flex">
+            <div class="col d-flex justify-content-end">
+                <p class="m-0 p-0 text-secondary" style="font-size:14px">
+                    {{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} -
+                    {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}
+                </p>
+            </div>
+            <div class="col-8 d-flex">
                 <div class="d-flex align-items-center justify-content-center">
                     <img src="{{ asset('storage/' . $pedido->loja->nome . '/' . $pedido->loja->logo) }}"
                         class="rounded-circle" style="max-width: 50px;">
                 </div>
                 <div class="ml-2">
                     <p class="m-0 fw-semibold">{{$pedido->loja->nome}}</p>
-                    <p class="m-0 text-secondary">{{$pedido->loja->rua}}, {{$pedido->loja->numero}}</p>
+                    <p class="m-0 text-secondary texto-truncate-100w text-truncate">{{$pedido->loja->rua}}, {{$pedido->loja->numero}}</p>
                 </div>
             </div>
             <hr>
@@ -71,10 +77,11 @@
                 </div>
             </div>
             <div class="d-flex">
-                <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1" style="font-variation-settings: 'FILL' 1;">
+                <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1"
+                    style="font-variation-settings: 'FILL' 1;">
                     location_on
                 </span>
-                <p class="m-0 p-0 text-secondary">
+                <p class="m-0 p-0 text-secondary texto-truncate-100w text-truncate">
                     {{$pedido->entrega->rua}}, {{$pedido->entrega->numero}}
                 </p>
             </div>

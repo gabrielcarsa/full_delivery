@@ -26,3 +26,13 @@
     background-position: center;
     background-size: cover;
 }
+
+.texto-truncate-100w {
+    max-width: none;
+}
+
+@media (max-width: 400px) {
+    .texto-truncate-100w {
+        max-width: 100px !important;
+    }
+}

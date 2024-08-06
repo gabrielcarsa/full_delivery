@@ -281,8 +281,8 @@
         <input type="hidden" name="taxa_entrega" value="{{ $data['taxa_entrega'] }}">
         <input type="hidden" name="loja_id" value="{{ $data['loja_id'] }}">
         <input type="hidden" name="consumo_local_viagem" value="{{ $data['consumo_local_viagem'] }}">
-        <input type="hidden" name="subtotal" value="{{ $data['taxa_entrega'] + $subtotal }}">
-        <input type="hidden" name="subtotal" value="{{ $data['distancia']}}">
+        <input type="hidden" name="total" value="{{ $data['taxa_entrega'] + $subtotal }}">
+        <input type="hidden" name="distancia" value="{{ $data['distancia']}}">
 
         <!-- BOTAO ACAO FIXO -->
         <div class="fixed-bottom p-3 bg-white border-top d-flex justify-content-end align-items-center">
