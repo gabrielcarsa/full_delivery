@@ -38,7 +38,8 @@
                 </div>
                 <div class="ml-2">
                     <p class="m-0 fw-semibold">{{$pedido->loja->nome}}</p>
-                    <p class="m-0 text-secondary texto-truncate-100w text-truncate">{{$pedido->loja->rua}}, {{$pedido->loja->numero}}</p>
+                    <p class="m-0 text-secondary texto-truncate-100w text-truncate">{{$pedido->loja->rua}},
+                        {{$pedido->loja->numero}}</p>
                 </div>
             </div>
             <hr>
@@ -53,9 +54,21 @@
                         <p class="m-0 p-0">Pedido pendente</p>
                     </div>
                     @elseif($pedido->status == 1)
-                    <p class="m-0 p-0">Pedido em preparo</p>
+                    <div class="d-flex">
+                        <span class="material-symbols-outlined d-flex align-items-center text-warning mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            skillet
+                        </span>
+                        <p class="m-0 p-0">Pedido em preparo</p>
+                    </div>
                     @elseif($pedido->status == 2)
-                    <p class="m-0 p-0">Pedido a caminho</p>
+                    <div class="d-flex">
+                        <span class="material-symbols-outlined d-flex align-items-center text-primary mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            sports_motorsports
+                        </span>
+                        <p class="m-0 p-0">Pedido a caminho</p>
+                    </div>
                     @elseif($pedido->status == 3)
                     <div class="d-flex">
                         <span class="material-symbols-outlined text-success d-flex align-items-center mr-1"
@@ -65,9 +78,21 @@
                         <p class="m-0 p-0">Pedido Concluído</p>
                     </div>
                     @elseif($pedido->status == 4)
-                    <p class="m-0 p-0">REJEITADO</p>
+                    <div class="d-flex">
+                        <span class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            error
+                        </span>
+                        <p class="m-0 p-0">Pedido Rejeitado</p>
+                    </div>
                     @elseif($pedido->status == 5)
-                    <p class="m-0 p-0">CANCELADO</p>
+                    <div class="d-flex">
+                        <span class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            warning
+                        </span>
+                        <p class="m-0 p-0">Pedido Cancelado</p>
+                    </div>
                     @endif
                 </div>
                 <div class="col-4 d-flex justify-content-end">

@@ -384,7 +384,7 @@
                     </td>
                 </tr>
 
-                @if($item->produto->categoria_opcional != null)
+                @if(!$item->produto->categoria_opcional->isEmpty())
                 <tr style="font-size:14px">
                     <td></td>
                     <td>
