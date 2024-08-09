@@ -41,6 +41,7 @@ Route::post('cliente/register', [ClienteAuthController::class, 'register']);
 // PEDIDO
 Route::get('/pedido-cliente', [PedidoController::class, 'indexPedidosCliente'])->name('pedido.pedidoCliente');
 Route::post('/pedido-cliente/cadastrar-web', [PedidoController::class, 'storeWeb'])->name('pedido.cadastrarWeb');
+Route::get('/pedido-cliente/detalhes-pedido', [PedidoController::class, 'showWeb'])->name('pedido.showWeb');
 
 
 // CLIENTE CARDAPIO LOGADO

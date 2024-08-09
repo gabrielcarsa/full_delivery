@@ -560,4 +560,30 @@ class PedidoController extends Controller
         return redirect()->route('pedido.pedidoCliente', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado_id]);
 
     }
+
+    //DETALHES DO PEDIDO
+    public function showWeb(Request $request){
+        //Variaveis via GET
+        $loja_id = $request->get('loja_id');
+        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $endereco_selecionado = $request->get('endereco_selecionado');
+
+        //Dados pedido
+        $pedido_id = $request->input('pedido_id');
+        
+        //Pedido
+        $pedido = Pedido::where('id', $pedido_id)
+        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega', 'uso_cupom')
+        ->orderBy('data_pedido', 'ASC')
+        ->first();
+        
+        $data = [
+            'consumo_local_viagem' => $consumo_local_viagem,
+            'loja_id' => $loja_id,
+            'endereco_selecionado' => $endereco_selecionado,
+            'pedido' => $pedido,
+        ];
+
+        return view('pedido/detalhes_pedido', compact('data'));       
+    }
 }
