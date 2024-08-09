@@ -42,7 +42,24 @@
         </div>
         <!--  FIM LOJA -->
 
+        <!--  PEDIDO REJEITADO, CANCELADO OU NORMAL -->
+        @if($data['pedido']->status == 4 || $data['pedido']->status == 5 )
 
+        <div class="p-3 my-3 border rounded bg-light">
+            <div class="d-flex align-items-center">
+                <span class="material-symbols-outlined text-danger fw-semibold mr-1">
+                    error
+                </span>
+                <p class="m-0 text-danger fw-semibold">
+                    {{$data['pedido']->status == 4 ? 'Pedido Rejeitado' : 'Pedido Cancelado'}}
+                </p>
+            </div>
+            <p class="mb-0 mt-2">
+                {{$data['pedido']->mensagem_cancelamento_rejeicao}}
+            </p>
+        </div>
+
+        @else
         <!-- ETAPAS STATUS -->
         <div class="d-flex align-items-center bg-light rounded mb-3 mt-5 justify-content-between" style="height: 20px">
 
@@ -136,9 +153,16 @@
             <!-- FIM PEDIDO ENTREGA -->
         </div>
         <!--  FIM ETAPAS STATUS -->
+        @endif
+        <!--  FIM PEDIDO REJEITADO, CANCELADO OU NORMAL -->
+
+        @if($data['pedido']->status != 4 && $data['pedido']->status != 5 )
+        <div style="margin: 70px 0 0 0">
+        </div>
+        @endif
 
         <!-- ENTREGA -->
-        <div class="" style="margin: 70px 0 0 0">
+        <div class="">
             <h3 class="fw-bolder fs-6">Endereço de entrega</h3>
             <p class="text-black m-0">
                 {{$data['pedido']->entrega->rua}}, {{$data['pedido']->entrega->numero}}.
@@ -257,13 +281,15 @@
         </ul>
         <!-- FIM LISTA -->
 
+
+        <!-- TOTAIS -->
+
         <!-- TITULO -->
         <div class="">
             <h3 class="fw-bolder fs-6">Resumo</h3>
         </div>
         <!-- FIM TITULO -->
 
-        <!-- TOTAIS -->
         <div class="px-3">
             <div class="d-flex">
                 <div class="d-flex align-items-center">
@@ -333,7 +359,5 @@
 
     </div>
     <!-- FIM CONTAINER -->
-
-
 
 </x-layout-cardapio>
