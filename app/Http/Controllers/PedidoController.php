@@ -391,7 +391,7 @@ class PedidoController extends Controller
 
         $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
-        ->orderBy('data_pedido', 'ASC')
+        ->orderBy('data_pedido', 'DESC')
         ->where('cliente_id', $cliente_id)
         ->get();
         
