@@ -98,8 +98,7 @@
 
             <!-- PEDIDO CONCLUIDO -->
             @if($data['pedido']->status >= 3)
-            <div class="bg-success rounded-circle"
-                style="height: 70px; width: 70px">
+            <div class="bg-success rounded-circle" style="height: 70px; width: 70px">
                 <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
                     <span class="material-symbols-outlined fs-1 text-white">
                         {{ $data['pedido']->status > 3 ? 'check_circle' : 'check_circle' }}
@@ -123,7 +122,8 @@
         </div>
         <!--  FIM ETAPAS STATUS -->
 
-        <div class="" style="margin: 70px 0">
+        <!-- ENTREGA -->
+        <div class="" style="margin: 70px 0 0 0">
             <p class="text-secondary m-0">
                 Entregar em
             </p>
@@ -138,7 +138,105 @@
                 {{$data['pedido']->entrega->complemento}}
             </p>
         </div>
+        <!-- FIM ENTREGA -->
 
+        <!-- LISTA -->
+        <ul class="list-group list-group-flush my-3">
+
+            <!-- Variáveis PHP -->
+            @php
+            $subtotal = 0;
+            @endphp
+
+            <!-- ITEM -->
+            @foreach ($data['pedido']->item_pedido as $item)
+
+            <!-- Incrementando sobre valor total -->
+            @php
+            $subtotal += $item['produto']->preco * $item['quantidade'];
+            @endphp
+
+            <!-- ITEM -->
+            <li class="list-group-item m-0">
+
+                <!-- PRODUTO -->
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex">
+                            <!-- IMAGEM PRODUTO -->
+                            <div class="d-flex align-items-center ">
+                                <img src="{{ asset('storage/'.$item['pedido']->loja->nome.'/imagens_produtos/'.$item['produto']->imagem) }}"
+                                    class="rounded" alt="{{$item['produto']->nome}}"
+                                    style="min-width: 50px !important; max-width: 50px !important">
+                            </div>
+                            <!-- FIM IMAGEM PRODUTO -->
+                            <div class="mx-2">
+                                <p class="m-0 fw-semibold">
+                                    {{ $item['produto']->nome }}
+                                </p>
+                                <p class="m-0">
+                                    R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col d-flex justify-content-end w-100">
+                        <p class="m-0 fw-semibold">{{$item['quantidade']}}x</p>
+                    </div>
+                </div>
+                <!-- FIM PRODUTO -->
+
+                <!-- SE HOUVER OPCIONAIS -->
+                @if(!$item['produto']->categoria_opcional->isEmpty())
+                <div class="p-0 m-0 bg-light p-2 rounded">
+
+                    <!-- CATEGORIAS DE OPCIONAIS -->
+                    @foreach($item['produto']->categoria_opcional as $categoria_opcional)
+
+                    <!-- OPCIONAIS -->
+                    @foreach($categoria_opcional->opcional_produto as $opcional)
+                    <div class="d-flex m-0">
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined fs-5" style="color: #FD0146 !important">
+                                add
+                            </span>
+                        </div>
+                        <p class="m-0 d-flex align-items-center text-secondary">
+                            {{$opcional->nome}}
+                        </p>
+                        <p class="text-secondary d-flex align-items-center justify-content-end w-100 m-0">
+                            @php
+                            $subtotal += $opcional->preco;
+                            @endphp
+
+                            R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                        </p>
+                    </div>
+                    @endforeach
+                    <!-- FIM SE HOUVER OPCIONAIS -->
+
+                    @endforeach
+                    <!-- FIM CATEGORIAS DE OPCIONAIS -->
+
+                </div>
+                @endif
+                <!-- FIM OPCIONAIS -->
+
+                <!-- OBSERVAÇÃO -->
+                @if($item['observacao'] != null)
+                <p class="">
+                    Obs.: {{$item['observacao']}}
+                </p>
+                @endif
+                <!-- FIM OBSERVAÇÃO -->
+
+            </li>
+
+            @endforeach
+            <!-- FIM ITEM -->
+
+        </ul>
+        <!-- FIM LISTA -->
 
 
     </div>
