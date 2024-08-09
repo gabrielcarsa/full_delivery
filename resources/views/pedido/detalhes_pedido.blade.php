@@ -28,8 +28,23 @@
         </div>
         <!-- FIM PREVISÃO -->
 
+        <!--  LOJA -->
+        <div class="d-flex border p-3 rounded">
+            <div class="d-flex align-items-center justify-content-center">
+                <img src="{{ asset('storage/' . $data['pedido']->loja->nome . '/' . $data['pedido']->loja->logo) }}"
+                    class="rounded-circle" style="max-width: 50px;">
+            </div>
+            <div class="ml-2">
+                <p class="m-0 fw-semibold">{{$data['pedido']->loja->nome}}</p>
+                <p class="m-0 text-secondary texto-truncate-100w text-truncate">{{$data['pedido']->loja->rua}},
+                    {{$data['pedido']->loja->numero}}</p>
+            </div>
+        </div>
+        <!--  FIM LOJA -->
+
+
         <!-- ETAPAS STATUS -->
-        <div class="d-flex align-items-center bg-light rounded my-3 justify-content-between" style="height: 20px">
+        <div class="d-flex align-items-center bg-light rounded mb-3 mt-5 justify-content-between" style="height: 20px">
 
             <!-- PEDIDO PENDENTE -->
             <div class="bg-light rounded-circle"
@@ -124,9 +139,7 @@
 
         <!-- ENTREGA -->
         <div class="" style="margin: 70px 0 0 0">
-            <p class="text-secondary m-0">
-                Entregar em
-            </p>
+            <h3 class="fw-bolder fs-6">Endereço de entrega</h3>
             <p class="text-black m-0">
                 {{$data['pedido']->entrega->rua}}, {{$data['pedido']->entrega->numero}}.
             </p>
@@ -142,6 +155,12 @@
 
         <!-- LISTA -->
         <ul class="list-group list-group-flush my-3">
+
+            <!-- TITULO -->
+            <div class="">
+                <h3 class="fw-bolder fs-6">Itens</h3>
+            </div>
+            <!-- FIM TITULO -->
 
             <!-- Variáveis PHP -->
             @php
@@ -238,6 +257,79 @@
         </ul>
         <!-- FIM LISTA -->
 
+        <!-- TITULO -->
+        <div class="">
+            <h3 class="fw-bolder fs-6">Resumo</h3>
+        </div>
+        <!-- FIM TITULO -->
+
+        <!-- TOTAIS -->
+        <div class="px-3">
+            <div class="d-flex">
+                <div class="d-flex align-items-center">
+                    <p class="fs-6 text-dark m-0">
+                        Subtotal
+                    </p>
+                </div>
+                <div class="d-flex align-items-center justify-content-end w-100">
+                    <p class="m-0 fs-6">
+                        R$ {{number_format($subtotal, 2, ',', '.')}}
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="d-flex align-items-center">
+                    <p class="fs-6 text-dark m-0">
+                        Entrega
+                    </p>
+                </div>
+                <div class="d-flex align-items-center justify-content-end w-100">
+                    <p class="m-0 fs-6">
+                        R$ {{number_format($data['pedido']->entrega->taxa_entrega, 2, ',', '.')}}
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="d-flex align-items-center">
+                    <p class="fs-6 text-dark m-0">
+                        Descontos
+                    </p>
+                </div>
+                <div class="d-flex align-items-center justify-content-end w-100">
+                    <p class="m-0 fs-6">
+                        R$ 0,00
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="d-flex align-items-center">
+                    <p class="fs-6 fw-bold m-0">
+                        Total
+                    </p>
+                </div>
+                <div class="d-flex align-items-center justify-content-end w-100">
+                    <p class="m-0 fs-6 fw-bold">
+                        R$ {{number_format($data['pedido']->total, 2, ',', '.')}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- FIM TOTAIS -->
+
+        <!-- PAGAMENTO -->
+        <div class="my-3">
+            <h3 class="fw-bolder fs-6">Pagar na entrega</h3>
+            <div class="d-flex">
+                <span class="material-symbols-outlined text-secondary mr-1">
+                    credit_card
+                </span>
+                <p class="text-secondary m-0">
+                    Cartão de crédito
+                </p>
+            </div>
+
+        </div>
+        <!-- FIM ENTREGA -->
 
     </div>
     <!-- FIM CONTAINER -->
