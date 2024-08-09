@@ -1,18 +1,18 @@
 <x-layout-cardapio>
 
-    <!-- NAVBAR CADASTRO -->
-    <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
+    <!-- NAVBAR PRODUTO -->
+    <div class="d-flex bg-white fixed-top p-2">
         <a href="#" onclick="history.go(-1); return false;"
-            class="btn btn-light rounded-circle d-flex align-items-center">
+            class="text-dark text-decoration-none d-flex align-items-center m-0">
             <span class="material-symbols-outlined">
                 arrow_back
             </span>
         </a>
         <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
-            <h2 class="fs-5 fw-bold">Cadastro de Endereço</h2>
+            <h2 class="fs-6 fw-bold">Cadastrar endereço</h2>
         </div>
     </div>
-    <!-- FIM NAVBAR CADASTRO -->
+    <!-- FIM NAVBAR PRODUTO -->
 
     <!-- CONTAINER -->
     <div class="container" style="margin-top: 70px">
@@ -74,7 +74,7 @@
             <hr>
 
             <div class="row my-2">
-                <div class="col-md-5">
+                <div class="col-md-5 my-1">
                     <div class="form-floating m-0">
                         <input type="text" name="rua" value="{{old('rua')}}"
                             class="form-control @error('rua') is-invalid @enderror" id="inputRua" placeholder=""
@@ -82,7 +82,7 @@
                         <label for="inputRua" class="">Rua</label>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 my-1">
                     <div class="form-floating m-0">
                         <input type="text" name="bairro" value="{{old('bairro')}}"
                             class="form-control @error('bairro') is-invalid @enderror" id="inputBairro" placeholder=""
@@ -90,7 +90,7 @@
                         <label for="inputBairro" class="">Bairro</label>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 my-1">
                     <div class="form-floating m-0">
                         <input type="text" name="numero" value="{{old('numero')}}"
                             class="form-control @error('numero') is-invalid @enderror" id="inputNumero" placeholder=""
@@ -101,7 +101,7 @@
             </div>
 
             <div class="row my-2">
-                <div class="col-md-5">
+                <div class="col-md-5 my-1">
                     <div class="form-floating m-0">
                         <input type="text" name="complemento" value="{{old('complemento')}}"
                             class="form-control @error('complemento') is-invalid @enderror" id="inputComplemento"
@@ -109,7 +109,7 @@
                         <label for="inputComplemento" class="">Complemento</label>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 my-1">
                     <div class="form-floating m-0">
                         <input type="text" name="cidade" value="{{old('cidade')}}"
                             class="form-control @error('cidade') is-invalid @enderror" id="inputCidade" placeholder=""
@@ -117,7 +117,7 @@
                         <label for="inputCidade" class="">Cidade</label>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 my-1">
                     <div class="form-floating m-0">
                         <input type="text" name="estado" value="{{old('estado')}}"
                             class="form-control @error('estado') is-invalid @enderror" id="inputEstado" placeholder=""

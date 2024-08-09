@@ -1,18 +1,18 @@
 <x-layout-cardapio>
 
-    <!-- NAVBAR ENDEREÇO -->
-    <div class="d-flex p-0 fixed-top p-1 bg-light border shadow-sm">
+   <!-- NAVBAR PRODUTO -->
+   <div class="d-flex bg-white fixed-top p-2">
         <a href="#" onclick="history.go(-1); return false;"
-            class="btn btn-light rounded-circle d-flex align-items-center">
+            class="text-dark text-decoration-none d-flex align-items-center m-0">
             <span class="material-symbols-outlined">
                 arrow_back
             </span>
         </a>
         <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
-            <h2 class="fs-5 fw-bold">Endereços</h2>
+            <h2 class="fs-6 fw-bold">Endereços</h2>
         </div>
     </div>
-    <!-- FIM NAVBAR ENDEREÇO -->
+    <!-- FIM NAVBAR PRODUTO -->
 
     @if($enderecos->isEmpty())
 
@@ -35,11 +35,11 @@
     @else
 
     <!-- CONTAINER ENDEREÇOS -->
-    <div class="container vh-100" style="margin-top: 80px;">
+    <div class="container" style="margin-top: 80px;">
 
         <a href="{{ route('cliente_endereco.novo', ['cliente_id' => Auth::guard('cliente')->user()->id]) }}"
             class="btn btn-primary">
-            Cadastrar endereço de entrega
+            Cadastrar endereço
         </a>
 
         <!-- LISTA DE ENDEREÇOS -->
