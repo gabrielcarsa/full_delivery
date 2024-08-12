@@ -35,7 +35,7 @@ class PedidoController extends Controller
 
         $pedidos = Pedido::where('loja_id', $id_loja)
         ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
-        ->orderBy('data_pedido', 'ASC')
+        ->orderBy('data_pedido', 'DESC')
         ->get();
         
 
@@ -282,7 +282,7 @@ class PedidoController extends Controller
         //Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
         ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
-        ->orderBy('data_pedido', 'ASC')
+        ->orderBy('data_pedido', 'DESC')
         ->get();
         
         //Pedido

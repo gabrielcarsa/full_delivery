@@ -67,7 +67,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('pedido.painel') }}"
+                                <a href="{{ route('pedido.painel') }}" target="_blank"
                                     class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('pedido.painel') ? 'nav-link-active' : 'nav-link-desactive'}} text-black">
                                     <span class="material-symbols-outlined">
                                         receipt_long
