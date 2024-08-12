@@ -576,7 +576,7 @@ class PedidoController extends Controller
         ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega', 'uso_cupom')
         ->orderBy('data_pedido', 'ASC')
         ->first();
-        
+                
         $data = [
             'consumo_local_viagem' => $consumo_local_viagem,
             'loja_id' => $loja_id,

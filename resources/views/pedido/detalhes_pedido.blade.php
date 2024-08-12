@@ -238,6 +238,14 @@
 
                     <!-- OPCIONAIS -->
                     @foreach($categoria_opcional->opcional_produto as $opcional)
+
+                    <!-- VERIFICAR OPCIONAIS -->
+                    @php
+                    // Verifica se o opcional está relacionado ao item_pedido
+                    $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
+                    @endphp
+
+                    @if($opcional_item)
                     <div class="d-flex m-0">
                         <div class="d-flex align-items-center">
                             <span class="material-symbols-outlined fs-5" style="color: #FD0146 !important">
@@ -248,18 +256,21 @@
                             {{$opcional->nome}}
                         </p>
                         <p class="text-secondary d-flex align-items-center justify-content-end w-100 m-0">
-                            @php
-                            $subtotal += $opcional->preco;
-                            @endphp
-
-                            R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                            R$ {{number_format($opcional_item->preco_unitario, 2, ',', '.')}}
                         </p>
                     </div>
-                    @endforeach
-                    <!-- FIM SE HOUVER OPCIONAIS -->
+                    <!-- Incrementando sobre valor total -->
+                    @php
+                    $subtotal += $opcional_item->preco_unitario;
+                    @endphp
+
+                    @endif
 
                     @endforeach
-                    <!-- FIM CATEGORIAS DE OPCIONAIS -->
+                    <!-- OPCIONAIS -->
+
+                    @endforeach
+                    <!-- CATEGORIAS DE OPCIONAIS -->
 
                 </div>
                 @endif

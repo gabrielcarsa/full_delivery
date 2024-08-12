@@ -388,22 +388,70 @@
                 <tr style="font-size:14px">
                     <td></td>
                     <td>
+
                         <!-- CATEGORIAS DE OPCIONAIS -->
                         @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+
+                        <!-- VERIFICAR SE EXISTE ALGUM OPCIONAL RELACIONADO A ESTA CATEGORIA -->
+                        @php
+
+                        // Filtra os opcionais do item_pedido que pertencem à categoria atual
+
+                        $opcionais_relacionados = $item->opcional_item->filter(function($opcional_item) use
+                        ($categoria_opcional) {
+                        return $categoria_opcional->opcional_produto->contains('id',
+                        $opcional_item->opcional_produto_id);
+                        });
+
+                        @endphp
+
+                        @if($opcionais_relacionados->isNotEmpty())
                         <p class="col-6 fw-bold m-0 text-secondary">{{$categoria_opcional->nome}}</p>
 
                         <!-- OPCIONAIS -->
-                        @foreach($categoria_opcional->opcional_produto as $opcional)
+                        @foreach($opcionais_relacionados as $opcional_item)
+
+                        <!-- VERIFICAR OPCIONAIS -->
+                        @php
+                        // Obter os detalhes do opcional_produto relacionado
+                        $opcional_produto = $categoria_opcional->opcional_produto->firstWhere('id',
+                        $opcional_item->opcional_produto_id);
+                        @endphp
 
                         <p class="m-0 text-secondary">
-                            {{$opcional->nome}}
+                            {{$opcional_produto->nome}}
                         </p>
 
                         <!-- Incrementando sobre valor total -->
                         @php
-                        $total_sem_entrega += $opcional->preco;
+                        $total_sem_entrega += $opcional_item->preco_unitario;
+                        @endphp
+                        @endforeach
+                        <!-- FIM OPCIONAIS -->
+                        @endif
+
+                        @endforeach
+                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
+
+                    </td>
+                    <td>
+                        <!-- CATEGORIAS DE OPCIONAIS -->
+                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+                        <!-- OPCIONAIS -->
+                        @foreach($categoria_opcional->opcional_produto as $opcional)
+
+                        <!-- VERIFICAR OPCIONAIS -->
+                        @php
+                        // Verifica se o opcional está relacionado ao item_pedido
+                        $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
                         @endphp
 
+                        @if($opcional_item)
+                        <p class="text-secondary">
+                            + R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                        </p>
+                        @endif
+
                         @endforeach
                         <!-- FIM OPCIONAIS -->
 
@@ -415,26 +463,18 @@
                         @foreach ($item->produto->categoria_opcional as $categoria_opcional)
                         <!-- OPCIONAIS -->
                         @foreach($categoria_opcional->opcional_produto as $opcional)
+                        
+                        <!-- VERIFICAR OPCIONAIS -->
+                        @php
+                        // Verifica se o opcional está relacionado ao item_pedido
+                        $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
+                        @endphp
 
+                        @if($opcional_item)
                         <p class="text-secondary">
                             + R$ {{number_format($opcional->preco, 2, ',', '.')}}
                         </p>
-
-                        @endforeach
-                        <!-- FIM OPCIONAIS -->
-
-                        @endforeach
-                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
-                    </td>
-                    <td>
-                        <!-- CATEGORIAS DE OPCIONAIS -->
-                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
-                        <!-- OPCIONAIS -->
-                        @foreach($categoria_opcional->opcional_produto as $opcional)
-
-                        <p class="text-secondary">
-                            + R$ {{number_format($opcional->preco, 2, ',', '.')}}
-                        </p>
+                        @endif
 
                         @endforeach
                         <!-- FIM OPCIONAIS -->
