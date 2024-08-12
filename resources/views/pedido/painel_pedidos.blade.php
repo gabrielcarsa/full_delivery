@@ -111,7 +111,7 @@
                             <div
                                 class="my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-bottom-0 border-danger border-5' : 'bg-white' }}">
 
-                                <p class="text-dark-50 fs-6 px-2 m-0"># {{$pedido->id}}</p>
+                                <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
                                 <!-- HEADER PEDIDOS -->
                                 <div class="row px-2">

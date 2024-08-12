@@ -1,92 +1,21 @@
 <!-- HEADER -->
 <div class="my-1">
-    <div class="row m-0 p-0 d-flex align-items-center">
-        <div class="col-md-auto">
-            <div class="m-0 p-3 text-center">
-                <h5 class="fw-bold fs-4 m-0 p-0">
-                    {{ $pedido->cliente->nome }}
-                </h5>
-                <p class="m-0 p-0 fs-6 fw-regular text-secondary d-flex align-items-center justify-content-center">
-                    <span class="material-symbols-outlined mr-1 fs-5">
-                        call
-                    </span>
-                    {{ $pedido->cliente->telefone }}
-                </p>
-            </div>
-        </div>
-        <div class="col">
-            @if($pedido->status == 0)
-            <div class="m-0 p-2 text-center">
-                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-bold text-warning">Pendente!</p>
-            </div>
-            @elseif($pedido->status == 1)
-            <div class="m-0 p-2 text-center">
-                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-regular">Em preparo</p>
-            </div>
-            @elseif($pedido->status == 2)
-            <div class="m-0 p-2 text-center">
-                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-regular">A caminho</p>
-            </div>
-            @elseif($pedido->status == 3)
-            <div class="m-0 p-2 text-center">
-                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-regular text-success">Concluido</p>
-            </div>
-            @elseif($pedido->status == 4)
-            <div class="m-0 p-2 text-center">
-                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-regular text-danger">REJEITADO</p>
-            </div>
-            @elseif($pedido->status == 5)
-            <div class="m-0 p-2 text-center">
-                <p class="m-0 p-0 fw-bold fs-6">Status do pedido</p>
-                <p class="m-0 p-0 fs-4 fw-regular text-danger">CANCELADO</p>
-            </div>
-            @endif
-        </div>
-        <div class="col m-0 text-center">
-            <p class="m-0 p-0 fw-bold fs-6">Loja</p>
-            <p class="m-0 p-0 fs-6 fw-regular text-secondary d-flex align-items-center justify-content-center">
-                <span class="material-symbols-outlined mr-2">
-                    storefront
-                </span>
-                {{ $pedido->loja->nome }}
-            </p>
-
-        </div>
-        <div class="col d-flex justify-content-end">
-            <p class="m-0 p-0 fw-semibold">{{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} -
-                {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
-        </div>
+    <div class="m-0">
+        <h5 class="fw-bold fs-4 m-0 text-uppercase">
+            {{ $pedido->cliente->nome }}
+        </h5>
+        <p class="m-0 fs-6 fw-regular text-secondary d-flex align-items-center">
+            {{ $pedido->cliente->telefone }}
+            <span class="material-symbols-outlined mx-2" style="font-variation-settings: 'FILL' 1; font-size: 10px">
+                circle
+            </span>
+            {{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} -
+            {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}
+        </p>
     </div>
 </div>
 <!-- FIM HEADER -->
 
-
-@if($pedido->status == 4)
-<div class="col">
-    <div class="card text-bg-danger">
-        <div class="card-header fw-bold">Motivo rejeição</div>
-        <div class="card-body">
-            <p class="card-text">{{ $pedido->mensagem_cancelamento_rejeicao }}</p>
-        </div>
-    </div>
-</div>
-
-@elseif($pedido->status == 5)
-<div class="col">
-    <div class="card text-bg-danger">
-        <div class="card-header fw-bold">Motivo cancelamento</div>
-        <div class="card-body">
-            <p class="card-text">{{ $pedido->mensagem_cancelamento_rejeicao }}</p>
-        </div>
-    </div>
-</div>
-
-@endif
 
 <!-- AÇÕES -->
 <div class="bg-white rounded border p-3">
@@ -289,6 +218,147 @@
 </div>
 <!-- FIM AÇÕES -->
 
+<!-- STATUS PEDIDO -->
+<div class="bg-white border rounded my-3 p-2">
+    @if($pedido->status == 0)
+    <div class="m-0">
+        <p class="m-0 p-0 text-secondary fs-6">Status do pedido</p>
+        <p class="m-0 p-0 fs-5 fw-bold text-warning">Pendente</p>
+    </div>
+    @elseif($pedido->status == 1)
+    <div class="m-0">
+        <p class="m-0 p-0 text-secondary fs-6">Status do pedido</p>
+        <p class="m-0 p-0 fs-5 fw-bold">Em preparo</p>
+    </div>
+    @elseif($pedido->status == 2)
+    <div class="m-0">
+        <p class="m-0 p-0 text-secondary fs-6">Status do pedido</p>
+        <p class="m-0 p-0 fs-5 fw-bold">A caminho</p>
+    </div>
+    @elseif($pedido->status == 3)
+    <div class="m-0">
+        <p class="m-0 p-0 text-secondary fs-6">Status do pedido</p>
+        <p class="m-0 p-0 fs-5 fw-bold text-success">Concluido</p>
+    </div>
+    @elseif($pedido->status == 4)
+    <div class="m-0">
+        <p class="m-0 p-0 text-secondary fs-6">Status do pedido</p>
+        <p class="m-0 p-0 fs-5 fw-bold text-danger">REJEITADO</p>
+        <p class="mt-2 mb-0 p-0 text-secondary fs-6">Motivo rejeição</p>
+        <p class="m-0 text-black">{{ $pedido->mensagem_cancelamento_rejeicao }}</p>
+    </div>
+
+    @elseif($pedido->status == 5)
+    <div class="m-0">
+        <p class="m-0 p-0 text-secondary fs-6">Status do pedido</p>
+        <p class="m-0 p-0 fs-5 fw-bold text-danger">CANCELADO</p>
+        <p class="mt-2 mb-0 p-0 text-secondary fs-6">Motivo cancelamento</p>
+        <p class="m-0 text-black">{{ $pedido->mensagem_cancelamento_rejeicao }}</p>
+    </div>
+    @endif
+
+    <!--  PEDIDO ETAPAS -->
+    @if($pedido->status != 4 && $pedido->status != 5 )
+
+    <!-- ETAPAS STATUS -->
+    <div class="d-flex align-items-center bg-light rounded mt-5 m-3 justify-content-between" style="height: 20px">
+
+        <!-- PEDIDO PENDENTE -->
+        <div class="bg-light rounded-circle" style="height: 70px; width: 70px; background-color: #FD0146 !important">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1 text-white">
+                    {{ $pedido->status > 0 ? 'check_circle' : 'hourglass_top' }}
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">
+                Pendente
+            </p>
+        </div>
+        <!-- FIM PEDIDO PENDENTE -->
+
+        <!-- PEDIDO PREPARANDO -->
+        @if($pedido->status >= 1)
+        <div class="bg-light rounded-circle" style="height: 70px; width: 70px; background-color: #FD0146 !important">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1 text-white">
+                    {{ $pedido->status > 1 ? 'check_circle' : 'skillet' }}
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">Preparando</p>
+        </div>
+        @else
+        <div class="bg-light rounded-circle" style="height: 70px; width: 70px">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1">
+                    skillet
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">Preparando</p>
+        </div>
+        @endif
+        <!-- FIM PEDIDO PREPARANDO -->
+
+        <!-- PEDIDO ENTREGA -->
+        @if($pedido->status >= 2)
+        <div class="bg-light rounded-circle" style="height: 70px; width: 70px; background-color: #FD0146 !important">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1 text-white">
+                    {{ $pedido->status > 2 ? 'check_circle' : 'sports_motorsports' }}
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">A caminho</p>
+        </div>
+        @else
+        <div class="bg-light rounded-circle" style="height: 70px; width: 70px">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1">
+                    sports_motorsports
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">A caminho</p>
+        </div>
+        @endif
+        <!-- FIM PEDIDO ENTREGA -->
+
+        <!-- PEDIDO CONCLUIDO -->
+        @if($pedido->status >= 3)
+        <div class="bg-success rounded-circle" style="height: 70px; width: 70px">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1 text-white">
+                    {{ $pedido->status > 3 ? 'check_circle' : 'check_circle' }}
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">Concluído</p>
+        </div>
+        @else
+        <div class="bg-light rounded-circle" style="height: 70px; width: 70px">
+            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
+                <span class="material-symbols-outlined fs-1">
+                    check_circle
+                </span>
+            </div>
+            <p class="text-truncate d-flex align-items-center justify-content-center"
+                style="font-size: 13px; max-width: 100px">Concluído</p>
+        </div>
+        @endif
+        <!-- FIM PEDIDO ENTREGA -->
+    </div>
+    <!--  FIM ETAPAS STATUS -->
+
+    <div style="margin: 70px 0 0 0">
+    </div>
+
+    @endif
+    <!--  FIM PEDIDO ETAPAS -->
+</div>
+<!-- FIM STATUS PEDIDO -->
+
 <!-- ENTREGA -->
 <div class="bg-white rounded border p-3">
 
@@ -463,7 +533,7 @@
                         @foreach ($item->produto->categoria_opcional as $categoria_opcional)
                         <!-- OPCIONAIS -->
                         @foreach($categoria_opcional->opcional_produto as $opcional)
-                        
+
                         <!-- VERIFICAR OPCIONAIS -->
                         @php
                         // Verifica se o opcional está relacionado ao item_pedido
