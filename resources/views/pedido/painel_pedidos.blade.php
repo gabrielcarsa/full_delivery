@@ -105,82 +105,76 @@
                         @foreach($data['pedidos'] as $pedido)
 
                         <!-- COLLAPSE PEDIDOS -->
-                        <div
-                            class="border my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-bottom-0 border-danger border-5' : 'bg-white' }}">
-                            @if($pedido->status == 0)
-                            <div class="bg-warning m-0 p-0 text-center rounded">
-                                <p class="m-0 p-0 fw-bold">PENDENTE</p>
-                            </div>
-                            @elseif($pedido->status == 1)
-                            <div class="border m-0 p-0 text-center rounded">
-                                <p class="m-0 p-0 fw-bold text-light">EM PREPARO</p>
-                            </div>
-                            @elseif($pedido->status == 2)
-                            <div class="bg-primary border m-0 p-0 text-center rounded">
-                                <p class="m-0 p-0 fw-bold text-light">A CAMINHO</p>
-                            </div>
-                            @elseif($pedido->status == 3)
-                            <div class="bg-success m-0 p-0 text-center rounded">
-                                <p class="m-0 p-0 fw-bold text-white">CONCLUIDO</p>
-                            </div>
-                            @elseif($pedido->status == 4)
-                            <div class="bg-danger m-0 p-0 text-center rounded">
-                                <p class="m-0 p-0 fw-bold text-white">REJEITADO</p>
-                            </div>
-                            @elseif($pedido->status == 5)
-                            <div class="bg-danger m-0 p-0 text-center rounded">
-                                <p class="m-0 p-0 fw-bold text-white">CANCELADO</p>
-                            </div>
-                            @endif
-                            <p class="text-dark-50 fs-6 px-2 m-0"># {{$pedido->id}}</p>
+                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
+                            <div
+                                class="border my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-bottom-0 border-danger border-5' : 'bg-white' }}">
+                                @if($pedido->status == 0)
+                                <div class="bg-warning m-0 p-0 text-center rounded">
+                                    <p class="m-0 p-0 fw-bold">PENDENTE</p>
+                                </div>
+                                @elseif($pedido->status == 1)
+                                <div class="border m-0 p-0 text-center rounded">
+                                    <p class="m-0 p-0 fw-bold text-light">EM PREPARO</p>
+                                </div>
+                                @elseif($pedido->status == 2)
+                                <div class="bg-primary border m-0 p-0 text-center rounded">
+                                    <p class="m-0 p-0 fw-bold text-light">A CAMINHO</p>
+                                </div>
+                                @elseif($pedido->status == 3)
+                                <div class="bg-success m-0 p-0 text-center rounded">
+                                    <p class="m-0 p-0 fw-bold text-white">CONCLUIDO</p>
+                                </div>
+                                @elseif($pedido->status == 4)
+                                <div class="bg-danger m-0 p-0 text-center rounded">
+                                    <p class="m-0 p-0 fw-bold text-white">REJEITADO</p>
+                                </div>
+                                @elseif($pedido->status == 5)
+                                <div class="bg-danger m-0 p-0 text-center rounded">
+                                    <p class="m-0 p-0 fw-bold text-white">CANCELADO</p>
+                                </div>
+                                @endif
+                                <p class="text-dark-50 fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
-                            <!-- HEADER PEDIDOS -->
-                            <div class="row px-2">
-                                <div class="col-md-8">
-                                    <h4 class="fw-bold fs-4 text-dark text-uppercase">{{$pedido->cliente->nome}}</h4>
+                                <!-- HEADER PEDIDOS -->
+                                <div class="row px-2">
+                                    <div class="col-md-8">
+                                        <h4 class="fw-bold fs-4 text-dark text-uppercase">{{$pedido->cliente->nome}}
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-end text-dark">
+                                        <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
+                                    </div>
                                 </div>
-                                <div class="col-md-4 d-flex justify-content-end text-dark">
-                                    <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
+                                <!-- FIM COLLAPSE PEDIDOS -->
+
+                                <!-- CORPO COLLAPSE PEDIDOS -->
+                                <div class="text-dark-50 fw-medium px-2">
+                                    @if($pedido->consumo_local_viagem_delivery == 1)
+                                    <p class="p-0 m-0">
+                                        Consumo no local
+                                    </p>
+
+                                    @elseif($pedido->consumo_local_viagem_delivery == 2)
+                                    <p class="p-0 m-0">
+                                        Para viagem
+                                    </p>
+
+                                    @elseif($pedido->consumo_local_viagem_delivery == 3)
+                                    <p class="p-0 m-0">
+                                        {{$pedido->entrega->rua}},
+                                        {{$pedido->entrega->bairro}},
+                                        {{$pedido->entrega->numero}}
+                                    </p>
+
+                                    @endif
+                                    <p class="p-0 m-0">{{$pedido->forma_pagamento_entrega->forma}}</p>
                                 </div>
+                                <!-- FIM CORPO COLLAPSE PEDIDOS -->
+
                             </div>
                             <!-- FIM COLLAPSE PEDIDOS -->
 
-                            <!-- CORPO COLLAPSE PEDIDOS -->
-                            <div class="text-dark-50 fw-medium px-2">
-                                @if($pedido->consumo_local_viagem_delivery == 1)
-                                <p class="p-0 m-0">
-                                    Consumo no local
-                                </p>
-
-                                @elseif($pedido->consumo_local_viagem_delivery == 2)
-                                <p class="p-0 m-0">
-                                    Para viagem
-                                </p>
-
-                                @elseif($pedido->consumo_local_viagem_delivery == 3)
-                                <p class="p-0 m-0">
-                                    {{$pedido->entrega->rua}},
-                                    {{$pedido->entrega->bairro}},
-                                    {{$pedido->entrega->numero}}
-                                </p>
-
-                                @endif
-                                <p class="p-0 m-0">{{$pedido->forma_pagamento_entrega->forma}}</p>
-                            </div>
-                            <!-- FIM CORPO COLLAPSE PEDIDOS -->
-
-                            <!-- BTN -->
-                            <div class="row m-3">
-                                <a href="{{route('pedido.show', ['id' => $pedido->id])}}"
-                                    class="p-2 text-white fw-semibold rounded w-100 text-decoration-none text-center"
-                                    style="background-color: #FD0146 !important">
-                                    Ver detalhes
-                                </a>
-                            </div>
-                            <!-- FIM BTN -->
-
-                        </div>
-                        <!-- FIM COLLAPSE PEDIDOS -->
+                        </a>
 
                         @endforeach
 
