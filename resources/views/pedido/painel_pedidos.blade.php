@@ -105,34 +105,12 @@
                         @foreach($data['pedidos'] as $pedido)
 
                         <!-- COLLAPSE PEDIDOS -->
-                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
+                        <a href="{{route('pedido.show', ['id' => $pedido->id])}}"
+                            class="text-decoration-none text-black">
+
                             <div
-                                class="border my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-bottom-0 border-danger border-5' : 'bg-white' }}">
-                                @if($pedido->status == 0)
-                                <div class="bg-warning m-0 p-0 text-center rounded">
-                                    <p class="m-0 p-0 fw-bold">PENDENTE</p>
-                                </div>
-                                @elseif($pedido->status == 1)
-                                <div class="border m-0 p-0 text-center rounded">
-                                    <p class="m-0 p-0 fw-bold text-light">EM PREPARO</p>
-                                </div>
-                                @elseif($pedido->status == 2)
-                                <div class="bg-primary border m-0 p-0 text-center rounded">
-                                    <p class="m-0 p-0 fw-bold text-light">A CAMINHO</p>
-                                </div>
-                                @elseif($pedido->status == 3)
-                                <div class="bg-success m-0 p-0 text-center rounded">
-                                    <p class="m-0 p-0 fw-bold text-white">CONCLUIDO</p>
-                                </div>
-                                @elseif($pedido->status == 4)
-                                <div class="bg-danger m-0 p-0 text-center rounded">
-                                    <p class="m-0 p-0 fw-bold text-white">REJEITADO</p>
-                                </div>
-                                @elseif($pedido->status == 5)
-                                <div class="bg-danger m-0 p-0 text-center rounded">
-                                    <p class="m-0 p-0 fw-bold text-white">CANCELADO</p>
-                                </div>
-                                @endif
+                                class="my-3 shadow-md p-2 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-bottom-0 border-danger border-5' : 'bg-white' }}">
+
                                 <p class="text-dark-50 fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
                                 <!-- HEADER PEDIDOS -->
@@ -149,6 +127,64 @@
 
                                 <!-- CORPO COLLAPSE PEDIDOS -->
                                 <div class="text-dark-50 fw-medium px-2">
+
+                                    @if($pedido->status == 0)
+                                    <div class="d-flex fw-bold">
+                                        <span
+                                            class="material-symbols-outlined d-flex align-items-center text-warning mr-1"
+                                            style="font-variation-settings: 'FILL' 1;">
+                                            pending
+                                        </span>
+                                        <p class="m-0 p-0">Pedido pendente</p>
+                                    </div>
+                                    @elseif($pedido->status == 1)
+                                    <div class="d-flex fw-bold">
+                                        <span
+                                            class="material-symbols-outlined d-flex align-items-center text-warning mr-1"
+                                            style="font-variation-settings: 'FILL' 1;">
+                                            skillet
+                                        </span>
+                                        <p class="m-0 p-0">Pedido em preparo</p>
+                                    </div>
+                                    @elseif($pedido->status == 2)
+                                    <div class="d-flex fw-bold">
+                                        <span
+                                            class="material-symbols-outlined d-flex align-items-center text-primary mr-1"
+                                            style="font-variation-settings: 'FILL' 1;">
+                                            sports_motorsports
+                                        </span>
+                                        <p class="m-0 p-0">Pedido a caminho</p>
+                                    </div>
+                                    @elseif($pedido->status == 3)
+                                    <div class="d-flex fw-bold">
+                                        <span
+                                            class="material-symbols-outlined text-success d-flex align-items-center mr-1"
+                                            style="font-variation-settings: 'FILL' 1;">
+                                            check_circle
+                                        </span>
+                                        <p class="m-0 p-0">Pedido Concluído</p>
+                                    </div>
+                                    @elseif($pedido->status == 4)
+                                    <div class="d-flex fw-bold">
+                                        <span
+                                            class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
+                                            style="font-variation-settings: 'FILL' 1;">
+                                            error
+                                        </span>
+                                        <p class="m-0 p-0">Pedido Rejeitado</p>
+                                    </div>
+                                    @elseif($pedido->status == 5)
+                                    <div class="d-flex fw-bold">
+                                        <span
+                                            class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
+                                            style="font-variation-settings: 'FILL' 1;">
+                                            warning
+                                        </span>
+                                        <p class="m-0 p-0">Pedido Cancelado</p>
+                                    </div>
+                                    @endif
+
+                                
                                     @if($pedido->consumo_local_viagem_delivery == 1)
                                     <p class="p-0 m-0">
                                         Consumo no local
