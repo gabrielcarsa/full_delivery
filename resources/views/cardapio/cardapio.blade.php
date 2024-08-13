@@ -149,8 +149,8 @@
                         <!-- VERIFICAR SE ESTÁ ABERTO -->
                         @if($data['categoria_produto'][0]->loja->is_open)
                         <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined">
-                                radio_button_checked
+                            <span class="material-symbols-outlined mr-1 fs-6" style="font-variation-settings: 'FILL' 1;">
+                                circle
                             </span>
                             <span>
                                 Aberto
@@ -160,7 +160,7 @@
                         @else
                         <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
                             <span class="material-symbols-outlined mr-1 fs-6">
-                                radio_button_unchecked
+                                circle
                             </span>
                             <span>
                                 Fechado
@@ -342,8 +342,8 @@
                         <!-- VERIFICAR SE ESTÁ ABERTO -->
                         @if($data['categoria_produto'][0]->loja->is_open)
                         <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined">
-                                radio_button_checked
+                            <span class="material-symbols-outlined mr-1" style="font-variation-settings: 'FILL' 1;">
+                                circle
                             </span>
                             <span>
                                 Aberto
@@ -353,7 +353,7 @@
                         @else
                         <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
                             <span class="material-symbols-outlined mr-1">
-                                radio_button_unchecked
+                                circle
                             </span>
                             <span>
                                 Fechado
