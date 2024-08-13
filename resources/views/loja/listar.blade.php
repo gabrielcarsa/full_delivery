@@ -26,8 +26,7 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Loja <span
-                        class="text-secondary fs-3">({{$lojas->count()}})</span></h2>
+                <h2 class="my-3 fw-bolder fs-1">Loja <span class="text-secondary fs-3">({{$lojas->count()}})</span></h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
@@ -47,11 +46,11 @@
 
         @foreach($lojas as $loja)
         <div
-            class="row align-items-center {{ session('lojaConectado') && session('lojaConectado')['id'] == $loja->id ? 'border-3 border-success' : 'border-3' }} bg-white p-3 rounded m-3">
+            class="row align-items-center border-3 bg-white p-3 rounded m-3"  style="{{ session('lojaConectado') && session('lojaConectado')['id'] == $loja->id ? 'border-color: #FD0146 !important' : '' }}">
             <div class="col-2">
 
                 <!-- BTN EDITAR IMG -->
-                <a class="position-absolute bg-dark p-1 text-white rounded" data-bs-toggle="modal"
+                <a class="position-absolute p-1 text-white rounded d-flex align-items-center text-decoration-none" style="background-color: #FD0146 !important" data-bs-toggle="modal"
                     data-bs-target="#modalEditarImagem">
                     <span class="material-symbols-outlined">
                         edit
@@ -69,8 +68,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="{{'/loja/alterar-logo/' . $loja->id}}" method="post"
-                                autocomplete="off" enctype="multipart/form-data">
+                            <form action="{{'/loja/alterar-logo/' . $loja->id}}" method="post" autocomplete="off"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-body">
@@ -94,8 +93,8 @@
                 <!-- FIM MODAL -->
 
                 <!-- LOGO RESTAURANTE -->
-                <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250"
-                    alt="Logo {{$loja->nome}}" class="shadow-sm rounded">
+                <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250" alt="Logo {{$loja->nome}}"
+                    class="shadow-sm rounded">
 
             </div>
 
@@ -107,18 +106,21 @@
                     {{$loja->bairro}}, {{$loja->cidade}} {{$loja->estado}}.
                     {{$loja->cep}}
                 </p>
-                <a href="{{route('loja.configurar', ['id' => $loja->id])}}"
-                    class="btn btn-primary mb-1">Configurações</a>
+                
+                <div class="d-flex">
+                    <a href="{{route('loja.configurar', ['id' => $loja->id])}}" class="text-decoration-none p-2 text-white fw-semibold rounded" style="background-color: #FD0146 !important">
+                        Configurações
+                    </a>
 
-                @if(session('lojaConectado') != null && session('lojaConectado')['id'] ==
-                $loja->id)
-                <button type="button" class="btn btn-info">Conectado</button>
-                @else
-                <form action="{{'/escolher-loja/'.$loja->id}}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-success">Conectar</button>
-                </form>
-                @endif
+                    @if(session('lojaConectado') != null && session('lojaConectado')['id'] == $loja->id)
+                    @else
+                    <form action="{{'/escolher-loja/'.$loja->id}}" method="post">
+                        @csrf
+                        <button type="submit" class="mx-2 p-2 text-white fw-semibold rounded w-100" style="background-color: #FD0146 !important">Escolher loja</button>
+                    </form>
+                    @endif
+                </div>
+
 
             </div>
             <!-- FIM INFO RESTAURANTE -->
