@@ -184,6 +184,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'LojaAbertaFechadaHelper' => App\Helpers\LojaAbertaFechadaHelper::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

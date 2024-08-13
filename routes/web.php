@@ -78,6 +78,7 @@ Route::middleware([
         Route::post('/loja/cadastrar/{usuario_id}', [LojaController::class, 'store']);
         Route::put('/loja/alterar/{usuario_id}/{loja_id}', [LojaController::class, 'update']);
         Route::put('/loja/alterar-logo/{loja_id}', [LojaController::class, 'update_logo']);
+        Route::get('/loja/abrir-fechar', [LojaController::class, 'abrir_fechar'])->name('loja.abrir_fechar');
        
         //ENTREGAS RESTAURANTE
         Route::get('/entregas-taxas', [LojaController::class, 'show_entrega_taxas'])->name('loja.entrega_taxas');
