@@ -23,7 +23,7 @@ use App\Models\ClienteEndereco;
 class PedidoController extends Controller
 {
     //PAINEL DE PEDIDOS
-    public function painel(){
+    public function painel(Request $request){
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
             return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar os pedidos');
@@ -33,12 +33,22 @@ class PedidoController extends Controller
         $id_loja  = session('lojaConectado')['id'];
         $loja = Loja::where('id', $id_loja)->first();
 
+        //Query Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
         ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
-        ->orderBy('data_pedido', 'DESC')
-        ->get();
-        
+        ->orderBy('data_pedido', 'DESC');
 
+        //Filtros
+        $filtro = $request->input('filtro');
+
+        // Verificando filtro e apĺicando
+        if($filtro != null){
+            $pedidos->where('status', $filtro);
+        }
+
+        //Executa a query
+        $pedidos = $pedidos->get();
+        
         $data = [
             'loja' => $loja,
             'pedidos' => $pedidos,

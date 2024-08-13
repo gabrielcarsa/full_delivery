@@ -61,40 +61,97 @@
                         <!-- HEADER -->
                         <div class="row">
                             <div class="col">
-                                <h2 class="m-3 fw-bolder fs-1 text-black">
-                                    Pedidos
-                                    <span class="text-black-50 fs-3">
-                                        ({{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}})
-                                    </span>
+                                <h2 class="mt-3 fw-bolder fs-2 text-black">
+                                    Painel de Pedidos
                                 </h2>
                             </div>
                         </div>
                         <!-- FIM HEADER -->
 
-                        <div class="d-flex align-items-center">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-dark dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filtrar
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Pendentes</a></li>
-                                    <li><a class="dropdown-item" href="#">Em preparo</a></li>
-                                    <li><a class="dropdown-item" href="#">A caminho</a></li>
-                                    <li><a class="dropdown-item" href="#">Concluido</a></li>
-                                    <li><a class="dropdown-item" href="#">Rejeitado</a></li>
-                                    <li><a class="dropdown-item" href="#">Cancelado</a></li>
-                                </ul>
-                            </div>
-                            <div class="m-1">
-                                <a href="" class="btn btn-primary d-flex align-items-center">
-                                    <span class="material-symbols-outlined">
-                                        search
+                        <!-- FILTROS -->
+                        <div class="overflow-x-scroll w100 m-0">
+                            <div class="d-flex flex-nowrap py-3">
+                                @php
+                                $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
+                                @endphp
+                                @if(isset($filtro) && is_numeric($filtro))
+                                <a href="{{ route('pedido.painel') }}"
+                                    class="mx-1 p-0 rounded text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
+                                    style="min-width: 180px; background-color: #FD0146 !important">
+                                    @if($filtro == 0)
+                                    Pendentes
+                                    @elseif($filtro == 1)
+                                    Em preparo
+                                    @elseif($filtro == 2)
+                                    A caminho
+                                    @elseif($filtro == 3)
+                                    Concluídos
+                                    @elseif($filtro == 4)
+                                    Rejeitados
+                                    @elseif($filtro == 5)
+                                    Cancelados
+                                    @endif
+                                    <span class="badge text-bg-light mx-1">
+                                        {{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}}
+                                    </span>
+                                    <span class="material-symbols-outlined ml-1 text-light">
+                                        close
                                     </span>
                                 </a>
+                                @endif
+
+                                @if($filtro != 0)
+                                <a href="{{ route('pedido.painel', ['filtro' => 0]) }}"
+                                    class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                                    style="min-width: 110px;">
+                                    Pendentes
+                                </a>
+                                @endif
+
+                                @if($filtro != 1)
+                                <a href="{{ route('pedido.painel', ['filtro' => 1]) }}"
+                                    class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                                    style="min-width: 110px;">
+                                    Em preparo
+                                </a>
+                                @endif
+
+                                @if($filtro != 2)
+                                <a href="{{ route('pedido.painel', ['filtro' => 2]) }}"
+                                    class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                                    style="min-width: 110px;">
+                                    A caminho
+                                </a>
+                                @endif
+
+                                @if($filtro != 3)
+                                <a href="{{ route('pedido.painel', ['filtro' => 3]) }}"
+                                    class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                                    style="min-width: 110px;">
+                                    Concluídos
+                                </a>
+                                @endif
+
+                                @if($filtro != 4)
+                                <a href="{{ route('pedido.painel', ['filtro' => 4]) }}"
+                                    class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                                    style="min-width: 110px;">
+                                    Rejeitados
+                                </a>
+                                @endif
+
+                                @if($filtro != 5)
+                                <a href="{{ route('pedido.painel', ['filtro' => 5]) }}"
+                                    class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                                    style="min-width: 110px;">
+                                    Cancelados
+                                </a>
+                                @endif
 
                             </div>
                         </div>
+                        <!-- FIM FILTROS -->
+
                     </div>
                     <!-- FIM HEADER -->
 
@@ -184,7 +241,7 @@
                                     </div>
                                     @endif
 
-                                
+
                                     @if($pedido->consumo_local_viagem_delivery == 1)
                                     <p class="p-0 m-0">
                                         Consumo no local
