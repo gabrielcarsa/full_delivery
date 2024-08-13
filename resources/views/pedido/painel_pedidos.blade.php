@@ -45,28 +45,29 @@
 
                     <!-- HEADER -->
                     <div class="p-2 m-0">
-                        <div class="row">
-                            <div class="col d-flex justify-content-center w100">
-                                <a href="{{ route('pedido.novo') }}" class="btn btn-primary">
-                                    Simular pedido
-                                </a>
-                            </div>
-                            <div class="col d-flex justify-content-center w100">
-                                <a href="" class="btn btn-secondary">
-                                    Configurações
-                                </a>
-                            </div>
+                        <!-- LOJA -->
+                        <div class="">
+                            <p class="p-0 m-0 fw-regular" style="font-size: 14px">conectado como</p>
+                            <h4 class="p-0 m-0 fs-3 fw-bold">
+                                {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : '---'}}
+                            </h4>
+                            <a href="{{ route('loja') }}"
+                                class="d-flex align-items-center align-middle fs-6 text-decoration-none">
+                                <span class="material-symbols-outlined fs-6">
+                                    change_circle
+                                </span>
+                                <span>{{session('lojaConectado') != null ? 'Trocar loja': 'Selecionar loja'}}</span>
+                            </a>
                         </div>
+                        <!-- FIM LOJA -->
 
-                        <!-- HEADER -->
-                        <div class="row">
-                            <div class="col">
-                                <h2 class="mt-3 fw-bolder fs-2 text-black">
-                                    Painel de Pedidos
-                                </h2>
-                            </div>
+                        <!-- TITULO -->
+                        <div class="mt-3">
+                            <h2 class="m-0 fw-bolder fs-2 text-black">
+                                Painel de Pedidos
+                            </h2>
                         </div>
-                        <!-- FIM HEADER -->
+                        <!-- FIM TITULO -->
 
                         <!-- FILTROS -->
                         <div class="overflow-x-scroll w100 m-0">
