@@ -220,15 +220,15 @@ class PedidoController extends Controller
             $cliente_id = Auth::guard('cliente')->user()->id;
         }
 
+        /*
+        --- Validações ---
+        */
+
         // Se endereço não for selecionado
         if($endereco_selecionado_id == null){
             $enderecoVazio = true;
             return redirect()->back()->withErrors(['enderecoVazio' => 'Por favor, selecione um endereço.']);
         }
-
-        /*
-        --- Validação do formulário ---
-        */
         
         $validator = Validator::make($request->all(), [
             //todo
@@ -239,11 +239,22 @@ class PedidoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        //Query da Loja selecionada
         $loja = Loja::where('id', $loja_id)->first();
 
         //Verificar se há loja selecionado
         if($loja == null){
             return redirect()->back()->with('error', 'Selecione um loja primeiro');
+        }
+
+        //Verificar se loja está aberta
+        if($loja->is_open != true){
+            $data = [
+                'consumo_local_viagem' => $consumo_local_viagem,
+                'loja_id' => $loja_id,
+                'endereco_selecionado' => $endereco_selecionado_id,
+            ];
+            return view('errors-pages/loja-fechada-error',  compact('data'));
         }
 
         /*
