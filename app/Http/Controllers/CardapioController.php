@@ -9,6 +9,7 @@ use App\Models\HorarioFuncionamento;
 use App\Models\Produto;
 use App\Models\OpcionalProduto;
 use App\Models\ClienteEndereco;
+use App\Models\FormaPagamentoLoja;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -142,6 +143,8 @@ class CardapioController extends Controller
             return redirect()->route('cliente.login', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
         }
     
+        //Formas de pagamento da Loja
+        $formas_pagamento_loja = FormaPagamentoLoja::all();
 
         // Array para passar variaveis
         $data = [
@@ -151,6 +154,7 @@ class CardapioController extends Controller
             'endereco_selecionado' => $endereco_selecionado,
             'distancia' => $distancia,
             'cliente_enderecos' => $cliente_enderecos,
+            'formas_pagamento_loja' => $formas_pagamento_loja,
         ];
    
         return view('cardapio/carrinho', compact('carrinho', 'data'));

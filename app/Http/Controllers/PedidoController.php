@@ -203,6 +203,8 @@ class PedidoController extends Controller
 
     //CADASTRAR PEDIDOS WEB
     public function storeWeb(Request $request){
+
+        dd($request->input('forma_pagamento'));
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba'); 
 

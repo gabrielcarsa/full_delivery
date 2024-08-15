@@ -274,7 +274,7 @@
                     <div>
                         <h3 class="fw-bolder fs-3">Formas de pagamento</h3>
                         <div class="p-3 border rounded">
-                            <p class="mx-0 mt-0 mb-2 d-flex align-items-center text-black">
+                            <p class="mx-0 mt-0 mb-2 d-flex align-items-center text-secondary">
                                 <span class="material-symbols-outlined mr-1" style="font-variation-settings: 'FILL' 1;">
                                     warning
                                 </span>
@@ -282,10 +282,13 @@
                                     Pagar na entrega
                                 </span>
                             </p>
+                            <p class="fw-bold fs-6" id="forma_pagamento_selecionada">
+                                Nenhuma forma selecionada
+                            </p>
 
                             <!-- BOTÃO MODAL -->
-                            <a class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Selecionar forma de pagamento
+                            <a id="btn_forma_pagamento" class="text-white rounded py-2 px-3 text-decoration-none" style="background-color: #FD0146 !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Selecionar
                             </a>
                             <!-- FIM BOTÃO MODAL -->
 
@@ -295,17 +298,30 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <p class="modal-title fs-5 fw-semibold" id="exampleModalLabel">Pagar na entrega</p>
+                                            <p class="modal-title fs-5 fw-semibold" id="exampleModalLabel">Pagar na
+                                                entrega</p>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            ...
+                                            <p class="text-secondary">Selecione a forma de pagamento para pagar na entrega:</p>
+                                            @foreach($data['formas_pagamento_loja'] as $forma_pagamento)
+                                            <div class="form-check py-2">
+                                                <input class="form-check-input" type="radio" name="forma_pagamento"
+                                                    id="{{$forma_pagamento->id}}" value="{{$forma_pagamento->nome}}">
+                                                <label class="form-check-label d-flex align-items-center" for="{{$forma_pagamento->id}}">
+                                                    <img src="{{ asset('storage/icones-forma-pagamento/' . $forma_pagamento->imagem . '.svg') }}"
+                                                        alt="" width="30px">
+                                                    <span class="ml-1 fw-semibold">
+                                                        {{$forma_pagamento->nome}}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            @endforeach
+
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="" data-bs-dismiss="modal">Fechar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -353,5 +369,25 @@
     <!-- FIM FORM -->
 
     @endif
+
+    <script>
+        // Seleciona todos os inputs de radio
+        const radios = document.querySelectorAll('input[name="forma_pagamento"]');
+        
+        // Adiciona um event listener para cada radio
+        radios.forEach((radio) => {
+            radio.addEventListener('change', function() {
+                // Captura o valor do elemento selecionado
+                const selectedValue = document.querySelector('input[name="forma_pagamento"]:checked').value;
+
+                // Exibe o valor no elemento com id "resultado"
+                document.getElementById('forma_pagamento_selecionada').innerText = selectedValue;
+
+                //Mudar valor de 'selecionar' para 'alterar'
+                document.getElementById('btn_forma_pagamento').innerText = 'Alterar';
+                
+            });
+        });
+    </script>
 
 </x-layout-cardapio>
