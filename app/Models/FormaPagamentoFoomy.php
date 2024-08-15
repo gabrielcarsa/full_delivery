@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MeioPagamentoEntrega extends Model
+class FormaPagamentoFoomy extends Model
 {
     use HasFactory;
-    protected $table = 'meio_pagamento_entrega';
+    protected $table = 'forma_pagamento_foomy';
 
 
     public function pedido()

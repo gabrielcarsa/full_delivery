@@ -21,14 +21,14 @@ class Pedido extends Model
         return $this->belongsTo(Loja::class);
     }
 
-    public function forma_pagamento_entrega()
+    public function forma_pagamento_foomy()
     {
-        return $this->belongsTo(FormaPagamentoEntrega::class);
+        return $this->belongsTo(FormaPagamentoFoomy::class);
     }
 
-    public function meio_pagamento_entrega()
+    public function forma_pagamento_loja()
     {
-        return $this->belongsTo(MeioPagamentoEntrega::class);
+        return $this->belongsTo(FormaPagamentoLoja::class);
     }
 
     public function entrega()

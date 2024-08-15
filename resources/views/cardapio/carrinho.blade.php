@@ -46,7 +46,8 @@
             <div class="d-flex">
                 <!-- ICONE LOCALIZACAO -->
                 <div>
-                    <span class="material-symbols-outlined {{$errors->has('enderecoVazio') ? 'text-danger' : 'text-secondary'}}">
+                    <span
+                        class="material-symbols-outlined {{$errors->has('enderecoVazio') ? 'text-danger' : 'text-secondary'}}">
                         location_on
                     </span>
                 </div>
@@ -268,8 +269,56 @@
                         </div>
                     </div>
                     <!-- FIM TOTAIS -->
+
+                    <!-- FORMA DE PAGAMENTO -->
+                    <div>
+                        <h3 class="fw-bolder fs-3">Formas de pagamento</h3>
+                        <div class="p-3 border rounded">
+                            <p class="mx-0 mt-0 mb-2 d-flex align-items-center text-black">
+                                <span class="material-symbols-outlined mr-1" style="font-variation-settings: 'FILL' 1;">
+                                    warning
+                                </span>
+                                <span>
+                                    Pagar na entrega
+                                </span>
+                            </p>
+
+                            <!-- BOTÃO MODAL -->
+                            <a class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Selecionar forma de pagamento
+                            </a>
+                            <!-- FIM BOTÃO MODAL -->
+
+                            <!-- MODAL -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <p class="modal-title fs-5 fw-semibold" id="exampleModalLabel">Pagar na entrega</p>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIM MODAL -->
+
+                        </div>
+                    </div>
+                    <!-- FIM FORMA DE PAGAMENTO -->
+
                 </div>
                 <!-- FIM RESUMO -->
+
             </div>
 
         </div>
