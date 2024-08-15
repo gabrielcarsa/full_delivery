@@ -14,6 +14,7 @@
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- Loja aberta ou fechada -->
                 <div class="ms-3 relative">
+                    @if(session('lojaConectado') != null)
                     @if(LojaAbertaFechadaHelper::getLojaStatus() == true)
                     <div class="d-flex bg-light p-2 rounded">
                         <p class="m-0 d-flex align-items-center text-success">
@@ -44,7 +45,7 @@
                             Abrir loja
                         </a>
                     </div>
-                    @else
+                    @endif
                     @endif
                 </div>
 
