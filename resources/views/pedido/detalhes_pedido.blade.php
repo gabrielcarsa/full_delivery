@@ -354,16 +354,34 @@
         <!-- FIM TOTAIS -->
 
         <!-- PAGAMENTO -->
-        <div class="my-3">
-            <h3 class="fw-bolder fs-6">Pagar na entrega</h3>
-            <div class="d-flex">
-                <span class="material-symbols-outlined text-secondary mr-1">
-                    credit_card
-                </span>
-                <p class="text-secondary m-0">
-                    Cartão de crédito
-                </p>
+        <div class="mx-0 my-3">
+
+            <!-- FORMA PAGAMENTO -->
+            @if($data['pedido']->forma_pagamento_loja->id != null)
+
+            <h3 class="fw-bolder fs-6">
+                Pagar na entrega
+            </h3>
+            <div class="d-flex align-items-center" style="font-size: 14px !important">
+                <img src="{{ asset('storage/icones-forma-pagamento/' .$data['pedido']->forma_pagamento_loja->imagem . '.svg') }}"
+                    alt="" width="30px">
+                <p class="p-0 mx-1 my-0">{{$data['pedido']->forma_pagamento_loja->nome}}</p>
             </div>
+
+            @else
+
+            <h3 class="fw-bolder fs-6">
+                Pago via web
+            </h3>
+            <div class="d-flex align-items-center" style="font-size: 14px !important">
+                <img src="{{ asset('storage/icones-forma-pagamento/' .$data['pedido']->forma_pagamento_foomy->imagem . '.svg') }}"
+                    alt="" width="30px">
+                <p class="p-0 mx-1 my-0">{{$data['pedido']->forma_pagamento_foomy->nome}}</p>
+            </div>
+
+            @endif
+            <!-- FIM FORMA PAGAMENTO -->
+
 
         </div>
         <!-- FIM ENTREGA -->

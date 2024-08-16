@@ -419,6 +419,7 @@
         @else
         <p class="p-0 m-0">Cliente pagou via site/app <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no {{$pedido->forma_pagamento_foomy->nome}}</strong></p>
         @endif
+        <!-- FIM FORMA PAGAMENTO -->
 
     </div>
 </div>
