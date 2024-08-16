@@ -101,7 +101,7 @@
                                 </a>
                                 @endif
 
-                                @if($filtro != 0)
+                                @if($filtro == null || $filtro != 0)
                                 <a href="{{ route('pedido.painel', ['filtro' => 0]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
