@@ -403,6 +403,27 @@
 </div>
 <!-- FIM ENTREGA -->
 
+<!-- PAGAMENTO -->
+<div class="bg-white rounded border p-3 my-2">
+    <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
+    <div class="">
+        <!-- FORMA PAGAMENTO -->
+        @if($pedido->forma_pagamento_loja->id != null)
+        <p class="p-0 m-0 fs-6">
+            Cobrar do cliente na entrega <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no {{$pedido->forma_pagamento_loja->nome}}</strong>
+        </p>
+        <p class="text-secondary m-0 p-0">
+            O entregador deve cobrar esse valor no ato da entrega.
+        </p>
+
+        @else
+        <p class="p-0 m-0">Cliente pagou via site/app <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no {{$pedido->forma_pagamento_foomy->nome}}</strong></p>
+        @endif
+
+    </div>
+</div>
+<!-- FIM PAGAMENTO -->
+
 <!-- PEDIDO -->
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pedido</p>
@@ -590,15 +611,3 @@
 
 </div>
 <!-- FIM PEDIDO -->
-
-<!-- PAGAMENTO -->
-<div class="bg-white rounded border p-3 my-2">
-    <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
-    <div class="">
-        <p class="m-0 p-0">Cobrar do cliente na entrega <strong>{{ $pedido->forma_pagamento_entrega->forma }}</strong>
-        </p>
-        <p class="text-secondary m-0 p-0">O entregador deve cobrar esse valor no ato da entrega. </p>
-    </div>
-
-</div>
-<!-- FIM PAGAMENTO -->

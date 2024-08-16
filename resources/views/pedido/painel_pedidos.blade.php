@@ -160,9 +160,10 @@
                     <div>
                         @if(isset($data['pedidos']))
 
+                        <!-- PEDIDOS -->
                         @foreach($data['pedidos'] as $pedido)
 
-                        <!-- COLLAPSE PEDIDOS -->
+                        <!-- PEDIDOS -->
                         <a href="{{route('pedido.show', ['id' => $pedido->id])}}"
                             class="text-decoration-none text-black">
 
@@ -171,7 +172,7 @@
 
                                 <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
-                                <!-- HEADER PEDIDOS -->
+                                <!-- HEADER PEDIDO -->
                                 <div class="row px-2">
                                     <div class="col-md-8">
                                         <h4 class="fw-bold fs-4 text-dark text-uppercase">{{$pedido->cliente->nome}}
@@ -181,9 +182,9 @@
                                         <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
                                     </div>
                                 </div>
-                                <!-- FIM COLLAPSE PEDIDOS -->
+                                <!-- FIM HEADER PEDIDO -->
 
-                                <!-- CORPO COLLAPSE PEDIDOS -->
+                                <!-- CORPO PEDIDO -->
                                 <div class="text-dark-50 fw-medium px-2">
 
                                     @if($pedido->status == 0)
@@ -242,35 +243,44 @@
                                     </div>
                                     @endif
 
-
+                                    <!-- CONSUMO -->
                                     @if($pedido->consumo_local_viagem_delivery == 1)
-                                    <p class="p-0 m-0">
+                                    <p class="mx-0 my-1 text-secondary">
                                         Consumo no local
                                     </p>
 
                                     @elseif($pedido->consumo_local_viagem_delivery == 2)
-                                    <p class="p-0 m-0">
+                                    <p class="mx-0 my-1 text-secondary">
                                         Para viagem
                                     </p>
 
                                     @elseif($pedido->consumo_local_viagem_delivery == 3)
-                                    <p class="p-0 m-0">
+                                    <p class="mx-0 my-1 text-secondary">
                                         {{$pedido->entrega->rua}},
                                         {{$pedido->entrega->bairro}},
                                         {{$pedido->entrega->numero}}
                                     </p>
-
                                     @endif
-                                    <p class="p-0 m-0">{{$pedido->forma_pagamento_entrega->forma}}</p>
+                                    <!-- CONSUMO -->
+
+                                    <!-- FORMA PAGAMENTO -->
+                                    @if($pedido->forma_pagamento_loja->id != null)
+                                    <p class="p-0 m-0 fs-6">{{$pedido->forma_pagamento_loja->nome}}</p>
+                                    @else
+                                    <p class="p-0 m-0">{{$pedido->forma_pagamento_foomy->nome}}</p>
+                                    @endif
+                                    <!-- FIM FORMA PAGAMENTO -->
+
                                 </div>
-                                <!-- FIM CORPO COLLAPSE PEDIDOS -->
+                                <!-- FIM CORPO PEDIDO -->
 
                             </div>
-                            <!-- FIM COLLAPSE PEDIDOS -->
 
                         </a>
+                        <!-- FIM PEDIDO -->
 
                         @endforeach
+                        <!-- FIM PEDIDOS -->
 
                         @endif
 

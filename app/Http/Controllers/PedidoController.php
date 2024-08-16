@@ -39,7 +39,7 @@ class PedidoController extends Controller
 
         //Query Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
-        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('data_pedido', 'DESC');
 
         //Filtros
@@ -77,13 +77,13 @@ class PedidoController extends Controller
 
         //Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
-        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('data_pedido', 'DESC')
         ->get();
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega', 'uso_cupom')
+        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
         ->orderBy('data_pedido', 'ASC')
         ->first();
         
@@ -186,7 +186,7 @@ class PedidoController extends Controller
         }
 
         $pedidos = Pedido::where('loja_id', $loja_id)
-        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega')
+        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('data_pedido', 'DESC')
         ->where('cliente_id', $cliente_id)
         ->get();
@@ -381,7 +381,7 @@ class PedidoController extends Controller
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('loja', 'forma_pagamento_entrega', 'item_pedido', 'cliente', 'entrega', 'meio_pagamento_entrega', 'uso_cupom')
+        ->with('loja', 'forma_pagamento_loja', 'forma_pagamento_foomy', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
         ->orderBy('data_pedido', 'ASC')
         ->first();
                 
