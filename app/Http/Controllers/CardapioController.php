@@ -42,6 +42,7 @@ class CardapioController extends Controller
             //Categorias e produtos da loja selecionada
             $categoria_produto = CategoriaProduto::where('loja_id', $loja_id)
             ->with('loja', 'produto')
+            ->orderBy('ordem')
             ->get();
 
             $horarios_funcionamento = HorarioFuncionamento::all();
