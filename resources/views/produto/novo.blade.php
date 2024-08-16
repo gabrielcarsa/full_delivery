@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="inputPreco" class="form-label">Preço</label>
-                    <input type="text" name="preco" value="{{!empty($produto) ? number_format($produto->preco, 2, ',', '.') : old('preco')}}"
+                    <input type="text" name="preco" value="{{!empty($produto) ? number_format($produto->preco, 2, ',', '.') : number_format(old('preco'), 2, ',', '.') }}"
                         class="form-control" id="inputPreco" required>
                 </div>
                 <div class="col-md-2">
