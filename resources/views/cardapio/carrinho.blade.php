@@ -287,7 +287,9 @@
                             </p>
 
                             <!-- BOTÃO MODAL -->
-                            <a id="btn_forma_pagamento" class="text-white rounded py-2 px-3 text-decoration-none" style="background-color: #FD0146 !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <a id="btn_forma_pagamento" class="text-white rounded py-2 px-3 text-decoration-none"
+                                style="background-color: #FD0146 !important;" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
                                 Selecionar
                             </a>
                             <!-- FIM BOTÃO MODAL -->
@@ -298,18 +300,28 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <p class="modal-title fs-5 fw-semibold" id="exampleModalLabel">Pagar na
-                                                entrega</p>
+                                            <p class="modal-title fs-5 fw-semibold" id="exampleModalLabel">
+                                                Pagar na entrega
+                                            </p>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
+
+                                        <!-- CORPO MODAL -->
                                         <div class="modal-body">
-                                            <p class="text-secondary">Selecione a forma de pagamento para pagar na entrega:</p>
+
+                                            <p class="text-secondary">
+                                                Selecione a forma de pagamento para pagar na entrega:
+                                            </p>
+
+                                            <!-- FORMAS DE PAGAMENTO -->
                                             @foreach($data['formas_pagamento_loja'] as $forma_pagamento)
                                             <div class="form-check py-2">
                                                 <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                    id="{{$forma_pagamento->id}}" value="{{$forma_pagamento->nome}}">
-                                                <label class="form-check-label d-flex align-items-center" for="{{$forma_pagamento->id}}">
+                                                    id="{{$forma_pagamento->id}}" value="{{$forma_pagamento->id}}">
+
+                                                <label class="form-check-label d-flex align-items-center"
+                                                    for="{{$forma_pagamento->id}}">
                                                     <img src="{{ asset('storage/icones-forma-pagamento/' . $forma_pagamento->imagem . '.svg') }}"
                                                         alt="" width="30px">
                                                     <span class="ml-1 fw-semibold">
@@ -318,8 +330,11 @@
                                                 </label>
                                             </div>
                                             @endforeach
+                                            <!-- FIM FORMAS DE PAGAMENTO -->
 
                                         </div>
+                                        <!-- FIM CORPO MODAL -->
+
                                         <div class="modal-footer">
                                             <button type="button" class="" data-bs-dismiss="modal">Fechar</button>
                                         </div>
@@ -371,23 +386,36 @@
     @endif
 
     <script>
-        // Seleciona todos os inputs de radio
-        const radios = document.querySelectorAll('input[name="forma_pagamento"]');
-        
-        // Adiciona um event listener para cada radio
-        radios.forEach((radio) => {
-            radio.addEventListener('change', function() {
-                // Captura o valor do elemento selecionado
-                const selectedValue = document.querySelector('input[name="forma_pagamento"]:checked').value;
+    // Seleciona todos os inputs de radio
+    const radios = document.querySelectorAll('input[name="forma_pagamento"]');
 
-                // Exibe o valor no elemento com id "resultado"
-                document.getElementById('forma_pagamento_selecionada').innerText = selectedValue;
+    // Obtenha as formas de pagamento do PHP e converta para JSON
+    var formasPagamento = @json($data['formas_pagamento_loja']);
 
-                //Mudar valor de 'selecionar' para 'alterar'
-                document.getElementById('btn_forma_pagamento').innerText = 'Alterar';
-                
+    // Adiciona um event listener para cada radio
+    radios.forEach((radio) => {
+        radio.addEventListener('change', function() {
+
+            // Captura o valor do elemento selecionado
+            const selectedValue = document.querySelector('input[name="forma_pagamento"]:checked').value;
+
+            //Variável para exibir após sere selecionada
+            let formaPagamentoSelecionada = "";
+
+            formasPagamento.forEach(forma => {
+                if(selectedValue == forma.id){
+                    formaPagamentoSelecionada = forma.nome;
+                }
             });
+
+            // Exibe o valor no elemento com id "resultado"
+            document.getElementById('forma_pagamento_selecionada').innerText = formaPagamentoSelecionada;
+
+            //Mudar valor de 'selecionar' para 'alterar'
+            document.getElementById('btn_forma_pagamento').innerText = 'Alterar';
+
         });
+    });
     </script>
 
 </x-layout-cardapio>

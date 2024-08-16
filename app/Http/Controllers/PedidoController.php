@@ -204,7 +204,6 @@ class PedidoController extends Controller
     //CADASTRAR PEDIDOS WEB
     public function storeWeb(Request $request){
 
-        dd($request->input('forma_pagamento'));
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba'); 
 
@@ -271,7 +270,7 @@ class PedidoController extends Controller
         $pedido->cliente_id = $cliente_id;
         $pedido->loja_id = $loja_id;
         $pedido->is_pagamento_entrega = true;
-        $pedido->forma_pagamento_entrega_id = 1;
+        $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
         $pedido->total = $total_geral;
         $pedido->save();
 
