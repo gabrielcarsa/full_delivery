@@ -265,17 +265,19 @@
 
                                     <!-- FORMA PAGAMENTO -->
                                     @if($pedido->forma_pagamento_loja->id != null)
+
                                     <div class="d-flex align-items-center" style="font-size: 14px !important">
-                                        <img src="{{ asset('storage/icones-forma-pagamento/' .$data['pedido']->forma_pagamento_loja->imagem . '.svg') }}"
+                                        <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_loja->imagem . '.svg') }}"
                                             alt="" width="30px">
-                                        <p class="p-0 mx-1 my-0">{{$data['pedido']->forma_pagamento_loja->nome}}</p>
+                                        <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_loja->nome}}</p>
                                     </div>
 
                                     @else
+
                                     <div class="d-flex align-items-center" style="font-size: 14px !important">
-                                        <img src="{{ asset('storage/icones-forma-pagamento/' .$data['pedido']->forma_pagamento_foomy->imagem . '.svg') }}"
+                                        <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_foomy->imagem . '.svg') }}"
                                             alt="" width="30px">
-                                        <p class="p-0 mx-1 my-0">{{$data['pedido']->forma_pagamento_foomy->nome}}</p>
+                                        <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_foomy->nome}}</p>
                                     </div>
 
                                     @endif

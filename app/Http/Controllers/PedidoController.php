@@ -57,7 +57,7 @@ class PedidoController extends Controller
             'loja' => $loja,
             'pedidos' => $pedidos,
         ];
-
+    
         return view('pedido/painel_pedidos', compact('data'));    
     }
 
