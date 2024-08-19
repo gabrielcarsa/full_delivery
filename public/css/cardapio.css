@@ -2,6 +2,13 @@
     font-family: "Inter", sans-serif;
 }
 
+.bg-padrao{
+    background-color: #FD0146 !important;
+}
+.text-padrao{
+    color: #FD0146 !important;
+}
+
 .wallpaper-cardapio {
     background-color: #fd0146;
 }
@@ -31,8 +38,16 @@
     max-width: none;
 }
 
+.card-login{
+    width: 450px;
+}
+
 @media (max-width: 400px) {
     .texto-truncate-100w {
         max-width: 100px !important;
+    }
+
+    .card-login{
+        width: 250px;
     }
 }

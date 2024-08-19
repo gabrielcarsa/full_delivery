@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Cliente;
+use App\Models\Loja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,9 +18,13 @@ class ClienteAuthController extends Controller
         // Se já houver escolhido a loja e o consumo
         if($loja_id != null && $consumo_local_viagem != null){
 
+            //Loja
+            $loja = Loja::find($loja_id);
+
             $data = [
                 'loja_id' => $loja_id,
                 'consumo_local_viagem' => $consumo_local_viagem,
+                'loja' => $loja
             ];
             return view('cliente.login', compact('data'));
 
