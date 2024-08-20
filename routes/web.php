@@ -153,6 +153,7 @@ Route::middleware([
 
         //FORMAS DE PAGAMENTO LOJA
         Route::get('/forma-pagamento', [FormaPagamentoLojaController::class, 'index'])->name('forma_pagamento');
+        Route::post('/forma-pagamento/cadastrar', [FormaPagamentoLojaController::class, 'store'])->name('forma_pagamento.cadastrar');
 
 
 });

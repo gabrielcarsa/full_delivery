@@ -9,6 +9,7 @@ class FormaPagamentoLoja extends Model
 {
     use HasFactory;
     protected $table = 'forma_pagamento_loja';
+    public $timestamps = false;
 
     public function pedido()
     {

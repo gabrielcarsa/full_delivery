@@ -27,13 +27,14 @@
         <!-- HEADER -->
         <h2 class="my-3 fw-bolder fs-1">Formas de pagamento</h2>
         <!-- FIM HEADER -->
-        <p>Escolha quais formas de pagamento seus clientes podem usar</p>
 
         <!-- CARD FORMAS DE PAGAMENTO -->
         <div class="p-3 bg-white rounded border">
 
             <!-- FORM -->
-            <form action="" method="post">
+            <form action="{{ route('forma_pagamento.cadastrar') }}" method="post">
+                @csrf
+
                 <p>Selecione as formas de pagamento aceitas pela sua loja</p>
 
                 <!-- ROW -->
@@ -42,7 +43,8 @@
                     <!-- FORMAS DE PAGAMENTO -->
                     @foreach($data['formas_pagamento_loja'] as $forma_pagamento)
                     <div class="form-check col-md-6">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="formas_pagamento_loja[]"
+                            value="{{$forma_pagamento->id}}" id="flexCheckDefault" {{$forma_pagamento->is_ativo == true ? 'checked' : ''}}>
                         <label class="form-check-label d-flex align-items-center" for="flexCheckDefault">
                             <img src="{{ asset('storage/icones-forma-pagamento/' . $forma_pagamento->imagem . '.svg') }}"
                                 alt="" width="30px">
@@ -58,7 +60,7 @@
                 <!-- FIM ROW -->
 
                 <div class="d-flex justify-content-end w-100">
-                    <button type="submit" class="btn bg-primary">
+                    <button type="submit" class="btn bg-padrao text-white px-5 fw-semibold">
                         Salvar
                     </button>
                 </div>
