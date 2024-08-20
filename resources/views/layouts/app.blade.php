@@ -168,7 +168,7 @@
                                         <a class="dropdown-item" href="#">Vendas</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="">Formas de pagamento</a>
+                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">Formas de pagamento</a>
                                     </li>
                                 </ul>
                             </li>

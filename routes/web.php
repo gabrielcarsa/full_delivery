@@ -13,6 +13,7 @@ use App\Http\Controllers\CupomController;
 use App\Http\Controllers\ClienteAuthController;
 use App\Http\Controllers\ClienteEnderecoController;
 use App\Http\Controllers\CategoriaOpcionalController;
+use App\Http\Controllers\FormaPagamentoLojaController;
 
 
 /*
@@ -149,6 +150,9 @@ Route::middleware([
         Route::delete('/cupom/apagar/{id}', [CupomController::class, 'destroy'])->name('cupom.excluir');
         Route::get('/cupom/status', [CupomController::class, 'status'])->name('cupom.status');
         Route::get('/cupom/detalhes', [CupomController::class, 'show'])->name('cupom.show');
+
+        //FORMAS DE PAGAMENTO LOJA
+        Route::get('/forma-pagamento', [FormaPagamentoLojaController::class, 'index'])->name('forma_pagamento');
 
 
 });
