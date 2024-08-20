@@ -145,7 +145,7 @@ class CardapioController extends Controller
         }
     
         //Formas de pagamento da Loja
-        $formas_pagamento_loja = FormaPagamentoLoja::all();
+        $formas_pagamento_loja = FormaPagamentoLoja::where('loja_id', $loja_id)->where('is_ativo', true)->get();
 
         // Array para passar variaveis
         $data = [
