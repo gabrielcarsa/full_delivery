@@ -21,15 +21,11 @@ class CategoriaProdutoController extends Controller
         //Sessão do loja que está conectado
         $lojaIdConectado = session('lojaConectado')['id'];
 
-        $categorias = DB::table('categoria_produto as cp')
-        ->select(
-            'cp.*',
-            'r.nome as loja'
-        )
-        ->join('loja as r', 'r.id', '=', 'cp.loja_id')
-        ->orderBy('cp.ordem')
-        ->where('cp.loja_id', $lojaIdConectado)
+        $categorias = CategoriaProduto::where('loja_id', $lojaIdConectado)
+        ->with('loja', 'produto')
+        ->orderBy('ordem')
         ->get();
+
         return view('categoria_produto/listar', compact('categorias'));
     }
 

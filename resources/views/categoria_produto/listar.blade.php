@@ -34,7 +34,7 @@
                 </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn  bg-padrao text-white m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
                     href="{{ route('categoria_produto.novo') }}">
                     <span class="material-symbols-outlined mr-1">
                         add
@@ -66,7 +66,7 @@
 
                     <div class="col d-flex align-items-center justify-content-end p-0">
                         <button type="submit"
-                            class="btn btn-primary fw-semibold d-flex align-items-center justify-content-center py-1 m-0 w-100">
+                            class="btn bg-padrao text-white fw-semibold d-flex align-items-center justify-content-center py-1 m-0 w-100">
                             <span class="material-symbols-outlined mr-1">
                                 search
                             </span>
@@ -78,84 +78,236 @@
         </div>
         <!-- FIM HEADER TABLE -->
 
-        <!-- TABLE -->
+        <!-- CATEGORIAS E PRODUTOS -->
         @if(isset($categorias))
-        <table class="table table-padrao border-top table align-middle">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Ordem de exibição</th>
-                    <th scope="col">Loja</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
 
-                <!-- CATEGORIAS -->
-                @foreach ($categorias as $categoria)
-                <tr>
-                    <th scope="row">{{$categoria->id}}</th>
-                    <td><a class="btn btn-outline-primary"
-                            href="{{ route('produtos', ['categoria_produto_id' => $categoria->id]) }}">{{$categoria->nome}}</a>
-                    </td>
-                    <td>{{$categoria->descricao}}</td>
-                    <td>{{$categoria->ordem}}</td>
-                    <td>{{$categoria->loja}}</td>
-                    <td>
-                        <a href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}"
-                            class="acoes-listar text-decoration-none">
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span>
-                        </a>
-                        <a href="" data-bs-toggle="modal" class="acoes-listar text-danger"
-                            data-bs-target="#exampleModal{{$categoria->id}}">
-                            <span class="material-symbols-outlined">
-                                delete
-                            </span>
-                        </a>
-                    </td>
+        <!-- CATEGORIAS -->
+        @foreach ($categorias as $categoria)
+        <div class="my-3 p-0 bg-white border rounded">
 
-                    <!-- MODAL EXCLUIR -->
-                    <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                                        {{$categoria->nome}}?</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Essa ação é irreversível! Tem certeza?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                    <form action="{{ route('categoria_produto.excluir', ['id' => $categoria->id]) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Sim, eu
-                                            tenho</button>
-                                    </form>
+            <!-- HEADER CATEGORIA -->
+            <div class="border-bottom p-3 d-flex align-items-center justify-content-between">
 
-                                </div>
+                <!-- TITULO CATEGORIA -->
+                <div class="">
+                    <p class="m-0 text-secondary" style="font-size: 13px !important;">
+                        ID {{$categoria->id}}
+                    </p>
+                    <p class="m-0 fw-bold fs-5 d-flex align-items-center">
+                        {{$categoria->nome}}
+                        <span class="material-symbols-outlined mx-2"
+                            style="font-variation-settings: 'FILL' 1; font-size: 10px">
+                            circle
+                        </span>
+                        <span class="text-secondary fw-medium" style="font-size: 13px !important;">
+                            ordem de exibição: {{$categoria->ordem}}
+                        </span>
+                    </p>
+                </div>
+                <!-- FIM TITULO CATEGORIA -->
+
+                <!-- BTN DROPDOWN AÇÕES -->
+                <div class="dropdown d-flex justify-content-end">
+                    <button class="text-padrao" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}">
+                                Editar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="" data-bs-toggle="modal" class="acoes-listar text-danger"
+                                data-bs-target="#exampleModal{{$categoria->id}}">
+                                Excluir
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- FIM BTN DROPDOWN AÇÕES -->
+
+                <!-- MODAL EXCLUIR -->
+                <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
+                                    {{$categoria->nome}}?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Essa ação é irreversível! Tem certeza?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                <form action="{{ route('categoria_produto.excluir', ['id' => $categoria->id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Sim, eu
+                                        tenho</button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
-                    <!-- MODAL EXCLUIR -->
+                </div>
+                <!-- MODAL EXCLUIR -->
 
-                </tr>
-                @endforeach
-                <!-- FIM CATEGORIAS -->
+            </div>
+            <!-- FIM HEADER CATEGORIA -->
 
-            </tbody>
-        </table>
+            <!-- PRODUTOS -->
+            @foreach($categoria->produto as $produto)
+
+            @if($produto != null)
+            <div class="border-bottom d-flex align-items-start justify-content-between p-3">
+                <div class="d-flex relative">
+                    <!-- LOGO DESTACAR PRODUTO -->
+                    @if($produto->destacar == true)
+                    <div class="position-absolute start-0 top-0 bg-warning py-1 px-2 d-flex align-items-center rounded">
+                        <p class="text-white p-0 m-0" style="font-size: 13px !important;">
+                            DESTACADO
+                        </p>
+                    </div>
+                    @endif
+                    <!-- FIM LOGO DESTACAR PRODUTO -->
+
+                    <!-- IMAGEM PRODUTO -->
+                    <img src="{{ asset('storage/'.$categoria->loja->nome.'/imagens_produtos/'.$produto->imagem) }}"
+                        style="width: 120px;" class="">
+                    <!-- FIM IMAGEM PRODUTO -->
+
+                    <div class="px-2">
+                        <p class="m-0 fw-semibold">
+                            {{$produto->nome}}
+                        </p>
+                        <p class="text-truncate text-secondary m-0" style="max-width: 200px">
+                            {{$produto->descricao}}
+                        </p>
+                        <p class="text-truncate m-0">
+                            Serve {{$produto->quantidade_pessoa}}
+                            {{$produto->quantidade_pessoa == 1 ? 'pessoa' : 'pessoas'}}
+                        </p>
+                        <!-- se houver promoção -->
+                        @if($produto->preco_promocao != null)
+                        <div class="d-flex">
+                            <p class="fw-regular text-secondary text-truncate m-0 text-decoration-line-through">R$
+                                {{number_format($produto->preco, 2, ',', '.')}}</p>
+                            <p class="mx-2">por</p>
+                            <p class="fw-semibold text-truncate m-0">R$
+                                {{number_format($produto->preco_promocao, 2, ',', '.')}}</p>
+                        </div>
+                        <!-- se não houver promoção -->
+                        @else
+                        <p class="fw-semibold text-truncate">R$ {{number_format($produto->preco, 2, ',', '.')}}</p>
+                        @endif
+                    </div>
+
+                </div>
+
+                <!-- BTN DROPDOWN AÇÕES -->
+                <div class="dropdown d-flex justify-content-end">
+                    <button class="text-padrao" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="material-symbols-outlined">
+                            more_vert
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu p-0">
+                        <li>
+                            <a href="{{ route('categoria_opcional', ['produto_id' => $produto->id]) }}"
+                                class="dropdown-item">
+                                Opcionais
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a href="{{ route('produto.editar', ['id' => $produto->id]) }}" class="dropdown-item">
+                                Editar
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a href="{{ route('produto.promocao', ['id' => $produto->id]) }}" class="dropdown-item">
+                                Promoção
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="px-3">
+                            <!-- BTN DESTACAR PRODUTO -->
+                            <form action="{{ route('produto.destacar', ['id' => $produto->id]) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="">
+                                    Destacar
+                                </button>
+                            </form>
+                            <!-- FIM BTN DESTACAR PRODUTO -->
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{$produto->id}}"
+                                class="dropdown-item">
+                                Excluir
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- FIM BTN DROPDOWN AÇÕES -->
+
+                <!-- MODAL EXCLUIR PRODUTO -->
+                <div class="modal fade" id="exampleModal{{$produto->id}}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
+                                    {{$produto->nome}}?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Essa ação é irreversível! Tem certeza?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                <form action="{{ route('produto.excluir', ['id' => $produto->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Sim, eu
+                                        tenho</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIM MODAL EXCLUIR PRODUTO -->
+
+            </div>
+            @endif
+
+            @endforeach
+            <!-- FIM PRODUTOS -->
+
+        </div>
+        <!-- FIM CATEGORIAS -->
+        @endforeach
         @endif
-
+        <!-- FIM CATEGORIAS E PRODUTOS -->
     </div>
 
 </x-app-layout>
