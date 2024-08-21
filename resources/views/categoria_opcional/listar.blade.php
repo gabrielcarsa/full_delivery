@@ -67,6 +67,38 @@
                         </span>
                         Excluir categoria
                     </a>
+
+                    <!-- MODAL EXCLUIR -->
+                    <div class="modal fade" id="exampleModal{{$categoria_opcional->id}}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
+                                        {{$categoria_opcional->nome}}?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Essa ação é irreversível! Tem certeza?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                    <form
+                                        action="{{ route('categoria_opcional.excluir', ['id' => $categoria_opcional->id]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">
+                                            Sim, eu tenho
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIM MODAL EXCLUIR -->
                 </div>
             </div>
 
@@ -85,8 +117,7 @@
                                 edit
                             </span>
                         </a>
-                        <form action="{{ route('opcional_produto.excluir', ['id' => $opcional->id]) }}"
-                            method="POST">
+                        <form action="{{ route('opcional_produto.excluir', ['id' => $opcional->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="ml-3 text-danger text-decoration-none">
@@ -106,34 +137,5 @@
     </div>
     @endif
 
-     <!-- MODAL EXCLUIR -->
-     <div class="modal fade" id="exampleModal{{$categoria_opcional->id}}" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                            {{$categoria_opcional->nome}}?</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Essa ação é irreversível! Tem certeza?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                        <form action="{{ route('categoria_opcional.excluir', ['id' => $categoria_opcional->id]) }}"
-                            method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
-                                Sim, eu tenho
-                            </button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- FIM MODAL EXCLUIR -->
 
 </x-app-layout>
