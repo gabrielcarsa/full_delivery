@@ -10,6 +10,10 @@
 .text-padrao{
     color: #FD0146 !important;
 }
+.border-padrao{
+    border-color: #FD0146 !important;
+}
+
 
 .table-padrao th, td {
     background-color: #F3F4F6 !important;

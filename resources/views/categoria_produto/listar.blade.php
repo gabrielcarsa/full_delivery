@@ -34,12 +34,12 @@
                 </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn  bg-padrao text-white m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
                     href="{{ route('categoria_produto.novo') }}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>
-                    Cadastrar
+                    Categoria
                 </a>
             </div>
         </div>
@@ -106,59 +106,71 @@
                 </div>
                 <!-- FIM TITULO CATEGORIA -->
 
-                <!-- BTN DROPDOWN AÇÕES -->
-                <div class="dropdown d-flex justify-content-end">
-                    <button class="text-padrao" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="material-symbols-outlined">
-                            more_vert
+                <div class="d-flex align-items-center">
+                    <!-- ADD BTN -->
+                    <a class="btn border-padrao text-padrao mx-3 my-0 py-1 px-3 fw-semibold d-flex align-items-center justify-content-center"
+                        href="{{ route('produto.novo', ['categoria_produto_id' => $categoria->id]) }}">
+                        <span class="material-symbols-outlined mr-1">
+                            add
                         </span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}">
-                                Editar
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="" data-bs-toggle="modal" class="acoes-listar text-danger"
-                                data-bs-target="#exampleModal{{$categoria->id}}">
-                                Excluir
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- FIM BTN DROPDOWN AÇÕES -->
+                        Produto
+                    </a>
+                    <!-- FIM ADD BTN -->
 
-                <!-- MODAL EXCLUIR -->
-                <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                                    {{$categoria->nome}}?</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Essa ação é irreversível! Tem certeza?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                <form action="{{ route('categoria_produto.excluir', ['id' => $categoria->id]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Sim, eu
-                                        tenho</button>
-                                </form>
+                    <!-- BTN DROPDOWN AÇÕES -->
+                    <div class="dropdown d-flex justify-content-end">
+                        <button class="text-padrao" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-symbols-outlined">
+                                more_vert
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item"
+                                    href="{{ route('categoria_produto.editar', ['id' => $categoria->id]) }}">
+                                    Editar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="" data-bs-toggle="modal" class="acoes-listar text-danger"
+                                    data-bs-target="#exampleModal{{$categoria->id}}">
+                                    Excluir
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- FIM BTN DROPDOWN AÇÕES -->
 
+                    <!-- MODAL EXCLUIR -->
+                    <div class="modal fade" id="exampleModal{{$categoria->id}}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
+                                        {{$categoria->nome}}?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Essa ação é irreversível! Tem certeza?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                    <form action="{{ route('categoria_produto.excluir', ['id' => $categoria->id]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Sim, eu
+                                            tenho</button>
+                                    </form>
+
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- MODAL EXCLUIR -->
                 </div>
-                <!-- MODAL EXCLUIR -->
 
             </div>
             <!-- FIM HEADER CATEGORIA -->
