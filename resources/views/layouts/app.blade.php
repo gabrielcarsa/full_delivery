@@ -66,14 +66,28 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('pedido.painel') }}" target="_blank"
-                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('pedido.painel') ? 'nav-link-active' : 'nav-link-desactive'}} text-black">
+                            <!-- Nav Item - ENTREGAS DROPEND -->
+                            <li class="nav-item dropend">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
+                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <span class="material-symbols-outlined">
                                         receipt_long
                                     </span>
                                     <span class="ml-1 d-none d-sm-inline">Pedidos</span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('pedido.painel') }}" target="_blank">
+                                            Gestor de Pedidos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('mesa.painel') }}" target="_blank">
+                                            Gestor de Mesas
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <li class="nav-item">
@@ -168,7 +182,8 @@
                                         <a class="dropdown-item" href="#">Vendas</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">Formas de pagamento</a>
+                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">Formas de
+                                            pagamento</a>
                                     </li>
                                 </ul>
                             </li>

@@ -14,6 +14,7 @@ use App\Http\Controllers\ClienteAuthController;
 use App\Http\Controllers\ClienteEnderecoController;
 use App\Http\Controllers\CategoriaOpcionalController;
 use App\Http\Controllers\FormaPagamentoLojaController;
+use App\Http\Controllers\MesaController;
 
 
 /*
@@ -155,5 +156,6 @@ Route::middleware([
         Route::get('/forma-pagamento', [FormaPagamentoLojaController::class, 'index'])->name('forma_pagamento');
         Route::post('/forma-pagamento/cadastrar', [FormaPagamentoLojaController::class, 'store'])->name('forma_pagamento.cadastrar');
 
-
+        //PEDIDO
+        Route::get('/mesas', [MesaController::class, 'painel'])->name('mesa.painel');
 });
