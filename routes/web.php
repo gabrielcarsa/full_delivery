@@ -134,7 +134,7 @@ Route::middleware([
         Route::delete('/cliente/apagar/{id}', [ClienteController::class, 'destroy'])->name('cliente.excluir');
 
         //PEDIDO
-        Route::get('/pedido', [PedidoController::class, 'painel'])->name('pedido.painel');
+        Route::get('/gestor-pedidos', [PedidoController::class, 'painel'])->name('pedido.painel');
         Route::get('/pedido/novo-simulador', [PedidoController::class, 'create'])->name('pedido.novo');
         Route::post('/pedido/cadastrar', [PedidoController::class, 'store'])->name('pedido.cadastrar');
         Route::get('/pedido/detalhes', [PedidoController::class, 'show'])->name('pedido.show');
@@ -156,6 +156,10 @@ Route::middleware([
         Route::get('/forma-pagamento', [FormaPagamentoLojaController::class, 'index'])->name('forma_pagamento');
         Route::post('/forma-pagamento/cadastrar', [FormaPagamentoLojaController::class, 'store'])->name('forma_pagamento.cadastrar');
 
-        //PEDIDO
-        Route::get('/mesas', [MesaController::class, 'painel'])->name('mesa.painel');
+        //MESA
+        Route::get('/mesa', [MesaController::class, 'index'])->name('mesa');
+        Route::get('/gestor-mesas', [MesaController::class, 'gestor'])->name('mesa.painel');
+        Route::get('/mesa/novo', [MesaController::class, 'create'])->name('mesa.novo');
+        Route::post('/mesa/cadastrar', [MesaController::class, 'store']);
+
 });

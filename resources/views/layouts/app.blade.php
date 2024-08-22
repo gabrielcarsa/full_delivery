@@ -66,7 +66,7 @@
                                 </a>
                             </li>
 
-                            <!-- Nav Item - ENTREGAS DROPEND -->
+                            <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
                             <li class="nav-item dropend">
                                 <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
                                     href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
@@ -110,14 +110,29 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('loja') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
-                                    href="{{ route('loja') }}">
+
+                            <!-- Nav Item - LOJAS DROPEND -->
+                            <li class="nav-item dropend">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
+                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     <span class="material-symbols-outlined">
                                         storefront
                                     </span>
                                     <span class="ml-1 d-none d-sm-inline">Loja</span>
                                 </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('loja') }}">
+                                            Minhas Lojas
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('mesa') }}">
+                                            Gestor de Mesas
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
                             <!-- Nav Item - ENTREGAS DROPEND -->
