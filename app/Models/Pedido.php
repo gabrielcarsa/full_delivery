@@ -46,8 +46,8 @@ class Pedido extends Model
         return $this->hasOne(UsoCupom::class);
     }
 
-    /*public function produto()
+    public function mesa()
     {
-        return $this->hasManyThrough(Produto::class, ItemPedido::class, 'pedido_id', 'id', 'id', 'produto_id'); //MUITOS PARA MUITOS (um produto pode ter muitos pedidos e um pedido por ter muitos produtos)
-    }*/
+        return $this->hasOne(Mesa::class);
+    }
 }

@@ -41,4 +41,9 @@ class Loja extends Model
      {
         return $this->hasMany(Cupom::class);
      }
+
+     public function mesa()
+     {
+        return $this->hasMany(Mesa::class);
+     }
 }
