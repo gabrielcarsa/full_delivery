@@ -339,7 +339,6 @@
 
         <!-- FIM PEDIDOS -->
 
-        </main>
     </div>
 
     @stack('modals')
