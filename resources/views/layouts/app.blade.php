@@ -129,7 +129,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('mesa') }}">
-                                            Gestor de Mesas
+                                            Cadastro de Mesas
                                         </a>
                                     </li>
                                 </ul>
