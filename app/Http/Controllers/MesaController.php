@@ -55,4 +55,11 @@ class MesaController extends Controller
         return redirect()->back();
 
     }
+
+     //EXCLUIR
+     public function destroy($id){
+        $mesa = Mesa::find($id);
+        $mesa->delete();
+        return redirect()->back()->with('success', 'Mesa excluída com sucesso');
+    }
 }

@@ -2,26 +2,61 @@
 
     <div class="container">
 
-        <!-- MENSAGENS -->
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="toast-container position-fixed top-0 end-0">
+            @if(session('success'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        check_circle
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('success') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('error') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        @foreach ($errors->all() as $error)
+                        <p class="fs-5 m-0">
+                            {{ $error }}
+                        </p>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
         </div>
-        @endif
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         <!-- FIM MENSAGENS -->
 
         <!-- HEADER -->
@@ -91,10 +126,73 @@
 
         <!-- MESAS -->
         @if($data['mesas'] != null)
-        @foreach($data['mesas'] as $mesa)
-        {{$mesa->nome}}
-        @endforeach
+        <!-- TABLE -->
+        <table class="table table-padrao border-top table align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Mesa</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- MESAS -->
+                @foreach($data['mesas'] as $mesa)
+                <tr>
+                    <td class="text-secondary">#{{$mesa->id}}</td>
+                    <td class="fw-semibold">{{$mesa->nome}}</td>
+                    <td>
+                        <a href="" data-bs-toggle="modal" class="acoes-listar text-danger"
+                            data-bs-target="#exampleModal{{$mesa->id}}">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </a>
+                    </td>
+
+                    <!-- MODAL EXCLUIR -->
+                    <div class="modal fade" id="exampleModal{{$mesa->id}}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title fs-5" id="exampleModalLabel">
+                                        Excluir {{$mesa->nome}}?
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Essa ação é irreversível! Tem certeza?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                    <form action="{{ route('mesa.excluir', ['id' => $mesa->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">
+                                            Sim, eu tenho
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL EXCLUIR -->
+
+                </tr>
+                @endforeach
+                <!-- FIM MESAS -->
+
+            </tbody>
+        </table>
+        <!-- FIM TABLE -->
+
         @endif
+        <!-- FIM MESAS -->
 
     </div>
+
 </x-app-layout>
