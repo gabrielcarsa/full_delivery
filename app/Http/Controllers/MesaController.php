@@ -26,7 +26,19 @@ class MesaController extends Controller
     }
 
     public function gestor(){
-        return view('mesa/gestor');
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar os pedidos');
+        }
+
+        $loja_id = session('lojaConectado')['id'];
+        $mesas = Mesa::where('loja_id', $loja_id)->get();
+
+        $data = [
+            'mesas' => $mesas,
+        ];
+        return view('mesa/gestor', compact('data'));
     }
 
     public function store(Request $request){

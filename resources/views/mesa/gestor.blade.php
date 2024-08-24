@@ -35,20 +35,116 @@
 
     <div class="min-h-screen bg-gray-100">
         @livewire('navigation-menu')
-        
 
-        <div class="d-flex">
-            <div class="d-flex">
-                <a class="d-flex align-items-center p-2 border rounded text-decoration-none text-center text-secondary"
-                    href="">
-                    <span class="material-symbols-outlined text-success" style="font-variation-settings: 'FILL' 1;">
+        <div class="container">
+
+            <!-- FILTROS -->
+            <div class="d-flex my-3">
+
+                <a href="" class="d-flex align-items-center fs-6 py-2 px-4 rounded border text-decoration-none mx-1">
+                    <span class="material-symbols-outlined text-success mr-1" style="font-variation-settings:'FILL' 1;">
                         circle
                     </span>
-                    <span>
-                        Disponíveis
+                    <span class="fw-semibold text-black">
+                        Disponível
                     </span>
                 </a>
+
+                <a href="" class="d-flex align-items-center fs-6 py-2 px-4 rounded border text-decoration-none mx-1">
+                    <span class="material-symbols-outlined text-warning mr-1" style="font-variation-settings:'FILL' 1;">
+                        circle
+                    </span>
+                    <span class="fw-semibold text-black">
+                        Ocupado
+                    </span>
+                </a>
+
+
             </div>
+            <!-- FIM FILTROS -->
+
+            <!-- GRID GESTOR PEDIDOS-->
+            <div class="row">
+
+                <!-- COLUNA MESAS -->
+                <div class="col-md-4">
+
+                    <!-- GRID MESAS -->
+                    <div class="row g-3">
+                        @if($data['mesas'] != null)
+
+                        <!-- MESA -->
+                        @foreach($data['mesas'] as $mesa)
+
+                        <!-- CARD MESA -->
+                        <div class="col-5 bg-white p-3 border mx-1 rounded">
+
+                            <!-- HEADER CARD MESA -->
+                            <div class="d-flex align-items-center justify-content-between">
+                                <p class="fw-bold fs-4 m-0">
+                                    Mesa {{$mesa->nome}}
+                                </p>
+                                <span class="material-symbols-outlined fs-3 text-success d-flex justify-items-between"
+                                    style="font-variation-settings:'FILL' 1;">
+                                    circle
+                                </span>
+                            </div>
+                            <!-- FIM HEADER CARD MESA -->
+
+                            <!-- CORPO CARD MESA -->
+                            <div class="d-flex align-items-center justify-content-between mt-3">
+                                <div>
+                                    <p class="text-secondary fs-6 m-0">
+                                        Tempo
+                                    </p>
+                                    <p class="fw-semibold fs-6 m-0">
+                                        @if($mesa->hora_abertura != null)
+                                        {{$mesa->hora_abertura}}
+                                        @else
+                                        00h00m
+                                        @endif
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="text-secondary fs-6 m-0">
+                                        Total
+                                    </p>
+                                    <p class="fw-semibold fs-6 m-0">
+                                        R$ 0,00
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- FIM CORPO CARD MESA -->
+
+                        </div>
+                        <!-- FIM CARD MESA -->
+
+                        @endforeach
+                        <!-- FIM MESA -->
+
+                        @endif
+                    </div>
+                    <!-- FIM GRID MESAS -->
+
+                </div>
+                <!-- FIM COLUNA MESAS -->
+
+                <div class="col-md-8">
+                    <div class="bg-white border rounded p-3 d-flex align-items-center justify-content-center">
+                        <div>
+                            <h4 class="m-0">
+                                Nenhuma mesa selecionada
+                            </h4>
+                            <p>
+                                Clique sobre uma mesa para visualizar detalhes
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- FIM GRID GESTOR PEDIDOS-->
+
         </div>
 
     </div>
