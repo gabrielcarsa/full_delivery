@@ -131,6 +131,15 @@
 
                 <div class="col-md-8">
                     <div class="bg-white border rounded p-3 d-flex align-items-center justify-content-center">
+
+                        <!-- MESA DETALHE -->
+                        @if(isset($data['mesa']))
+                        <x-show-mesa :mesa="$data['mesa']" />
+
+                        <!-- FIM MESA DETALHE -->
+                         
+                        @else
+
                         <div>
                             <h4 class="m-0">
                                 Nenhuma mesa selecionada
@@ -139,7 +148,7 @@
                                 Clique sobre uma mesa para visualizar detalhes
                             </p>
                         </div>
-
+                        @endif
                     </div>
                 </div>
             </div>
