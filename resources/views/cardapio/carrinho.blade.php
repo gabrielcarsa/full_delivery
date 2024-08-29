@@ -41,8 +41,39 @@
 
         <div class="p-3 mt-3">
 
+            <!-- IF MESA -->
+            @if($data['consumo_local_viagem'] == 1)
+            <h4 class="m-0 fs-5 fw-bold pt-3">
+                Preencha os campos
+            </h4>
+
+            <div class="form-floating my-1">
+                <input type="text" name="nome_cliente" class="form-control" id="floatingInput"
+                    placeholder="name@example.com">
+                <label for="floatingInput">Seu nome</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>-- Selecione --</option>
+                    @foreach($data['mesas'] as $mesa)
+                    <option value="{{$mesa->id}}">Mesa {{$mesa->nome}}</option>
+                    @endforeach
+                </select>
+                <label for="floatingSelect">Sua mesa</label>
+            </div>
+            @endif
+            <!-- FIM IF MESA -->
+
+
+            <!-- IF ENDEREÇO ENTREGA -->
+            @if($data['consumo_local_viagem'] == 3)
+
             <!-- ROW ENDEREÇO -->
-            <h4 class="m-0 fs-5 fw-bold pt-3">Entrega em</h4>
+            <h4 class="m-0 fs-5 fw-bold pt-3">
+                Entrega em
+            </h4>
+
+            <!-- ENDEREÇO -->
             <div class="d-flex">
                 <!-- ICONE LOCALIZACAO -->
                 <div>
@@ -99,11 +130,15 @@
 
             </div>
             <!-- FIM ENDEREÇO -->
+
             @if ($errors->has('enderecoVazio'))
             <p class="m-0 fs-6 text-danger">
                 {{ $errors->first('enderecoVazio') }}
             </p>
             @endif
+
+            @endif
+            <!-- FIM IF ENDEREÇO ENTREGA -->
 
             <div class="row">
                 <!-- ITENS -->
@@ -271,6 +306,7 @@
                     <!-- FIM TOTAIS -->
 
                     <!-- FORMA DE PAGAMENTO -->
+                    @if($data['consumo_local_viagem'] == 3)
                     <div>
                         <h3 class="fw-bolder fs-3">Formas de pagamento</h3>
                         <div class="p-3 border rounded">
@@ -346,6 +382,7 @@
                         </div>
                     </div>
                     <!-- FIM FORMA DE PAGAMENTO -->
+                    @endif
 
                 </div>
                 <!-- FIM RESUMO -->
@@ -403,13 +440,14 @@
             let formaPagamentoSelecionada = "";
 
             formasPagamento.forEach(forma => {
-                if(selectedValue == forma.id){
+                if (selectedValue == forma.id) {
                     formaPagamentoSelecionada = forma.nome;
                 }
             });
 
             // Exibe o valor no elemento com id "resultado"
-            document.getElementById('forma_pagamento_selecionada').innerText = formaPagamentoSelecionada;
+            document.getElementById('forma_pagamento_selecionada').innerText =
+                formaPagamentoSelecionada;
 
             //Mudar valor de 'selecionar' para 'alterar'
             document.getElementById('btn_forma_pagamento').innerText = 'Alterar';

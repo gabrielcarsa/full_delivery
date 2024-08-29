@@ -10,6 +10,7 @@ use App\Models\Produto;
 use App\Models\OpcionalProduto;
 use App\Models\ClienteEndereco;
 use App\Models\FormaPagamentoLoja;
+use App\Models\Mesa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -87,66 +88,76 @@ class CardapioController extends Controller
 
         $taxa_entrega = null;
         $distancia = null;
-
-        /*
-        --- Calcular Entrega ---
-        */
-        if($endereco_selecionado != null){
-
-            $loja = Loja::find($loja_id);
-            $cliente_endereco = ClienteEndereco::find($endereco_selecionado);
-
-            // Variáveis para calcular distância
-            $origem = $loja->cep;
-            $destino = $cliente_endereco->cep; 
-            $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
-
-            // Obtendo a distância em metros
-            $distancia = DistanciaEntregaHelper::getDistance($origem, $destino, $apiKey);
-
-            // Taxa de entrega gratuita
-            if($loja->is_taxa_entrega_free == true){
-                $taxa_entrega = 0;
-
-            // Taxa de entrega calculada por km
-            }elseif($loja->taxa_por_km_entrega != null){
-
-                // Verificar se deu certo a requisição
-                if ($distancia !== false) {
-
-                    // se distancia for maior que 1 km
-                    if($distancia >= 1000){
-                        $distancia_km = $distancia / 1000;
-                        $taxa_entrega = $distancia_km * $loja->taxa_por_km_entrega;
-
-                    }else{
-                        $taxa_entrega = $loja->taxa_por_km_entrega;
-                    
-                    }
-
-                }else{
-                    $taxa_entrega = 'Erro: favor contate o suporte';
-                }
-
-            // Taxa de entrega fixa
-            }elseif($loja->taxa_entrega_fixa != null){
-                $taxa_entrega = $loja->taxa_entrega_fixa;
-            }
-        }
-
         $cliente_enderecos = null;
+        $mesas = null;
 
-        //Enderecos Clientes
-        if( Auth::guard('cliente')->user()){
-            $cliente_id = Auth::guard('cliente')->user()->id;
-            $cliente_enderecos = ClienteEndereco::where('cliente_id', $cliente_id)->get();
-        }else{
-            return redirect()->route('cliente.login', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
-        }
-    
         //Formas de pagamento da Loja
         $formas_pagamento_loja = FormaPagamentoLoja::where('loja_id', $loja_id)->where('is_ativo', true)->get();
 
+        // Para comer no local
+        if($consumo_local_viagem == 1){
+            //Mesas
+            $mesas = Mesa::where('loja_id', $loja_id)->get();
+
+        // Para delivery
+        }if($consumo_local_viagem == 3){
+
+            //Enderecos Clientes
+            if( Auth::guard('cliente')->user()){
+                $cliente_id = Auth::guard('cliente')->user()->id;
+                $cliente_enderecos = ClienteEndereco::where('cliente_id', $cliente_id)->get();
+            }else{
+                return redirect()->route('cliente.login', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
+            }
+
+            /*
+            --- Calcular Entrega ---
+            */
+            if($endereco_selecionado != null){
+
+                $loja = Loja::find($loja_id);
+                $cliente_endereco = ClienteEndereco::find($endereco_selecionado);
+
+                // Variáveis para calcular distância
+                $origem = $loja->cep;
+                $destino = $cliente_endereco->cep; 
+                $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
+
+                // Obtendo a distância em metros
+                $distancia = DistanciaEntregaHelper::getDistance($origem, $destino, $apiKey);
+
+                // Taxa de entrega gratuita
+                if($loja->is_taxa_entrega_free == true){
+                    $taxa_entrega = 0;
+
+                // Taxa de entrega calculada por km
+                }elseif($loja->taxa_por_km_entrega != null){
+
+                    // Verificar se deu certo a requisição
+                    if ($distancia !== false) {
+
+                        // se distancia for maior que 1 km
+                        if($distancia >= 1000){
+                            $distancia_km = $distancia / 1000;
+                            $taxa_entrega = $distancia_km * $loja->taxa_por_km_entrega;
+
+                        }else{
+                            $taxa_entrega = $loja->taxa_por_km_entrega;
+                        
+                        }
+
+                    }else{
+                        $taxa_entrega = 'Erro: favor contate o suporte';
+                    }
+
+                // Taxa de entrega fixa
+                }elseif($loja->taxa_entrega_fixa != null){
+                    $taxa_entrega = $loja->taxa_entrega_fixa;
+                }
+            }
+        }
+
+        
         // Array para passar variaveis
         $data = [
             'consumo_local_viagem' => $consumo_local_viagem,
@@ -156,6 +167,7 @@ class CardapioController extends Controller
             'distancia' => $distancia,
             'cliente_enderecos' => $cliente_enderecos,
             'formas_pagamento_loja' => $formas_pagamento_loja,
+            'mesas' => $mesas,
         ];
    
         return view('cardapio/carrinho', compact('carrinho', 'data'));
