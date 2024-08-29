@@ -133,7 +133,7 @@
                 <div class="col-md-8">
                     <div class="bg-white border rounded p-3">
                         <!-- LOJA -->
-                        <div class="border-bottom pb-3">
+                        <div class="">
                             <h4 class="p-0 m-0 fs-3 fw-bold">
                                 {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : '---'}}
                             </h4>
