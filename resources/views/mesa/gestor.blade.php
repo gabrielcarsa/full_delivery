@@ -77,7 +77,8 @@
                         @foreach($data['mesas'] as $mesa)
 
                         <!-- CARD MESA -->
-                        <div class="col-5 bg-white p-3 border mx-1 rounded">
+                        <a href="{{ route('mesa.show', ['id' => $mesa->id]) }}"
+                            class="col-5 bg-white p-3 border mx-1 rounded text-decoration-none text-black">
 
                             <!-- HEADER CARD MESA -->
                             <div class="d-flex align-items-center justify-content-between">
@@ -116,7 +117,7 @@
                             </div>
                             <!-- FIM CORPO CARD MESA -->
 
-                        </div>
+                        </a>
                         <!-- FIM CARD MESA -->
 
                         @endforeach
@@ -130,14 +131,28 @@
                 <!-- FIM COLUNA MESAS -->
 
                 <div class="col-md-8">
-                    <div class="bg-white border rounded p-3 d-flex align-items-center justify-content-center">
+                    <div class="bg-white border rounded p-3">
+                        <!-- LOJA -->
+                        <div class="border-bottom pb-3">
+                            <h4 class="p-0 m-0 fs-3 fw-bold">
+                                {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : '---'}}
+                            </h4>
+                            <a href="{{ route('loja') }}"
+                                class="d-flex align-items-center align-middle fs-6 text-decoration-none">
+                                <span class="material-symbols-outlined fs-6">
+                                    change_circle
+                                </span>
+                                <span>{{session('lojaConectado') != null ? 'Trocar loja': 'Selecionar loja'}}</span>
+                            </a>
+                        </div>
+                        <!-- FIM LOJA -->
 
                         <!-- MESA DETALHE -->
                         @if(isset($data['mesa']))
                         <x-show-mesa :mesa="$data['mesa']" />
 
                         <!-- FIM MESA DETALHE -->
-                         
+
                         @else
 
                         <div>
