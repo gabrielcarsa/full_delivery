@@ -60,6 +60,7 @@
         </div>
 
         @else
+        
         <!-- ETAPAS STATUS -->
         <div class="d-flex align-items-center bg-light rounded mb-3 mt-5 justify-content-between" style="height: 20px">
 
@@ -104,6 +105,8 @@
             <!-- FIM PEDIDO PREPARANDO -->
 
             <!-- PEDIDO ENTREGA -->
+            @if($data['pedido']->consumo_local_viagem_delivery == 3)
+
             @if($data['pedido']->status >= 2)
             <div class="bg-light rounded-circle"
                 style="height: 70px; width: 70px; background-color: #FD0146 !important">
@@ -125,6 +128,8 @@
                 <p class="text-truncate d-flex align-items-center justify-content-center"
                     style="font-size: 13px; max-width: 100px">A caminho</p>
             </div>
+            @endif
+
             @endif
             <!-- FIM PEDIDO ENTREGA -->
 
@@ -162,6 +167,7 @@
         @endif
 
         <!-- ENTREGA -->
+        @if($data['pedido']->consumo_local_viagem_delivery == 3)
         <div class="">
             <h3 class="fw-bolder fs-6">Endereço de entrega</h3>
             <p class="text-black m-0">
@@ -175,6 +181,7 @@
                 {{$data['pedido']->entrega->complemento}}
             </p>
         </div>
+        @endif
         <!-- FIM ENTREGA -->
 
         <!-- LISTA -->
@@ -314,6 +321,7 @@
                     </p>
                 </div>
             </div>
+            @if($data['pedido']->consumo_local_viagem_delivery == 3)
             <div class="d-flex">
                 <div class="d-flex align-items-center">
                     <p class="fs-6 text-dark m-0">
@@ -326,6 +334,7 @@
                     </p>
                 </div>
             </div>
+            @endif
             <div class="d-flex">
                 <div class="d-flex align-items-center">
                     <p class="fs-6 text-dark m-0">
@@ -354,6 +363,7 @@
         <!-- FIM TOTAIS -->
 
         <!-- PAGAMENTO -->
+        @if($data['pedido']->consumo_local_viagem_delivery == 3)
         <div class="mx-0 my-3">
 
             <!-- FORMA PAGAMENTO -->
@@ -384,7 +394,8 @@
 
 
         </div>
-        <!-- FIM ENTREGA -->
+        @endif
+        <!-- FIM PAGAMENTO -->
 
     </div>
     <!-- FIM CONTAINER -->
