@@ -385,6 +385,9 @@ class PedidoController extends Controller
             $pedido->save();
         }
 
+        // Apagando carrinho
+        Session::forget('carrinho');
+
         return redirect()->route('pedido.pedidoCliente', ['loja_id' => $loja_id, 'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery, 'endereco_selecionado' => $endereco_selecionado_id]);
 
     }
