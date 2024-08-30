@@ -18,7 +18,7 @@
             <p>
                 É necessário fazer login ou se cadastrar para acessar a área de clientes.
             </p>
-            <a href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}"
+            <a href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}"
                 class="btn bg-padrao text-white fw-semibold px-3 d-block">
                 Entrar
             </a>

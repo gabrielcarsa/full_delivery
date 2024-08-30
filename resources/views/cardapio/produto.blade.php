@@ -32,7 +32,7 @@
                 <hr>
                 <!-- FORM PRODUTO OPCINAL -->
                 <form
-                    action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem={{$data['consumo_local_viagem']}}&endereco_selecionado={{$data['endereco_selecionado']}}"
+                    action="/adicionar-carrinho/{{$produto->id}}?loja_id={{$data['loja_id']}}&consumo_local_viagem_delivery={{$data['consumo_local_viagem_delivery']}}&endereco_selecionado={{$data['endereco_selecionado']}}"
                     method="post">
                     @csrf
 

@@ -41,66 +41,63 @@
 
         <div class="p-3 mt-3">
 
-            <!-- MENSAGENS -->
-            <div class="toast-container position-fixed top-0 end-0">
-                @if(session('success'))
-                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-autohide="true">
-                    <div class="d-flex align-items-center p-3">
-                        <span class="material-symbols-outlined fs-1 text-padrao"
-                            style="font-variation-settings:'FILL' 1;">
-                            check_circle
-                        </span>
-                        <div class="toast-body">
-                            <p class="fs-5 m-0">
-                                {{ session('success') }}
-                            </p>
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
+          <!-- MENSAGENS -->
+          <div class="toast-container position-fixed top-0 end-0">
+            @if(session('success'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        check_circle
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('success') }}
+                        </p>
                     </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
                 </div>
-                @endif
-                @if (session('error'))
-                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-autohide="true">
-                    <div class="d-flex align-items-center p-3">
-                        <span class="material-symbols-outlined fs-1 text-padrao"
-                            style="font-variation-settings:'FILL' 1;">
-                            error
-                        </span>
-                        <div class="toast-body">
-                            <p class="fs-5 m-0">
-                                {{ session('error') }}
-                            </p>
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                </div>
-                @endif
-                @if ($errors->any())
-                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-autohide="true">
-                    <div class="d-flex align-items-center p-3">
-                        <span class="material-symbols-outlined fs-1 text-padrao"
-                            style="font-variation-settings:'FILL' 1;">
-                            error
-                        </span>
-                        <div class="toast-body">
-                            @foreach ($errors->all() as $error)
-                            <p class="fs-5 m-0">
-                                {{ $error }}
-                            </p>
-                            @endforeach
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                </div>
-                @endif
             </div>
-            <!-- FIM MENSAGENS -->
+            @endif
+            @if (session('error'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('error') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        @foreach ($errors->all() as $error)
+                        <p class="fs-5 m-0">
+                            {{ $error }}
+                        </p>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+        </div>
+        <!-- FIM MENSAGENS -->
 
             <div class="toast show mt-3" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-padrao">
@@ -131,7 +128,7 @@
             </div>
 
             <!-- IF MESA -->
-            @if($data['consumo_local_viagem'] == 1)
+            @if($data['consumo_local_viagem_delivery'] == 1)
             <h4 class="m-0 fs-5 fw-bold pt-3">
                 Preencha os campos
             </h4>
@@ -142,8 +139,7 @@
                 <label for="floatingInput">Seu nome</label>
             </div>
             <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelect" name="mesa_id"
-                    aria-label="Floating label select example">
+                <select class="form-select" id="floatingSelect" name="mesa_id" aria-label="Floating label select example">
                     <option selected>-- Selecione --</option>
                     @foreach($data['mesas'] as $mesa)
                     <option value="{{$mesa->id}}">Mesa {{$mesa->nome}}</option>
@@ -156,7 +152,7 @@
 
 
             <!-- IF ENDEREÇO ENTREGA -->
-            @if($data['consumo_local_viagem'] == 3)
+            @if($data['consumo_local_viagem_delivery'] == 3)
 
             <!-- ROW ENDEREÇO -->
             <h4 class="m-0 fs-5 fw-bold pt-3">
@@ -205,7 +201,7 @@
                         @if($endereco != $data['endereco_selecionado'])
                         <li>
                             <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
                                 <span class="fw-bold">
                                     {{$endereco->nome}}
                                 </span> - {{$endereco->rua}}
@@ -396,7 +392,7 @@
                     <!-- FIM TOTAIS -->
 
                     <!-- FORMA DE PAGAMENTO -->
-                    @if($data['consumo_local_viagem'] == 3)
+                    @if($data['consumo_local_viagem_delivery'] == 3)
                     <div>
                         <h3 class="fw-bolder fs-3">Formas de pagamento</h3>
                         <div class="p-3 border rounded">
@@ -487,7 +483,7 @@
         <input type="hidden" name="endereco_selecionado_id" value="{{ $data['endereco_selecionado']}}">
         <input type="hidden" name="taxa_entrega" value="{{ $data['taxa_entrega'] }}">
         <input type="hidden" name="loja_id" value="{{ $data['loja_id'] }}">
-        <input type="hidden" name="consumo_local_viagem" value="{{ $data['consumo_local_viagem'] }}">
+        <input type="hidden" name="consumo_local_viagem_delivery" value="{{ $data['consumo_local_viagem_delivery'] }}">
         <input type="hidden" name="total" value="{{ $data['taxa_entrega'] + $subtotal }}">
         <input type="hidden" name="distancia" value="{{ $data['distancia']}}">
 

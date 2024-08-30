@@ -102,6 +102,7 @@
                     </div>
                 </div>
                 <div class="d-flex">
+                    @if($data['consumo_local_viagem_delivery'] == 3)
                     <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1"
                         style="font-variation-settings: 'FILL' 1;">
                         location_on
@@ -109,6 +110,7 @@
                     <p class="m-0 p-0 text-secondary texto-truncate-100w text-truncate">
                         {{$pedido->entrega->rua}}, {{$pedido->entrega->numero}}
                     </p>
+                    @endif
                 </div>
             </div>
         </a>

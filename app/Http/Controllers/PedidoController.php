@@ -176,7 +176,7 @@ class PedidoController extends Controller
     public function indexPedidosCliente(Request $request){
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
         $endereco_selecionado = $request->get('endereco_selecionado');
 
         $cliente_id = null;
@@ -193,7 +193,7 @@ class PedidoController extends Controller
         
 
         $data = [
-            'consumo_local_viagem' => $consumo_local_viagem,
+            'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
             'loja_id' => $loja_id,
             'endereco_selecionado' => $endereco_selecionado,
         ];
@@ -211,7 +211,7 @@ class PedidoController extends Controller
         $endereco_selecionado_id = $request->input('endereco_selecionado_id');
         $taxa_entrega = $request->input('taxa_entrega');
         $loja_id = $request->input('loja_id');
-        $consumo_local_viagem = $request->input('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->input('consumo_local_viagem_delivery');
         $total_geral = $request->input('total');
         $distancia = $request->input('distancia');
         $nome_cliente = $request->input('nome_cliente');
@@ -228,13 +228,13 @@ class PedidoController extends Controller
         */
 
         // Se endereço não for selecionado
-        if($consumo_local_viagem == 3 && $endereco_selecionado_id == null){
+        if($consumo_local_viagem_delivery == 3 && $endereco_selecionado_id == null){
             $enderecoVazio = true;
             return redirect()->back()->withErrors(['enderecoVazio' => 'Por favor, selecione um endereço.']);
         }
 
         //Se mesa ou nome cliente não foi selecionado
-        if($consumo_local_viagem == 1){
+        if($consumo_local_viagem_delivery == 1){
             $validator = Validator::make($request->all(), [
                 'nome_cliente' => 'required|string|max:100',
                 'mesa_id' => 'required|min:1',
@@ -258,7 +258,7 @@ class PedidoController extends Controller
         //Verificar se loja está aberta
         if($loja->is_open != true){
             $data = [
-                'consumo_local_viagem' => $consumo_local_viagem,
+                'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
                 'loja_id' => $loja_id,
                 'endereco_selecionado' => $endereco_selecionado_id,
             ];
@@ -271,7 +271,7 @@ class PedidoController extends Controller
 
         $pedido = new Pedido();
         $pedido->status = 0;
-        $pedido->consumo_local_viagem_delivery = $consumo_local_viagem;//1. Local, 2. Viagem, 3. Delivery
+        $pedido->consumo_local_viagem_delivery_delivery = $consumo_local_viagem_delivery;//1. Local, 2. Viagem, 3. Delivery
         $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
         $pedido->is_simulacao = false;   
         $pedido->loja_id = $loja_id;
@@ -286,9 +286,9 @@ class PedidoController extends Controller
         }
 
         // Verificar local de consumo
-        if($consumo_local_viagem == 1){ // Verificar comer local
+        if($consumo_local_viagem_delivery == 1){ // Verificar comer local
             $pedido->mesa_id = $mesa_id;
-        }elseif($consumo_local_viagem == 3){ //Verificar delivery
+        }elseif($consumo_local_viagem_delivery == 3){ //Verificar delivery
             $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
         }
 
@@ -337,7 +337,7 @@ class PedidoController extends Controller
         --- Cadastro de entrega ---
         */
 
-        if($pedido->consumo_local_viagem_delivery == 3){
+        if($pedido->consumo_local_viagem_delivery_delivery == 3){
             $cliente_endereco = ClienteEndereco::find($endereco_selecionado_id);
             $entrega = new Entrega();
             $entrega->pedido_id = $pedido->id;
@@ -385,7 +385,7 @@ class PedidoController extends Controller
             $pedido->save();
         }
 
-        return redirect()->route('pedido.pedidoCliente', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado_id]);
+        return redirect()->route('pedido.pedidoCliente', ['loja_id' => $loja_id, 'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery, 'endereco_selecionado' => $endereco_selecionado_id]);
 
     }
 
@@ -393,7 +393,7 @@ class PedidoController extends Controller
     public function showWeb(Request $request){
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
         $endereco_selecionado = $request->get('endereco_selecionado');
 
         //Dados pedido
@@ -406,7 +406,7 @@ class PedidoController extends Controller
         ->first();
                 
         $data = [
-            'consumo_local_viagem' => $consumo_local_viagem,
+            'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
             'loja_id' => $loja_id,
             'endereco_selecionado' => $endereco_selecionado,
             'pedido' => $pedido,

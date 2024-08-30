@@ -13,17 +13,17 @@ class ClienteAuthController extends Controller
     {
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
 
         // Se já houver escolhido a loja e o consumo
-        if($loja_id != null && $consumo_local_viagem != null){
+        if($loja_id != null && $consumo_local_viagem_delivery != null){
 
             //Loja
             $loja = Loja::find($loja_id);
 
             $data = [
                 'loja_id' => $loja_id,
-                'consumo_local_viagem' => $consumo_local_viagem,
+                'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
                 'loja' => $loja
             ];
             return view('cliente.login', compact('data'));
@@ -40,14 +40,14 @@ class ClienteAuthController extends Controller
         if (Auth::guard('cliente')->attempt($credentials)) {
             //Variaveis via GET
             $loja_id = $request->get('loja_id');
-            $consumo_local_viagem = $request->get('consumo_local_viagem');
+            $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
 
             // Se já houver escolhido a loja e o consumo
-            if($loja_id != null && $consumo_local_viagem != null){
+            if($loja_id != null && $consumo_local_viagem_delivery != null){
 
                 return redirect()->route('cardapio', [
                     'loja_id' => $loja_id,
-                    'consumo_local_viagem' => $consumo_local_viagem,
+                    'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
                 ]);
 
             }

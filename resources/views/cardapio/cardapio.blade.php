@@ -52,53 +52,53 @@
     @elseif(!$data['categoria_produto']->isEmpty())
 
     <!-- DROPDOWN TROCAR CONSUMO -->
-    @if(!empty($data['consumo_local_viagem']))
+    @if(!empty($data['consumo_local_viagem_delivery']))
     <div class="d-flex justify-content-center m-0">
         <div class="dropdown m-0">
             <button class="dropdown-toggle fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                @if($data['consumo_local_viagem'] == 1)
+                @if($data['consumo_local_viagem_delivery'] == 1)
                 Comer no local
-                @elseif($data['consumo_local_viagem'] == 2)
+                @elseif($data['consumo_local_viagem_delivery'] == 2)
                 Para viagem
-                @elseif($data['consumo_local_viagem'] == 3)
+                @elseif($data['consumo_local_viagem_delivery'] == 3)
                 Para entrega
                 @else
                 Erro
                 @endif
             </button>
             <ul class="dropdown-menu">
-                @if($data['consumo_local_viagem'] != 1)
+                @if($data['consumo_local_viagem_delivery'] != 1)
                 <li>
                     <a class="dropdown-item"
-                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}">
+                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 1]) }}">
                         Comer no local
                     </a>
                 </li>
                 @endif
 
-                @if($data['consumo_local_viagem'] != 2)
+                @if($data['consumo_local_viagem_delivery'] != 2)
                 <li>
                     <a class="dropdown-item"
-                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}">
+                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 2]) }}">
                         Para viagem
                     </a>
                 </li>
                 @endif
 
-                @if($data['consumo_local_viagem'] != 3)
+                @if($data['consumo_local_viagem_delivery'] != 3)
 
                 @if (Route::has('login'))
                 @auth('cliente')
                 <li>
                     <a class="dropdown-item"
-                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
+                        href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}">
                         Para entrega
                     </a>
                 </li>
                 @else
                 <li>
                     <a class="dropdown-item"
-                        href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}">
+                        href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}">
                         Para entrega
                     </a>
                 </li>
@@ -211,7 +211,7 @@
             <!-- FIM INFORMAÇÕES LOJA -->
 
             <!-- ENDEREÇO ENTREGA SE HOUVER -->
-            @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
+            @if (Route::has('login') && $data['consumo_local_viagem_delivery'] == 3)
             @auth('cliente')
 
             <div class="d-flex align-items-center justify-content-center">
@@ -246,7 +246,7 @@
                             @if($endereco != $data['endereco_selecionado'])
                             <li>
                                 <a class="dropdown-item"
-                                    href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                    href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
                                     <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
                                     {{$endereco->numero}}
                                 </a>
@@ -278,7 +278,7 @@
             <div class="bg-white m-3 p-3 rounded border">
 
                 <!-- ENDEREÇO ENTREGA SE HOUVER -->
-                @if (Route::has('login') && $data['consumo_local_viagem'] == 3)
+                @if (Route::has('login') && $data['consumo_local_viagem_delivery'] == 3)
                 @auth('cliente')
 
                 <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
@@ -311,7 +311,7 @@
                         @if($endereco != $data['endereco_selecionado'])
                         <li>
                             <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
                                 <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
                                 {{$endereco->numero}}
                             </a>
@@ -425,7 +425,7 @@
     </div>
     <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
 
-    @if(empty($data['consumo_local_viagem']))
+    @if(empty($data['consumo_local_viagem_delivery']))
 
     <!-- SELECIONAR OPÇÃO -->
 
@@ -433,7 +433,7 @@
         <div class="px-3 py-4 m-3 border rounded shadow-sm" style="min-width: 300px">
             <p class="text-secondary text-center">Selecione uma opção</p>
             <div class="">
-                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 1]) }}"
+                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 1]) }}"
                     class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         storefront
@@ -442,7 +442,7 @@
                         Comer no local
                     </span>
                 </a>
-                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 2]) }}"
+                <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 2]) }}"
                     class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         room_service
@@ -453,7 +453,7 @@
                 </a>
                 @if (Route::has('login'))
                 @auth('cliente')
-                <a href=" {{route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}"
+                <a href=" {{route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}"
                     class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports
@@ -463,7 +463,7 @@
                     </span>
                 </a>
                 @else
-                <a href=" {{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}"
+                <a href=" {{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}"
                     class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
                     <span class="material-symbols-outlined mr-1">
                         sports_motorsports
@@ -517,7 +517,7 @@
                     <div class="col-md-6">
 
                         <!-- PRODUTO -->
-                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id, 'consumo_local_viagem' => $data['consumo_local_viagem'], 'endereco_selecionado' => $data['endereco_selecionado']]) }}"
+                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id, 'consumo_local_viagem_delivery' => $data['consumo_local_viagem_delivery'], 'endereco_selecionado' => $data['endereco_selecionado']]) }}"
                             class="text-decoration-none text-reset">
 
                             <!-- CARD PRODUTO -->

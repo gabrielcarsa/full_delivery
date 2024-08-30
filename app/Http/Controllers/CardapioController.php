@@ -23,7 +23,7 @@ class CardapioController extends Controller
 
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
         $endereco_selecionado = $request->get('endereco_selecionado');
 
         //Declarando variaveis zeradas
@@ -64,7 +64,7 @@ class CardapioController extends Controller
             'lojas' => $lojas,
             'horarios_funcionamento' => $horarios_funcionamento,
             'loja_id' => $loja_id,
-            'consumo_local_viagem' => $consumo_local_viagem,
+            'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
             'endereco_selecionado' => $endereco_selecionado,
             'cliente_enderecos' => $cliente_enderecos,
         ];
@@ -80,7 +80,7 @@ class CardapioController extends Controller
         
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
         $endereco_selecionado = $request->get('endereco_selecionado');
 
         //Carrinho
@@ -95,19 +95,19 @@ class CardapioController extends Controller
         $formas_pagamento_loja = FormaPagamentoLoja::where('loja_id', $loja_id)->where('is_ativo', true)->get();
 
         // Para comer no local
-        if($consumo_local_viagem == 1){
+        if($consumo_local_viagem_delivery == 1){
             //Mesas
             $mesas = Mesa::where('loja_id', $loja_id)->get();
 
         // Para delivery
-        }if($consumo_local_viagem == 3){
+        }if($consumo_local_viagem_delivery == 3){
 
             //Enderecos Clientes
             if( Auth::guard('cliente')->user()){
                 $cliente_id = Auth::guard('cliente')->user()->id;
                 $cliente_enderecos = ClienteEndereco::where('cliente_id', $cliente_id)->get();
             }else{
-                return redirect()->route('cliente.login', ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
+                return redirect()->route('cliente.login', ['loja_id' => $loja_id, 'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery, 'endereco_selecionado' => $endereco_selecionado]);
             }
 
             /*
@@ -160,7 +160,7 @@ class CardapioController extends Controller
         
         // Array para passar variaveis
         $data = [
-            'consumo_local_viagem' => $consumo_local_viagem,
+            'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
             'loja_id' => $loja_id,
             'taxa_entrega' => $taxa_entrega,
             'endereco_selecionado' => $endereco_selecionado,
@@ -177,7 +177,7 @@ class CardapioController extends Controller
     public function storeCarrinho(Request $request, $produto_id){
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
         $endereco_selecionado = $request->get('endereco_selecionado');
 
         // Pega os opcionais selecionados
@@ -216,7 +216,7 @@ class CardapioController extends Controller
         $request->session()->push('carrinho', $itensCarrinho);
 
         //Redirecionando com rota laravel
-        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id, 'consumo_local_viagem' => $consumo_local_viagem, 'endereco_selecionado' => $endereco_selecionado]);
+        return redirect()->action([CardapioController::class, 'index'], ['loja_id' => $loja_id, 'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery, 'endereco_selecionado' => $endereco_selecionado]);
     }
 
     // APAGAR CARRINHO
@@ -230,7 +230,7 @@ class CardapioController extends Controller
     public function showProduto(Request $request){
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
-        $consumo_local_viagem = $request->get('consumo_local_viagem');
+        $consumo_local_viagem_delivery = $request->get('consumo_local_viagem_delivery');
         $endereco_selecionado = $request->get('endereco_selecionado');
         $produto_id = $request->get('produto_id');
 
@@ -241,7 +241,7 @@ class CardapioController extends Controller
 
         // Array para passar variaveis
         $data = [
-            'consumo_local_viagem' => $consumo_local_viagem,
+            'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
             'loja_id' => $loja_id,
             'endereco_selecionado' => $endereco_selecionado,
         ];
