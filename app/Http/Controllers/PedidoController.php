@@ -203,7 +203,7 @@ class PedidoController extends Controller
 
     //CADASTRAR PEDIDOS WEB
     public function storeWeb(Request $request){
-
+dd( Auth::guard('cliente'));
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba'); 
 
@@ -215,6 +215,9 @@ class PedidoController extends Controller
         $consumo_local_viagem = $request->input('consumo_local_viagem');
         $total_geral = $request->input('total');
         $distancia = $request->input('distancia');
+        $nome_cliente = $request->input('nome_cliente');
+        $mesa_id = $request->input('mesa_id');
+
 
         $cliente_id = null;
         if( Auth::guard('cliente')->user()){
@@ -226,14 +229,19 @@ class PedidoController extends Controller
         */
 
         // Se endereço não for selecionado
-        if($endereco_selecionado_id == null){
+        if($consumo_local_viagem == 3 && $endereco_selecionado_id == null){
             $enderecoVazio = true;
             return redirect()->back()->withErrors(['enderecoVazio' => 'Por favor, selecione um endereço.']);
         }
+
+        //Se mesa ou nome cliente não foi selecionado
+        if($consumo_local_viagem == 1 && $nome_cliente == null){
+            $validator = Validator::make($request->all(), [
+                'nome_cliente' => 'required|string|max:100',
+                'mesa_id' => 'required|min:1',
+            ]);
+        }
         
-        $validator = Validator::make($request->all(), [
-            //todo
-        ]);
 
         // Se a validação falhar
         if ($validator->fails()) {
@@ -267,6 +275,10 @@ class PedidoController extends Controller
         $pedido->consumo_local_viagem_delivery = $consumo_local_viagem;//1. Local, 2. Viagem, 3. Delivery
         $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
         $pedido->is_simulacao = false;
+        
+        if($consumo_local_viagem == 1 ){
+
+        }
         $pedido->cliente_id = $cliente_id;
         $pedido->loja_id = $loja_id;
         $pedido->is_pagamento_entrega = true;

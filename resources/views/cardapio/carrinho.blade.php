@@ -41,6 +41,95 @@
 
         <div class="p-3 mt-3">
 
+            <!-- MENSAGENS -->
+            <div class="toast-container position-fixed top-0 end-0">
+                @if(session('success'))
+                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                    data-bs-autohide="true">
+                    <div class="d-flex align-items-center p-3">
+                        <span class="material-symbols-outlined fs-1 text-padrao"
+                            style="font-variation-settings:'FILL' 1;">
+                            check_circle
+                        </span>
+                        <div class="toast-body">
+                            <p class="fs-5 m-0">
+                                {{ session('success') }}
+                            </p>
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
+                @if (session('error'))
+                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                    data-bs-autohide="true">
+                    <div class="d-flex align-items-center p-3">
+                        <span class="material-symbols-outlined fs-1 text-padrao"
+                            style="font-variation-settings:'FILL' 1;">
+                            error
+                        </span>
+                        <div class="toast-body">
+                            <p class="fs-5 m-0">
+                                {{ session('error') }}
+                            </p>
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
+                @if ($errors->any())
+                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                    data-bs-autohide="true">
+                    <div class="d-flex align-items-center p-3">
+                        <span class="material-symbols-outlined fs-1 text-padrao"
+                            style="font-variation-settings:'FILL' 1;">
+                            error
+                        </span>
+                        <div class="toast-body">
+                            @foreach ($errors->all() as $error)
+                            <p class="fs-5 m-0">
+                                {{ $error }}
+                            </p>
+                            @endforeach
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
+            </div>
+            <!-- FIM MENSAGENS -->
+
+            <div class="toast show mt-3" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-padrao">
+                    <strong class="me-auto fw-bold text-white fs-6">Ganhe Descontos</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="p-3">
+                    <div class="d-flex align-items-center">
+                        <span class="material-symbols-outlined text-padrao mr-2"
+                            style="font-size: 40px; font-variation-settings: 'FILL' 1;">
+                            sell
+                        </span>
+                        <p class="m-0">
+                            Crie sua conta hoje e pague mais barato nos seus pedidos.
+                        </p>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="" class="btn bg-padrao text-white fw-semibold d-block">
+                            Quero pagar mais barato
+                        </a>
+
+                        <a href="" class="text-black d-block mt-2">
+                            Já tenho conta
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
             <!-- IF MESA -->
             @if($data['consumo_local_viagem'] == 1)
             <h4 class="m-0 fs-5 fw-bold pt-3">
@@ -53,7 +142,8 @@
                 <label for="floatingInput">Seu nome</label>
             </div>
             <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                <select class="form-select" id="floatingSelect" name="mesa_id"
+                    aria-label="Floating label select example">
                     <option selected>-- Selecione --</option>
                     @foreach($data['mesas'] as $mesa)
                     <option value="{{$mesa->id}}">Mesa {{$mesa->nome}}</option>
