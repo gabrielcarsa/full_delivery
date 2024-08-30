@@ -203,7 +203,6 @@ class PedidoController extends Controller
 
     //CADASTRAR PEDIDOS WEB
     public function storeWeb(Request $request){
-dd( Auth::guard('cliente'));
         //Definindo data para cadastrar
         date_default_timezone_set('America/Cuiaba'); 
 
@@ -235,7 +234,7 @@ dd( Auth::guard('cliente'));
         }
 
         //Se mesa ou nome cliente não foi selecionado
-        if($consumo_local_viagem == 1 && $nome_cliente == null){
+        if($consumo_local_viagem == 1){
             $validator = Validator::make($request->all(), [
                 'nome_cliente' => 'required|string|max:100',
                 'mesa_id' => 'required|min:1',
@@ -274,16 +273,25 @@ dd( Auth::guard('cliente'));
         $pedido->status = 0;
         $pedido->consumo_local_viagem_delivery = $consumo_local_viagem;//1. Local, 2. Viagem, 3. Delivery
         $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
-        $pedido->is_simulacao = false;
-        
-        if($consumo_local_viagem == 1 ){
-
-        }
-        $pedido->cliente_id = $cliente_id;
+        $pedido->is_simulacao = false;   
         $pedido->loja_id = $loja_id;
         $pedido->is_pagamento_entrega = true;
-        $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
         $pedido->total = $total_geral;
+
+        //Verificar usuário logado
+        if (Auth::guard('cliente')->check()) {
+            $pedido->cliente_id = $cliente_id;
+        } else {
+            $pedido->nome_cliente = $nome_cliente;
+        }
+
+        // Verificar local de consumo
+        if($consumo_local_viagem == 1){ // Verificar comer local
+            $pedido->mesa_id = $mesa_id;
+        }elseif($consumo_local_viagem == 3){ //Verificar delivery
+            $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
+        }
+
         $pedido->save();
 
 
