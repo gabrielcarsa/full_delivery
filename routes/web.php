@@ -45,10 +45,11 @@ Route::get('/pedido-cliente', [PedidoController::class, 'indexPedidosCliente'])-
 Route::post('/pedido-cliente/cadastrar-web', [PedidoController::class, 'storeWeb'])->name('pedido.cadastrarWeb');
 Route::get('/pedido-cliente/detalhes-pedido', [PedidoController::class, 'showWeb'])->name('pedido.showWeb');
 
+// CLIENTE AREA
+Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
 
 // CLIENTE CARDAPIO LOGADO
 Route::middleware('auth:cliente')->group(function () {
-    Route::get('cliente/area', [ClienteController::class, 'showClienteArea'])->name('cliente.area');
     Route::get('cliente/logout', [ClienteAuthController::class, 'logout'])->name('cliente.logout');
 
     // ENDERECO CLIENTE

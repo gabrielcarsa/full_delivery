@@ -5,6 +5,30 @@
     $cliente = Auth::guard('cliente')->user();
     @endphp
 
+    <!-- SE NÃO ESTIVER LOGADO -->
+    @if($cliente == null)
+    <div class="vh-100 d-flex align-items-center justify-content-center p-3">
+        <div>
+            <!-- IMAGEM LOJA -->
+            <div class="my-3">
+                <img src="{{ asset('storage/images/login.svg') }}"
+                    class="rounded-circle" style="width: 450px;">
+            </div>
+            <!-- FIM IMAGEM LOJA -->
+            <p>
+                É necessário fazer login ou se cadastrar para acessar a área de clientes.
+            </p>
+            <a href="{{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem' => 3]) }}"
+                class="btn bg-padrao text-white fw-semibold px-3 d-block">
+                Entrar
+            </a>
+            <a href="#" onclick="history.go(-1); return false;" class="text-black text-center d-block my-3">
+                Voltar
+            </a>
+        </div>
+    </div>
+
+    @else
     <!-- CONTAINER -->
     <div class="container">
 
@@ -55,7 +79,8 @@
 
             <!-- ITEM -->
             <li class="list-group-item">
-                <a href=" {{ route('cliente_endereco.listar', ['cliente_id' => $cliente->id]) }} " class="text-decoration-none">
+                <a href=" {{ route('cliente_endereco.listar', ['cliente_id' => $cliente->id]) }} "
+                    class="text-decoration-none">
                     <div class="row">
                         <div class="col-2 d-flex align-items-center justify-content-center">
                             <span class="material-symbols-outlined text-dark m-0 pr-3" style="font-size: 30px;">
@@ -198,6 +223,8 @@
 
     </div>
     <!-- FIM CONTAINER -->
+    @endif
+    <!-- FIM SE NÃO ESTIVER LOGADO -->
 
     <!-- MENU APPBAR -->
     <x-appbar-cardapio :data="$data" />
