@@ -3,14 +3,19 @@
     @if(empty($carrinho))
 
     <!-- CARRINHO VAZIO -->
-    <div class="vh-100 d-flex justify-content-center align-items-center">
-        <div class="m-5">
-            <span class="material-symbols-outlined" style="font-size: 60px;">
-                shopping_cart_off
-            </span>
-            <h3>Ops!</h3>
+    <div class="vh-100 d-flex align-items-center justify-content-center p-3">
+        <div>
+            <!-- IMAGEM SEM PEDIDOS -->
+            <div class="my-3">
+                <img src="{{ asset('storage/images/carrinho-vazio.svg') }}" style="width: 450px;">
+            </div>
+            <!-- FIM IMAGEM SEM PEDIDOS -->
+            <h3>Não deu uma fome?</h3>
             <p>Parece que seu carrinho está vazio!</p>
-            <a href="#" onclick="history.go(-1); return false;" class="btn bg-padrao text-white">Ir para cardápio</a>
+            <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => $data['consumo_local_viagem_delivery']]) }}"
+                class="btn bg-padrao text-white px-3 d-block">
+                Ir para cardápio
+            </a>
         </div>
     </div>
 
@@ -41,63 +46,66 @@
 
         <div class="p-3 mt-3">
 
-          <!-- MENSAGENS -->
-          <div class="toast-container position-fixed top-0 end-0">
-            @if(session('success'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('success') }}
-                        </p>
+            <!-- MENSAGENS -->
+            <div class="toast-container position-fixed top-0 end-0">
+                @if(session('success'))
+                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                    data-bs-autohide="true">
+                    <div class="d-flex align-items-center p-3">
+                        <span class="material-symbols-outlined fs-1 text-padrao"
+                            style="font-variation-settings:'FILL' 1;">
+                            check_circle
+                        </span>
+                        <div class="toast-body">
+                            <p class="fs-5 m-0">
+                                {{ session('success') }}
+                            </p>
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
                 </div>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('error') }}
-                        </p>
+                @endif
+                @if (session('error'))
+                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                    data-bs-autohide="true">
+                    <div class="d-flex align-items-center p-3">
+                        <span class="material-symbols-outlined fs-1 text-padrao"
+                            style="font-variation-settings:'FILL' 1;">
+                            error
+                        </span>
+                        <div class="toast-body">
+                            <p class="fs-5 m-0">
+                                {{ session('error') }}
+                            </p>
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
                 </div>
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        @foreach ($errors->all() as $error)
-                        <p class="fs-5 m-0">
-                            {{ $error }}
-                        </p>
-                        @endforeach
+                @endif
+                @if ($errors->any())
+                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                    data-bs-autohide="true">
+                    <div class="d-flex align-items-center p-3">
+                        <span class="material-symbols-outlined fs-1 text-padrao"
+                            style="font-variation-settings:'FILL' 1;">
+                            error
+                        </span>
+                        <div class="toast-body">
+                            @foreach ($errors->all() as $error)
+                            <p class="fs-5 m-0">
+                                {{ $error }}
+                            </p>
+                            @endforeach
+                        </div>
+                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
                     </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
                 </div>
+                @endif
             </div>
-            @endif
-        </div>
-        <!-- FIM MENSAGENS -->
+            <!-- FIM MENSAGENS -->
 
             <div class="toast show mt-3" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-padrao">
@@ -139,7 +147,8 @@
                 <label for="floatingInput">Seu nome</label>
             </div>
             <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelect" name="mesa_id" aria-label="Floating label select example">
+                <select class="form-select" id="floatingSelect" name="mesa_id"
+                    aria-label="Floating label select example">
                     <option selected>-- Selecione --</option>
                     @foreach($data['mesas'] as $mesa)
                     <option value="{{$mesa->id}}">Mesa {{$mesa->nome}}</option>

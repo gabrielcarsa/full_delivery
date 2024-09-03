@@ -9,12 +9,11 @@
     @if($cliente == null)
     <div class="vh-100 d-flex align-items-center justify-content-center p-3">
         <div>
-            <!-- IMAGEM LOJA -->
+            <!-- IMAGEM LOGIN -->
             <div class="my-3">
-                <img src="{{ asset('storage/images/login.svg') }}"
-                    class="rounded-circle" style="width: 450px;">
+                <img src="{{ asset('storage/images/login.svg') }}" style="width: 450px;">
             </div>
-            <!-- FIM IMAGEM LOJA -->
+            <!-- FIM IMAGEM LOGIN -->
             <p>
                 É necessário fazer login ou se cadastrar para acessar a área de clientes.
             </p>
