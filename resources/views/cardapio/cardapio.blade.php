@@ -149,7 +149,8 @@
                         <!-- VERIFICAR SE ESTÁ ABERTO -->
                         @if($data['categoria_produto'][0]->loja->is_open)
                         <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined mr-1 fs-6" style="font-variation-settings: 'FILL' 1;">
+                            <span class="material-symbols-outlined mr-1 fs-6"
+                                style="font-variation-settings: 'FILL' 1;">
                                 circle
                             </span>
                             <span>
@@ -173,8 +174,8 @@
                 <!-- FIM LOJA TITULO -->
 
                 <!-- ARROW INFOS -->
-                <a href="" class="d-flex justify-content-center text-decoration-none text-black mr-2" data-bs-toggle="modal"
-                    data-bs-target="#modalHorarios">
+                <a href="" class="d-flex justify-content-center text-decoration-none text-black mr-2"
+                    data-bs-toggle="modal" data-bs-target="#modalHorarios">
                     <span class="material-symbols-outlined">
                         chevron_right
                     </span>
@@ -488,16 +489,15 @@
         <div class="p-3 container">
 
             <!-- CATEGORIAS -->
-            <div class="bg-white rounded border shadow-sm overflow-x-scroll sticky-top w100">
-                <ul class="nav nav-tabs d-flex flex-nowrap py-3" id="category-nav">
-                    @foreach($data['categoria_produto'] as $categoria)
-                    <li class="nav-item">
-                        <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}" class="nav-link text-dark">
-                            {{$categoria->nome}}
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
+            <div class="bg-body-tertiary d-flex overflow-x-scroll sticky-top w100 mb-3 py-4" id="categorias-nav">
+                @foreach($data['categoria_produto'] as $categoria)
+                <div class="m-3">
+                    <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}"
+                        class="text-decoration-none text-black border border-black rounded px-3 py-2">
+                        {{$categoria->nome}}
+                    </a>
+                </div>
+                @endforeach
             </div>
             <!-- FIM CATEGORIAS -->
 
@@ -614,16 +614,21 @@
     });
     document.addEventListener('DOMContentLoaded', function() {
         const sections = document.querySelectorAll('.cardapio-lista h3');
-        const navItems = document.querySelectorAll('#category-nav .nav-link');
+        const navItems = document.querySelectorAll('#categorias-nav .text-decoration-none');
 
         function removeActiveClasses() {
-            navItems.forEach(item => item.classList.remove('active'));
+            navItems.forEach(item => item.classList.remove('bg-padrao'));
+            navItems.forEach(item => item.classList.remove('text-white'));
+            navItems.forEach(item => item.classList.remove('fw-semibold'));
         }
 
         function addActiveClass(id) {
             const navItem = document.querySelector(`#nav-${id}`);
             if (navItem) {
-                navItem.classList.add('active');
+                navItem.classList.add('bg-padrao');
+                navItem.classList.add('text-white');
+                navItem.classList.add('fw-semibold');
+
             }
         }
 
