@@ -102,7 +102,17 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    @if($data['consumo_local_viagem_delivery'] == 3)
+                    @if($pedido->consumo_local_viagem_delivery == 1)
+                    <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1"
+                        style="font-variation-settings: 'FILL' 1;">
+                        table_bar
+                    </span>
+                    <p class="m-0 p-0 text-secondary texto-truncate-100w text-truncate">
+                        Mesa {{$pedido->mesa->nome}}
+                    </p>
+                    @endif
+
+                    @if($pedido->consumo_local_viagem_delivery == 3)
                     <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1"
                         style="font-variation-settings: 'FILL' 1;">
                         location_on
@@ -112,6 +122,20 @@
                     </p>
                     @endif
                 </div>
+
+                <div class="d-flex">
+                    @if($pedido->cliente_id == null)
+                    <span class="material-symbols-outlined text-secondary d-flex align-items-center mr-1"
+                        style="font-variation-settings: 'FILL' 1;">
+                        person
+                    </span>
+                    <p class="m-0 p-0 text-secondary texto-truncate-100w text-truncate">
+                        {{$pedido->nome_cliente}}
+                    </p>
+                    @endif
+                </div>
+
+
             </div>
         </a>
         @endforeach

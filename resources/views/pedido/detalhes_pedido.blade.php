@@ -18,6 +18,7 @@
     <div class="container my-5">
 
         <!-- PREVISÃO -->
+        @if($data['pedido']->consumo_local_viagem_delivery == 3)
         <div class="py-3">
             <p class="text-secondary m-0">
                 Previsão de entrega
@@ -26,7 +27,34 @@
                 12:30 - 13:20
             </p>
         </div>
+        @endif
         <!-- FIM PREVISÃO -->
+
+        <!-- MESA E CLIENTE -->
+        @if($data['pedido']->consumo_local_viagem_delivery == 1)
+        <div class="py-3">
+            <p class="text-secondary m-0">
+                Mesa
+            </p>
+            <p class="text-black m-0 fs-5">
+                {{$data['pedido']->mesa->nome}}
+            </p>
+        </div>
+        @endif
+        <!-- FIM MESA E CLIENTE -->
+
+        <!-- CLIENTE NÃO LOGADO -->
+        @if($data['pedido']->cliente_id == null)
+        <div class="py-3">
+            <p class="text-secondary m-0">
+                Nome e sobrenome
+            </p>
+            <p class="text-black m-0 fs-5">
+                {{$data['pedido']->nome_cliente}}
+            </p>
+        </div>
+        @endif
+        <!-- FIM CLIENTE NÃO LOGADO -->
 
         <!--  LOJA -->
         <div class="d-flex border p-3 rounded">
@@ -60,7 +88,7 @@
         </div>
 
         @else
-        
+
         <!-- ETAPAS STATUS -->
         <div class="d-flex align-items-center bg-light rounded mb-3 mt-5 justify-content-between" style="height: 20px">
 

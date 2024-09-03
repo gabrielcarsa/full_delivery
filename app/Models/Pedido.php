@@ -48,6 +48,6 @@ class Pedido extends Model
 
     public function mesa()
     {
-        return $this->hasOne(Mesa::class);
+        return $this->belongsTo(Mesa::class);
     }
 }
