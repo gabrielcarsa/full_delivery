@@ -19,6 +19,7 @@ use App\Models\FormaPagamentoEntrega;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ClienteEndereco;
+use Illuminate\Support\Facades\Session;
 
 class PedidoController extends Controller
 {
@@ -183,14 +184,23 @@ class PedidoController extends Controller
 
         if( Auth::guard('cliente')->user()){
             $cliente_id = Auth::guard('cliente')->user()->id;
-        }
 
-        $pedidos = Pedido::where('loja_id', $loja_id)
-        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
-        ->orderBy('data_pedido', 'DESC')
-        ->where('cliente_id', $cliente_id)
-        ->get();
-        
+            $pedidos = Pedido::where('loja_id', $loja_id)
+            ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
+            ->orderBy('data_pedido', 'DESC')
+            ->where('cliente_id', $cliente_id)
+            ->get();
+        }else{
+
+            //Cliente não logado pegar mesa
+            $clienteNaoLogado = $request->session()->get('clienteNaoLogado');
+            
+            $pedidos = Pedido::where('loja_id', $loja_id)
+            ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
+            ->orderBy('data_pedido', 'DESC')
+            ->where('mesa_id', $clienteNaoLogado['mesa_id'])
+            ->get();
+        }        
 
         $data = [
             'consumo_local_viagem_delivery' => $consumo_local_viagem_delivery,
@@ -219,6 +229,8 @@ class PedidoController extends Controller
 
 
         $cliente_id = null;
+
+        //Se cliente estiver logado
         if( Auth::guard('cliente')->user()){
             $cliente_id = Auth::guard('cliente')->user()->id;
         }
@@ -271,18 +283,27 @@ class PedidoController extends Controller
 
         $pedido = new Pedido();
         $pedido->status = 0;
-        $pedido->consumo_local_viagem_delivery_delivery = $consumo_local_viagem_delivery;//1. Local, 2. Viagem, 3. Delivery
+        $pedido->consumo_local_viagem_delivery = $consumo_local_viagem_delivery;//1. Local, 2. Viagem, 3. Delivery
         $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
         $pedido->is_simulacao = false;   
         $pedido->loja_id = $loja_id;
         $pedido->is_pagamento_entrega = true;
         $pedido->total = $total_geral;
 
-        //Verificar usuário logado
+        //Verificar cliente logado
         if (Auth::guard('cliente')->check()) {
             $pedido->cliente_id = $cliente_id;
         } else {
             $pedido->nome_cliente = $nome_cliente;
+
+            //Para cliente não logado armazenar como sessão mesa e nome cliente para posteriormente exibir pedidos
+            $clienteNaoLogado = [
+                'mesa_id' => $mesa_id,
+                'nome_cliente' => $nome_cliente,
+            ];
+
+            // Adicionando o cliente na sessão
+            $request->session()->put('clienteNaoLogado', $clienteNaoLogado);
         }
 
         // Verificar local de consumo
