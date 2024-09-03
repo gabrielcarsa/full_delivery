@@ -10,7 +10,7 @@
             </span>
             <h3>Ops!</h3>
             <p>Parece que seu carrinho está vazio!</p>
-            <a href="#" onclick="history.go(-1); return false;" class="btn btn-primary">Ir para cardápio</a>
+            <a href="#" onclick="history.go(-1); return false;" class="btn bg-padrao text-white">Ir para cardápio</a>
         </div>
     </div>
 
