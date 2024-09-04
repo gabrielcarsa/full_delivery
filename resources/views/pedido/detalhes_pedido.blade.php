@@ -19,7 +19,7 @@
 
         <!-- PREVISÃO -->
         @if($data['pedido']->consumo_local_viagem_delivery == 3)
-        <div class="py-3">
+        <div class="py-1">
             <p class="text-secondary m-0">
                 Previsão de entrega
             </p>
@@ -32,7 +32,7 @@
 
         <!-- MESA E CLIENTE -->
         @if($data['pedido']->consumo_local_viagem_delivery == 1)
-        <div class="py-3">
+        <div class="py-1">
             <p class="text-secondary m-0">
                 Mesa
             </p>
@@ -45,7 +45,7 @@
 
         <!-- CLIENTE NÃO LOGADO -->
         @if($data['pedido']->cliente_id == null)
-        <div class="py-3">
+        <div class="py-1">
             <p class="text-secondary m-0">
                 Nome e sobrenome
             </p>
@@ -117,7 +117,7 @@
             <!-- FIM LINHA INTERMEDIARIA -->
 
             <!-- PEDIDO PREPARANDO -->
-            <div class="ms-3">
+            <div class="ms-3 {{$data['pedido']->status == 1 ? 'text-black' : 'text-secondary'}}">
                 <div class="m-0">
                     @if($data['pedido']->status > 1)
                     <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
@@ -143,7 +143,7 @@
             <!-- PEDIDO ENTREGA -->
             @if($data['pedido']->consumo_local_viagem_delivery == 3)
 
-            <div class="ms-3">
+            <div class="ms-3 {{$data['pedido']->status == 2 ? 'text-black' : 'text-secondary'}}">
                 <div class="m-0">
                     @if($data['pedido']->status > 2)
                     <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
@@ -169,7 +169,7 @@
             <!-- FIM PEDIDO ENTREGA -->
 
             <!-- PEDIDO CONCLUIDO -->
-            <div class="">
+            <div class="{{$data['pedido']->status == 3 ? 'text-black' : 'text-secondary'}}">
                 <div class="m-0">
                     @if($data['pedido']->status > 2)
                     <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">

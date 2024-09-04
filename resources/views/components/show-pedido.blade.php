@@ -581,7 +581,7 @@
 
                         @if($opcional_item)
                         <p class="text-secondary">
-                            + R$ {{number_format($opcional->preco, 2, ',', '.')}}
+                            + R$ {{number_format($opcional->preco * $item->quantidade, 2, ',', '.')}}
                         </p>
                         @endif
 
