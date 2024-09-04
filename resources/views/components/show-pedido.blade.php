@@ -88,7 +88,7 @@
         </div>
         <!-- FIM MODAL REJEITAR -->
 
-        @elseif($pedido->status == 1)
+        @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 3)
         <div class="col">
             <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                 class="btn btn-primary d-flex align-items-center justify-content-center">
@@ -149,7 +149,7 @@
         <!-- FIM MODAL CANCELAR -->
 
 
-        @elseif($pedido->status == 2)
+        @elseif($pedido->status == 2 || $pedido->consumo_local_viagem_delivery == 3)
         <div class="col">
             <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                 class="btn btn-success d-flex align-items-center justify-content-center">
@@ -158,6 +158,66 @@
                 </span>
                 <span>
                     Pedido entregue
+                </span>
+            </a>
+        </div>
+        <div class="col">
+            <a href="" class="btn btn-danger d-flex align-items-center justify-content-center" data-bs-toggle="modal"
+                data-bs-target="#cancelarModal">
+                <span class="material-symbols-outlined mr-1">
+                    dangerous
+                </span>
+                <span>
+                    Cancelar pedido
+                </span>
+            </a>
+        </div>
+
+        <!-- MODAL CANCELAR PEDIDO -->
+        <div class="modal fade" id="cancelarModal" tabindex="-1" aria-labelledby="cancelarModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <!-- FORM ACAO -->
+                <form action="{{route('pedido.cancelar', ['id' => $pedido->id])}}" method="POST" class="my-2">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="cancelarModal">Deseja mesmo cancelar esse pedido?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="px-4">
+                                Após cancelar esse pedido essa ação não poderá ser desfeita!
+                            </p>
+                            <div class="form-floating mt-1">
+                                <input type="text" class="form-control @error('motivo') is-invalid @enderror"
+                                    id="inputArea" name="motivo" autocomplete="off" required>
+                                <label for="inputArea">Qual o motivo?</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-danger px-5">
+                                Cancelar pedido
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- FIM FORM -->
+            </div>
+        </div>
+        <!-- FIM MODAL CANCELAR -->
+
+        @elseif($pedido->status == 1 || $pedido->consumo_local_viagem_delivery == 1)
+        <div class="col">
+            <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                class="btn btn-success d-flex align-items-center justify-content-center">
+                <span class="material-symbols-outlined mr-1">
+                    task_alt
+                </span>
+                <span>
+                    Pedido concluído
                 </span>
             </a>
         </div>
@@ -431,7 +491,7 @@
         <p class="p-0 m-0">
             Cliente pagou via site/app <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no
                 {{$pedido->forma_pagamento_foomy->nome}}</strong>
-            </p>
+        </p>
         @endif
 
         <!-- FIM FORMA PAGAMENTO -->
@@ -607,7 +667,7 @@
                     <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                 </tr>
                 @endif
-                
+
                 @if(!empty($pedido->uso_cupom))
                 <tr>
                     <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>

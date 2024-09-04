@@ -116,7 +116,13 @@ class PedidoController extends Controller
         
         $status_atual = $pedido->status;
 
-        $pedido->status = $status_atual + 1;
+        //Se for pedido pra consumo no local e ele estiver em preparo o próximo passo é ser concluído e não ir para a entrega
+        if($pedido->consumo_local_viagem_delivery == 1 && $status_atual == 1){
+            $pedido->status = $status_atual + 2;
+        }else{
+            $pedido->status++;
+        }
+
         $pedido->save();
         return redirect()->back()->with('success', 'Status atualizado com sucesso');
 
