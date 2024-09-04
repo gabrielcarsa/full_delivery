@@ -2,10 +2,16 @@
 <div class="my-1">
     <div class="m-0">
         <h5 class="fw-bold fs-4 m-0 text-uppercase">
-            {{ $pedido->cliente->nome }}
+            @if($pedido->cliente_id != null)
+            {{$pedido->cliente->nome}}
+            @else
+            {{$pedido->nome_cliente}}
+            @endif
         </h5>
         <p class="m-0 fs-6 fw-regular text-secondary d-flex align-items-center">
+            @if($pedido->cliente_id != null)
             {{ $pedido->cliente->telefone }}
+            @endif
             <span class="material-symbols-outlined mx-2" style="font-variation-settings: 'FILL' 1; font-size: 10px">
                 circle
             </span>
@@ -363,11 +369,13 @@
 <div class="bg-white rounded border p-3">
 
     @if($pedido->consumo_local_viagem_delivery == 1)
-    <p class="fw-bolder fs-5 m-0 p-0">Consumir no local</p>
+    <p class="fw-bolder fs-5 m-0 p-0">
+        Consumir no local
+    </p>
     <div class="row m-0 p-0 d-flex align-items-center">
         <div class="m-0 p-0">
             <p class="fw-regular m-0 p-0">
-                Sem entrega
+                Mesa {{$pedido->mesa->nome}}
             </p>
         </div>
     </div>
@@ -404,25 +412,34 @@
 <!-- FIM ENTREGA -->
 
 <!-- PAGAMENTO -->
+@if($pedido->consumo_local_viagem_delivery == 3)
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
     <div class="">
+
         <!-- FORMA PAGAMENTO -->
         @if($pedido->forma_pagamento_loja->id != null)
         <p class="p-0 m-0 fs-6">
-            Cobrar do cliente na entrega <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no {{$pedido->forma_pagamento_loja->nome}}</strong>
+            Cobrar do cliente na entrega <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no
+                {{$pedido->forma_pagamento_loja->nome}}</strong>
         </p>
         <p class="text-secondary m-0 p-0">
             O entregador deve cobrar esse valor no ato da entrega.
         </p>
 
         @else
-        <p class="p-0 m-0">Cliente pagou via site/app <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no {{$pedido->forma_pagamento_foomy->nome}}</strong></p>
+        <p class="p-0 m-0">
+            Cliente pagou via site/app <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no
+                {{$pedido->forma_pagamento_foomy->nome}}</strong>
+            </p>
         @endif
+
         <!-- FIM FORMA PAGAMENTO -->
 
     </div>
 </div>
+@endif
+
 <!-- FIM PAGAMENTO -->
 
 <!-- PEDIDO -->
@@ -516,7 +533,7 @@
 
                         <!-- Incrementando sobre valor total -->
                         @php
-                        $total_sem_entrega += $opcional_item->preco_unitario;
+                        $total_sem_entrega += $opcional_item->preco_unitario * $item->quantidade;
                         @endphp
                         @endforeach
                         <!-- FIM OPCIONAIS -->
@@ -584,10 +601,13 @@
                     <td colspan="3" class="fw-bold bg-white">Subtotal</td>
                     <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
                 </tr>
+                @if($pedido->consumo_local_viagem_delivery == 3)
                 <tr>
                     <td colspan="3" class="fw-bold bg-white">Entrega</td>
                     <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                 </tr>
+                @endif
+                
                 @if(!empty($pedido->uso_cupom))
                 <tr>
                     <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>

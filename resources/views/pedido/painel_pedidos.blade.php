@@ -175,7 +175,12 @@
                                 <!-- HEADER PEDIDO -->
                                 <div class="row px-2">
                                     <div class="col-md-8">
-                                        <h4 class="fw-bold fs-4 text-dark text-uppercase">{{$pedido->cliente->nome}}
+                                        <h4 class="fw-bold fs-4 text-dark text-uppercase">
+                                            @if($pedido->cliente_id != null)
+                                            {{$pedido->cliente->nome}}
+                                            @else
+                                            {{$pedido->nome_cliente}}
+                                            @endif
                                         </h4>
                                     </div>
                                     <div class="col-md-4 d-flex justify-content-end text-dark">
@@ -245,8 +250,11 @@
 
                                     <!-- CONSUMO -->
                                     @if($pedido->consumo_local_viagem_delivery == 1)
-                                    <p class="mx-0 my-1 text-secondary">
+                                    <p class="m-0 text-secondary">
                                         Consumo no local
+                                    </p>
+                                    <p class="m-0 text-secondary">
+                                        Mesa {{$pedido->mesa->nome}}
                                     </p>
 
                                     @elseif($pedido->consumo_local_viagem_delivery == 2)
@@ -264,6 +272,8 @@
                                     <!-- CONSUMO -->
 
                                     <!-- FORMA PAGAMENTO -->
+                                    @if($pedido->consumo_local_viagem_delivery == 3)
+
                                     @if($pedido->forma_pagamento_loja->id != null)
 
                                     <div class="d-flex align-items-center" style="font-size: 14px !important">
@@ -279,6 +289,8 @@
                                             alt="" width="30px">
                                         <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_foomy->nome}}</p>
                                     </div>
+
+                                    @endif
 
                                     @endif
                                     <!-- FIM FORMA PAGAMENTO -->
