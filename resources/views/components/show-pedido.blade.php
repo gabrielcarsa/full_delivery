@@ -343,7 +343,7 @@
                 @endif
             </div>
             <p class="m-0" style="font-size: 13px !important">
-                Pendente
+                Pedido Pendente
             </p>
         </div>
         <!-- FIM PEDIDO PENDENTE -->
@@ -368,7 +368,7 @@
                 @endif
             </div>
             <p class="m-0" style="font-size: 13px !important">
-                Preparando
+                Em preparo
             </p>
         </div>
         <!-- FIM PEDIDO PREPARANDO -->
@@ -395,7 +395,7 @@
                 @endif
             </div>
             <p class="m-0" style="font-size: 13px !important">
-                A caminho
+                Sair entrega
             </p>
         </div>
 
@@ -422,7 +422,7 @@
                 @endif
             </div>
             <p class="m-0" style="font-size: 13px !important">
-                Concluído
+                Pedido Concluído
             </p>
         </div>
         <!-- FIM PEDIDO ENTREGA -->

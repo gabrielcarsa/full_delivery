@@ -106,13 +106,14 @@
                     @endif
                 </div>
                 <p class="m-0" style="font-size: 13px !important">
-                    Pendente
+                    Pedido Pendente
                 </p>
             </div>
             <!-- FIM PEDIDO PENDENTE -->
 
             <!-- LINHA INTERMEDIARIA -->
-            <div class="{{ $data['pedido']->status > 0 ? 'bg-padrao' : 'bg-light border' }} rounded" style="width: 100% !important; height: 5px;">
+            <div class="{{ $data['pedido']->status > 0 ? 'bg-padrao' : 'bg-light border' }} rounded"
+                style="width: 100% !important; height: 5px;">
             </div>
             <!-- FIM LINHA INTERMEDIARIA -->
 
@@ -130,13 +131,14 @@
                     @endif
                 </div>
                 <p class="m-0" style="font-size: 13px !important">
-                    Preparando
+                    Em preparo
                 </p>
             </div>
             <!-- FIM PEDIDO PREPARANDO -->
 
             <!-- LINHA INTERMEDIARIA -->
-            <div class="{{ $data['pedido']->status > 1 ? 'bg-padrao' : 'bg-light border' }} rounded m-1" style="width: 100% !important; height: 5px;">
+            <div class="{{ $data['pedido']->status > 1 ? 'bg-padrao' : 'bg-light border' }} rounded m-1"
+                style="width: 100% !important; height: 5px;">
             </div>
             <!-- FIM LINHA INTERMEDIARIA -->
 
@@ -156,12 +158,13 @@
                     @endif
                 </div>
                 <p class="m-0" style="font-size: 13px !important">
-                    A caminho
+                    Sair entrega
                 </p>
             </div>
 
             <!-- LINHA INTERMEDIARIA -->
-            <div class="{{ $data['pedido']->status > 2 ? 'bg-padrao' : 'bg-light border' }} rounded m-1" style="width: 100% !important; height: 5px;">
+            <div class="{{ $data['pedido']->status > 2 ? 'bg-padrao' : 'bg-light border' }} rounded m-1"
+                style="width: 100% !important; height: 5px;">
             </div>
             <!-- FIM LINHA INTERMEDIARIA -->
 
@@ -182,7 +185,7 @@
                     @endif
                 </div>
                 <p class="m-0" style="font-size: 13px !important">
-                    Concluído
+                    Pedido Concluído
                 </p>
             </div>
             <!-- FIM PEDIDO ENTREGA -->
