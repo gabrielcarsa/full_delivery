@@ -149,7 +149,7 @@
         <!-- FIM MODAL CANCELAR -->
 
 
-        @elseif($pedido->status == 2 || $pedido->consumo_local_viagem_delivery == 3)
+        @elseif($pedido->status == 2 && $pedido->consumo_local_viagem_delivery == 3)
         <div class="col">
             <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                 class="btn btn-success d-flex align-items-center justify-content-center">
@@ -209,7 +209,7 @@
         </div>
         <!-- FIM MODAL CANCELAR -->
 
-        @elseif($pedido->status == 1 || $pedido->consumo_local_viagem_delivery == 1)
+        @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 1)
         <div class="col">
             <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                 class="btn btn-success d-flex align-items-center justify-content-center">
@@ -327,98 +327,108 @@
     @if($pedido->status != 4 && $pedido->status != 5 )
 
     <!-- ETAPAS STATUS -->
-    <div class="d-flex align-items-center bg-light rounded mt-5 m-3 justify-content-between" style="height: 20px">
+    <div class="d-flex align-items-center justify-content-between my-3">
 
         <!-- PEDIDO PENDENTE -->
-        <div class="bg-light rounded-circle" style="height: 70px; width: 70px; background-color: #FD0146 !important">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1 text-white">
-                    {{ $pedido->status > 0 ? 'check_circle' : 'hourglass_top' }}
+        <div class="{{$pedido->status == 0 ? 'text-black' : 'text-secondary'}}">
+            <div class="m-0">
+                @if($pedido->status > 0)
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    check_circle
                 </span>
+                @else
+                <p class="m-0 fs-1 fw-bolder {{ $pedido->status > 0 ? 'text-padrao' : '' }}">
+                    1.
+                </p>
+                @endif
             </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">
+            <p class="m-0" style="font-size: 13px !important">
                 Pendente
             </p>
         </div>
         <!-- FIM PEDIDO PENDENTE -->
 
+        <!-- LINHA INTERMEDIARIA -->
+        <div class="{{ $pedido->status > 0 ? 'bg-padrao' : 'bg-light border' }} rounded"
+            style="width: 100% !important; height: 5px;">
+        </div>
+        <!-- FIM LINHA INTERMEDIARIA -->
+
         <!-- PEDIDO PREPARANDO -->
-        @if($pedido->status >= 1)
-        <div class="bg-light rounded-circle" style="height: 70px; width: 70px; background-color: #FD0146 !important">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1 text-white">
-                    {{ $pedido->status > 1 ? 'check_circle' : 'skillet' }}
+        <div class="ms-3 {{$pedido->status == 1 ? 'text-black' : 'text-secondary'}}">
+            <div class="m-0">
+                @if($pedido->status > 1)
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    check_circle
                 </span>
+                @else
+                <p class="m-0 fs-1 fw-bolder {{ $pedido->status > 1 ? 'text-padrao' : '' }}">
+                    2.
+                </p>
+                @endif
             </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">Preparando</p>
+            <p class="m-0" style="font-size: 13px !important">
+                Preparando
+            </p>
         </div>
-        @else
-        <div class="bg-light rounded-circle" style="height: 70px; width: 70px">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1">
-                    skillet
-                </span>
-            </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">Preparando</p>
-        </div>
-        @endif
         <!-- FIM PEDIDO PREPARANDO -->
 
+        <!-- LINHA INTERMEDIARIA -->
+        <div class="{{ $pedido->status > 1 ? 'bg-padrao' : 'bg-light border' }} rounded m-1"
+            style="width: 100% !important; height: 5px;">
+        </div>
+        <!-- FIM LINHA INTERMEDIARIA -->
+
         <!-- PEDIDO ENTREGA -->
-        @if($pedido->status >= 2)
-        <div class="bg-light rounded-circle" style="height: 70px; width: 70px; background-color: #FD0146 !important">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1 text-white">
-                    {{ $pedido->status > 2 ? 'check_circle' : 'sports_motorsports' }}
+        @if($pedido->consumo_local_viagem_delivery == 3)
+
+        <div class="ms-3 {{$pedido->status == 2 ? 'text-black' : 'text-secondary'}}">
+            <div class="m-0">
+                @if($pedido->status > 2)
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    check_circle
                 </span>
+                @else
+                <p class="m-0 fs-1 fw-bolder {{ $pedido->status > 2 ? 'text-padrao' : '' }}">
+                    3.
+                </p>
+                @endif
             </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">A caminho</p>
+            <p class="m-0" style="font-size: 13px !important">
+                A caminho
+            </p>
         </div>
-        @else
-        <div class="bg-light rounded-circle" style="height: 70px; width: 70px">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1">
-                    sports_motorsports
-                </span>
-            </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">A caminho</p>
+
+        <!-- LINHA INTERMEDIARIA -->
+        <div class="{{ $pedido->status > 2 ? 'bg-padrao' : 'bg-light border' }} rounded m-1"
+            style="width: 100% !important; height: 5px;">
         </div>
+        <!-- FIM LINHA INTERMEDIARIA -->
+
         @endif
         <!-- FIM PEDIDO ENTREGA -->
 
         <!-- PEDIDO CONCLUIDO -->
-        @if($pedido->status >= 3)
-        <div class="bg-success rounded-circle" style="height: 70px; width: 70px">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1 text-white">
-                    {{ $pedido->status > 3 ? 'check_circle' : 'check_circle' }}
-                </span>
-            </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">Concluído</p>
-        </div>
-        @else
-        <div class="bg-light rounded-circle" style="height: 70px; width: 70px">
-            <div class="m-0 d-flex align-items-center justify-content-center" style="height: 70px; width: 70px">
-                <span class="material-symbols-outlined fs-1">
+        <div class="{{$pedido->status == 3 ? 'text-black' : 'text-secondary'}}">
+            <div class="m-0">
+                @if($pedido->status > 2)
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
                     check_circle
                 </span>
+                @else
+                <p class="m-0 fs-1 fw-bolder {{ $pedido->status > 2 ? 'text-padrao' : '' }}">
+                    {{ $pedido->consumo_local_viagem_delivery == 3 ? '4.' : '3.' }}
+                </p>
+                @endif
             </div>
-            <p class="text-truncate d-flex align-items-center justify-content-center"
-                style="font-size: 13px; max-width: 100px">Concluído</p>
+            <p class="m-0" style="font-size: 13px !important">
+                Concluído
+            </p>
         </div>
-        @endif
         <!-- FIM PEDIDO ENTREGA -->
+
     </div>
     <!--  FIM ETAPAS STATUS -->
-
-    <div style="margin: 70px 0 0 0">
-    </div>
 
     @endif
     <!--  FIM PEDIDO ETAPAS -->
