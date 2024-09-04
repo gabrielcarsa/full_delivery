@@ -201,11 +201,17 @@ class PedidoController extends Controller
             //Cliente não logado pegar mesa
             $clienteNaoLogado = $request->session()->get('clienteNaoLogado');
             
-            $pedidos = Pedido::where('loja_id', $loja_id)
-            ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
-            ->orderBy('data_pedido', 'DESC')
-            ->where('mesa_id', $clienteNaoLogado['mesa_id'])
-            ->get();
+            if($clienteNaoLogado != null){
+                $pedidos = Pedido::where('loja_id', $loja_id)
+                ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
+                ->orderBy('data_pedido', 'DESC')
+                ->where('mesa_id', $clienteNaoLogado['mesa_id'])
+                ->where('nome_cliente', $clienteNaoLogado['nome_cliente'])
+                ->get();
+            }else{
+                $pedidos = collect();
+            }
+            
         }        
 
         $data = [
