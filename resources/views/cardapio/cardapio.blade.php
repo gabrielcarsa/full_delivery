@@ -489,7 +489,7 @@
         <div class="p-3 container">
 
             <!-- CATEGORIAS -->
-            <div class="bg-body-tertiary d-flex overflow-x-scroll sticky-top w100 mb-3 py-4" id="categorias-nav">
+            <div class="bg-body-tertiary d-flex overflow-x-scroll sticky-top w100 py-2" id="categorias-nav">
                 @foreach($data['categoria_produto'] as $categoria)
                 <div class="m-3">
                     <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}"
@@ -628,7 +628,6 @@
                 navItem.classList.add('bg-padrao');
                 navItem.classList.add('text-white');
                 navItem.classList.add('fw-semibold');
-
             }
         }
 
