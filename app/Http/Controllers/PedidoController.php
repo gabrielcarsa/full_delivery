@@ -258,17 +258,25 @@ class PedidoController extends Controller
         }
 
         //Se mesa ou nome cliente não foi selecionado
-        if($consumo_local_viagem_delivery == 1){
+        if($consumo_local_viagem_delivery == 1 && !Auth::guard('cliente')->check()){
             $validator = Validator::make($request->all(), [
                 'nome_cliente' => 'required|string|max:100',
                 'mesa_id' => 'required|min:1',
             ]);
-        }
-        
 
-        // Se a validação falhar
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }elseif ($consumo_local_viagem_delivery == 1 && Auth::guard('cliente')->check()) {
+            $validator = Validator::make($request->all(), [
+                'mesa_id' => 'required|min:1',
+            ]);
+
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
         }
 
         //Query da Loja selecionada
@@ -370,7 +378,7 @@ class PedidoController extends Controller
         --- Cadastro de entrega ---
         */
 
-        if($pedido->consumo_local_viagem_delivery_delivery == 3){
+        if($pedido->consumo_local_viagem_delivery == 3){
             $cliente_endereco = ClienteEndereco::find($endereco_selecionado_id);
             $entrega = new Entrega();
             $entrega->pedido_id = $pedido->id;

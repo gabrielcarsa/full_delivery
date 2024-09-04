@@ -107,6 +107,8 @@
             </div>
             <!-- FIM MENSAGENS -->
 
+            <!-- TOATS CRIAR CONTA -->
+            @if(!Auth::guard('cliente')->check())
             <div class="toast show mt-3" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-padrao">
                     <strong class="me-auto fw-bold text-white fs-6">Ganhe Descontos</strong>
@@ -134,6 +136,8 @@
 
                 </div>
             </div>
+            @endif
+            <!-- FIM TOATS CRIAR CONTA -->
 
             <!-- IF MESA -->
             @if($data['consumo_local_viagem_delivery'] == 1)
@@ -141,11 +145,14 @@
                 Preencha os campos
             </h4>
 
+            @if(!Auth::guard('cliente')->check())
             <div class="form-floating my-1">
                 <input type="text" name="nome_cliente" class="form-control" id="floatingInput"
                     placeholder="name@example.com">
                 <label for="floatingInput">Seu nome</label>
             </div>
+            @endif
+            
             <div class="form-floating mb-3">
                 <select class="form-select" id="floatingSelect" name="mesa_id"
                     aria-label="Floating label select example">
