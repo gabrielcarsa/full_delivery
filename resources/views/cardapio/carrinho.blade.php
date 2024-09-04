@@ -302,7 +302,7 @@
                                     </p>
                                     <p class="text-secondary d-flex align-items-center justify-content-end w-100 m-0">
                                         @php
-                                        $subtotal += $opcional->preco;
+                                        $subtotal += $opcional->preco * $item['quantidade'];
                                         @endphp
 
                                         R$ {{number_format($opcional->preco, 2, ',', '.')}}
@@ -362,6 +362,7 @@
                             </div>
                         </div>
                         <div class="d-flex">
+                            @if($data['consumo_local_viagem_delivery'] == 3)
                             <div class="d-flex align-items-center">
                                 <p class="fs-6 text-dark m-0">
                                     Entrega
@@ -372,6 +373,7 @@
                                     R$ {{number_format($data['taxa_entrega'], 2, ',', '.')}}
                                 </p>
                             </div>
+                            @endif
                         </div>
                         <div class="d-flex">
                             <div class="d-flex align-items-center">
@@ -393,7 +395,11 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-end w-100">
                                 <p class="m-0 fs-6 fw-bold">
+                                    @if($data['consumo_local_viagem_delivery'] == 3)
                                     R$ {{number_format($data['taxa_entrega'] + $subtotal, 2, ',', '.')}}
+                                    @else
+                                    R$ {{number_format($subtotal, 2, ',', '.')}}
+                                    @endif
                                 </p>
                             </div>
                         </div>

@@ -296,7 +296,7 @@
                     </div>
                     <!-- Incrementando sobre valor total -->
                     @php
-                    $subtotal += $opcional_item->preco_unitario;
+                    $subtotal += $opcional_item->preco_unitario * $item['quantidade'];;
                     @endphp
 
                     @endif
