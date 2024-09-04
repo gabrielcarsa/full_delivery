@@ -93,7 +93,7 @@
         <div class="d-flex align-items-center justify-content-between my-3">
 
             <!-- PEDIDO PENDENTE -->
-            <div class="">
+            <div class="{{$data['pedido']->status == 0 ? 'text-black' : 'text-secondary'}}">
                 <div class="m-0">
                     @if($data['pedido']->status > 0)
                     <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
