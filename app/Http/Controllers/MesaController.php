@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Mesa;
+use App\Models\Pedido;
 use App\Models\Loja;
 
 class MesaController extends Controller
@@ -96,14 +97,22 @@ class MesaController extends Controller
         //Mesas
         $mesas = Mesa::where('loja_id', $loja_id)->get();
         
-        //Pedido
-        $mesa = Mesa::where('id', $mesa_id)
-        ->with('loja', 'pedido')
+        //Mesa
+        $mesa = Mesa::with('loja', 'pedido')
+        ->where('id', $mesa_id)
         ->first();
-        
+       
+        //Pedidos da mesa
+        $pedidos = Pedido::with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
+        ->orderBy('data_pedido', 'DESC')
+        ->where('mesa_id', $mesa_id)
+        ->where('situacao', '!=', 2)
+        ->get();
+
         $data = [
             'mesa' => $mesa,
             'mesas' => $mesas,
+            'pedidos' => $pedidos,
         ];
 
         return view('mesa/gestor', compact('data'));       

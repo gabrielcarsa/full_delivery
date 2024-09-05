@@ -9,7 +9,7 @@ use Illuminate\View\Component;
 class ShowMesa extends Component
 {
 
-    public function __construct(public $mesa)
+    public function __construct(public $data)
     {
 
     }
@@ -19,6 +19,6 @@ class ShowMesa extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.show-mesa');
+        return view('components.show-mesa', ['data' => $this->data]);
     }
 }

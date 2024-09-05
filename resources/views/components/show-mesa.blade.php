@@ -1,17 +1,17 @@
 <div class="my-3">
-
+@dd($data)
     <!-- HEADER MESA DETALHES -->
     <div class="d-flex justify-content-between align-items-center border p-3 rounded">
         <h4 class="m-0 fw-bold text-black">
-            Mesa {{$mesa->nome}}
+            Mesa {{$data['mesa']->nome}}
         </h4>
         <div class="d-flex align-items-center">
             <p class="my-0 mx-1">
                 <span class="fw-bold">
                     Tempo:
                 </span>
-                @if($mesa->hora_abertura != null)
-                {{$mesa->hora_abertura}}
+                @if($data['mesa']->hora_abertura != null)
+                {{$data['mesa']->hora_abertura}}
                 @else
                 00h00m
                 @endif
@@ -47,7 +47,10 @@
             account_circle
         </span>
         <p class="m-0 fs-5 fw-semibold">
-            Nome cliente
+            <!-- Exibir itens do pedido -->
+            @foreach ($pedido->item_pedido as $item)
+            {{$item->produto->nome }}
+            @endforeach
         </p>
     </div>
 </div>

@@ -149,8 +149,7 @@
 
                         <!-- MESA DETALHE -->
                         @if(isset($data['mesa']))
-                        <x-show-mesa :mesa="$data['mesa']" />
-
+                        <x-show-mesa :data="$data"/>
                         <!-- FIM MESA DETALHE -->
 
                         @else

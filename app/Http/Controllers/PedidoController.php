@@ -123,6 +123,11 @@ class PedidoController extends Controller
             $pedido->status++;
         }
 
+        //Concluir pedido
+        if($pedido->status == 3 || $pedido->status == 4 || $pedido->status == 5){
+            $pedido->situacao = 2;
+        }
+
         $pedido->save();
         return redirect()->back()->with('success', 'Status atualizado com sucesso');
 
@@ -307,6 +312,7 @@ class PedidoController extends Controller
         $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
         $pedido->is_simulacao = false;   
         $pedido->loja_id = $loja_id;
+        $pedido->situacao = 0;
         $pedido->is_pagamento_entrega = true;
         $pedido->total = $total_geral;
 
