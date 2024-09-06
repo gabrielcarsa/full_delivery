@@ -319,7 +319,7 @@
                 Subtotal mesa
             </p>
             <p class="m-0">
-                {{ number_format($total_geral, 2, ',', '.') }}
+                R$ {{ number_format($total_geral, 2, ',', '.') }}
             </p>
         </div>
         <div>
@@ -334,11 +334,23 @@
             <p class="m-0 text-secondary">
                 Total mesa
             </p>
-            <p class="m-0">
-                {{ number_format($total_geral, 2, ',', '.') }}
+            <p class="m-0 fw-bold">
+                R$ {{ number_format($total_geral, 2, ',', '.') }}
             </p>
         </div>
     </div>
     <!-- FIM VALORES -->
+
+    <!-- BOTÕES AÇÕES -->
+    <div class="d-flex justify-content-end my-3">
+        <a href="" class="btn border-padrao text-padrao mx-1">
+            Transferir consumo
+        </a>
+        <a href="" class="btn bg-padrao text-white fw-semibold ml-1">
+            Fazer pagamento
+        </a>
+    </div>
+    <!-- FIM BOTÕES AÇÕES -->
+
 
 </div>
