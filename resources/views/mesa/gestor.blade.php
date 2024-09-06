@@ -36,38 +36,43 @@
     <div class="min-h-screen bg-gray-100">
         @livewire('navigation-menu')
 
-        <div class="container">
+        <div class="container py-3">
 
-            <!-- FILTROS -->
-            <div class="d-flex my-3">
-
-                <a href="" class="d-flex align-items-center fs-6 py-2 px-4 rounded border text-decoration-none mx-1">
-                    <span class="material-symbols-outlined text-success mr-1" style="font-variation-settings:'FILL' 1;">
-                        circle
-                    </span>
-                    <span class="fw-semibold text-black">
-                        Disponível
-                    </span>
-                </a>
-
-                <a href="" class="d-flex align-items-center fs-6 py-2 px-4 rounded border text-decoration-none mx-1">
-                    <span class="material-symbols-outlined text-warning mr-1" style="font-variation-settings:'FILL' 1;">
-                        circle
-                    </span>
-                    <span class="fw-semibold text-black">
-                        Ocupado
-                    </span>
-                </a>
-
-
-            </div>
-            <!-- FIM FILTROS -->
 
             <!-- GRID GESTOR PEDIDOS-->
             <div class="row">
 
                 <!-- COLUNA MESAS -->
-                <div class="col-md-4">
+                <div class="col-md-4" style="overflow-y: auto; height: 85vh !important">
+
+                    <!-- FILTROS -->
+                    <div class="d-flex my-3">
+
+                        <a href=""
+                            class="d-flex align-items-center fs-6 py-2 px-4 rounded border text-decoration-none mx-1">
+                            <span class="material-symbols-outlined text-success mr-1"
+                                style="font-variation-settings:'FILL' 1;">
+                                circle
+                            </span>
+                            <span class="fw-semibold text-black">
+                                Disponível
+                            </span>
+                        </a>
+
+                        <a href=""
+                            class="d-flex align-items-center fs-6 py-2 px-4 rounded border text-decoration-none mx-1">
+                            <span class="material-symbols-outlined text-warning mr-1"
+                                style="font-variation-settings:'FILL' 1;">
+                                circle
+                            </span>
+                            <span class="fw-semibold text-black">
+                                Ocupado
+                            </span>
+                        </a>
+
+
+                    </div>
+                    <!-- FIM FILTROS -->
 
                     <!-- GRID MESAS -->
                     <div class="row g-3">
@@ -130,7 +135,7 @@
                 </div>
                 <!-- FIM COLUNA MESAS -->
 
-                <div class="col-md-8">
+                <div class="col-md-8 m-0 p-0" style="overflow-y: auto; height: 85vh !important">
                     <div class="bg-white border rounded p-3">
                         <!-- LOJA -->
                         <div class="">
@@ -149,7 +154,10 @@
 
                         <!-- MESA DETALHE -->
                         @if(isset($data['mesa']))
-                        <x-show-mesa :data="$data"/>
+
+                        <div>
+                            <x-show-mesa :data="$data" />
+                        </div>
                         <!-- FIM MESA DETALHE -->
 
                         @else
