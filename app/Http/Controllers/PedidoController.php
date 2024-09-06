@@ -124,8 +124,10 @@ class PedidoController extends Controller
         }
 
         //Concluir pedido
-        if($pedido->status == 3 || $pedido->status == 4 || $pedido->status == 5){
-            $pedido->situacao = 2;
+        if($pedido->consumo_local_viagem_delivery == 3){
+            if($pedido->status == 3 || $pedido->status == 4 || $pedido->status == 5 ){
+                $pedido->situacao = 2;
+            }
         }
 
         $pedido->save();

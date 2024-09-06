@@ -32,9 +32,16 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            Mudar de mesa
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="#">
+                            Cancelar mesa
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -42,22 +49,55 @@
     </div>
     <!-- HEADER MESA DETALHES -->
 
-    <!-- PEDIDO -->
+    <!-- Variáveis PHP -->
+    @php
+    $total_geral = 0;
+    @endphp
+
+
+    <!-- PEDIDOS -->
     <div class="p-3 my-2">
         <p class="fw-bolder fs-5 m-0 p-0">Pedido</p>
 
         <div class="px-3 py-1 m-2">
+
+            <!-- PEDIDOS FOREACH -->
+            @foreach ($data['pedidos'] as $pedido)
+
+            <!-- NOME CLIENTE PEDIDO -->
+            <div class="d-flex fs-4 align-items-center fw-semibold pt-3">
+                <span class="material-symbols-outlined mr-1 text-padrao" style="font-variation-settings: 'FILL' 1;">
+                    person
+                </span>
+                <p class="m-0 text-uppercase">
+                    @if($pedido->nome_cliente == null)
+                    {{$pedido->cliente->nome }}
+                    @else
+                    {{$pedido->nome_cliente }}
+                    @endif
+                </p>
+            </div>
+            <!-- FIM NOME CLIENTE PEDIDO -->
+
+            <div>
+                <p class="m-0 text-secondary">
+                    Pedido ID: {{$pedido->id}}
+                </p>
+            </div>
+
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Quantidade</th>
+                        <th>
+                            <input type="checkbox" name="selectAll" id="selectAll">
+                        </th>
+                        <th scope="col">Qtnd</th>
                         <th scope="col">Item</th>
-                        <th scope="col">Preço unitário</th>
+                        <th scope="col">Unidade</th>
                         <th scope="col">Subtotal</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
-                @foreach ($data['pedidos'] as $pedido)
 
                 <tbody>
                     <!-- Variáveis PHP -->
@@ -73,13 +113,11 @@
                     $total_sem_entrega += $item->subtotal;
                     @endphp
 
-                    @if($pedido->nome_cliente == null)
-                    {{$pedido->cliente->nome }}
-                    @else
-                    {{$pedido->nome_cliente }}
-                    @endif
-                    
+
                     <tr class="p-0 m-0">
+                        <td class="bg-white">
+                            <input type="checkbox" name="pedido_id[]" value="{{$pedido->id}}">
+                        </td>
                         <td class="bg-white">
                             <span>
                                 {{ $item->quantidade }}x
@@ -110,9 +148,16 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Alterar quantidade
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="#">
+                                            Excluir item
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
@@ -120,6 +165,7 @@
 
                     @if(!$item->produto->categoria_opcional->isEmpty())
                     <tr style="font-size:14px">
+                        <td></td>
                         <td></td>
                         <td>
 
@@ -223,12 +269,76 @@
                     @endforeach
 
                 </tbody>
-                @endforeach
+
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="fw-bold bg-white">Total cliente</td>
+                        <td class="bg-white"></td>
+                        <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
+                        <td class="bg-white"></td>
+                        @php
+                        $total_geral += $total_sem_entrega;
+                        @endphp
+                    </tr>
+                    @if($pedido->consumo_local_viagem_delivery == 3)
+                    <tr>
+                        <td colspan="3" class="fw-bold bg-white">Entrega</td>
+                        <td class="bg-white"></td>
+                        <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
+                    </tr>
+                    @endif
+
+                    @if(!empty($pedido->uso_cupom))
+                    <tr>
+                        <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
+                        @if($pedido->uso_cupom->cupom->tipo_desconto == 1)
+                        <td class="text-danger bg-white">
+                            - R$ {{ number_format($pedido->uso_cupom->cupom->desconto, 2, ',', '.') }}
+                        </td>
+                        @else
+                        <td class="text-danger bg-white">- {{ $pedido->uso_cupom->cupom->desconto }} %</td>
+                        @endif
+                        <td class="bg-white"></td>
+                    </tr>
+                    @endif
+
+                </tfoot>
 
             </table>
-
+            @endforeach
+            <!-- FIM PEDIDOS FOREACH -->
         </div>
 
     </div>
-    <!-- FIM PEDIDO -->
+    <!-- FIM PEDIDOS -->
+
+    <!-- VALORES -->
+    <div class="d-flex justify-content-between px-3">
+        <div>
+            <p class="m-0 text-secondary">
+                Subtotal mesa
+            </p>
+            <p class="m-0">
+                {{ number_format($total_geral, 2, ',', '.') }}
+            </p>
+        </div>
+        <div>
+            <p class="m-0 text-secondary">
+                Taxa de serviço
+            </p>
+            <p class="m-0">
+                R$ 0,00
+            </p>
+        </div>
+        <div>
+            <p class="m-0 text-secondary">
+                Total mesa
+            </p>
+            <p class="m-0">
+                {{ number_format($total_geral, 2, ',', '.') }}
+            </p>
+        </div>
+    </div>
+    <!-- FIM VALORES -->
+
 </div>
