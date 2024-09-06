@@ -184,7 +184,7 @@
                                         </h4>
                                     </div>
                                     <div class="col-md-4 d-flex justify-content-end text-dark">
-                                        <p>{{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}</p>
+                                        <p>{{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}</p>
                                     </div>
                                 </div>
                                 <!-- FIM HEADER PEDIDO -->

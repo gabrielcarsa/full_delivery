@@ -35,8 +35,8 @@
             <div class="border rounded m-3 p-3">
                 <div class="col d-flex justify-content-end">
                     <p class="m-0 p-0 text-secondary" style="font-size:14px">
-                        {{\Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y')}} -
-                        {{\Carbon\Carbon::parse($pedido->data_pedido)->format('H:i')}}
+                        {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
+                        {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
                     </p>
                 </div>
                 <div class="col-8 d-flex">

@@ -14,6 +14,7 @@ use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
 use App\Models\OpcionalProduto;
 use App\Models\Cupom;
+use App\Models\Mesa;
 use App\Models\UsoCupom;
 use App\Models\FormaPagamentoEntrega;
 use Carbon\Carbon;
@@ -41,7 +42,7 @@ class PedidoController extends Controller
         //Query Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
-        ->orderBy('data_pedido', 'DESC');
+        ->orderBy('feito_em', 'DESC');
 
         //Filtros
         $filtro = $request->input('filtro');
@@ -79,13 +80,13 @@ class PedidoController extends Controller
         //Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
-        ->orderBy('data_pedido', 'DESC')
+        ->orderBy('feito_em', 'DESC')
         ->get();
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
-        ->orderBy('data_pedido', 'ASC')
+        ->orderBy('feito_em', 'ASC')
         ->first();
         
         $data = [
@@ -200,7 +201,7 @@ class PedidoController extends Controller
 
             $pedidos = Pedido::where('loja_id', $loja_id)
             ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
-            ->orderBy('data_pedido', 'DESC')
+            ->orderBy('feito_em', 'DESC')
             ->where('cliente_id', $cliente_id)
             ->get();
         }else{
@@ -211,7 +212,7 @@ class PedidoController extends Controller
             if($clienteNaoLogado != null){
                 $pedidos = Pedido::where('loja_id', $loja_id)
                 ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
-                ->orderBy('data_pedido', 'DESC')
+                ->orderBy('feito_em', 'DESC')
                 ->where('mesa_id', $clienteNaoLogado['mesa_id'])
                 ->where('nome_cliente', $clienteNaoLogado['nome_cliente'])
                 ->get();
@@ -311,7 +312,7 @@ class PedidoController extends Controller
         $pedido = new Pedido();
         $pedido->status = 0;
         $pedido->consumo_local_viagem_delivery = $consumo_local_viagem_delivery;//1. Local, 2. Viagem, 3. Delivery
-        $pedido->data_pedido = Carbon::now()->format('Y-m-d H:i:s');
+        $pedido->feito_em = Carbon::now()->format('Y-m-d H:i:s');
         $pedido->is_simulacao = false;   
         $pedido->loja_id = $loja_id;
         $pedido->situacao = 0;
@@ -337,6 +338,12 @@ class PedidoController extends Controller
         // Verificar local de consumo
         if($consumo_local_viagem_delivery == 1){ // Verificar comer local
             $pedido->mesa_id = $mesa_id;
+
+            //Mudando status mesa
+            $mesa = Mesa::find($mesa_id);
+            $mesa->is_ocupada = true;
+            $mesa->hora_abertura = Carbon::now()->format('Y-m-d H:i:s');
+
         }elseif($consumo_local_viagem_delivery == 3){ //Verificar delivery
             $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
         }
@@ -454,7 +461,7 @@ class PedidoController extends Controller
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
         ->with('loja', 'forma_pagamento_loja', 'forma_pagamento_foomy', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
-        ->orderBy('data_pedido', 'ASC')
+        ->orderBy('feito_em', 'ASC')
         ->first();
                 
         $data = [
