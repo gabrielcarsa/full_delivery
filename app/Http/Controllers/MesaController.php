@@ -104,7 +104,7 @@ class MesaController extends Controller
        
         //Pedidos da mesa
         $pedidos = Pedido::with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
-        ->orderBy('data_pedido', 'DESC')
+        ->orderBy('feito_em', 'DESC')
         ->where('mesa_id', $mesa_id)
         ->where('situacao', '!=', 2)
         ->get();

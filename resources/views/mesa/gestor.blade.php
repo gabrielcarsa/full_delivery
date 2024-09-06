@@ -90,7 +90,7 @@
                                 <p class="fw-bold fs-4 m-0">
                                     Mesa {{$mesa->nome}}
                                 </p>
-                                <span class="material-symbols-outlined fs-3 text-success d-flex justify-items-between"
+                                <span class="material-symbols-outlined fs-3 d-flex justify-items-between {{$mesa->is_ocupada == false ? 'text-success' : 'text-warning'}}"
                                     style="font-variation-settings:'FILL' 1;">
                                     circle
                                 </span>

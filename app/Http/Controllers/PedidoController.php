@@ -341,8 +341,11 @@ class PedidoController extends Controller
 
             //Mudando status mesa
             $mesa = Mesa::find($mesa_id);
-            $mesa->is_ocupada = true;
-            $mesa->hora_abertura = Carbon::now()->format('Y-m-d H:i:s');
+            if($mesa->is_ocupada == false){
+                $mesa->is_ocupada = true;
+                $mesa->hora_abertura = Carbon::now()->format('Y-m-d H:i:s');
+                $mesa->save();
+            }
 
         }elseif($consumo_local_viagem_delivery == 3){ //Verificar delivery
             $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
