@@ -142,6 +142,7 @@ Route::middleware([
         Route::get('/pedido/update-status', [PedidoController::class, 'update_status'])->name('pedido.update_status');
         Route::post('/pedido/rejeitar', [PedidoController::class, 'rejeitar'])->name('pedido.rejeitar');
         Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar'])->name('pedido.cancelar');
+        Route::get('/pedido/pagamento-mesa', [PedidoController::class, 'pagamento_mesa_view'])->name('pedido.pagamento');
 
         //CUPOM
         Route::get('/cupom', [CupomController::class, 'index'])->name('cupom');

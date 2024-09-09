@@ -116,7 +116,7 @@
 
                 <tr class="p-0 m-0">
                     <td class="bg-white">
-                        <input type="checkbox" name="pedido_id[]" value="{{$pedido->id}}">
+                        <input type="checkbox" name="item_pedido_id[]" value="{{$pedido->id}}">
                     </td>
                     <td class="bg-white">
                         <span>
@@ -345,10 +345,154 @@
         <a href="" class="btn border-padrao text-padrao mx-1">
             Transferir consumo
         </a>
-        <a href="" class="btn bg-padrao text-white fw-semibold ml-1">
+        <a href="" class="btn bg-padrao text-white fw-semibold ml-1" data-bs-toggle="modal"
+            data-bs-target="#modalPagamento">
             Fazer pagamento
         </a>
     </div>
     <!-- FIM BOTÕES AÇÕES -->
 
+    <!-- MODAL -->
+    <div class="modal fade modal-lg" id="modalPagamento" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title fs-5" id="exampleModalLabel">
+                        Fazer pagamento
+                    </p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col bg-light p-3 m-1">
+                            <label for="inputValorPagar" class="form-label">Valor a pagar</label>
+                            <input type="text" id="inputValorPagar" class="form-control" aria-describedby="aPagarHelp">
+                            <div id="aPagarHelp" class="form-text">
+                                o valor a pagar não pode ser maior que R$ {{ number_format($total_geral, 2, ',', '.') }}
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Não cobrar taxa de serviço
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col bg-light p-3 m-1">
+                            <p class="m-0">
+                                Selecione uma opção
+                            </p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="option1">
+                                <label class="form-check-label" for="inlineRadio1">Dinheiro</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Pix</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col bg-light p-3 m-1">
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0">
+                                    Valor pago:
+                                </p>
+                                <p class="m-0">
+                                    R$ 0,00
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0 fw-bold">
+                                    Valor em aberto:
+                                </p>
+                                <p class="m-0 fw-bold">
+                                    R$ {{ number_format($total_geral, 2, ',', '.') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col bg-light p-3 m-1">
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0">
+                                    Subtotal:
+                                </p>
+                                <p class="m-0">
+                                    R$ {{ number_format($total_geral, 2, ',', '.') }}
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0">
+                                    Taxa de serviço:
+                                </p>
+                                <p class="m-0">
+                                    R$ 0,00
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <p class="m-0 fw-bold">
+                                    Total a pagar:
+                                </p>
+                                <p class="m-0 fw-bold">
+                                    R$ {{ number_format($total_geral, 2, ',', '.') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="text-padrao mx-3" data-bs-dismiss="modal">Voltar</button>
+                    <button type="button" class="btn bg-padrao text-white fw-semibold ml-1 px-3">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FIM MODAL -->
+
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+
+
+    // Selecionar todos checkboxes
+    $("#selectAll").click(function() {
+        // Obtém o estado atual do "Selecionar Todos" dentro da tabela atual
+        var selecionarTodos = $(this).prop('checked');
+
+        // Encontra os checkboxes individuais dentro da tabela atual e marca ou desmarca com base no estado do "Selecionar Todos"
+        $(this).closest('table').find("input[name='item_pedido_id[]']").prop('checked',
+            selecionarTodos);
+    });
+
+
+    $("#pagamento").click(function(event) {
+        event.preventDefault();
+
+        // Obtenha os valores dos checkboxes selecionados
+        var checkboxesSelecionados = [];
+
+        $("input[name='item_pedido_id[]']:checked").each(function() {
+            checkboxesSelecionados.push($(this).val());
+        });
+
+        // Crie a URL com os valores dos checkboxes como parâmetros de consulta
+        var url = "{{ route('pedido.pagamento') }}?item_pedido_id=" + checkboxesSelecionados.join(',');
+
+        // Redirecione para a URL com os parâmetros
+        window.location.href = url;
+    });
+
+
+
+});
+</script>

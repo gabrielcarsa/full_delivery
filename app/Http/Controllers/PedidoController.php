@@ -182,6 +182,16 @@ class PedidoController extends Controller
 
     }
 
+    // PAGAMENTO PEDIDO MESA
+    public function pagamento_mesa_view(Request $request){
+        // Recupere os valores dos checkboxes da consulta da URL
+        $checkboxesSelecionados = $request->input('checkboxes');
+
+        // Converta os valores dos checkboxes em um array
+        $checkboxesSelecionados = explode(',', $checkboxesSelecionados); 
+
+    }
+
     //-------------------------
     // PEDIDOS PARTE DO CLIENTE
     //-------------------------
