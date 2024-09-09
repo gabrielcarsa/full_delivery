@@ -97,12 +97,7 @@ class CardapioController extends Controller
         // Para comer no local
         if($consumo_local_viagem_delivery == 1){
             //Mesas
-            $mesas = Mesa::where('loja_id', $loja_id)
-            ->where(function ($query) {
-                $query->where('is_ocupada', false)
-                      ->orWhereNull('is_ocupada');
-            })
-            ->get();
+            $mesas = Mesa::where('loja_id', $loja_id)->get();
 
         // Para delivery
         }if($consumo_local_viagem_delivery == 3){
