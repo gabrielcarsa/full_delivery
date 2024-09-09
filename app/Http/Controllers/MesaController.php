@@ -73,7 +73,8 @@ class MesaController extends Controller
         $loja_id = session('lojaConectado')['id'];
 
         //Mesas
-        $mesas = Mesa::where('loja_id', $loja_id)->get();
+        $mesas = Mesa::with('loja', 'pedido')
+        ->where('loja_id', $loja_id)->get();
 
         $data = [
             'mesas' => $mesas,

@@ -8,19 +8,14 @@
         <div class="d-flex align-items-center">
             <p class="my-0 mx-1">
                 <span class="fw-bold">
-                    Tempo:
+                    Abertura da mesa:
                 </span>
                 @if($data['mesa']->hora_abertura != null)
-                {{$data['mesa']->hora_abertura}}
+                {{\Carbon\Carbon::parse($data['mesa']->abertura)->format('d/m/Y')}} ás
+                {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('H:i')}}
                 @else
                 00h00m
                 @endif
-            </p>
-            <p class="my-0 mx-1">
-                <span class="fw-bold">
-                    Qtd de itens:
-                </span>
-                0
             </p>
 
             <div class="dropdown">

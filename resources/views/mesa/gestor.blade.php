@@ -90,7 +90,8 @@
                                 <p class="fw-bold fs-4 m-0">
                                     Mesa {{$mesa->nome}}
                                 </p>
-                                <span class="material-symbols-outlined fs-3 d-flex justify-items-between {{$mesa->is_ocupada == false ? 'text-success' : 'text-warning'}}"
+                                <span
+                                    class="material-symbols-outlined fs-3 d-flex justify-items-between {{$mesa->is_ocupada == false ? 'text-success' : 'text-warning'}}"
                                     style="font-variation-settings:'FILL' 1;">
                                     circle
                                 </span>
@@ -101,11 +102,11 @@
                             <div class="d-flex align-items-center justify-content-between mt-3">
                                 <div>
                                     <p class="text-secondary fs-6 m-0">
-                                        Tempo
+                                        Abertura
                                     </p>
                                     <p class="fw-semibold fs-6 m-0">
                                         @if($mesa->hora_abertura != null)
-                                        {{$mesa->hora_abertura}}
+                                        {{\Carbon\Carbon::parse($mesa->abertura)->format('H:i')}}
                                         @else
                                         00h00m
                                         @endif
@@ -116,7 +117,19 @@
                                         Total
                                     </p>
                                     <p class="fw-semibold fs-6 m-0">
-                                        R$ 0,00
+                                        @php
+                                        $total_mesa = 0;
+                                        @endphp
+
+                                        @foreach($mesa->pedido as $pedido)
+
+                                        @php
+                                        $total_mesa += $pedido->total;
+                                        @endphp
+
+                                        @endforeach
+
+                                        R$ {{number_format($total_mesa, 2, ',', '.')}}
                                     </p>
                                 </div>
                             </div>
