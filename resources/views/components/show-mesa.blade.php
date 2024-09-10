@@ -326,7 +326,10 @@
                 Taxa de serviço
             </p>
             <p class="m-0">
-                R$ 0,00
+                @php
+                $taxa_servico = $total_geral * ($data['mesa']->loja->taxa_servico / 100)
+                @endphp
+                R$ {{ number_format($taxa_servico, 2, ',', '.') }}
             </p>
         </div>
         <div>
@@ -334,7 +337,7 @@
                 Total mesa
             </p>
             <p class="m-0 fw-bold">
-                R$ {{ number_format($total_geral, 2, ',', '.') }}
+                R$ {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
             </p>
         </div>
     </div>
@@ -370,7 +373,7 @@
                             <label for="inputValorPagar" class="form-label">Valor a pagar</label>
                             <input type="text" id="inputValorPagar" class="form-control" aria-describedby="aPagarHelp">
                             <div id="aPagarHelp" class="form-text">
-                                o valor a pagar não pode ser maior que R$ {{ number_format($total_geral, 2, ',', '.') }}
+                                o valor a pagar não pode ser maior que R$ {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
                             </div>
                             <div class="form-check mt-2">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -430,7 +433,7 @@
                                     Taxa de serviço:
                                 </p>
                                 <p class="m-0">
-                                    R$ 0,00
+                                    R$ {{ number_format($taxa_servico, 2, ',', '.') }}
                                 </p>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -438,7 +441,7 @@
                                     Total a pagar:
                                 </p>
                                 <p class="m-0 fw-bold">
-                                    R$ {{ number_format($total_geral, 2, ',', '.') }}
+                                    R$ {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
                                 </p>
                             </div>
                         </div>
