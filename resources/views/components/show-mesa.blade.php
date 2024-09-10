@@ -413,7 +413,7 @@
                                     Valor pago:
                                 </p>
                                 <p class="m-0">
-                                    R$ 0,00
+                                    R$ {{ number_format($data['mesa']->valor_pago_parcial, 2, ',', '.') }}
                                 </p>
                             </div>
                             <div class="d-flex justify-content-between">
