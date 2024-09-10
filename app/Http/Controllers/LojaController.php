@@ -74,6 +74,7 @@ class LojaController extends Controller
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:255',
+            'taxa_servico' => 'required|number',
             'cep' => 'required|string|max:100',
             'rua' => 'required|string|max:100',
             'bairro' => 'required|string|max:100',
@@ -98,6 +99,7 @@ class LojaController extends Controller
         $loja->telefone1 = $request->input('telefone1');
         $loja->telefone2 = $request->input('telefone2');
         $loja->area_entrega_metros = 5000; // valor padrão
+        $loja->taxa_servico = $request->input('taxa_servico');
         $loja->is_taxa_entrega_free = true;
         $loja->cadastrado_usuario_id = $usuario_id;
         if ($request->hasFile('imagem')) {
