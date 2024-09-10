@@ -373,7 +373,8 @@
                             <label for="inputValorPagar" class="form-label">Valor a pagar</label>
                             <input type="text" id="inputValorPagar" class="form-control" aria-describedby="aPagarHelp">
                             <div id="aPagarHelp" class="form-text">
-                                o valor a pagar não pode ser maior que R$ {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
+                                o valor a pagar não pode ser maior que R$
+                                {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
                             </div>
                             <div class="form-check mt-2">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -387,16 +388,21 @@
                                 Selecione uma opção
                             </p>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option1">
                                 <label class="form-check-label" for="inlineRadio1">Dinheiro</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
                                 <label class="form-check-label" for="inlineRadio2">Pix</label>
                             </div>
-
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Crédito</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Débito</label>
+                            </div>
                         </div>
                     </div>
 
