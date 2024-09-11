@@ -29,7 +29,7 @@ class PedidoController extends Controller
     //-------------------------
 
     //EXIBIR PEDIDOS
-    public function painel(Request $request){
+    public function gestor(Request $request){
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
             return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar os pedidos');
@@ -60,7 +60,7 @@ class PedidoController extends Controller
             'pedidos' => $pedidos,
         ];
     
-        return view('pedido/painel_pedidos', compact('data'));    
+        return view('pedido/gestor_pedidos', compact('data'));    
     }
 
     //EXIBIR PEDIDO
@@ -95,7 +95,7 @@ class PedidoController extends Controller
             'pedidos' => $pedidos,
         ];
 
-        return view('pedido/painel_pedidos', compact('data'));       
+        return view('pedido/gestor_pedidos', compact('data'));       
     }
 
     // ATUALIZAR STATUS PEDIDO

@@ -78,12 +78,12 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('pedido.painel') }}" target="_blank">
+                                        <a class="dropdown-item" href="{{ route('pedido.gestor') }}" target="_blank">
                                             Gestor de Pedidos
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('mesa.painel') }}" target="_blank">
+                                        <a class="dropdown-item" href="{{ route('mesa.gestor') }}" target="_blank">
                                             Gestor de Mesas
                                         </a>
                                     </li>

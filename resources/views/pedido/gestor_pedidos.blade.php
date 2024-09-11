@@ -64,7 +64,7 @@
                         <!-- TITULO -->
                         <div class="mt-3">
                             <h2 class="m-0 fw-bolder fs-2 text-black">
-                                Painel de Pedidos
+                                Gestor de Pedidos
                             </h2>
                         </div>
                         <!-- FIM TITULO -->
@@ -76,7 +76,7 @@
                                 $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
                                 @endphp
                                 @if(isset($filtro) && is_numeric($filtro))
-                                <a href="{{ route('pedido.painel') }}"
+                                <a href="{{ route('pedido.gestor') }}"
                                     class="mx-1 p-0 rounded text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
                                     style="min-width: 180px; background-color: #FD0146 !important">
                                     @if($filtro == 0)
@@ -102,7 +102,7 @@
                                 @endif
 
                                 @if($filtro == null || $filtro != 0)
-                                <a href="{{ route('pedido.painel', ['filtro' => 0]) }}"
+                                <a href="{{ route('pedido.gestor', ['filtro' => 0]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
                                     Pendentes
@@ -110,7 +110,7 @@
                                 @endif
 
                                 @if($filtro != 1)
-                                <a href="{{ route('pedido.painel', ['filtro' => 1]) }}"
+                                <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
                                     Em preparo
@@ -118,7 +118,7 @@
                                 @endif
 
                                 @if($filtro != 2)
-                                <a href="{{ route('pedido.painel', ['filtro' => 2]) }}"
+                                <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
                                     A caminho
@@ -126,7 +126,7 @@
                                 @endif
 
                                 @if($filtro != 3)
-                                <a href="{{ route('pedido.painel', ['filtro' => 3]) }}"
+                                <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
                                     Concluídos
@@ -134,7 +134,7 @@
                                 @endif
 
                                 @if($filtro != 4)
-                                <a href="{{ route('pedido.painel', ['filtro' => 4]) }}"
+                                <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
                                     Rejeitados
@@ -142,7 +142,7 @@
                                 @endif
 
                                 @if($filtro != 5)
-                                <a href="{{ route('pedido.painel', ['filtro' => 5]) }}"
+                                <a href="{{ route('pedido.gestor', ['filtro' => 5]) }}"
                                     class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
                                     style="min-width: 110px;">
                                     Cancelados
