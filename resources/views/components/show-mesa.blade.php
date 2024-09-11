@@ -11,7 +11,7 @@
                     Abertura da mesa:
                 </span>
                 @if($data['mesa']->hora_abertura != null)
-                {{\Carbon\Carbon::parse($data['mesa']->abertura)->format('d/m/Y')}} ás
+                {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('d/m/Y')}} ás
                 {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('H:i')}}
                 @else
                 00h00m

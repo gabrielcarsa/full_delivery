@@ -538,6 +538,15 @@ class PedidoController extends Controller
 
             }else{ //Pagamento parcial
 
+                //Mesa valor pago parcial
+                $mesa->valor_pago_parcial += $valorPagar;
+                $mesa->save();
+
+                //Fechando pedido (s)
+                foreach($pedidos as $pedido){
+                    $pedido->situacao = 1;
+                    $pedido->save();
+                }
             }
 
         }else{// Com taxa de serviço

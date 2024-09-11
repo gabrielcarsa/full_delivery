@@ -106,7 +106,7 @@
                                     </p>
                                     <p class="fw-semibold fs-6 m-0">
                                         @if($mesa->hora_abertura != null)
-                                        {{\Carbon\Carbon::parse($mesa->abertura)->format('H:i')}}
+                                        {{\Carbon\Carbon::parse($mesa->hora_abertura)->format('H:i')}}
                                         @else
                                         00h00m
                                         @endif
