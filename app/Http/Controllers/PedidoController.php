@@ -527,6 +527,7 @@ class PedidoController extends Controller
                 //Mesa livre
                 $mesa->is_ocupada = false;
                 $mesa->hora_abertura = null;
+                $mesa->valor_pago_parcial = 0;
                 $mesa->save();
 
                 //Fechando pedido (s)
