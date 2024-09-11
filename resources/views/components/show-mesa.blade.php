@@ -8,7 +8,7 @@
             <span class="bg-success px-2 ml-1 text-white rounded" style="font-size: 13px !important">
                 Dísponivel
             </span>
-            @elseif($data['mesa']->is_ocupada == 1 && $data['mesa']->pagamento_parcial > 0)
+            @elseif($data['mesa']->is_ocupada == 1 && $data['mesa']->valor_pago_parcial > 0)
             <span class="bg-padrao px-2 ml-1 text-white rounded" style="font-size: 13px !important">
                 Pagamento parcial
             </span>
@@ -485,7 +485,12 @@
                                 </div>
                             </div>
                         </div>
-
+                        <p class="mx-0 mt-3 text-secondary d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1">
+                                warning
+                            </span>
+                            O valor pago não é somado a taxa de serviço
+                        </p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="text-padrao mx-3" data-bs-dismiss="modal">Voltar</button>
