@@ -192,6 +192,111 @@ class PedidoController extends Controller
 
     }
 
+    // PAGAMENTO DO PEDIDO MESA
+    public function pagamento_mesa(Request $request){
+
+        //Definindo data para cadastrar
+        date_default_timezone_set('America/Cuiaba'); 
+        
+        $mesa_id = $request->input('mesa_id');
+        $valorPagar = $request->input('valorPagar');
+        $pedidoIds = json_decode($request->input('pedidos'));
+        $total_geral = $request->input('total_geral');
+        $taxa_servico = $request->input('taxa_servico');
+        $sem_taxa_servico = $request->input('sem_taxa_servico');
+        $valor_pago_parcial = $request->input('valor_pago_parcial');
+
+        //Convertendo em float para salvar BD
+        $valorPagar = floatval(str_replace(',', '.', str_replace('.', '', $valorPagar)));
+
+        //Valor em aberto
+        $valorEmAberto = $total_geral - $valor_pago_parcial;
+
+        //Dados mesa
+        $mesa = Mesa::find($mesa_id);
+        
+        // Recuperar os pedidos do banco de dados
+        $pedidos = Pedido::whereIn('id', $pedidoIds)->get();
+
+        //Verificar sem ou com taxa de serviço
+        if($sem_taxa_servico == true){
+
+            //Verificar receber maior valor
+            if($valorPagar > $valorEmAberto){
+                $valorPagoMaior = true;
+                return redirect()->back()->withErrors(['valorPagoMaior' => 'Valor pago maior do que total valor total devido.']);
+            }
+
+            //Verificar se foi pago valor todo devido
+            if($valorPagar == $valorEmAberto){
+                //Mesa livre
+                $mesa->is_ocupada = false;
+                $mesa->hora_abertura = null;
+                $mesa->valor_pago_parcial = 0;
+                $mesa->save();
+
+                //Fechando pedido (s)
+                foreach($pedidos as $pedido){
+                    $pedido->fechado_em = Carbon::now()->format('Y-m-d H:i:s');
+                    $pedido->situacao = 2;
+                    $pedido->save();
+                }
+
+            }else{ //Pagamento parcial
+
+                //Mesa valor pago parcial
+                $mesa->valor_pago_parcial += $valorPagar;
+                $mesa->save();
+
+                //Fechando pedido (s)
+                foreach($pedidos as $pedido){
+                    $pedido->situacao = 1;
+                    $pedido->save();
+                }
+            }
+
+        }else{// Com taxa de serviço
+
+            //Verificar receber maior valor
+            if($valorPagar > ($valorEmAberto + $taxa_servico)){
+                $valorPagoMaior = true;
+                return redirect()->back()->withErrors(['valorPagoMaior' => 'Valor pago maior do que total valor total devido.']);
+            }
+
+            //Verificar se foi pago valor todo devido
+            if($valorPagar == ($valorEmAberto + $taxa_servico)){
+                //Mesa livre
+                $mesa->is_ocupada = false;
+                $mesa->hora_abertura = null;
+                $mesa->valor_pago_parcial = 0;
+                $mesa->save();
+
+                //Fechando pedido (s)
+                foreach($pedidos as $pedido){
+                    $pedido->fechado_em = Carbon::now()->format('Y-m-d H:i:s');
+                    $pedido->situacao = 2;
+                    $pedido->save();
+                }
+
+            }else{ //Pagamento parcial
+
+                //Mesa valor pago parcial
+                $mesa->valor_pago_parcial += ($valorPagar - $taxa_servico);
+                $mesa->save();
+
+                //Fechando pedido (s)
+                foreach($pedidos as $pedido){
+                    $pedido->situacao = 1;
+                    $pedido->save();
+                }
+            }
+
+        }
+
+        return redirect()->back();
+
+    }
+
     //-------------------------
     // PEDIDOS PARTE DO CLIENTE
     //-------------------------
@@ -487,80 +592,4 @@ class PedidoController extends Controller
         return view('pedido/detalhes_pedido', compact('data'));       
     }
 
-    // PAGAMENTO DO PEDIDO MESA
-    public function pagamento_mesa(Request $request){
-
-        //Definindo data para cadastrar
-        date_default_timezone_set('America/Cuiaba'); 
-        
-        $mesa_id = $request->input('mesa_id');
-        $valorPagar = $request->input('valorPagar');
-        $pedidoIds = json_decode($request->input('pedidos'));
-        $total_geral = $request->input('total_geral');
-        $taxa_servico = $request->input('taxa_servico');
-        $sem_taxa_servico = $request->input('sem_taxa_servico');
-        $valor_pago_parcial = $request->input('valor_pago_parcial');
-
-        //Convertendo em float para salvar BD
-        $valorPagar = floatval(str_replace(',', '.', str_replace('.', '', $valorPagar)));
-
-        //Valor em aberto
-        $valorEmAberto = $total_geral - $valor_pago_parcial;
-
-        //Dados mesa
-        $mesa = Mesa::find($mesa_id);
-        
-        // Recuperar os pedidos do banco de dados
-        $pedidos = Pedido::whereIn('id', $pedidoIds)->get();
-
-        //Verificar sem ou com taxa de serviço
-        if($sem_taxa_servico == true){
-
-            //Verificar receber maior valor
-            if($valorPagar > $valorEmAberto){
-                $valorPagoMaior = true;
-                return redirect()->back()->withErrors(['valorPagoMaior' => 'Valor pago maior do que total valor total devido.']);
-            }
-
-             //Verificar se foi pago valor todo devido
-            if($valorPagar == $valorEmAberto){
-                //Mesa livre
-                $mesa->is_ocupada = false;
-                $mesa->hora_abertura = null;
-                $mesa->valor_pago_parcial = 0;
-                $mesa->save();
-
-                //Fechando pedido (s)
-                foreach($pedidos as $pedido){
-                    $pedido->fechado_em = Carbon::now()->format('Y-m-d H:i:s');
-                    $pedido->situacao = 2;
-                    $pedido->save();
-                }
-
-            }else{ //Pagamento parcial
-
-                //Mesa valor pago parcial
-                $mesa->valor_pago_parcial += $valorPagar;
-                $mesa->save();
-
-                //Fechando pedido (s)
-                foreach($pedidos as $pedido){
-                    $pedido->situacao = 1;
-                    $pedido->save();
-                }
-            }
-
-        }else{// Com taxa de serviço
-
-            //Verificar receber maior valor
-            if($valorPagar > ($valorEmAberto + $taxa_servico)){
-                $valorPagoMaior = true;
-                return redirect()->back()->withErrors(['valorPagoMaior' => 'Valor pago maior do que total valor total devido.']);
-            }
-
-        }
-
-        return redirect()->back();
-
-    }
 }
