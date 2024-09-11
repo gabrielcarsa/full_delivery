@@ -124,7 +124,9 @@
                                         @foreach($mesa->pedido as $pedido)
 
                                         @php
-                                        $total_mesa += $pedido->total;
+                                        if($pedido->situacao != 2){
+                                            $total_mesa += $pedido->total;
+                                        }
                                         @endphp
 
                                         @endforeach

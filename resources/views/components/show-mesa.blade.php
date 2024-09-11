@@ -323,7 +323,7 @@
         </div>
         <div>
             <p class="m-0 text-secondary">
-                Taxa de serviço
+                Taxa de serviço ({{$data['mesa']->loja->taxa_servico}}%)
             </p>
             <p class="m-0">
                 @php
@@ -366,99 +366,121 @@
                     </p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <form
+                    action="{{ route('pedido.pagamento', ['mesa_id' => $data['mesa']->id ]) }}"
+                    method="post">
+                    @csrf
 
-                    <div class="row">
-                        <div class="col bg-light p-3 m-1">
-                            <label for="inputValorPagar" class="form-label">Valor a pagar</label>
-                            <input type="text" id="inputValorPagar" class="form-control" aria-describedby="aPagarHelp">
-                            <div id="aPagarHelp" class="form-text">
-                                o valor a pagar não pode ser maior que R$
-                                {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
+                    <div class="modal-body">
+                        <!-- VARIÁVEIS -->
+                        <input type="hidden" name="total_geral" value="{{$total_geral}}">
+                        <input type="hidden" name="taxa_servico" value="{{$taxa_servico}}">
+                        <input type="hidden" name="valor_pago_parcial" value="{{$data['mesa']->valor_pago_parcial}}">
+                        <input type="hidden" name="pedidos" value="{{ json_encode($data['pedidos']->pluck('id')->toArray()) }}">
+                        <!-- FIM VARIÁVEIS -->
+
+                        <div class="row">
+                            <div class="col bg-light p-3 m-1">
+                                <label for="inputValorPagar" class="form-label">Valor a pagar</label>
+                                <input type="text" id="inputValorPagar" name="valorPagar" class="form-control"
+                                    aria-describedby="aPagarHelp">
+                                <div id="aPagarHelp" class="form-text">
+                                    o valor a pagar não pode ser maior que R$
+                                    {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
+                                </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" value="true" name="sem_taxa_servico" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Não cobrar taxa de serviço
+                                    </label>
+                                </div>
                             </div>
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Não cobrar taxa de serviço
-                                </label>
+                            <div class="col bg-light p-3 m-1">
+                                <p class="m-0">
+                                    Selecione uma opção
+                                </p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        value="option1">
+                                    <label class="form-check-label" for="inlineRadio1">Dinheiro</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">Pix</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">Crédito</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">Débito</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col bg-light p-3 m-1">
-                            <p class="m-0">
-                                Selecione uma opção
-                            </p>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">Dinheiro</label>
+
+                        <div class="row">
+                            <div class="col bg-light p-3 m-1">
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0">
+                                        Valor pago:
+                                    </p>
+                                    <p class="m-0">
+                                        R$ {{ number_format($data['mesa']->valor_pago_parcial, 2, ',', '.') }}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0 fw-bold">
+                                        Valor em aberto:
+                                    </p>
+                                    <p class="m-0 fw-bold">
+                                        @php
+                                        $valor_em_aberto = $total_geral - $data['mesa']->valor_pago_parcial;
+                                        @endphp
+                                        R$ {{ number_format($valor_em_aberto, 2, ',', '.') }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Pix</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Crédito</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">Débito</label>
+                            <div class="col bg-light p-3 m-1">
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0">
+                                        Subtotal:
+                                    </p>
+                                    <p class="m-0">
+                                        R$ {{ number_format($total_geral, 2, ',', '.') }}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0">
+                                        Taxa de serviço:
+                                    </p>
+                                    <p class="m-0">
+                                        R$ {{ number_format($taxa_servico, 2, ',', '.') }}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0 fw-bold">
+                                        Total mesa:
+                                    </p>
+                                    <p class="m-0 fw-bold">
+                                        R$ {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
+
                     </div>
-
-                    <div class="row">
-                        <div class="col bg-light p-3 m-1">
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0">
-                                    Valor pago:
-                                </p>
-                                <p class="m-0">
-                                    R$ {{ number_format($data['mesa']->valor_pago_parcial, 2, ',', '.') }}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0 fw-bold">
-                                    Valor em aberto:
-                                </p>
-                                <p class="m-0 fw-bold">
-                                    R$ {{ number_format($total_geral, 2, ',', '.') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col bg-light p-3 m-1">
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0">
-                                    Subtotal:
-                                </p>
-                                <p class="m-0">
-                                    R$ {{ number_format($total_geral, 2, ',', '.') }}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0">
-                                    Taxa de serviço:
-                                </p>
-                                <p class="m-0">
-                                    R$ {{ number_format($taxa_servico, 2, ',', '.') }}
-                                </p>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <p class="m-0 fw-bold">
-                                    Total a pagar:
-                                </p>
-                                <p class="m-0 fw-bold">
-                                    R$ {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
-                                </p>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="text-padrao mx-3" data-bs-dismiss="modal">Voltar</button>
+                        <button type="submit" class="btn bg-padrao text-white fw-semibold ml-1 px-3">
+                            Pagar
+                        </button>
                     </div>
+                </form>
 
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="text-padrao mx-3" data-bs-dismiss="modal">Voltar</button>
-                    <button type="button" class="btn bg-padrao text-white fw-semibold ml-1 px-3">Pagar</button>
-                </div>
             </div>
         </div>
     </div>
@@ -501,6 +523,23 @@ $(document).ready(function() {
         window.location.href = url;
     });
 
+    $(document).on('input', 'input[name^="valorPagar"]', function() {
+        // Remova os caracteres não numéricos
+        var unmaskedValue = $(this).val().replace(/\D/g, '');
+
+        // Adicione a máscara apenas ao input de valor relacionado à mudança
+        $(this).val(mask(unmaskedValue));
+    });
+
+    function mask(value) {
+        // Converte o valor para número
+        var numberValue = parseFloat(value) / 100;
+
+        // Formata o número com vírgula como separador decimal e duas casas decimais
+        return numberValue.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2
+        });
+    }
 
 
 });
