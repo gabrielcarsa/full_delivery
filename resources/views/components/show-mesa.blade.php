@@ -4,6 +4,19 @@
     <div class="d-flex justify-content-between align-items-center border p-3 rounded">
         <h4 class="m-0 fw-bold text-black">
             Mesa {{$data['mesa']->nome}}
+            @if($data['mesa']->is_ocupada != 1)
+            <span class="bg-success px-2 ml-1 text-white rounded" style="font-size: 13px !important">
+                Dísponivel
+            </span>
+            @elseif($data['mesa']->is_ocupada == 1 && $data['mesa']->pagamento_parcial > 0)
+            <span class="bg-padrao px-2 ml-1 text-white rounded" style="font-size: 13px !important">
+                Pagamento parcial
+            </span>
+            @else
+            <span class="bg-warning px-2 ml-1 text-white rounded" style="font-size: 13px !important">
+                Ocupado
+            </span>
+            @endif
         </h4>
         <div class="d-flex align-items-center">
             <p class="my-0 mx-1">
