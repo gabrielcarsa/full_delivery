@@ -366,9 +366,7 @@
                     </p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form
-                    action="{{ route('pedido.pagamento', ['mesa_id' => $data['mesa']->id ]) }}"
-                    method="post">
+                <form action="{{ route('pedido.pagamento', ['mesa_id' => $data['mesa']->id ]) }}" method="post">
                     @csrf
 
                     <div class="modal-body">
@@ -376,7 +374,8 @@
                         <input type="hidden" name="total_geral" value="{{$total_geral}}">
                         <input type="hidden" name="taxa_servico" value="{{$taxa_servico}}">
                         <input type="hidden" name="valor_pago_parcial" value="{{$data['mesa']->valor_pago_parcial}}">
-                        <input type="hidden" name="pedidos" value="{{ json_encode($data['pedidos']->pluck('id')->toArray()) }}">
+                        <input type="hidden" name="pedidos"
+                            value="{{ json_encode($data['pedidos']->pluck('id')->toArray()) }}">
                         <!-- FIM VARIÁVEIS -->
 
                         <div class="row">
@@ -386,11 +385,12 @@
                                     aria-describedby="aPagarHelp">
                                 <div id="aPagarHelp" class="form-text">
                                     o valor a pagar não pode ser maior que R$
-                                    {{ number_format($total_geral + $taxa_servico, 2, ',', '.') }}
+                                    {{ number_format(($total_geral + $taxa_servico) - $data['mesa']->valor_pago_parcial, 2, ',', '.') }}
                                 </div>
                                 <div class="form-check mt-2">
-                                    <input class="form-check-input" type="checkbox" value="true" name="sem_taxa_servico" id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" value="true" name="sem_taxa_servico"
+                                        id="sem_taxa_servico">
+                                    <label class="form-check-label" for="sem_taxa_servico">
                                         Não cobrar taxa de serviço
                                     </label>
                                 </div>
@@ -436,9 +436,10 @@
                                     <p class="m-0 fw-bold">
                                         Valor em aberto:
                                     </p>
-                                    <p class="m-0 fw-bold">
+                                    <p class="m-0 fw-bold" id="valor_em_aberto">
                                         @php
-                                        $valor_em_aberto = $total_geral - $data['mesa']->valor_pago_parcial;
+                                        $valor_em_aberto = ($total_geral + $taxa_servico) -
+                                        $data['mesa']->valor_pago_parcial;
                                         @endphp
                                         R$ {{ number_format($valor_em_aberto, 2, ',', '.') }}
                                     </p>
@@ -541,6 +542,30 @@ $(document).ready(function() {
         });
     }
 
+    // Cálculo do valor em aberto ao marcar/desmarcar o checkbox da taxa de serviço
+    $('#sem_taxa_servico').change(function() {
+        var total_geral = parseFloat('{{ $total_geral }}');
+        var taxa_servico = parseFloat('{{ $taxa_servico }}');
+        var valor_pago_parcial = isNaN(parseFloat('{{ $data["mesa"]->valor_pago_parcial }}')) ? 0 :
+            parseFloat('{{ $data["mesa"]->valor_pago_parcial }}');
+        var valorEmAberto = (total_geral + taxa_servico) - valor_pago_parcial;
+
+        if ($(this).is(':checked')) {
+            // Se a taxa de serviço não for cobrada, subtrai o valor da taxa de serviço
+            valorEmAberto = total_geral - valor_pago_parcial;
+        }
+
+        // Atualiza o valor em aberto na tela
+        $('#valor_em_aberto').text('R$ ' + valorEmAberto.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }));
+        $('#aPagarHelp').text('o valor a pagar não pode ser maior que R$ ' + valorEmAberto
+            .toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }));
+    });
 
 });
 </script>
