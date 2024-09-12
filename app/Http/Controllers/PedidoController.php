@@ -224,7 +224,7 @@ class PedidoController extends Controller
             //Verificar receber maior valor
             if($valorPagar > $valorEmAberto){
                 $valorPagoMaior = true;
-                return redirect()->back()->withErrors(['valorPagoMaior' => 'Valor pago maior do que total valor total devido.']);
+                return redirect()->back()->withErrors(['valorPagoMaior' => 'Erro: Valor inserido é maior que o valor em aberto. Tente novamente!']);
             }
 
             //Verificar se foi pago valor todo devido
@@ -260,7 +260,7 @@ class PedidoController extends Controller
             //Verificar receber maior valor
             if($valorPagar > ($valorEmAberto + $taxa_servico)){
                 $valorPagoMaior = true;
-                return redirect()->back()->withErrors(['valorPagoMaior' => 'Valor pago maior do que total valor total devido.']);
+                return redirect()->back()->withErrors(['valorPagoMaior' => 'Erro: Valor inserido é maior que o valor em aberto. Tente novamente!']);
             }
 
             //Verificar se foi pago valor todo devido
