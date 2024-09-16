@@ -450,7 +450,7 @@
                             <div class="col bg-light p-3 m-1">
                                 <label for="inputValorPagar" class="form-label">Valor a pagar</label>
                                 <input type="text" id="inputValorPagar" name="valorPagar" class="form-control"
-                                    aria-describedby="aPagarHelp">
+                                    aria-describedby="aPagarHelp" required>
                                 <div id="aPagarHelp" class="form-text">
                                     o valor a pagar não pode ser maior que R$
                                     {{ number_format(($total_geral + $taxa_servico) - $data['mesa']->valor_pago_parcial, 2, ',', '.') }}

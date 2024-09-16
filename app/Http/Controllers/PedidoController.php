@@ -210,7 +210,7 @@ class PedidoController extends Controller
         $valorPagar = floatval(str_replace(',', '.', str_replace('.', '', $valorPagar)));
 
         //Valor em aberto
-        $valorEmAberto = $total_geral - $valor_pago_parcial;
+        $valorEmAberto = floatval($total_geral - $valor_pago_parcial);
 
         //Dados mesa
         $mesa = Mesa::find($mesa_id);
@@ -218,17 +218,20 @@ class PedidoController extends Controller
         // Recuperar os pedidos do banco de dados
         $pedidos = Pedido::whereIn('id', $pedidoIds)->get();
 
+        // Definir epsilon (margem de erro para comparação de floats)
+        $epsilon = 0.00001;
+
         //Verificar sem ou com taxa de serviço
         if($sem_taxa_servico == true){
 
             //Verificar receber maior valor
-            if($valorPagar > $valorEmAberto){
+            if (($valorPagar - $valorEmAberto) > $epsilon) {
                 $valorPagoMaior = true;
                 return redirect()->back()->withErrors(['valorPagoMaior' => 'Erro: Valor inserido é maior que o valor em aberto. Tente novamente!']);
             }
 
             //Verificar se foi pago valor todo devido
-            if($valorPagar == $valorEmAberto){
+            if(abs($valorPagar - $valorEmAberto) < $epsilon){
                 //Mesa livre
                 $mesa->is_ocupada = false;
                 $mesa->hora_abertura = null;
@@ -258,13 +261,13 @@ class PedidoController extends Controller
         }else{// Com taxa de serviço
 
             //Verificar receber maior valor
-            if($valorPagar > ($valorEmAberto + $taxa_servico)){
+            if(($valorPagar - ($valorEmAberto + $taxa_servico)) > $epsilon){
                 $valorPagoMaior = true;
                 return redirect()->back()->withErrors(['valorPagoMaior' => 'Erro: Valor inserido é maior que o valor em aberto. Tente novamente!']);
             }
 
             //Verificar se foi pago valor todo devido
-            if($valorPagar == ($valorEmAberto + $taxa_servico)){
+            if(abs($valorPagar - ($valorEmAberto + $taxa_servico)) < $epsilon){
                 //Mesa livre
                 $mesa->is_ocupada = false;
                 $mesa->hora_abertura = null;
