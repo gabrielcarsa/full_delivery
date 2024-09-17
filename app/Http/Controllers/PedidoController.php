@@ -195,6 +195,7 @@ class PedidoController extends Controller
         $taxa_servico = $request->input('taxa_servico');
         $sem_taxa_servico = $request->input('sem_taxa_servico');
         $valor_pago_parcial = $request->input('valor_pago_parcial');
+        $itens_pedido_id = $request->input('item_pedido_id');
 
         //Convertendo em float para salvar BD
         $valorPagar = floatval(str_replace(',', '.', str_replace('.', '', $valorPagar)));
@@ -210,6 +211,20 @@ class PedidoController extends Controller
 
         // Definir epsilon (margem de erro para comparação de floats)
         $epsilon = 0.00001;
+
+
+        // Se não for selecionado nenhum item
+        if($itens_pedido_id != null){
+
+            foreach($itens_pedido_id as $item_pedido_id){
+                // Item Pedido
+                $item_pedido = ItemPedido::find($item_pedido_id);
+                $item_pedido->situacao = 1;
+                $item_pedido->save();
+
+            }
+
+        }
 
         //Verificar sem ou com taxa de serviço
         if($sem_taxa_servico == true){
@@ -285,6 +300,7 @@ class PedidoController extends Controller
             }
 
         }
+        
 
         return redirect()->back();
 
