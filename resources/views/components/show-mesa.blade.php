@@ -568,17 +568,62 @@
 <script>
 $(document).ready(function() {
 
-
     // Selecionar todos checkboxes
     $("#selectAll").click(function() {
-        // Obtém o estado atual do "Selecionar Todos" dentro da tabela atual
         var selecionarTodos = $(this).prop('checked');
-
-        // Encontra os checkboxes individuais dentro da tabela atual e marca ou desmarca com base no estado do "Selecionar Todos"
         $(this).closest('table').find("input[name='item_pedido_id[]']").prop('checked',
             selecionarTodos);
+        calcularValorTotal(); // Chame a função sempre que marcar/desmarcar
     });
 
+    // Calcular valor total ao marcar/desmarcar os checkboxes individuais
+    $("input[name='item_pedido_id[]']").change(function() {
+        calcularValorTotal();
+    });
+
+    // Função para calcular o valor total dos itens selecionados
+    function calcularValorTotal() {
+        var total = 0;
+
+        // Iterar sobre os checkboxes selecionados
+        $("input[name='item_pedido_id[]']:checked").each(function() {
+            // Pega o checkbox do item selecionado
+            var checkbox = $(this);
+            // Pega a linha do item correspondente
+            var linhaItem = checkbox.closest('tr');
+            // Pega o subtotal do item (verifique se está formatado com R$, e converta para número)
+            var subtotalItem = parseFloat(linhaItem.find('td:nth-child(5) span').text().replace('R$',
+                '').replace('.', '').replace(',', '.'));
+
+            // Adiciona o subtotal do item ao total
+            total += subtotalItem;
+
+            // Verifica se a próxima linha contém opcionais (categoria de opcionais)
+            var proximaLinha = linhaItem.next('tr');
+            if (proximaLinha.length && proximaLinha.find('td:nth-child(3) p').length) {
+                // Iterar sobre os opcionais e somar seus valores
+                proximaLinha.find('td:nth-child(5) p').each(function() {
+                    // Pega o valor do opcional (verifique se está formatado com R$, e converta para número)
+                    var precoOpcional = parseFloat($(this).text().replace('+ R$', '').replace(
+                        '.', '').replace(',', '.'));
+                    // Adiciona o valor do opcional ao total
+                    total += precoOpcional;
+                });
+            }
+        });
+
+        // Atualizar o campo inputValorPagar com o total formatado
+        $('#inputValorPagar').val(total.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }));
+    }
+
+    // Calcular valor total inicial (caso algum item esteja pré-selecionado)
+    calcularValorTotal();
+});
+
+$(document).ready(function() {
 
     $("#pagamento").click(function(event) {
         event.preventDefault();
