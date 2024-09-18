@@ -192,22 +192,26 @@
                             <input type="checkbox" name="item_pedido_id[]" value="{{$item->id}}">
                             @endif
                         </td>
-                        <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
+                        <td
+                            class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                             <span>
                                 {{ $item->quantidade }}x
                             </span><br>
                         </td>
-                        <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
+                        <td
+                            class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                             <span class="fw-bold">
                                 {{ $item->produto->nome }}
                             </span>
                         </td>
-                        <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
+                        <td
+                            class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                             <span>
                                 R$ {{number_format($item->preco_unitario, 2, ',', '.')}}
                             </span>
                         </td>
-                        <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
+                        <td
+                            class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                             <span>
                                 R$ {{number_format($item->subtotal, 2, ',', '.')}}
                             </span>
@@ -498,6 +502,14 @@
                             <div class="col bg-light p-3 m-1">
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0">
+                                        Valor dos itens selecionados:
+                                    </p>
+                                    <p class="m-0" id="valorItensSelecionados">
+                                        R$ 0,00
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="m-0">
                                         Valor pago:
                                     </p>
                                     <p class="m-0">
@@ -617,7 +629,7 @@ $(document).ready(function() {
         });
 
         // Atualizar o campo inputValorPagar com o total formatado
-        $('#inputValorPagar').val(total.toLocaleString('pt-BR', {
+        $('#valorItensSelecionados').text('R$ ' + total.toLocaleString('pt-BR', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }));
