@@ -556,11 +556,18 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mx-0 mt-3 text-secondary d-flex align-items-center">
+                        <p class="m-0 text-black fw-semibold d-flex align-items-center">
                             <span class="material-symbols-outlined mr-1">
                                 warning
                             </span>
-                            O valor pago não é somado a taxa de serviço
+                            Algumas instruções:
+                        </p>
+                        <p class="my-0 mx-3 text-secondary">
+                            - Se o pagamento for parcial a porcentagem de taxa de serviço, se for cobrada, será cobrada
+                            por pagamento parcial.
+                        </p>
+                        <p class="my-0 mx-3 text-secondary">
+                            - O 'valor pago' não é somado a taxa de serviço.
                         </p>
                     </div>
                     <div class="modal-footer">
