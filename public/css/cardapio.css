@@ -8,6 +8,9 @@
 .text-padrao{
     color: #FD0146 !important;
 }
+.border-padrao{
+    border-color: #FD0146 !important;
+}
 
 .wallpaper-cardapio {
     background-color: #fd0146;

@@ -493,7 +493,7 @@
                 @foreach($data['categoria_produto'] as $categoria)
                 <div class="m-3">
                     <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}"
-                        class="text-decoration-none text-black border border-black rounded px-3 py-2">
+                        class="text-decoration-none text-black border rounded px-3 py-2">
                         {{$categoria->nome}}
                     </a>
                 </div>
@@ -620,6 +620,7 @@
             navItems.forEach(item => item.classList.remove('bg-padrao'));
             navItems.forEach(item => item.classList.remove('text-white'));
             navItems.forEach(item => item.classList.remove('fw-semibold'));
+            navItems.forEach(item => item.classList.add('border'));
         }
 
         function addActiveClass(id) {
@@ -628,6 +629,7 @@
                 navItem.classList.add('bg-padrao');
                 navItem.classList.add('text-white');
                 navItem.classList.add('fw-semibold');
+                navItem.classList.remove('border');
             }
         }
 
