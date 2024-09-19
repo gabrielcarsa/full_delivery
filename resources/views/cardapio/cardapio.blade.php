@@ -486,14 +486,14 @@
     <!-- CARDAPIO -->
     <div class="bg-body-tertiary">
 
-        <div class="p-3 container">
+        <div class="">
 
             <!-- CATEGORIAS -->
             <div class="bg-body-tertiary d-flex overflow-x-scroll sticky-top w100 py-2" id="categorias-nav">
                 @foreach($data['categoria_produto'] as $categoria)
                 <div class="m-3">
                     <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}"
-                        class="text-decoration-none text-black border rounded px-3 py-2">
+                        class="text-decoration-none text-black rounded px-3 py-2">
                         {{$categoria->nome}}
                     </a>
                 </div>
@@ -509,57 +509,67 @@
 
                 @if($categoria->produto != null)
 
-                <h3 id="{{$categoria->nome}}" class="my-3 fw-bolder">{{$categoria->nome}}</h3>
+                <h3 id="{{$categoria->nome}}" class="m-3 fw-bold d-inline-block"
+                    style="border-bottom: 5px solid #FD0146">
+                    {{$categoria->nome}}
+                </h3>
                 <div class="row">
 
-                    <!-- PRODUTOS GRID -->
-                    @foreach($categoria->produto as $produto)
-                    <div class="col-md-6">
+                    <!-- LISTA -->
+                    <ul class="list-group list-group-flush">
 
-                        <!-- PRODUTO -->
-                        <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id, 'consumo_local_viagem_delivery' => $data['consumo_local_viagem_delivery'], 'endereco_selecionado' => $data['endereco_selecionado']]) }}"
-                            class="text-decoration-none text-reset">
+                        <!-- PRODUTOS GRID -->
+                        @foreach($categoria->produto as $produto)
+                        <div class="col-md-6">
 
-                            <!-- CARD PRODUTO -->
-                            <div class="row bg-white border rounded p-1 m-1">
+                            <li class="list-group-item">
 
-                                <!-- CARD PRODUTO DESCRIÇÃO -->
-                                <div class="col-6 p-1">
-                                    <div class="">
-                                        <h5 class="fs-5 fw-semibold">{{$produto->nome}}</h5>
-                                        <p class="text-secondary text-truncate m-0" style="font-size: 13px">
-                                            {{$produto->descricao}}
-                                        </p>
-                                        <p class="my-1" style="font-size: 13px">
-                                            Serve {{$produto->quantidade_pessoa}}
-                                            {{$produto->quantidade_pessoa > 1 ? 'pessoas' : 'pessoa'}}
-                                        </p>
-                                        <p class="fw-800 fs-6">
-                                            <strong>
-                                                R$ {{number_format($produto->preco, 2, ',', '.')}}
-                                            </strong>
-                                        </p>
+                                <!-- PRODUTO -->
+                                <a href="{{ route('cardapio.produto', ['loja_id' => $data['loja_id'], 'produto_id' => $produto->id, 'consumo_local_viagem_delivery' => $data['consumo_local_viagem_delivery'], 'endereco_selecionado' => $data['endereco_selecionado']]) }}"
+                                    class="text-decoration-none text-reset">
+
+                                    <!-- CARD PRODUTO -->
+                                    <div class="row bg-white ps-3">
+
+                                        <!-- CARD PRODUTO DESCRIÇÃO -->
+                                        <div class="col-6 p-1">
+                                            <div class="">
+                                                <h5 class="fs-5 fw-semibold">{{$produto->nome}}</h5>
+                                                <p class="text-secondary text-truncate m-0" style="font-size: 13px">
+                                                    {{$produto->descricao}}
+                                                </p>
+                                                <p class="my-1" style="font-size: 13px">
+                                                    Serve {{$produto->quantidade_pessoa}}
+                                                    {{$produto->quantidade_pessoa > 1 ? 'pessoas' : 'pessoa'}}
+                                                </p>
+                                                <p class="fw-800 fs-6">
+                                                    <strong>
+                                                        R$ {{number_format($produto->preco, 2, ',', '.')}}
+                                                    </strong>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- FIM CARD PRODUTO DESCRIÇÃO -->
+
+                                        <!-- IMG PRODUTO -->
+                                        <div class="col-6 d-flex align-items-center justify-content-center">
+                                            <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
+                                                class="rounded img-produto" alt="{{$produto->nome}}" width="90px">
+                                        </div>
+                                        <!-- FIM IMG PRODUTO -->
+
                                     </div>
-                                </div>
-                                <!-- FIM CARD PRODUTO DESCRIÇÃO -->
+                                    <!-- FIM CARD PRODUTO -->
 
-                                <!-- IMG PRODUTO -->
-                                <div class="col-6 d-flex align-items-center justify-content-center">
-                                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
-                                        class="rounded img-produto" alt="{{$produto->nome}}" width="90px">
-                                </div>
-                                <!-- FIM IMG PRODUTO -->
+                                </a>
+                                <!-- FIM PRODUTO -->
 
-                            </div>
-                            <!-- FIM CARD PRODUTO -->
+                            </li>
+                        </div>
 
-                        </a>
-                        <!-- FIM PRODUTO -->
-
-                    </div>
-
-                    @endforeach
-                    <!-- FIM PRODUTOS GRID -->
+                        @endforeach
+                        <!-- FIM PRODUTOS GRID -->
+                    </ul>
 
                 </div>
                 @endif

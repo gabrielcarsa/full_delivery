@@ -1,5 +1,5 @@
 * {
-    font-family: "Inter", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .bg-padrao{
@@ -9,7 +9,7 @@
     color: #FD0146 !important;
 }
 .border-padrao{
-    border-color: #FD0146 !important;
+    border: 1px solid #FD0146 !important;
 }
 
 .wallpaper-cardapio {
