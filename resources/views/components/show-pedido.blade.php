@@ -520,10 +520,14 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Quantidade</th>
+                    <th>
+                        <input type="checkbox" name="selectAll" id="selectAll">
+                    </th>
+                    <th scope="col">Qtnd</th>
                     <th scope="col">Item</th>
-                    <th scope="col">Preço unitário</th>
+                    <th scope="col">Unidade</th>
                     <th scope="col">Subtotal</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -541,6 +545,9 @@
                 @endphp
 
                 <tr class="p-0 m-0">
+                    <td class="bg-white">
+                        <input type="checkbox" name="item_pedido_id[]" value="{{$item->id}}">
+                    </td>
                     <td class="bg-white">
                         <span>
                             {{ $item->quantidade }}x
@@ -561,10 +568,34 @@
                             R$ {{number_format($item->subtotal, 2, ',', '.')}}
                         </span>
                     </td>
+                    <td class="bg-white">
+                        <div class="dropdown">
+                            <a class="btn d-flex align-items-center ml-2" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    more_vert
+                                </span>
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Alterar quantidade
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="#">
+                                        Excluir item
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
 
                 @if(!$item->produto->categoria_opcional->isEmpty())
                 <tr style="font-size:14px">
+                    <td></td>
                     <td></td>
                     <td>
 
@@ -661,6 +692,7 @@
                         @endforeach
                         <!-- FIM CATEGORIAS DE OPCIONAIS -->
                     </td>
+                    <td></td>
                 </tr>
                 @endif
 
@@ -668,19 +700,21 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3" class="fw-bold bg-white">Subtotal</td>
+                    <td colspan="4" class="fw-bold bg-white">Subtotal</td>
                     <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
+                    <td class="bg-white"></td>
                 </tr>
                 @if($pedido->consumo_local_viagem_delivery == 3)
                 <tr>
-                    <td colspan="3" class="fw-bold bg-white">Entrega</td>
+                    <td colspan="4" class="fw-bold bg-white">Entrega</td>
                     <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
+                    <td class="bg-white"></td>
                 </tr>
                 @endif
 
                 @if(!empty($pedido->uso_cupom))
                 <tr>
-                    <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
+                    <td colspan="4" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
                     @if($pedido->uso_cupom->cupom->tipo_desconto == 1)
                     <td class="text-danger bg-white">
                         - R$ {{ number_format($pedido->uso_cupom->cupom->desconto, 2, ',', '.') }}
@@ -688,11 +722,13 @@
                     @else
                     <td class="text-danger bg-white">- {{ $pedido->uso_cupom->cupom->desconto }} %</td>
                     @endif
+                    <td class="bg-white"></td>
                 </tr>
                 @endif
                 <tr>
-                    <td colspan="3" class="fw-bold bg-white">Total</td>
+                    <td colspan="4" class="fw-bold bg-white">Total</td>
                     <td class="fw-bolder bg-white"> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
+                    <td class="bg-white"></td>
                 </tr>
             </tfoot>
 
