@@ -182,6 +182,44 @@ class PedidoController extends Controller
 
     }
 
+    // ADICIONAR QTD PEDIDO
+    public function adicionar_quantidade(Request $request){
+        //IDs
+        $item_pedido_id = $request->input('item_id');
+        $pedido_id = $request->input('pedido_id');
+
+        //Item Pedido
+        $item_pedido = ItemPedido::find($item_pedido_id);
+        $item_pedido->subtotal += $item_pedido->preco_unitario; 
+        $item_pedido->quantidade += 1; 
+        $item_pedido->save(); 
+
+        //Pedido
+        $pedido = Pedido::find($pedido_id);
+        $pedido->total += $item_pedido->preco_unitario;
+        $pedido->save(); 
+        return redirect()->back();
+    }
+
+     // REMOVER QTD PEDIDO
+     public function remover_quantidade(Request $request){
+        //IDs
+        $item_pedido_id = $request->input('item_id');
+        $pedido_id = $request->input('pedido_id');
+
+        //Item Pedido
+        $item_pedido = ItemPedido::find($item_pedido_id);
+        $item_pedido->subtotal -= $item_pedido->preco_unitario; 
+        $item_pedido->quantidade -= 1; 
+        $item_pedido->save(); 
+
+        //Pedido
+        $pedido = Pedido::find($pedido_id);
+        $pedido->total -= $item_pedido->preco_unitario;
+        $pedido->save(); 
+        return redirect()->back();
+    }
+
     // PAGAMENTO DO PEDIDO MESA
     public function pagamento_mesa(Request $request){
         
