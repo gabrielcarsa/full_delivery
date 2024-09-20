@@ -243,12 +243,44 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item text-danger" href="#">
+                                        <a class="dropdown-item text-danger" data-bs-toggle="modal"
+                                            data-bs-target="#exluirItemModal{{$item->id}}">
                                             Excluir item
                                         </a>
                                     </li>
                                 </ul>
-
+                                <!-- MODAL EXCLUIR -->
+                                <div class="modal fade" id="exluirItemModal{{$item->id}}" tabindex="-1"
+                                    aria-labelledby="exluirItemModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <p class="modal-title fs-5" id="exluirItemModalLabel">
+                                                    Excluir {{$item->produto->nome}}?
+                                                </p>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Esse produto tem {{$item->quantidade}} quantidade(s), todas
+                                                    quantidades serão excluídas.
+                                                </p>
+                                                <p>Essa ação é irreversível! Tem certeza?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn border-padrao text-padrao"
+                                                    data-bs-dismiss="modal">
+                                                    Não
+                                                </button>
+                                                <a href="{{ route('pedido.deletar_item', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}" class="btn bg-padrao text-white fw-semibold">
+                                                    Sim, eu tenho
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- MODAL EXCLUIR -->
                             </div>
                         </td>
                     </tr>
@@ -594,6 +626,8 @@
         </div>
         <!-- FIM MODAL -->
     </form>
+
+
 
 </div>
 

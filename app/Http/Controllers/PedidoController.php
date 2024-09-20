@@ -220,6 +220,25 @@ class PedidoController extends Controller
         return redirect()->back();
     }
 
+        // EXCLUIR ITEM
+        public function deletar_item(Request $request){
+            //IDs
+            $item_pedido_id = $request->input('item_id');
+            $pedido_id = $request->input('pedido_id');
+    
+            //Item Pedido
+            $item_pedido = ItemPedido::find($item_pedido_id);
+    
+            //Pedido
+            $pedido = Pedido::find($pedido_id);
+            $pedido->total = $pedido->total - ($item_pedido->preco_unitario * $item_pedido->quantidade);
+
+            $pedido->save(); 
+            $item_pedido->delete(); 
+
+            return redirect()->back();
+        }
+
     // PAGAMENTO DO PEDIDO MESA
     public function pagamento_mesa(Request $request){
         
