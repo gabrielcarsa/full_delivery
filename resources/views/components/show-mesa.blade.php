@@ -196,19 +196,19 @@
                             class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                             <span class="d-flex align-items-center">
                                 @if($item->quantidade >= 2)
-                                <a class="d-flex align-items-center text-padrao text-decoration-none"
+                                <a class="d-flex align-items-center bg-padrao text-decoration-none rounded-circle"
                                     href="{{ route('pedido.remover_quantidade', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}">
-                                    <span class="material-symbols-outlined">
+                                    <span class="material-symbols-outlined text-white fs-6 fw-bold">
                                         remove
                                     </span>
                                 </a>
                                 @endif
-                                <span class="mx-1">
+                                <span class="mx-2">
                                     {{ $item->quantidade }}x
                                 </span>
-                                <a class="d-flex align-items-center text-padrao text-decoration-none"
+                                <a class="d-flex align-items-center bg-padrao text-decoration-none rounded-circle"
                                     href="{{ route('pedido.adicionar_quantidade', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}">
-                                    <span class="material-symbols-outlined">
+                                    <span class="material-symbols-outlined text-white fs-6 fw-bold">
                                         add
                                     </span>
                                 </a>
