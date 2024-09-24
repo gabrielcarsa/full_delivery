@@ -181,7 +181,7 @@
 
                                 <div class="exibirProdutos">
                                 </div>
-                                
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn border-padrao text-padrao" data-bs-dismiss="modal">
@@ -813,17 +813,25 @@ function exibirProdutos(categoriasProdutos) {
     categoriasProdutos.forEach(categoria => {
         // Renderiza os produtos da categoria
         categoria.produto.forEach(produto => {
+
+            // Formata o preço em formato BRL (R$)
+            let precoFormatado = parseFloat(produto.preco).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+
             // Cria o card do produto com o layout desejado
             let produtoCard = `
                 <div class="d-flex align-items-center justify-content-between border rounded p-3 mb-2">
                     <div>
                         <p class="m-0 text-secondary">#${produto.id}</p> <!-- ID do produto -->
-                        <p class="m-0 fw-bold">${produto.nome}</p> <!-- Nome do produto -->
+                        <p class="m-0 fw-bold">${produto.nome} - ${precoFormatado}</p> <!-- Nome do produto -->
                         <p class="m-0 fw-semibold">${categoria.nome}</p> <!-- Nome da categoria -->
                     </div>
                     <div>
-                        <a href="#" class="d-flex align-items-center bg-padrao text-decoration-none text-white p-2 rounded">
-                            <span class="material-symbols-outlined fw-bold">add_circle</span> <!-- Botão de adicionar -->
+                        <a href="#" class="d-flex align-items-center border-padrao text-decoration-none text-padrao p-2 rounded">
+                            <span class="material-symbols-outlined fw-bold mr-1">add_circle</span> <!-- Botão de adicionar -->
+                            Adicionar
                         </a>
                     </div>
                 </div>`;
