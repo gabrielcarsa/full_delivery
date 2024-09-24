@@ -240,7 +240,7 @@ class PedidoController extends Controller
         $item_pedido->quantidade = 1;
         $item_pedido->preco_unitario = $produto->preco;; 
         $item_pedido->subtotal = $produto->preco;; 
-        $item_pedido->observacao = "##MENSAGEM AUTOMÁTICA##\nAdicionado via Gestor de Mesas"; 
+        $item_pedido->observacao = "#".$pedido->id.$produto_id." adicionado por operador."; 
         $item_pedido->save();
         return redirect()->back();
 

@@ -213,6 +213,7 @@
                     <!-- Variáveis PHP -->
                     @php
                     $total_sem_entrega = 0;
+                    $isset_opcionais = false;
                     @endphp
 
                     <!-- Exibir itens do pedido -->
@@ -257,6 +258,13 @@
                             <span class="fw-bold">
                                 {{ $item->produto->nome }}
                             </span>
+                            <!-- OBSERVAÇÃO -->
+                            @if($item->observacao != null)
+                            <p class="m-0" style="font-size: 14px;">
+                                Obs.: {{$item->observacao}}
+                            </p>
+                            @endif
+                            <!-- FIM OBSERVAÇÃO -->
                         </td>
                         <td
                             class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
@@ -324,7 +332,28 @@
                         </td>
                     </tr>
 
-                    @if(!$item->produto->categoria_opcional->isEmpty())
+                    <!--VERIFICAR SE EXISTE OPCIONAIS -->
+                    @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+
+                    <!-- VERIFICAR SE EXISTE ALGUM OPCIONAL RELACIONADO A ESTA CATEGORIA -->
+                    @php
+
+                    // Filtra os opcionais do item_pedido que pertencem à categoria atual
+
+                    $opcionais_relacionados = $item->opcional_item->filter(function($opcional_item) use
+                    ($categoria_opcional) {
+                    return $categoria_opcional->opcional_produto->contains('id',
+                    $opcional_item->opcional_produto_id);
+                    });
+                    if($opcionais_relacionados->isNotEmpty()){
+                    $isset_opcionais = true;
+                    }
+
+                    @endphp
+
+                    @endforeach
+
+                    @if($isset_opcionais == true)
                     <tr style="font-size:14px">
                         <td></td>
                         <td></td>
@@ -821,7 +850,8 @@ function exibirProdutos(categoriasProdutos) {
             });
 
             // Rota para add produto
-            const urlBase = "{{ route('pedido.adicionar_item', ['pedido_id' => $pedido->id, 'produto_id' => '']) }}";
+            const urlBase =
+                "{{ route('pedido.adicionar_item', ['pedido_id' => $pedido->id, 'produto_id' => '']) }}";
 
             // Cria o card do produto com o layout desejado
             let produtoCard = `
