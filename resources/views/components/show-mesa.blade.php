@@ -148,12 +148,50 @@
                         Pedido ID: {{$pedido->id}}
                     </p>
                 </div>
-                <a href="" class="btn border-padrao text-padrao d-flex align-items-center">
+                <a data-bs-toggle="modal" data-bs-target="#adicionarItemModal{{$pedido->id}}"
+                    class="btn border-padrao text-padrao d-flex align-items-center">
                     <span class="material-symbols-outlined">
                         add
                     </span>
                     Adionar item
                 </a>
+                <!-- MODAL ADD -->
+                <div class="modal fade" id="adicionarItemModal{{$pedido->id}}" tabindex="-1"
+                    aria-labelledby="adicionarItemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <p class="modal-title fs-5" id="adicionarItemModalLabel">
+                                    Adicionar item
+                                </p>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Digite o nome do produto"
+                                        aria-label="Produto" aria-describedby="button-addon2" name="pesquisaProduto">
+                                    <button class="btn border-padrao d-flex align-items-center" type="button"
+                                        id="pesquisarProduto">
+                                        <span class="material-symbols-outlined text-padrao">
+                                            search
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div class="exibirProdutos">
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn border-padrao text-padrao" data-bs-dismiss="modal">
+                                    Fechar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIM MODAL ADD -->
             </div>
             <!-- FIM NOME CLIENTE PEDIDO -->
 
@@ -273,7 +311,8 @@
                                                     data-bs-dismiss="modal">
                                                     Não
                                                 </button>
-                                                <a href="{{ route('pedido.deletar_item', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}" class="btn bg-padrao text-white fw-semibold">
+                                                <a href="{{ route('pedido.deletar_item', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}"
+                                                    class="btn bg-padrao text-white fw-semibold">
                                                     Sim, eu tenho
                                                 </a>
                                             </div>
@@ -635,6 +674,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+//CALCULAR VALOR TOTAL ITENS SELECIONADOS
 $(document).ready(function() {
 
     // Selecionar todos checkboxes
@@ -694,23 +734,8 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 
-    $("#pagamento").click(function(event) {
-        event.preventDefault();
 
-        // Obtenha os valores dos checkboxes selecionados
-        var checkboxesSelecionados = [];
-
-        $("input[name='item_pedido_id[]']:checked").each(function() {
-            checkboxesSelecionados.push($(this).val());
-        });
-
-        // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-        var url = "{{ route('pedido.pagamento') }}?item_pedido_id=" + checkboxesSelecionados.join(',');
-
-        // Redirecione para a URL com os parâmetros
-        window.location.href = url;
-    });
-
+    // MASCARA NO CAMPO DE VALOR
     $(document).on('input', 'input[name^="valorPagar"]', function() {
         // Remova os caracteres não numéricos
         var unmaskedValue = $(this).val().replace(/\D/g, '');
@@ -755,4 +780,57 @@ $(document).ready(function() {
     });
 
 });
+
+//PESQUISAR E EXIBIR CATEGORIAS E PRODUTOS
+document.getElementById('pesquisarProduto').addEventListener('click', function() {
+    const pesquisaCampo = document.querySelector('input[name="pesquisaProduto"]').value;
+    // Requisição Ajax
+    fetch(`/categoria_produto/JSON?pesquisa=${encodeURIComponent(pesquisaCampo)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                exibirProdutos(data);
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+});
+
+function exibirProdutos(categoriasProdutos) {
+    const produtosContainer = document.querySelector('.exibirProdutos');
+    produtosContainer.innerHTML = ''; // Limpa os produtos anteriores
+
+    // Verifica se há categorias retornadas
+    if (categoriasProdutos.length === 0) {
+        produtosContainer.innerHTML = '<p>Nenhum produto encontrado.</p>';
+        return;
+    }
+
+    // Itera sobre as categorias e seus produtos
+    categoriasProdutos.forEach(categoria => {
+        // Renderiza os produtos da categoria
+        categoria.produto.forEach(produto => {
+            // Cria o card do produto com o layout desejado
+            let produtoCard = `
+                <div class="d-flex align-items-center justify-content-between border rounded p-3 mb-2">
+                    <div>
+                        <p class="m-0 text-secondary">#${produto.id}</p> <!-- ID do produto -->
+                        <p class="m-0 fw-bold">${produto.nome}</p> <!-- Nome do produto -->
+                        <p class="m-0 fw-semibold">${categoria.nome}</p> <!-- Nome da categoria -->
+                    </div>
+                    <div>
+                        <a href="#" class="d-flex align-items-center bg-padrao text-decoration-none text-white p-2 rounded">
+                            <span class="material-symbols-outlined fw-bold">add_circle</span> <!-- Botão de adicionar -->
+                        </a>
+                    </div>
+                </div>`;
+
+            // Adiciona o card ao container
+            produtosContainer.innerHTML += produtoCard;
+        });
+    });
+}
 </script>

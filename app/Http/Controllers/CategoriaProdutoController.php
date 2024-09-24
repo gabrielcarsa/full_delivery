@@ -93,4 +93,36 @@ class CategoriaProdutoController extends Controller
         $produto->delete();
         return redirect()->back()->with('success', 'Categoria excluida com sucesso');
     }
+
+    public function indexJSON(Request $request){
+
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+        }
+
+        //Sessão do loja que está conectado
+        $loja_id = session('lojaConectado')['id'];
+
+        // Termo de busca, se existir
+        $pesquisa = $request->input('pesquisa');
+
+        // Busca por categorias e produtos da loja selecionada, filtrando se houver um termo de busca
+        $categoria_produto = CategoriaProduto::where('loja_id', $loja_id)
+        ->whereHas('produto', function($query) use ($pesquisa) {
+            if ($pesquisa) {
+                // Filtra produtos cujo nome contenha o termo de busca
+                $query->where('nome', 'like', '%' . $pesquisa . '%');
+            }
+        })
+        ->with(['produto' => function($query) use ($pesquisa) {
+            if ($pesquisa) {
+                // Filtra produtos cujo nome contenha o termo de busca
+                $query->where('nome', 'like', '%' . $pesquisa . '%');
+            }
+        }])
+        ->orderBy('ordem')
+        ->get();
+
+        return response()->json($categoria_produto);
+    }
 }
