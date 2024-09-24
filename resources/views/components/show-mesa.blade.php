@@ -172,7 +172,7 @@
                                     <input type="text" class="form-control" placeholder="Digite o nome do produto"
                                         aria-label="Produto" aria-describedby="button-addon2" name="pesquisaProduto">
                                     <button class="btn border-padrao d-flex align-items-center" type="button"
-                                        id="pesquisarProduto">
+                                        id="pesquisarProduto{{$pedido->id}}" data-pedido-id="{{ $pedido->id }}">
                                         <span class="material-symbols-outlined text-padrao">
                                             search
                                         </span>
@@ -811,25 +811,31 @@ $(document).ready(function() {
 });
 
 //PESQUISAR E EXIBIR CATEGORIAS E PRODUTOS
-document.getElementById('pesquisarProduto').addEventListener('click', function() {
-    const pesquisaCampo = document.querySelector('input[name="pesquisaProduto"]').value;
-    // Requisição Ajax
-    fetch(`/categoria_produto/JSON?pesquisa=${encodeURIComponent(pesquisaCampo)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error);
-            } else {
-                exibirProdutos(data);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-        });
+document.querySelectorAll('[id^="pesquisarProduto"]').forEach(button => {
+    button.addEventListener('click', function() {
+        // Obtém o ID do pedido a partir do atributo data
+        const pedidoId = this.dataset.pedidoId;
+
+        const pesquisaCampo = document.querySelector('input[name="pesquisaProduto"]').value;
+
+        // Requisição Ajax
+        fetch(`/categoria_produto/JSON?pesquisa=${encodeURIComponent(pesquisaCampo)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    exibirProdutos(data, pedidoId);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+    });
 });
 
-function exibirProdutos(categoriasProdutos) {
-    const produtosContainer = document.querySelector('.exibirProdutos');
+function exibirProdutos(categoriasProdutos, pedidoId) {
+    const produtosContainer = document.querySelector(`#adicionarItemModal${pedidoId} .exibirProdutos`);
     produtosContainer.innerHTML = ''; // Limpa os produtos anteriores
 
     // Verifica se há categorias retornadas
@@ -849,9 +855,9 @@ function exibirProdutos(categoriasProdutos) {
                 currency: 'BRL'
             });
 
-            // Rota para add produto
-            const urlBase =
-                "{{ route('pedido.adicionar_item', ['pedido_id' => $pedido->id, 'produto_id' => '']) }}";
+            // Gera a URL base no Blade, sem placeholders
+            const urlBase = `{{ route('pedido.adicionar_item') }}`;
+            const urlProduto = `${urlBase}?pedido_id=${pedidoId}&produto_id=${produto.id}`;
 
             // Cria o card do produto com o layout desejado
             let produtoCard = `
@@ -862,7 +868,7 @@ function exibirProdutos(categoriasProdutos) {
                         <p class="m-0 fw-semibold">${categoria.nome}</p> <!-- Nome da categoria -->
                     </div>
                     <div>
-                        <a href="${urlBase}${produto.id}" class="d-flex align-items-center border-padrao text-decoration-none text-padrao p-2 rounded">
+                        <a href="${urlProduto}" class="d-flex align-items-center border-padrao text-decoration-none text-padrao p-2 rounded">
                             <span class="material-symbols-outlined fw-bold mr-1">add_circle</span> <!-- Botão de adicionar -->
                             Adicionar
                         </a>
