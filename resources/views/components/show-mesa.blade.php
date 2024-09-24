@@ -820,6 +820,9 @@ function exibirProdutos(categoriasProdutos) {
                 currency: 'BRL'
             });
 
+            // Rota para add produto
+            const urlBase = "{{ route('pedido.adicionar_item', ['pedido_id' => $pedido->id, 'produto_id' => '']) }}";
+
             // Cria o card do produto com o layout desejado
             let produtoCard = `
                 <div class="d-flex align-items-center justify-content-between border rounded p-3 mb-2">
@@ -829,7 +832,7 @@ function exibirProdutos(categoriasProdutos) {
                         <p class="m-0 fw-semibold">${categoria.nome}</p> <!-- Nome da categoria -->
                     </div>
                     <div>
-                        <a href="#" class="d-flex align-items-center border-padrao text-decoration-none text-padrao p-2 rounded">
+                        <a href="${urlBase}${produto.id}" class="d-flex align-items-center border-padrao text-decoration-none text-padrao p-2 rounded">
                             <span class="material-symbols-outlined fw-bold mr-1">add_circle</span> <!-- Botão de adicionar -->
                             Adicionar
                         </a>

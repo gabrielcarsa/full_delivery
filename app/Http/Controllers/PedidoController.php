@@ -220,24 +220,50 @@ class PedidoController extends Controller
         return redirect()->back();
     }
 
-        // EXCLUIR ITEM
-        public function deletar_item(Request $request){
-            //IDs
-            $item_pedido_id = $request->input('item_id');
-            $pedido_id = $request->input('pedido_id');
-    
-            //Item Pedido
-            $item_pedido = ItemPedido::find($item_pedido_id);
-    
-            //Pedido
-            $pedido = Pedido::find($pedido_id);
-            $pedido->total = $pedido->total - ($item_pedido->preco_unitario * $item_pedido->quantidade);
+    // ADICIONAR ITEM
+    public function adicionar_item(Request $request){
+        //IDs
+        $produto_id = $request->input('produto_id');
+        $pedido_id = $request->input('pedido_id');
 
-            $pedido->save(); 
-            $item_pedido->delete(); 
+        //Produto
+        $produto = Produto::find($produto_id);
 
-            return redirect()->back();
-        }
+        //Pedido
+        $pedido = Pedido::find($pedido_id);
+        $pedido->total = $pedido->total + $produto->preco;
+        $pedido->save(); 
+
+        $item_pedido = new ItemPedido();
+        $item_pedido->pedido_id = $pedido->id;
+        $item_pedido->produto_id = $produto_id; 
+        $item_pedido->quantidade = 1;
+        $item_pedido->preco_unitario = $produto->preco;; 
+        $item_pedido->subtotal = $produto->preco;; 
+        $item_pedido->observacao = "##MENSAGEM AUTOMÁTICA##\nAdicionado via Gestor de Mesas"; 
+        $item_pedido->save();
+        return redirect()->back();
+
+    }
+
+    // EXCLUIR ITEM
+    public function deletar_item(Request $request){
+        //IDs
+        $item_pedido_id = $request->input('item_id');
+        $pedido_id = $request->input('pedido_id');
+
+        //Item Pedido
+        $item_pedido = ItemPedido::find($item_pedido_id);
+
+        //Pedido
+        $pedido = Pedido::find($pedido_id);
+        $pedido->total = $pedido->total - ($item_pedido->preco_unitario * $item_pedido->quantidade);
+
+        $pedido->save(); 
+        $item_pedido->delete(); 
+
+        return redirect()->back();
+    }
 
     // PAGAMENTO DO PEDIDO MESA
     public function pagamento_mesa(Request $request){

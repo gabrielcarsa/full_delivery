@@ -145,6 +145,8 @@ Route::middleware([
         Route::get('/pedido/adicionar-quantidade', [PedidoController::class, 'adicionar_quantidade'])->name('pedido.adicionar_quantidade');
         Route::get('/pedido/remover-quantidade', [PedidoController::class, 'remover_quantidade'])->name('pedido.remover_quantidade');
         Route::get('/pedido/deletar-item', [PedidoController::class, 'deletar_item'])->name('pedido.deletar_item');
+        Route::get('/pedido/adicionar-item', [PedidoController::class, 'adicionar_item'])->name('pedido.adicionar_item');
+
 
         //CUPOM
         Route::get('/cupom', [CupomController::class, 'index'])->name('cupom');
