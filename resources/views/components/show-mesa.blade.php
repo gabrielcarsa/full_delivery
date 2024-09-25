@@ -339,19 +339,17 @@
                     @php
 
                     // Filtra os opcionais do item_pedido que pertencem à categoria atual
-
-                    $opcionais_relacionados = $item->opcional_item->filter(function($opcional_item) use
-                    ($categoria_opcional) {
-                    return $categoria_opcional->opcional_produto->contains('id',
-                    $opcional_item->opcional_produto_id);
+                    $opcionais_relacionados = $item->opcional_item->
+                    filter(function($opcional_item) use ($categoria_opcional) {
+                    return $categoria_opcional->opcional_produto->contains('id',$opcional_item->opcional_produto_id);
                     });
                     if($opcionais_relacionados->isNotEmpty()){
                     $isset_opcionais = true;
                     }
-
                     @endphp
 
                     @endforeach
+                    <!-- FIM VERIFICAR SE EXISTE OPCIONAIS -->
 
                     @if($isset_opcionais == true)
                     <tr style="font-size:14px">

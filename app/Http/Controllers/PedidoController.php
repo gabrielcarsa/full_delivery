@@ -257,7 +257,22 @@ class PedidoController extends Controller
 
         //Pedido
         $pedido = Pedido::find($pedido_id);
-        $pedido->total = $pedido->total - ($item_pedido->preco_unitario * $item_pedido->quantidade);
+
+        //Total pedido
+        $total_pedido = $pedido->total;
+
+        // Verifica e exclui opcionais associados ao item de pedido
+        $opcionais = OpcionalItem::where('item_pedido_id', $item_pedido_id)->get();
+        if ($opcionais->isNotEmpty()) {
+            foreach ($opcionais as $opcional) {
+                $total_pedido = $total_pedido - ($opcional->preco_unitario * $opcional->quantidade);
+
+                $opcional->delete();
+            }
+        }
+
+        $total_pedido = $total_pedido - ($item_pedido->preco_unitario * $item_pedido->quantidade);
+        $pedido->total = $total_pedido;
 
         $pedido->save(); 
         $item_pedido->delete(); 
