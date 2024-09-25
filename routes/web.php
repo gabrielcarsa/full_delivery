@@ -167,6 +167,7 @@ Route::middleware([
         Route::get('/mesa/novo', [MesaController::class, 'create'])->name('mesa.novo');
         Route::post('/mesa/cadastrar', [MesaController::class, 'store']);
         Route::delete('/mesa/apagar/{id}', [MesaController::class, 'destroy'])->name('mesa.excluir');
+        Route::put('/mesa/mudar-mesa', [MesaController::class, 'mudar_mesa'])->name('mesa.mudar_mesa');
 
         Route::get('/gestor-mesas', [MesaController::class, 'gestor'])->name('mesa.gestor');
         Route::get('/gestor-mesas/detalhes', [MesaController::class, 'show'])->name('mesa.show');

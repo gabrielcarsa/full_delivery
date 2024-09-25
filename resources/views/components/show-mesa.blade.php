@@ -1,120 +1,179 @@
 <div class="my-3">
+
+    <!-- MENSAGENS -->
+    <div class="toast-container position-fixed top-0 end-0">
+        @if(session('success'))
+        <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="true">
+            <div class="d-flex align-items-center p-3">
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    check_circle
+                </span>
+                <div class="toast-body">
+                    <p class="fs-5 m-0">
+                        {{ session('success') }}
+                    </p>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        @endif
+        @if (session('error'))
+        <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="true">
+            <div class="d-flex align-items-center p-3">
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    error
+                </span>
+                <div class="toast-body">
+                    <p class="fs-5 m-0">
+                        {{ session('error') }}
+                    </p>
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="true">
+            <div class="d-flex align-items-center p-3">
+                <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    error
+                </span>
+                <div class="toast-body">
+                    @foreach ($errors->all() as $error)
+                    <p class="fs-5 m-0">
+                        {{ $error }}
+                    </p>
+                    @endforeach
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        @endif
+    </div>
+    <!-- FIM MENSAGENS -->
+
+    <!-- HEADER MESA DETALHES -->
+    <div class="d-flex justify-content-between align-items-center border p-3 rounded">
+        <h4 class="m-0 fw-bold text-black">
+            Mesa {{$data['mesa']->nome}}
+            @if($data['mesa']->is_ocupada != 1)
+            <span class="bg-success px-2 ml-1 text-white rounded" style="font-size: 13px !important">
+                Dísponivel
+            </span>
+            @elseif($data['mesa']->is_ocupada == 1 && $data['mesa']->valor_pago_parcial > 0)
+            <span class="bg-padrao px-2 ml-1 text-white rounded" style="font-size: 13px !important">
+                Pagamento parcial
+            </span>
+            @else
+            <span class="bg-warning px-2 ml-1 text-white rounded" style="font-size: 13px !important">
+                Ocupado
+            </span>
+            @endif
+        </h4>
+        <div class="d-flex align-items-center">
+            <p class="my-0 mx-1">
+                <span class="fw-bold">
+                    Abertura da mesa:
+                </span>
+                @if($data['mesa']->hora_abertura != null)
+                {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('d/m/Y')}} ás
+                {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('H:i')}}
+                @else
+                00h00m
+                @endif
+            </p>
+
+            <div class="dropdown">
+                <a class="btn border d-flex align-items-center ml-2" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span class="material-symbols-outlined">
+                        more_vert
+                    </span>
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#mudarMesaModal">
+                            Mudar de mesa
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="#">
+                            Cancelar mesa
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- MODAL MUDAR MESA -->
+                <div class="modal modal-md fade" id="mudarMesaModal" tabindex="-1" aria-labelledby="mudarMesaModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <p class="modal-title fs-5 fw-semibold" id="mudarMesaModalLabel">
+                                    Mudar de mesa
+                                </p>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form action="{{ route('mesa.mudar_mesa', ['mesa_atual_id' => $data['mesa']->id]) }}"
+                                method="post">
+                                @csrf
+                                @method('PUT')
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <p>
+                                            Transfira os pedidos para outra mesa.
+                                        </p>
+                                        <div class="col">
+                                            <p class="m-0">
+                                                De
+                                            </p>
+                                            <p class="m-0 fw-bold fs-5">
+                                                Mesa {{$data['mesa']->nome}}
+                                            </p>
+                                        </div>
+                                        <div class="col text-center">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="floatingSelect" aria-label="Para"
+                                                    name="mesa_nova_id">
+                                                    <option selected>-- Selecione --</option>
+                                                    @foreach($data['mesas'] as $mesa)
+                                                    <option value="{{$mesa->id}}">Mesa {{$mesa->nome}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="floatingSelect">Para</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn border-padrao text-padrao" data-bs-dismiss="modal">
+                                        Fechar
+                                    </button>
+                                    <button type="submit" class="btn bg-padrao text-white fw-semibold px-3">
+                                        Transferir
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- FIM MODAL MUDAR MESA -->
+
+            </div>
+
+        </div>
+    </div>
+    <!-- HEADER MESA DETALHES -->
+
     <form action="{{ route('pedido.pagamento', ['mesa_id' => $data['mesa']->id ]) }}" method="post">
         @csrf
-        <!-- MENSAGENS -->
-        <div class="toast-container position-fixed top-0 end-0">
-            @if(session('success'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('success') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('error') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        @foreach ($errors->all() as $error)
-                        <p class="fs-5 m-0">
-                            {{ $error }}
-                        </p>
-                        @endforeach
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-        </div>
-        <!-- FIM MENSAGENS -->
-
-        <!-- HEADER MESA DETALHES -->
-        <div class="d-flex justify-content-between align-items-center border p-3 rounded">
-            <h4 class="m-0 fw-bold text-black">
-                Mesa {{$data['mesa']->nome}}
-                @if($data['mesa']->is_ocupada != 1)
-                <span class="bg-success px-2 ml-1 text-white rounded" style="font-size: 13px !important">
-                    Dísponivel
-                </span>
-                @elseif($data['mesa']->is_ocupada == 1 && $data['mesa']->valor_pago_parcial > 0)
-                <span class="bg-padrao px-2 ml-1 text-white rounded" style="font-size: 13px !important">
-                    Pagamento parcial
-                </span>
-                @else
-                <span class="bg-warning px-2 ml-1 text-white rounded" style="font-size: 13px !important">
-                    Ocupado
-                </span>
-                @endif
-            </h4>
-            <div class="d-flex align-items-center">
-                <p class="my-0 mx-1">
-                    <span class="fw-bold">
-                        Abertura da mesa:
-                    </span>
-                    @if($data['mesa']->hora_abertura != null)
-                    {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('d/m/Y')}} ás
-                    {{\Carbon\Carbon::parse($data['mesa']->hora_abertura)->format('H:i')}}
-                    @else
-                    00h00m
-                    @endif
-                </p>
-
-                <div class="dropdown">
-                    <a class="btn border d-flex align-items-center ml-2" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="material-symbols-outlined">
-                            more_vert
-                        </span>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Mudar de mesa
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-danger" href="#">
-                                Cancelar mesa
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-        <!-- HEADER MESA DETALHES -->
 
         <!-- Variáveis PHP -->
         @php
@@ -713,8 +772,6 @@
         </div>
         <!-- FIM MODAL -->
     </form>
-
-
 
 </div>
 

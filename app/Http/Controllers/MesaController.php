@@ -118,4 +118,38 @@ class MesaController extends Controller
 
         return view('mesa/gestor', compact('data'));       
     }
+
+    // Mudar de mesa
+    public function mudar_mesa(Request $request){
+        //Dados 
+        $mesa_atual_id = $request->input('mesa_atual_id');
+        $mesa_nova_id = $request->input('mesa_nova_id');
+
+        //Alterar mesa nos pedidos
+        $pedidos_mesa = Pedido::where('mesa_id',$mesa_atual_id)->get();
+
+        foreach($pedidos_mesa as $pedido){
+            $pedido->mesa_id = $mesa_nova_id;
+            $pedido->save();
+        }
+
+        $mesa_atual = Mesa::find($mesa_atual_id);
+        $mesa_nova = Mesa::find($mesa_nova_id);
+
+        // Definindo mesa nova com dados mesa atual
+        $mesa_nova->is_ocupada = $mesa_atual->is_ocupada;
+        $mesa_nova->hora_abertura = $mesa_atual->hora_abertura;
+        $mesa_nova->valor_pago_parcial = $mesa_atual->valor_pago_parcial;
+        $mesa_nova->is_taxa_paga = $mesa_atual->is_taxa_paga;
+        $mesa_nova->save();
+
+        // Resetando mesa atual
+        $mesa_atual->is_ocupada = false;
+        $mesa_atual->hora_abertura = null;
+        $mesa_atual->valor_pago_parcial = 0;
+        $mesa_atual->is_taxa_paga = false;
+        $mesa_atual->save();
+
+        return redirect()->back();
+    }
 }
