@@ -436,6 +436,9 @@
                             @php
                             // Verifica se o opcional está relacionado ao item_pedido
                             $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
+
+                            //Resetar variável
+                            $isset_opcionais = false;
                             @endphp
 
                             @if($opcional_item)
