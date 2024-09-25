@@ -34,7 +34,7 @@
                 </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
                     href="{{ route('categoria_opcional.novo', ['produto_id' => $produto->id]) }}">
                     <span class="material-symbols-outlined mr-1">
                         add
@@ -51,7 +51,14 @@
 
         <div class="bg-white border rounded p-3">
             <div class="row d-flex align-items-center mb-3">
-                <h4 class="col-6 fw-bold fs-5 m-0">{{$categoria_opcional->nome}}</h4>
+                <h4 class="col-6 fw-bold fs-5 m-0 d-flex align-items-center">
+                    {{$categoria_opcional->nome}}
+                    @if($categoria_opcional->is_required == true)
+                    <span class="bg-dark text-white p-1 rounded ml-1" style="font-size: 10px !important;">
+                        OBRIGATÓRIO
+                    </span>
+                    @endif
+                </h4>
                 <div class="col-6 d-flex justify-content-end">
                     <a class="btn btn-outline-primary d-flex align-items-center justify-content-center"
                         href="{{ route('opcional_produto.novo', ['categoria_opcional_id' => $categoria_opcional->id]) }}">
