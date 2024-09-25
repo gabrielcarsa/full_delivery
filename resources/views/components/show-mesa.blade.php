@@ -570,12 +570,18 @@
                                 <input type="text" id="inputValorPagar" name="valorPagar" class="form-control"
                                     aria-describedby="aPagarHelp" required>
                                 <div id="aPagarHelp" class="form-text">
+                                    @if($data['mesa']->is_taxa_paga == true)
+                                    o valor a pagar não pode ser maior que R$
+                                    {{ number_format($total_geral- $data['mesa']->valor_pago_parcial, 2, ',', '.') }}
+                                    @else
                                     o valor a pagar não pode ser maior que R$
                                     {{ number_format(($total_geral + $taxa_servico) - $data['mesa']->valor_pago_parcial, 2, ',', '.') }}
+                                    @endif
                                 </div>
                                 <div class="form-check mt-2">
                                     <input class="form-check-input" type="checkbox" value="true" name="sem_taxa_servico"
-                                        id="sem_taxa_servico">
+                                        id="sem_taxa_servico"
+                                        {{$data['mesa']->is_taxa_paga == true ? 'checked disabled' : ''}}>
                                     <label class="form-check-label" for="sem_taxa_servico">
                                         Não cobrar taxa de serviço
                                     </label>
@@ -610,6 +616,12 @@
 
                         <div class="row">
                             <div class="col bg-light p-3 m-1">
+                                @if($data['mesa']->is_taxa_paga == true)
+                                <p class="m-0 text-secondary">
+                                    *Taxa de serviço de R$ {{ number_format($taxa_servico, 2, ',', '.') }} já foi
+                                    paga.
+                                </p>
+                                @endif
                                 <div class="d-flex justify-content-between">
                                     <p class="m-0">
                                         Valor dos itens selecionados:
@@ -632,8 +644,14 @@
                                     </p>
                                     <p class="m-0 fw-bold" id="valor_em_aberto">
                                         @php
+                                        if($data['mesa']->is_taxa_paga == true){
+                                        $valor_em_aberto = $total_geral -
+                                        $data['mesa']->valor_pago_parcial;
+                                        }else{
                                         $valor_em_aberto = ($total_geral + $taxa_servico) -
                                         $data['mesa']->valor_pago_parcial;
+                                        }
+
                                         @endphp
                                         R$ {{ number_format($valor_em_aberto, 2, ',', '.') }}
                                     </p>
@@ -673,8 +691,8 @@
                             Algumas instruções:
                         </p>
                         <p class="my-0 mx-3 text-secondary">
-                            - Se o pagamento for parcial a porcentagem de taxa de serviço, se for cobrada, será cobrada
-                            por pagamento parcial.
+                            - A taxa de serviço é cobrada por mesa. Uma vez que foi paga a taxa não poderá ser
+                            cobrada novamente.
                         </p>
                         <p class="my-0 mx-3 text-secondary">
                             - O 'valor pago' não é somado a taxa de serviço.

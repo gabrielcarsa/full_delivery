@@ -303,6 +303,12 @@ class PedidoController extends Controller
 
         //Dados mesa
         $mesa = Mesa::find($mesa_id);
+
+        // Verificar se mesa já pagou a taxa de serviço
+        if($mesa->is_taxa_paga == true){
+            //Se já pagou, pagamento será sem taxa
+            $sem_taxa_servico = true;
+        }
         
         // Recuperar os pedidos do banco de dados
         $pedidos = Pedido::whereIn('id', $pedidoIds)->get();
@@ -339,6 +345,7 @@ class PedidoController extends Controller
                 $mesa->is_ocupada = false;
                 $mesa->hora_abertura = null;
                 $mesa->valor_pago_parcial = 0;
+                $mesa->is_taxa_paga = false;
                 $mesa->save();
 
                 //Fechando pedido (s)
@@ -375,6 +382,7 @@ class PedidoController extends Controller
                 $mesa->is_ocupada = false;
                 $mesa->hora_abertura = null;
                 $mesa->valor_pago_parcial = 0;
+                $mesa->is_taxa_paga = false;
                 $mesa->save();
 
                 //Fechando pedido (s)
@@ -388,6 +396,7 @@ class PedidoController extends Controller
 
                 //Mesa valor pago parcial
                 $mesa->valor_pago_parcial += ($valorPagar - $taxa_servico);
+                $mesa->is_taxa_paga = true;
                 $mesa->save();
 
                 //Fechando pedido (s)
