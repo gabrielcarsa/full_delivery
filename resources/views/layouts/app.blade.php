@@ -78,7 +78,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('pedido.gestor') }}" target="_blank">
+                                        <a class="dropdown-item" href="{{ route('pedido.gestor') }}">
                                             Gestor de Pedidos
                                         </a>
                                     </li>
