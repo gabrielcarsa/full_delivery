@@ -156,7 +156,7 @@
 
         </div>
         <!-- FIM HEADER -->
-        
+
         <!-- PEDIDOS GRID -->
         <div class="row g-3">
             @if(isset($data['pedidos']))
@@ -167,26 +167,340 @@
             <!-- PEDIDO -->
             <div class="col-md-3 m-3 shadow-md p-2 rounded {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light' : 'bg-white' }}"
                 {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? '' : 'style="max-height: 400px !important"' }}>
-                <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
 
-                    <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
+                <p class="text-secondary fs-6 px-2 m-0"># {{$pedido->id}}</p>
 
-                    <!-- HEADER PEDIDO -->
-                    <div class="row px-2">
-                        <div class="col-md-8">
-                            <h4 class="fw-bold fs-4 text-dark text-uppercase">
-                                @if($pedido->cliente_id != null)
-                                {{$pedido->cliente->nome}}
-                                @else
-                                {{$pedido->nome_cliente}}
+                <!-- HEADER PEDIDO -->
+                <div class="row px-2">
+                    <div class="col-md-8">
+                        <h4 class="fw-bold fs-4 text-dark text-uppercase">
+                            @if($pedido->cliente_id != null)
+                            {{$pedido->cliente->nome}}
+                            @else
+                            {{$pedido->nome_cliente}}
+                            @endif
+                        </h4>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end">
+                        <div class="dropdown">
+                            @if($pedido->status == 0)
+                            <button class="btn btn-outline-danger dropdown-toggle rounded-pill" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Pendente
+                            </button>
+
+                            @elseif($pedido->status == 1)
+                            <button class="btn btn-warning dropdown-toggle rounded-pill" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Em preparo
+                            </button>
+
+                            @elseif($pedido->status == 2)
+                            <button class="btn btn-primary dropdown-toggle rounded-pill" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                A caminho
+                            </button>
+
+                            @elseif($pedido->status == 3)
+                            <button class="btn btn-success dropdown-toggle rounded-pill" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Concluído
+                            </button>
+
+                            @elseif($pedido->status == 4)
+                            <button class="btn btn-danger dropdown-toggle rounded-pill" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Rejeitado
+                            </button>
+
+                            @elseif($pedido->status == 5)
+                            <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Cancelado
+                            </button>
+
+                            @endif
+
+                            <!-- AÇÕES -->
+                            <ul class="dropdown-menu">
+
+                                <!-- STATUS DO PEDIDO -->
+                                @if($pedido->status == 0)
+                                <li>
+                                    <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                                        class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-outlined mr-1">
+                                            task_alt
+                                        </span>
+                                        <span>
+                                            Aceitar pedido
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="dropdown-item d-flex align-items-center text-danger"
+                                        data-bs-toggle="modal" data-bs-target="#rejeitarModal">
+                                        <span class="material-symbols-outlined mr-1">
+                                            dangerous
+                                        </span>
+                                        <span>
+                                            Rejeitar pedido
+                                        </span>
+                                    </a>
+                                </li>
+
+
+                                <!-- MODAL REJEITAR PEDIDO -->
+                                <div class="modal fade" id="rejeitarModal" tabindex="-1" aria-labelledby="rejeitarModal"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <!-- FORM ACAO -->
+                                        <form action="{{route('pedido.rejeitar', ['id' => $pedido->id])}}" method="POST"
+                                            class="my-2">
+                                            @csrf
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="rejeitarModal">Deseja mesmo
+                                                        rejeitar esse pedido?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="px-4">
+                                                        Após rejeitar pedido essa ação não poderá ser desfeita!
+                                                    </p>
+                                                    <div class="form-floating mt-1">
+                                                        <input type="text"
+                                                            class="form-control @error('motivo') is-invalid @enderror"
+                                                            id="inputArea" name="motivo" autocomplete="off" required>
+                                                        <label for="inputArea">Qual o motivo?</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                    <button type="submit" class="btn btn-danger px-5">
+                                                        Rejeitar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- FIM FORM -->
+                                    </div>
+                                </div>
+                                <!-- FIM MODAL REJEITAR -->
+
+                                @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 3)
+                                <li>
+                                    <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                                        class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-outlined">
+                                            sports_motorsports
+                                        </span>
+                                        <span>
+                                            Enviar para entrega
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="dropdown-item d-flex align-items-center text-danger"
+                                        data-bs-toggle="modal" data-bs-target="#cancelarModal">
+                                        <span class="material-symbols-outlined mr-1">
+                                            dangerous
+                                        </span>
+                                        <span>
+                                            Cancelar pedido
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <!-- MODAL CANCELAR PEDIDO -->
+                                <div class="modal fade" id="cancelarModal" tabindex="-1" aria-labelledby="cancelarModal"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <!-- FORM ACAO -->
+                                        <form action="{{route('pedido.cancelar', ['id' => $pedido->id])}}" method="POST"
+                                            class="my-2">
+                                            @csrf
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="cancelarModal">Deseja mesmo
+                                                        cancelar esse pedido?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="px-4">
+                                                        Após cancelar esse pedido essa ação não poderá ser
+                                                        desfeita!
+                                                    </p>
+                                                    <div class="form-floating mt-1">
+                                                        <input type="text"
+                                                            class="form-control @error('motivo') is-invalid @enderror"
+                                                            id="inputArea" name="motivo" autocomplete="off" required>
+                                                        <label for="inputArea">Qual o motivo?</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                    <button type="submit" class="btn btn-danger px-5">
+                                                        Cancelar pedido
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- FIM FORM -->
+                                    </div>
+                                </div>
+                                <!-- FIM MODAL CANCELAR -->
+
+
+                                @elseif($pedido->status == 2 && $pedido->consumo_local_viagem_delivery == 3)
+                                <li>
+                                    <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                                        class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-outlined mr-1">
+                                            task_alt
+                                        </span>
+                                        <span>
+                                            Pedido entregue
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="dropdown-item d-flex align-items-center text-danger"
+                                        data-bs-toggle="modal" data-bs-target="#cancelarModal">
+                                        <span class="material-symbols-outlined mr-1">
+                                            dangerous
+                                        </span>
+                                        <span>
+                                            Cancelar pedido
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <!-- MODAL CANCELAR PEDIDO -->
+                                <div class="modal fade" id="cancelarModal" tabindex="-1" aria-labelledby="cancelarModal"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <!-- FORM ACAO -->
+                                        <form action="{{route('pedido.cancelar', ['id' => $pedido->id])}}" method="POST"
+                                            class="my-2">
+                                            @csrf
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="cancelarModal">Deseja mesmo
+                                                        cancelar esse pedido?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="px-4">
+                                                        Após cancelar esse pedido essa ação não poderá ser
+                                                        desfeita!
+                                                    </p>
+                                                    <div class="form-floating mt-1">
+                                                        <input type="text"
+                                                            class="form-control @error('motivo') is-invalid @enderror"
+                                                            id="inputArea" name="motivo" autocomplete="off" required>
+                                                        <label for="inputArea">Qual o motivo?</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                    <button type="submit" class="btn btn-danger px-5">
+                                                        Cancelar pedido
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- FIM FORM -->
+                                    </div>
+                                </div>
+                                <!-- FIM MODAL CANCELAR -->
+
+                                @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 1)
+                                <li>
+                                    <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                                        class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-outlined mr-1">
+                                            task_alt
+                                        </span>
+                                        <span>
+                                            Pedido concluído
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="dropdown-item d-flex align-items-center text-danger"
+                                        data-bs-toggle="modal" data-bs-target="#cancelarModal">
+                                        <span class="material-symbols-outlined mr-1">
+                                            dangerous
+                                        </span>
+                                        <span>
+                                            Cancelar pedido
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <!-- MODAL CANCELAR PEDIDO -->
+                                <div class="modal fade" id="cancelarModal" tabindex="-1" aria-labelledby="cancelarModal"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <!-- FORM ACAO -->
+                                        <form action="{{route('pedido.cancelar', ['id' => $pedido->id])}}" method="POST"
+                                            class="my-2">
+                                            @csrf
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="cancelarModal">Deseja mesmo
+                                                        cancelar esse pedido?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="px-4">
+                                                        Após cancelar esse pedido essa ação não poderá ser
+                                                        desfeita!
+                                                    </p>
+                                                    <div class="form-floating mt-1">
+                                                        <input type="text"
+                                                            class="form-control @error('motivo') is-invalid @enderror"
+                                                            id="inputArea" name="motivo" autocomplete="off" required>
+                                                        <label for="inputArea">Qual o motivo?</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                    <button type="submit" class="btn btn-danger px-5">
+                                                        Cancelar pedido
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- FIM FORM -->
+                                    </div>
+                                </div>
+                                <!-- FIM MODAL CANCELAR -->
+
                                 @endif
-                            </h4>
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-end text-dark">
+
+                            </ul>
+                            <!-- FIM AÇÕES -->
 
                         </div>
                     </div>
-                    <!-- FIM HEADER PEDIDO -->
+                </div>
+                <!-- FIM HEADER PEDIDO -->
+
+                <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
 
                     <!-- CORPO PEDIDO -->
                     <div class="text-dark-50 fw-medium px-2">
@@ -194,55 +508,6 @@
                             {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
                             {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
                         </p>
-                        @if($pedido->status == 0)
-                        <div class="d-flex fw-bold">
-                            <span class="material-symbols-outlined d-flex align-items-center text-warning mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                pending
-                            </span>
-                            <p class="m-0 p-0">Pedido pendente</p>
-                        </div>
-                        @elseif($pedido->status == 1)
-                        <div class="d-flex fw-bold">
-                            <span class="material-symbols-outlined d-flex align-items-center text-warning mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                skillet
-                            </span>
-                            <p class="m-0 p-0">Pedido em preparo</p>
-                        </div>
-                        @elseif($pedido->status == 2)
-                        <div class="d-flex fw-bold">
-                            <span class="material-symbols-outlined d-flex align-items-center text-primary mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                sports_motorsports
-                            </span>
-                            <p class="m-0 p-0">Pedido a caminho</p>
-                        </div>
-                        @elseif($pedido->status == 3)
-                        <div class="d-flex fw-bold">
-                            <span class="material-symbols-outlined text-success d-flex align-items-center mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                check_circle
-                            </span>
-                            <p class="m-0 p-0">Pedido Concluído</p>
-                        </div>
-                        @elseif($pedido->status == 4)
-                        <div class="d-flex fw-bold">
-                            <span class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                error
-                            </span>
-                            <p class="m-0 p-0">Pedido Rejeitado</p>
-                        </div>
-                        @elseif($pedido->status == 5)
-                        <div class="d-flex fw-bold">
-                            <span class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                warning
-                            </span>
-                            <p class="m-0 p-0">Pedido Cancelado</p>
-                        </div>
-                        @endif
 
                         <!-- CONSUMO -->
                         @if($pedido->consumo_local_viagem_delivery == 1)
@@ -300,8 +565,8 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <p class="modal-title fs-5" id="modalDetalhesLabel">
-                                        Pedido #{{$pedido->id}}
+                                    <p class="fw-semibold fs-5 m-0" id="modalDetalhesLabel">
+                                        Detalhes do pedido
                                     </p>
                                 </div>
                                 <div class="modal-body">
