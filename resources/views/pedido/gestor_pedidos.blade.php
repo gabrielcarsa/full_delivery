@@ -69,48 +69,71 @@
 
                     @if($filtro == null || $filtro != 0)
                     <a href="{{ route('pedido.gestor', ['filtro' => 0]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
+                        <span class="material-symbols-outlined text-danger mr-1">
+                            radio_button_unchecked
+                        </span>
                         Pendentes
                     </a>
                     @endif
 
                     @if($filtro != 1)
                     <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
+                        <span class="material-symbols-outlined text-warning mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            radio_button_unchecked
+                        </span>
                         Em preparo
                     </a>
                     @endif
 
                     @if($filtro != 2)
                     <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
+                        <span class="material-symbols-outlined text-primary mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            radio_button_unchecked
+                        </span>
                         A caminho
                     </a>
                     @endif
 
                     @if($filtro != 3)
                     <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
+                        <span class="material-symbols-outlined text-success mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            radio_button_unchecked
+                        </span>
                         Concluídos
                     </a>
                     @endif
 
                     @if($filtro != 4)
                     <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
+                        <span class="material-symbols-outlined text-danger mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            radio_button_unchecked
+                        </span>
                         Rejeitados
                     </a>
                     @endif
 
                     @if($filtro != 5)
                     <a href="{{ route('pedido.gestor', ['filtro' => 5]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-center text-secondary"
+                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
+                        <span class="material-symbols-outlined text-secondary mr-1"
+                            style="font-variation-settings: 'FILL' 1;">
+                            radio_button_unchecked
+                        </span>
                         Cancelados
                     </a>
                     @endif
@@ -123,7 +146,7 @@
         <!-- FIM HEADER -->
 
         <!-- PEDIDOS GRID -->
-        <div class="row">
+        <div class="row row-cols-4 g-1">
             @if(isset($data['pedidos']))
 
             <!-- PEDIDOS -->
@@ -131,14 +154,16 @@
 
             <!-- PEDIDO -->
             <div
-                class="col m-1 shadow-md p-2 rounded {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light' : 'bg-white' }}">
-
-                <p class="text-secondary fs-6 px-2 m-0"># 0{{$pedido->id}}0</p>
+                class="col mx-1 shadow-md p-2 rounded {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-start-0 border-danger border-5' : 'bg-white' }}">
 
                 <!-- HEADER PEDIDO -->
                 <div class="row px-2">
                     <div class="col-md-8">
-                        <h4 class="fw-bold fs-4 text-dark text-uppercase">
+                        <p class="text-secondary fs-6 m-0">
+                            # 0{{$pedido->id}}0
+                        </p>
+
+                        <h4 class="fw-bold fs-5 text-dark text-uppercase">
                             @if($pedido->cliente_id != null)
                             {{$pedido->cliente->nome}}
                             @else
@@ -148,7 +173,7 @@
                     </div>
 
                     <!-- BOTÃO DROPDOWN NO CANTO COM STATUS -->
-                    <div class="col-md-4 d-flex align-items-center justify-content-end">
+                    <div class="col-md-4 d-flex align-items-start justify-content-end">
                         <!-- DROPDOWN -->
                         <div class="dropdown">
                             @if($pedido->status == 0)
@@ -384,28 +409,41 @@
                 <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
 
                     <!-- CORPO PEDIDO -->
-                    <div class="text-dark-50 fw-medium px-2">
-                        <p class="m-0">
+                    <div class="fw-medium px-3 py-2 text-secondary">
+                        <p class="m-0 d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1 fs-5"
+                                style="font-variation-settings: 'FILL' 1;">
+                                schedule
+                            </span>
                             {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
                             {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
                         </p>
 
                         <!-- CONSUMO -->
                         @if($pedido->consumo_local_viagem_delivery == 1)
-                        <p class="m-0 text-secondary">
-                            Consumo no local
-                        </p>
-                        <p class="m-0 text-secondary">
+                        <p class="m-0 d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1 fs-5"
+                                style="font-variation-settings: 'FILL' 1;">
+                                table_restaurant
+                            </span>
                             Mesa {{$pedido->mesa->nome}}
                         </p>
 
                         @elseif($pedido->consumo_local_viagem_delivery == 2)
-                        <p class="mx-0 my-1 text-secondary">
+                        <p class="m-0 d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1 fs-5"
+                                style="font-variation-settings: 'FILL' 1;">
+                                shopping_bag
+                            </span>
                             Para viagem
                         </p>
 
                         @elseif($pedido->consumo_local_viagem_delivery == 3)
-                        <p class="mx-0 my-1 text-secondary">
+                        <p class="m-0 d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1 fs-5"
+                                style="font-variation-settings: 'FILL' 1;">
+                                two_wheeler
+                            </span>
                             {{$pedido->entrega->rua}},
                             {{$pedido->entrega->bairro}},
                             {{$pedido->entrega->numero}}
@@ -418,18 +456,18 @@
 
                         @if($pedido->forma_pagamento_loja->id != null)
 
-                        <div class="d-flex align-items-center" style="font-size: 14px !important">
+                        <div class="d-flex align-items-center">
                             <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_loja->imagem . '.svg') }}"
-                                alt="" width="30px">
-                            <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_loja->nome}}</p>
+                                alt="" width="20px">
+                            <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_loja->nome}} (Cobrar na entrega)</p>
                         </div>
 
                         @else
 
-                        <div class="d-flex align-items-center" style="font-size: 14px !important">
+                        <div class="d-flex align-items-center">
                             <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_foomy->imagem . '.svg') }}"
-                                alt="" width="30px">
-                            <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_foomy->nome}}</p>
+                                alt="" width="20px">
+                            <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_foomy->nome}} (Pago online)</p>
                         </div>
 
                         @endif
@@ -440,47 +478,47 @@
                     </div>
                     <!-- FIM CORPO PEDIDO -->
 
-                    <!-- MODAL DETALHES PEDIDO -->
-                    <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <p class="fw-semibold fs-5 m-0" id="modalDetalhesLabel">
-                                        Detalhes do pedido
-                                    </p>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- PEDIDO DETALHE -->
-                                    @if(isset($data['pedido']))
-                                    <x-show-pedido :pedido="$data['pedido']" />
-                                    @endif
-                                    <!-- FIM PEDIDO DETALHE -->
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="{{ route('pedido.gestor') }}" class="btn border-padrao text-padrao">
-                                        Fechar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- FIM MODAL DETALHES PEDIDO -->
-
-                    <!-- Verificar se o modal deve ser aberto -->
-                    @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
-                    <script>
-                    // Espera o DOM ser completamente carregado
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var myModal = new bootstrap.Modal(document.getElementById('modalDetalhes'));
-                        myModal.show();
-                    });
-                    </script>
-                    @endif
-
                 </a>
             </div>
             <!-- FIM PEDIDO -->
+
+            <!-- MODAL DETALHES PEDIDO -->
+            <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <p class="fw-semibold fs-5 m-0" id="modalDetalhesLabel">
+                                Detalhes do pedido
+                            </p>
+                        </div>
+                        <div class="modal-body">
+                            <!-- PEDIDO DETALHE -->
+                            @if(isset($data['pedido']))
+                            <x-show-pedido :pedido="$data['pedido']" />
+                            @endif
+                            <!-- FIM PEDIDO DETALHE -->
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{ route('pedido.gestor') }}" class="btn border-padrao text-padrao">
+                                Fechar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM MODAL DETALHES PEDIDO -->
+
+            <!-- Verificar se o modal deve ser aberto -->
+            @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
+            <script>
+            // Espera o DOM ser completamente carregado
+            document.addEventListener('DOMContentLoaded', function() {
+                var myModal = new bootstrap.Modal(document.getElementById('modalDetalhes'));
+                myModal.show();
+            });
+            </script>
+            @endif
 
 
             @endforeach
