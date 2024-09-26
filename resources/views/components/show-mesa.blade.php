@@ -142,7 +142,9 @@
                                                     name="mesa_nova_id">
                                                     <option selected>-- Selecione --</option>
                                                     @foreach($data['mesas'] as $mesa)
+                                                    @if($mesa->id != $data['mesa']->id)
                                                     <option value="{{$mesa->id}}">Mesa {{$mesa->nome}}</option>
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                                 <label for="floatingSelect">Para</label>
