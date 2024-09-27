@@ -147,8 +147,9 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                                        {{$categoria->nome}}?</h1>
+                                    <p class="fs-5 fw-semibold" id="exampleModalLabel">
+                                        Excluir {{$categoria->nome}}?
+                                    </p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -207,6 +208,12 @@
                             Serve {{$produto->quantidade_pessoa}}
                             {{$produto->quantidade_pessoa == 1 ? 'pessoa' : 'pessoas'}}
                         </p>
+                        @if($produto->tempo_preparo_min_minutos != null && $produto->tempo_preparo_max_minutos != null)
+                        <p class="m-0 text-secondary">
+                            {{$produto->tempo_preparo_min_minutos}} - 
+                            {{$produto->tempo_preparo_max_minutos}} minutos de preparo
+                        </p>
+                        @endif
                         <!-- se houver promoção -->
                         @if($produto->preco_promocao != null)
                         <div class="d-flex">
