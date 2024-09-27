@@ -92,7 +92,8 @@ class ProdutoController extends Controller
         $produto->nome = $request->input('nome');
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
-
+        $produto->tempo_preparo_min_minutos = $request->input('tempo_preparo_min_minutos');
+        $produto->tempo_preparo_max_minutos = $request->input('tempo_preparo_max_minutos');
         $produto->preco = $request->input('preco');
 
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
@@ -141,7 +142,8 @@ class ProdutoController extends Controller
         $produto->nome = $request->input('nome');
         $produto->descricao = $request->input('descricao');
         $produto->disponibilidade = $request->input('disponibilidade');
-
+        $produto->tempo_preparo_min_minutos = $request->input('tempo_preparo_min_minutos');
+        $produto->tempo_preparo_max_minutos = $request->input('tempo_preparo_max_minutos');
         $produto->preco = $request->input('preco'); // Converter a string diretamente para um número em ponto flutuante
 
         $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
