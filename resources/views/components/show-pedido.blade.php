@@ -58,11 +58,20 @@
 @if($pedido->consumo_local_viagem_delivery == 3)
 <p class="m-0 px-3 d-flex align-items-center">
     <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
-        schedule
+        calendar_clock
     </span>
     Previsão de entrega: 18:10 - 18:25
 </p>
 @endif
+
+<p class="m-0 px-3 d-flex align-items-center">
+    <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+        schedule
+    </span>
+    Recebido em
+    {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
+    {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
+</p>
 <!-- FIM INFORMAÇÕES -->
 
 <!-- PAGAMENTO -->
@@ -104,9 +113,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>
-                        <input type="checkbox" name="selectAll" id="selectAll">
-                    </th>
                     <th scope="col">Qtnd</th>
                     <th scope="col">Item</th>
                     <th scope="col">Unidade</th>
@@ -114,10 +120,12 @@
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
+
             <tbody>
                 <!-- Variáveis PHP -->
                 @php
                 $total_sem_entrega = 0;
+                $isset_opcionais = false;
                 @endphp
 
                 <!-- Exibir itens do pedido -->
@@ -128,26 +136,47 @@
                 $total_sem_entrega += $item->subtotal;
                 @endphp
 
+
                 <tr class="p-0 m-0">
-                    <td class="bg-white">
-                        <input type="checkbox" name="item_pedido_id[]" value="{{$item->id}}">
-                    </td>
-                    <td class="bg-white">
-                        <span>
-                            {{ $item->quantidade }}x
+                    <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
+                        <span class="d-flex align-items-center">
+                            @if($item->quantidade >= 2)
+                            <a class="d-flex align-items-center bg-padrao text-decoration-none rounded-circle"
+                                href="{{ route('pedido.remover_quantidade', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}">
+                                <span class="material-symbols-outlined text-white fs-6 fw-bold">
+                                    remove
+                                </span>
+                            </a>
+                            @endif
+                            <span class="mx-2">
+                                {{ $item->quantidade }}x
+                            </span>
+                            <a class="d-flex align-items-center bg-padrao text-decoration-none rounded-circle"
+                                href="{{ route('pedido.adicionar_quantidade', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}">
+                                <span class="material-symbols-outlined text-white fs-6 fw-bold">
+                                    add
+                                </span>
+                            </a>
                         </span><br>
                     </td>
-                    <td class="bg-white">
+                    <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                         <span class="fw-bold">
                             {{ $item->produto->nome }}
                         </span>
+                        <!-- OBSERVAÇÃO -->
+                        @if($item->observacao != null)
+                        <p class="m-0" style="font-size: 14px;">
+                            Obs.: {{$item->observacao}}
+                        </p>
+                        @endif
+                        <!-- FIM OBSERVAÇÃO -->
                     </td>
-                    <td class="bg-white">
+                    <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                         <span>
                             R$ {{number_format($item->preco_unitario, 2, ',', '.')}}
                         </span>
                     </td>
-                    <td class="bg-white">
+                    <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                         <span>
                             R$ {{number_format($item->subtotal, 2, ',', '.')}}
                         </span>
@@ -163,21 +192,69 @@
 
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        Alterar quantidade
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-danger" href="#">
+                                    <a class="dropdown-item text-danger" data-bs-toggle="modal"
+                                        data-bs-target="#exluirItemModal{{$item->id}}">
                                         Excluir item
                                     </a>
                                 </li>
                             </ul>
+                            <!-- MODAL EXCLUIR -->
+                            <div class="modal fade" id="exluirItemModal{{$item->id}}" tabindex="-1"
+                                aria-labelledby="exluirItemModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <p class="modal-title fs-5" id="exluirItemModalLabel">
+                                                Excluir {{$item->produto->nome}}?
+                                            </p>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>
+                                                Esse produto tem {{$item->quantidade}} quantidade(s), todas
+                                                quantidades serão excluídas.
+                                            </p>
+                                            <p>Essa ação é irreversível! Tem certeza?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn border-padrao text-padrao"
+                                                data-bs-dismiss="modal">
+                                                Não
+                                            </button>
+                                            <a href="{{ route('pedido.deletar_item', ['item_id' => $item->id, 'pedido_id' => $pedido->id]) }}"
+                                                class="btn bg-padrao text-white fw-semibold">
+                                                Sim, eu tenho
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL EXCLUIR -->
                         </div>
                     </td>
                 </tr>
 
-                @if(!$item->produto->categoria_opcional->isEmpty())
+                <!--VERIFICAR SE EXISTE OPCIONAIS -->
+                @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+
+                <!-- VERIFICAR SE EXISTE ALGUM OPCIONAL RELACIONADO A ESTA CATEGORIA -->
+                @php
+
+                // Filtra os opcionais do item_pedido que pertencem à categoria atual
+                $opcionais_relacionados = $item->opcional_item->
+                filter(function($opcional_item) use ($categoria_opcional) {
+                return $categoria_opcional->opcional_produto->contains('id',$opcional_item->opcional_produto_id);
+                });
+                if($opcionais_relacionados->isNotEmpty()){
+                $isset_opcionais = true;
+                }
+                @endphp
+
+                @endforeach
+                <!-- FIM VERIFICAR SE EXISTE OPCIONAIS -->
+
+                @if($isset_opcionais == true)
                 <tr style="font-size:14px">
                     <td></td>
                     <td></td>
@@ -262,6 +339,9 @@
                         @php
                         // Verifica se o opcional está relacionado ao item_pedido
                         $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
+
+                        //Resetar variável
+                        $isset_opcionais = false;
                         @endphp
 
                         @if($opcional_item)
@@ -281,7 +361,9 @@
                 @endif
 
                 @endforeach
+
             </tbody>
+
             <tfoot>
                 <tr>
                     <td colspan="4" class="fw-bold bg-white">Subtotal</td>
