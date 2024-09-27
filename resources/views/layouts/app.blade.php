@@ -83,7 +83,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('mesa.gestor') }}" target="_blank">
+                                        <a class="dropdown-item" href="{{ route('mesa.gestor') }}">
                                             Gestor de Mesas
                                         </a>
                                     </li>
