@@ -527,49 +527,20 @@
                 tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header d-flex align-items-center justify-content-between">
+                        <div class="modal-header d-flex justify-content-between">
+                            @if(isset($data['pedido']))
                             <p class="fw-bold fs-5 m-0" id="modalDetalhesLabel">
-                                @if(isset($data['pedido']))
                                 #0{{$data['pedido']->id}}0
-                                @endif
                             </p>
                             <p class="m-0 text-secondary">
-                                Recebido {{ \Carbon\Carbon::parse($pedido->feito_em)->diffForHumans() }}
+                                Recebido {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->diffForHumans() }}
                             </p>
-                            <!-- STATUS -->
-                            @if($pedido->status == 0)
-                            <p class="border border-danger text-danger p-1 rounded-pill m-0">
-                                Pendente
-                            </p>
-
-                            @elseif($pedido->status == 1)
-                            <p class="bg-warning p-1 rounded-pill m-0">
-                                Em preparo
-                            </p>
-
-                            @elseif($pedido->status == 2)
-                            <p class="bg-primary p-1 rounded-pill m-0">
-                                A caminho
-                            </p>
-
-                            @elseif($pedido->status == 3)
-                            <p class="bg-success p-1 rounded-pill m-0">
-                                Concluído
-                            </p>
-
-                            @elseif($pedido->status == 4)
-                            <p class="bg-danger p-1 rounded-pill m-0">
-                                Rejeitado
-                            </p>
-
-                            @elseif($pedido->status == 5)
-                            <p class="bg-secondary p-1 rounded-pill m-0">
-                                Cancelado
-                            </p>
-
+                            <button type="button" class="pe-auto" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
                             @endif
-                            <!-- FIM STATUS -->
-
                         </div>
                         <div class="modal-body">
                             <!-- PEDIDO DETALHE -->

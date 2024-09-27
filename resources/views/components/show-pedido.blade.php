@@ -1,4 +1,5 @@
 <!-- INFORMAÇÕES -->
+
 <div class="row px-3">
     <div class="col">
         <p class="m-0 d-flex align-items-center text-uppercase">
@@ -107,7 +108,43 @@
 
 <!-- PEDIDO -->
 <div class="bg-white rounded border p-3 my-2">
-    <p class="fw-bolder fs-5 m-0 p-0">Pedido</p>
+    <div class="d-flex align-items-center justify-content-between">
+        <p class="fw-bolder fs-5 m-0 p-0">Pedido</p>
+
+        <!-- STATUS -->
+        @if($pedido->status == 0)
+        <p class="border border-danger text-danger py-1 px-2 rounded-pill m-0">
+            Pendente
+        </p>
+
+        @elseif($pedido->status == 1)
+        <p class="bg-warning py-1 px-2 rounded-pill m-0">
+            Em preparo
+        </p>
+
+        @elseif($pedido->status == 2)
+        <p class="bg-primary py-1 px-2 rounded-pill m-0 text-white">
+            A caminho
+        </p>
+
+        @elseif($pedido->status == 3)
+        <p class="bg-success py-1 px-2 rounded-pill m-0 text-white">
+            Concluído
+        </p>
+
+        @elseif($pedido->status == 4)
+        <p class="bg-danger py-1 px-2 rounded-pill m-0 text-white">
+            Rejeitado
+        </p>
+
+        @elseif($pedido->status == 5)
+        <p class="bg-secondary py-1 px-2 rounded-pill m-0 text-white">
+            Cancelado
+        </p>
+
+        @endif
+        <!-- FIM STATUS -->
+    </div>
 
     <div class="px-3 py-1 m-2">
         <table class="table">
@@ -366,13 +403,13 @@
 
             <tfoot>
                 <tr>
-                    <td colspan="4" class="fw-bold bg-white">Subtotal</td>
+                    <td colspan="3" class="fw-bold bg-white">Subtotal</td>
                     <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
                 </tr>
                 @if($pedido->consumo_local_viagem_delivery == 3)
                 <tr>
-                    <td colspan="4" class="fw-bold bg-white">Entrega</td>
+                    <td colspan="3" class="fw-bold bg-white">Entrega</td>
                     <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
                 </tr>
@@ -380,7 +417,7 @@
 
                 @if(!empty($pedido->uso_cupom))
                 <tr>
-                    <td colspan="4" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
+                    <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
                     @if($pedido->uso_cupom->cupom->tipo_desconto == 1)
                     <td class="text-danger bg-white">
                         - R$ {{ number_format($pedido->uso_cupom->cupom->desconto, 2, ',', '.') }}
@@ -392,7 +429,7 @@
                 </tr>
                 @endif
                 <tr>
-                    <td colspan="4" class="fw-bold bg-white">Total</td>
+                    <td colspan="3" class="fw-bold bg-white">Total</td>
                     <td class="fw-bolder bg-white"> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
                 </tr>
