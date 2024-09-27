@@ -2,25 +2,61 @@
 
     <div class="container">
         <!-- MENSAGENS -->
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="toast-container position-fixed top-0 end-0">
+            @if(session('success'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        check_circle
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('success') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('error') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        @foreach ($errors->all() as $error)
+                        <p class="fs-5 m-0">
+                            {{ $error }}
+                        </p>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
         </div>
-        @endif
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         <!-- FIM MENSAGENS -->
 
 
@@ -146,15 +182,14 @@
         <!-- FIM HEADER -->
 
         <!-- PEDIDOS GRID -->
-        <div class="row row-cols-4 g-1">
+        <div class="row g-1">
             @if(isset($data['pedidos']))
 
             <!-- PEDIDOS -->
             @foreach($data['pedidos'] as $pedido)
-
             <!-- PEDIDO -->
-            <div
-                class="col mx-1 shadow-md p-2 rounded {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-start-0 border-danger border-5' : 'bg-white' }}">
+            <div class="col mx-1 shadow-md p-2 rounded {{isset($data['pedido']) && $data['pedido']->id == $pedido->id ? 'bg-light border-end-0 border-top-0 border-start-0 border-danger border-5' : 'bg-white' }}"
+                style="min-width: 300px !important; max-width: 300px !important">
 
                 <!-- HEADER PEDIDO -->
                 <div class="row px-2">
@@ -219,6 +254,7 @@
 
                                 <!-- STATUS DO PEDIDO -->
                                 @if($pedido->status == 0)
+                                <!-- Pedindo pendente -> aceitar pedido -->
                                 <li>
                                     <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                                         class="dropdown-item d-flex align-items-center">
@@ -243,6 +279,7 @@
                                 </li>
 
                                 @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 3)
+                                <!-- Pedido em preparo -> enviar entrega caso seja delivery -->
                                 <li>
                                     <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                                         class="dropdown-item d-flex align-items-center">
@@ -267,6 +304,7 @@
                                 </li>
 
                                 @elseif($pedido->status == 2 && $pedido->consumo_local_viagem_delivery == 3)
+                                <!-- Pedido a caminho -> entregue caso seja delivery -->
                                 <li>
                                     <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                                         class="dropdown-item d-flex align-items-center">
@@ -291,6 +329,7 @@
                                 </li>
 
                                 @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 1)
+                                <!-- Pedido em preparo -> concluído caso seja comer no local -->
                                 <li>
                                     <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                                         class="dropdown-item d-flex align-items-center">
@@ -444,9 +483,7 @@
                                 style="font-variation-settings: 'FILL' 1;">
                                 two_wheeler
                             </span>
-                            {{$pedido->entrega->rua}},
-                            {{$pedido->entrega->bairro}},
-                            {{$pedido->entrega->numero}}
+                            Entrega
                         </p>
                         @endif
                         <!-- CONSUMO -->
@@ -459,7 +496,9 @@
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_loja->imagem . '.svg') }}"
                                 alt="" width="20px">
-                            <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_loja->nome}} (Cobrar na entrega)</p>
+                            <p class="p-0 ml-1 my-0">
+                                Cobrar R$ {{number_format($pedido->total, 2, ',', '.')}} na entrega.
+                            </p>
                         </div>
 
                         @else
@@ -467,7 +506,9 @@
                         <div class="d-flex align-items-center">
                             <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_foomy->imagem . '.svg') }}"
                                 alt="" width="20px">
-                            <p class="p-0 mx-1 my-0">{{$pedido->forma_pagamento_foomy->nome}} (Pago online)</p>
+                            <p class="p-0 ml-1 my-0">
+                                Pago R$ {{number_format($pedido->total, 2, ',', '.')}} online.
+                            </p>
                         </div>
 
                         @endif
@@ -488,8 +529,10 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <p class="fw-semibold fs-5 m-0" id="modalDetalhesLabel">
-                                Detalhes do pedido
+                            <p class="fw-bold fs-5 m-0" id="modalDetalhesLabel">
+                                @if(isset($data['pedido']))
+                                #0{{$data['pedido']->id}}0
+                                @endif
                             </p>
                         </div>
                         <div class="modal-body">

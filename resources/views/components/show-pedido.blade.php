@@ -1,3 +1,70 @@
+<!-- INFORMAÇÕES -->
+<div class="row px-3">
+    <div class="col">
+        <p class="m-0 d-flex align-items-center text-uppercase">
+            <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+                person
+            </span>
+            @if($pedido->cliente_id != null)
+            {{$pedido->cliente->nome}}
+            @else
+            {{$pedido->nome_cliente}}
+            @endif
+        </p>
+    </div>
+    <div class="col">
+        @if($pedido->cliente_id != null)
+        <p class="m-0 d-flex align-items-center">
+            <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+                call
+            </span>
+            {{$pedido->cliente->telefone}}
+        </p>
+        @endif
+    </div>
+</div>
+
+<div class="px-3">
+    <!-- CONSUMO -->
+    @if($pedido->consumo_local_viagem_delivery == 1)
+    <p class="m-0 d-flex align-items-center">
+        <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+            table_restaurant
+        </span>
+        Mesa {{$pedido->mesa->nome}}
+    </p>
+
+    @elseif($pedido->consumo_local_viagem_delivery == 2)
+    <p class="m-0 d-flex align-items-center">
+        <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+            shopping_bag
+        </span>
+        Para viagem
+    </p>
+
+    @elseif($pedido->consumo_local_viagem_delivery == 3)
+    <p class="m-0 d-flex align-items-center">
+        <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+            two_wheeler
+        </span>
+        {{$pedido->entrega->rua}} {{$pedido->entrega->numero}},
+        {{$pedido->entrega->bairro}}, {{$pedido->entrega->cidade}}/{{$pedido->entrega->estado}}.
+        {{$pedido->entrega->complemento}}
+    </p>
+    @endif
+    <!-- FIM CONSUMO -->
+</div>
+
+@if($pedido->consumo_local_viagem_delivery == 3)
+<p class="m-0 px-3 d-flex align-items-center">
+    <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+        schedule
+    </span>
+    Previsão de entrega: 18:10 - 18:25
+</p>
+@endif
+<!-- FIM INFORMAÇÕES -->
+
 <!-- PAGAMENTO -->
 @if($pedido->consumo_local_viagem_delivery == 3)
 <div class="bg-white rounded border p-3 my-2">
