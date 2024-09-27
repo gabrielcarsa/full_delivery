@@ -126,12 +126,24 @@
 
                     @else
 
-                    <div>
-                        <h4 class="m-0">
+                    <div class="p-5">
+                        <h4 class="m-0 fw-bold">
                             Nenhuma mesa selecionada
                         </h4>
-                        <p>
-                            Clique sobre uma mesa para visualizar detalhes
+                        <p class="text-secondary">
+                            Clique sobre uma mesa para visualizar detalhes.
+                        </p>
+                        <p class="fw-bold m-0 pt-3">
+                            Sobre o gestor de mesas:
+                        </p>
+                        <p class="m-0">
+                            - Veja todos pedidos da mesa.
+                        </p>
+                        <p class="m-0">
+                            - Realize o pagamento dos pedidos da mesa.
+                        </p>
+                        <p class="m-0">
+                            - O pagamento pode ser feito por item ou parcialmente sobre o valor total.
                         </p>
                     </div>
                     @endif
