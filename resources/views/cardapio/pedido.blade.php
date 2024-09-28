@@ -118,7 +118,7 @@
                     </div>
                     <div class="col-4 d-flex justify-content-end">
                         <p class="m-0 fw-bold text-secondary">
-                            ID: {{$pedido->id}}
+                            #0{{$pedido->id}}0
                         </p>
                     </div>
                 </div>

@@ -61,7 +61,10 @@
     <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
         calendar_clock
     </span>
-    Previsão de entrega: 18:10 - 18:25
+    Previsão de entrega:
+    {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_min)->format('H:i') }}
+    -
+    {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
 </p>
 @endif
 

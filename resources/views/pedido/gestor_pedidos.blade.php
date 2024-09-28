@@ -484,6 +484,15 @@
                             </span>
                             Entrega
                         </p>
+                        <p class="m-0 d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1 fs-5 text-secondary"
+                                style="font-variation-settings: 'FILL' 1;">
+                                calendar_clock
+                            </span>
+                            {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_min)->format('H:i') }}
+                            -
+                            {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
+                        </p>
                         @endif
                         <!-- CONSUMO -->
 
