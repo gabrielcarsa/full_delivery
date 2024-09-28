@@ -9,7 +9,9 @@
             </span>
         </a>
         <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
-            <h2 class="fs-6 fw-bold">Detalhes do pedido</h2>
+            <h2 class="fs-6 fw-bold">
+                Detalhes do pedido
+            </h2>
         </div>
     </div>
     <!-- FIM NAVBAR PRODUTO -->
@@ -19,12 +21,21 @@
 
         <!-- PREVISÃO -->
         @if($data['pedido']->consumo_local_viagem_delivery == 3)
-        <div class="py-1">
+        <div class="mt-1 mb-3">
             <p class="text-secondary m-0">
                 Previsão de entrega
             </p>
             <p class="text-black m-0 fs-5">
-                12:30 - 13:20
+                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->addMinutes($data['pedido']->entrega->tempo_min)->format('H:i') }}
+                -
+                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->addMinutes($data['pedido']->entrega->tempo_max)->format('H:i') }}
+            </p>
+            <p class="m-0 d-flex align-items-center text-secondary border p-2 rounded"
+                style="font-size: 13px !important">
+                <span class="material-symbols-outlined mr-1 fs-5">
+                    info
+                </span>
+                O tempo de entrega pode variar devido a vários fatores, para maiores informações ligue para a loja.
             </p>
         </div>
         @endif
@@ -55,20 +66,6 @@
         </div>
         @endif
         <!-- FIM CLIENTE NÃO LOGADO -->
-
-        <!--  LOJA -->
-        <div class="d-flex border p-3 rounded">
-            <div class="d-flex align-items-center justify-content-center">
-                <img src="{{ asset('storage/' . $data['pedido']->loja->nome . '/' . $data['pedido']->loja->logo) }}"
-                    class="rounded-circle" style="max-width: 50px;">
-            </div>
-            <div class="ml-2">
-                <p class="m-0 fw-semibold">{{$data['pedido']->loja->nome}}</p>
-                <p class="m-0 text-secondary texto-truncate-100w text-truncate">{{$data['pedido']->loja->rua}},
-                    {{$data['pedido']->loja->numero}}</p>
-            </div>
-        </div>
-        <!--  FIM LOJA -->
 
         <!--  PEDIDO REJEITADO, CANCELADO OU NORMAL -->
         @if($data['pedido']->status == 4 || $data['pedido']->status == 5 )
@@ -195,6 +192,27 @@
 
         @endif
         <!--  FIM PEDIDO REJEITADO, CANCELADO OU NORMAL -->
+
+        <!--  LOJA -->
+        <div class="border p-3 rounded my-2">
+            <p class="text-secondary">
+                Feito em 
+                {{\Carbon\Carbon::parse($data['pedido']->feito_em)->format('d/m/Y')}} -
+                {{\Carbon\Carbon::parse($data['pedido']->feito_em)->format('H:i')}}
+            </p>
+            <div class="d-flex">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('storage/' . $data['pedido']->loja->nome . '/' . $data['pedido']->loja->logo) }}"
+                        class="rounded-circle" style="max-width: 50px;">
+                </div>
+                <div class="ml-2">
+                    <p class="m-0 fw-semibold">{{$data['pedido']->loja->nome}}</p>
+                    <p class="m-0 text-secondary texto-truncate-100w text-truncate">{{$data['pedido']->loja->rua}},
+                        {{$data['pedido']->loja->numero}}</p>
+                </div>
+            </div>
+        </div>
+        <!--  FIM LOJA -->
 
         <!-- ENTREGA -->
         @if($data['pedido']->consumo_local_viagem_delivery == 3)

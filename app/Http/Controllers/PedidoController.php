@@ -477,6 +477,8 @@ class PedidoController extends Controller
         $distancia = $request->input('distancia');
         $nome_cliente = $request->input('nome_cliente');
         $mesa_id = $request->input('mesa_id');
+        $tempo_preparo_min = 0;
+        $tempo_preparo_max = 0;
 
 
         $cliente_id = null;
@@ -602,6 +604,11 @@ class PedidoController extends Controller
             $item_pedido->observacao = $item_carrinho['observacao']; 
             $item_pedido->save();
 
+            //Definindo tempo de preparo por produto
+            $produto_item = Produto::find($produto_id);
+            $tempo_preparo_min += $produto_item->tempo_preparo_min_minutos;
+            $tempo_preparo_max += $produto_item->tempo_preparo_max_minutos;
+
             if($item_carrinho['opcionais'] != null){
                 
                 foreach($item_carrinho['opcionais'] as $item_opcional){
@@ -640,6 +647,10 @@ class PedidoController extends Controller
             $entrega->complemento = $cliente_endereco->complemento;
             $entrega->distancia_metros = $distancia; 
             $entrega->taxa_entrega = $taxa_entrega;
+
+            $distancia_km = $distancia / 1000;
+            $entrega->tempo_min = $tempo_preparo_min + (2 * $distancia_km);
+            $entrega->tempo_max = $tempo_preparo_max + (5 * $distancia_km);
             $entrega->save();
         }
 

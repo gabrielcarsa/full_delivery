@@ -35,8 +35,7 @@
             <div class="border rounded m-3 p-3">
                 <div class="col d-flex justify-content-end">
                     <p class="m-0 p-0 text-secondary" style="font-size:14px">
-                        {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
-                        {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
+                        Feito {{ \Carbon\Carbon::parse($pedido->feito_em)->diffForHumans() }}
                     </p>
                 </div>
                 <div class="col-8 d-flex">
@@ -51,6 +50,20 @@
                     </div>
                 </div>
                 <hr>
+                <!-- PREVISÃO -->
+                @if($pedido->consumo_local_viagem_delivery == 3)
+                <div class="mt-1 mb-3">
+                    <p class="text-secondary m-0">
+                        Previsão de entrega
+                    </p>
+                    <p class="text-black m-0 fs-5">
+                        {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_min)->format('H:i') }}
+                        -
+                        {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
+                    </p>
+                </div>
+                @endif
+                <!-- FIM PREVISÃO -->
                 <div class="row">
                     <div class="col-8">
                         @if($pedido->status == 0)
