@@ -75,13 +75,13 @@
                             @endif
                             @csrf
                             <div class="form-floating mb-3">
-                                <input type="email" name="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com">
-                                <label for="floatingInput">Email</label>
+                                <input type="phone" name="telefone" class="form-control" id="inputTelefone"
+                                    placeholder="(DD) 9999-9999" required>
+                                <label for="inputTelefone">Telefone</label>
                             </div>
                             <div class="form-floating">
                                 <input type="password" name="password" class="form-control" id="floatingPassword"
-                                    placeholder="Password">
+                                    placeholder="Password" required>
                                 <label for="floatingPassword">Senha</label>
                             </div>
                             <div class="d-flex mt-3">
@@ -89,7 +89,7 @@
                                     Entrar
                                 </button>
                             </div>
-                            
+
                             <p class="text-secondary my-3 text-center">
                                 Ou entre com
                             </p>
@@ -122,4 +122,31 @@
     </div>
     <!-- FIM FUNDO -->
 
+    <script>
+    // Função para aplicar a máscara de telefone
+    function aplicarMascaraTelefone(inputId) {
+        const input = document.getElementById(inputId);
+
+        input.addEventListener('input', function(e) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue = '(' + value.slice(0, 2);
+
+                if (value.length > 2) {
+                    formattedValue += ') ' + value.slice(2, 7);
+                }
+
+                if (value.length > 7) {
+                    formattedValue += '-' + value.slice(7, 11);
+                }
+            }
+
+            input.value = formattedValue;
+        });
+    }
+    // Aplicar a máscara para os campos de telefone
+    aplicarMascaraTelefone('inputTelefone');
+    </script>
 </x-layout-cardapio>

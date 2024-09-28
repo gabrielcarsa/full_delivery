@@ -39,16 +39,10 @@
                     <label for="floatingInput">Nome</label>
                 </div>
                 <div class="form-floating my-1">
-                    <input type="text" name="telefone" class="form-control" id="inputTelefone"
+                    <input type="phone" name="telefone" class="form-control" id="inputTelefone"
                         placeholder="name@example.com" autocomplete="off"
                         value="{{!empty($cliente) ? $cliente->telefone : old('telefone')}}">
                     <label for="inputTelefone">Telefone</label>
-                </div>
-                <div class="form-floating my-1">
-                    <input type="email" name="email" class="form-control" id="floatingInput"
-                        placeholder="name@example.com" autocomplete="off"
-                        value="{{!empty($cliente) ? $cliente->email : old('email')}}">
-                    <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating my-1">
                     <input type="password" name="senha" class="form-control" id="floatingPassword"

@@ -35,7 +35,12 @@ class ClienteAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+
+        $request->merge([
+            'telefone' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone')),
+        ]);
+
+        $credentials = $request->only('telefone', 'password');
 
         if (Auth::guard('cliente')->attempt($credentials)) {
             //Variaveis via GET
@@ -55,7 +60,7 @@ class ClienteAuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+            'telefone' => 'As credenciais fornecidas não correspondem aos nossos registros.',
         ]);
     }
 
@@ -79,14 +84,12 @@ class ClienteAuthController extends Controller
 
         $request->validate([
             'nome' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:cliente',
-            'telefone' => 'required|string|max:100',
+            'telefone' => 'required|string|max:100|unique:cliente',
             'senha' => 'required|string|min:8|confirmed',
         ]);
 
         $cliente = Cliente::create([
             'nome' => $request->nome,
-            'email' => $request->email,
             'telefone' => $request->telefone,
             'senha' => Hash::make($request->senha),
         ]);
