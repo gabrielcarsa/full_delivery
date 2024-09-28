@@ -40,17 +40,3 @@
 .texto-truncate-100w {
     max-width: none;
 }
-
-.card-login{
-    width: 450px;
-}
-
-@media (max-width: 400px) {
-    .texto-truncate-100w {
-        max-width: 100px !important;
-    }
-
-    .card-login{
-        width: 250px;
-    }
-}
