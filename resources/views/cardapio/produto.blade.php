@@ -9,7 +9,9 @@
             </span>
         </a>
         <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
-            <h2 class="fs-6 fw-bold">{{$produto->nome}}</h2>
+            <h2 class="fs-5 fw-semibold">
+                {{$produto->nome}}
+            </h2>
         </div>
     </div>
     <!-- FIM NAVBAR PRODUTO -->

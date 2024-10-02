@@ -1,6 +1,23 @@
 <x-layout-cardapio>
+
     <div class="bg-light">
-        <div class="vh-100 container d-flex align-items-center justify-content-center">
+        <!-- NAVBAR -->
+        <div class="d-flex bg-white fixed-top p-2">
+            <a href="#" onclick="history.go(-1); return false;"
+                class="text-dark text-decoration-none d-flex align-items-center m-0">
+                <span class="material-symbols-outlined">
+                    arrow_back
+                </span>
+            </a>
+            <div class="d-flex align-items-center justify-content-center" style="flex: 1;">
+                <h2 class="fs-5 fw-semibold">
+                    Entrar
+                </h2>
+            </div>
+        </div>
+        <!-- FIM NAVBAR -->
+
+        <div class="container d-flex align-items-center justify-content-center" style="padding-top: 80px">
             <div>
                 <!-- MENSAGENS -->
                 @if(session('success'))
