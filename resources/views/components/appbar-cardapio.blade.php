@@ -4,7 +4,7 @@
 
             <!-- ITEM APPBAR -->
             <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-reset' : 'text-secondary'}}"
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio') ? 'text-padrao' : 'text-secondary'}}"
                     href="{{ route('cardapio', ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         menu_book
@@ -18,7 +18,7 @@
 
             <!-- ITEM APPBAR -->
             <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedido.pedidoCliente') ? 'text-reset' : 'text-secondary'}}"
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedido.pedidoCliente') ? 'text-padrao' : 'text-secondary'}}"
                     href="{{ route('pedido.pedidoCliente', ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         receipt_long
@@ -32,7 +32,7 @@
 
             <!-- ITEM APPBAR -->
             <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cliente.area') ? 'text-reset' : 'text-secondary'}}"
+                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cliente.area') ? 'text-padrao' : 'text-secondary'}}"
                     href="{{ route('cliente.area', ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
                         account_circle
