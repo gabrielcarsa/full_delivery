@@ -580,6 +580,19 @@
     </div>
     <!-- FIM CARDAPIO -->
 
+    @if(!empty($carrinho))
+    <a class="rounded p-2 mx-3 fixed-bottom bg-padrao text-decoration-none d-flex align-items-center"
+        style="margin-bottom: 70px !important;"
+        href="{{ route('cardapio.carrinho', ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}">
+        <span class="badge bg-white text-dark mr-2">
+            {{count($carrinho)}}
+        </span>
+        <span class="text-white fw-semibold">
+            Carrinho
+        </span>
+    </a>
+    @endif
+
     <!-- MENU APPBAR -->
     <x-appbar-cardapio :data="$data" />
     <!-- FIM MENU APPBAR -->

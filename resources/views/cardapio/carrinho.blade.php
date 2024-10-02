@@ -107,43 +107,15 @@
             </div>
             <!-- FIM MENSAGENS -->
 
-            <!-- TOATS CRIAR CONTA -->
-            @if(!Auth::guard('cliente')->check())
-            <div class="toast show mt-3" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header bg-padrao">
-                    <strong class="me-auto fw-bold text-white fs-6">Ganhe Descontos</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="p-3">
-                    <div class="d-flex align-items-center">
-                        <span class="material-symbols-outlined text-padrao mr-2"
-                            style="font-size: 40px; font-variation-settings: 'FILL' 1;">
-                            sell
-                        </span>
-                        <p class="m-0">
-                            Crie sua conta hoje e pague mais barato nos seus pedidos.
-                        </p>
-                    </div>
-                    <div class="text-center mt-3">
-                        <a href="" class="btn bg-padrao text-white fw-semibold d-block">
-                            Quero pagar mais barato
-                        </a>
-
-                        <a href="" class="text-black d-block mt-2">
-                            Já tenho conta
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-            @endif
-            <!-- FIM TOATS CRIAR CONTA -->
 
             <!-- IF MESA -->
             @if($data['consumo_local_viagem_delivery'] == 1)
-            <h4 class="m-0 fs-5 fw-bold pt-3">
+            <h4 class="m-0 fs-4 fw-bold pt-3">
                 Preencha os campos
             </h4>
+            <p class="text-secondary m-0">
+                Preencha abaixo os campos para podermos identificar você.
+            </p>
 
             @if(!Auth::guard('cliente')->check())
             <div class="form-floating my-1">
@@ -171,7 +143,7 @@
             @if($data['consumo_local_viagem_delivery'] == 3)
 
             <!-- ROW ENDEREÇO -->
-            <h4 class="m-0 fs-5 fw-bold pt-3">
+            <h4 class="m-0 fs-4 fw-bold pt-3">
                 Entrega em
             </h4>
 
@@ -247,7 +219,7 @@
                 <div class="col-md-6 my-3">
                     <div class="d-flex">
                         <div class="d-flex align-items-center">
-                            <h3 class="fw-bolder fs-3">Itens</h3>
+                            <h3 class="fw-bolder fs-4">Itens</h3>
                         </div>
                         <div class="d-flex align-items-center justify-content-end w-100">
                             <a href="{{ route('cardapio.esvaziarCarrinho') }}" class="text-danger text-decoration-none">

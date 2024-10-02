@@ -18,20 +18,6 @@
 
             <!-- ITEM APPBAR -->
             <li class="nav-item">
-                <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('cardapio.carrinho') ? 'text-reset' : 'text-secondary'}}"
-                    href="{{ route('cardapio.carrinho', ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}" style="font-size:13px">
-                    <span class="material-symbols-outlined">
-                        shopping_cart
-                    </span>
-                    <span>
-                        Carrinho
-                    </span>
-                </a>
-            </li>
-            <!-- FIM ITEM APPBAR -->
-
-            <!-- ITEM APPBAR -->
-            <li class="nav-item">
                 <a class="m-0 p-0 nav-link d-flex flex-column align-items-center {{ request()->routeIs('pedido.pedidoCliente') ? 'text-reset' : 'text-secondary'}}"
                     href="{{ route('pedido.pedidoCliente', ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}" style="font-size:13px">
                     <span class="material-symbols-outlined">
