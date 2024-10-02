@@ -72,6 +72,7 @@ class LojaController extends Controller
         // Validação do formulário
         $validator = Validator::make($request->all(), [
             'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
+            'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:255',
             'taxa_servico' => 'required|numeric',
@@ -107,6 +108,12 @@ class LojaController extends Controller
             $nomeArquivo = "logo";
             $request->file('imagem')->storeAs('public/'.$loja->nome, $nomeArquivo);
             $loja->logo = $nomeArquivo;
+        }
+        if ($request->hasFile('banner')) {
+            //Colocando nome único no arquivo
+            $nomeArquivo = "banner";
+            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            //não estou salvando nome do arquino no BD pois só vai ter um banner
         }
 
         //Endereço
@@ -145,6 +152,7 @@ class LojaController extends Controller
         
        // Validação do formulário
        $validator = Validator::make($request->all(), [
+            'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:500',
             'taxa_servico' => 'required|numeric',
@@ -173,6 +181,12 @@ class LojaController extends Controller
         $loja->telefone1 = $request->input('telefone1');
         $loja->telefone2 = $request->input('telefone2');
         $loja->taxa_servico = $request->input('taxa_servico');
+        if ($request->hasFile('banner')) {
+            //Colocando nome único no arquivo
+            $nomeArquivo = "banner";
+            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            //não estou salvando nome do arquino no BD pois só vai ter um banner
+        }
 
         //Endereço
         $loja->cep = $request->input('cep');

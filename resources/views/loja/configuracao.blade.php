@@ -63,6 +63,24 @@
                     <p class="text-secondary ml-2">300 x 300 (px)</p>
                     @endif
 
+                    @if(empty($loja))
+                    <div class="input-group">
+                        <label class="input-group-text" for="inputBanner">Banner</label>
+                        <input type="file" class="form-control @error('banner') is-invalid @enderror" name="banner"
+                            id="inputBanner">
+                    </div>
+                    <p class="text-secondary ml-2">1920 x 720 (px)</p>
+                    @else
+                    <!-- BANNER RESTAURANTE -->
+                    <img src='{{asset("storage/$loja->nome/banner")}}' height="200" class="shadow-sm rounded relative d-block">
+                    <div class="input-group absolute">
+                        <label class="input-group-text" for="inputBanner">Alterar banner</label>
+                        <input type="file" class="form-control @error('banner') is-invalid @enderror" name="banner"
+                            id="inputBanner">
+                    </div>
+                    <p class="text-secondary ml-2">1920 x 720 (px)</p>
+                    @endif
+
                     <div class="row bg-light p-3 m-3 rounded">
                         <p class="mx-0 mb-2 fw-bold fs-5">
                             Sobre a loja

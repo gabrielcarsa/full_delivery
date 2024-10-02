@@ -119,26 +119,23 @@
 
     <!-- EXIBIR PARA TELAS MENORES LOJA -->
     <div class="small-screen-content d-none">
-        <!-- BANNER E LOJA -->
-        <div class="relative">
 
-            <!-- BANNER -->
-            <div class="banner" style="height: 200px; background-color: #EDEDED;">
+        <!-- BANNER LOJA -->
+        <div class="d-flex align-items-center justify-content-center">
+            <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/banner') }}">
+        </div>
+        <!-- FIM BANNER LOJA -->
 
-            </div>
-            <!-- FIM BANNER -->
-
+        <div class="d-flex justify-content-between">
             <!-- IMAGEM LOJA -->
-            <div class="absolute top-0" style="margin: 160px 20px;">
-                <div class="d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
-                        class="rounded-circle" style="max-width: 90px;">
-                </div>
+            <div class="p-2">
+                <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
+                    class="rounded-circle" style="max-width: 90px;">
             </div>
             <!-- FIM IMAGEM LOJA -->
 
             <!-- LOJA TITULO -->
-            <div class="d-flex justify-content-end align-items-center">
+            <div class="d-flex align-items-center">
                 <div class="mx-3">
                     <div class="d-flex justify-content-end">
                         <h2 class="fs-2 fw-bolder m-0">{{$data['categoria_produto'][0]->loja->nome}}</h2>
@@ -171,7 +168,6 @@
                     </div>
                     <!-- FIM VERIFICAR SE ESTÁ ABERTO -->
                 </div>
-                <!-- FIM LOJA TITULO -->
 
                 <!-- ARROW INFOS -->
                 <a href="" class="d-flex justify-content-center text-decoration-none text-black mr-2"
@@ -183,87 +179,88 @@
                 <!-- FIM ARROW INFOS -->
 
             </div>
+            <!-- FIM LOJA TITULO -->
 
-            <!-- INFORMAÇÕES LOJA -->
-            <div class="p-3" style="font-size: 13px">
+        </div>
 
-                <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                    <span class="material-symbols-outlined mr-1">
-                        attach_money
-                    </span>
-                    <span>
-                        Pedido minímo: R$ 20,00
-                    </span>
-                </p>
-                <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                    <span class="material-symbols-outlined mr-1">
-                        location_on
-                    </span>
-                    <span>
-                        {{$data['categoria_produto'][0]->loja->rua}},
-                        {{$data['categoria_produto'][0]->loja->numero}}
-                        {{$data['categoria_produto'][0]->loja->bairro}} -
-                        {{$data['categoria_produto'][0]->loja->cidade}}
-                        {{$data['categoria_produto'][0]->loja->estado}}
-                    </span>
-                </p>
+        <!-- INFORMAÇÕES LOJA -->
+        <div class="p-3" style="font-size: 13px">
 
-            </div>
-            <!-- FIM INFORMAÇÕES LOJA -->
+            <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                <span class="material-symbols-outlined mr-1">
+                    attach_money
+                </span>
+                <span>
+                    Pedido minímo: R$ 20,00
+                </span>
+            </p>
+            <p class="d-flex align-items-center m-0 p-0 text-secondary">
+                <span class="material-symbols-outlined mr-1">
+                    location_on
+                </span>
+                <span>
+                    {{$data['categoria_produto'][0]->loja->rua}},
+                    {{$data['categoria_produto'][0]->loja->numero}}
+                    {{$data['categoria_produto'][0]->loja->bairro}} -
+                    {{$data['categoria_produto'][0]->loja->cidade}}
+                    {{$data['categoria_produto'][0]->loja->estado}}
+                </span>
+            </p>
 
-            <!-- ENDEREÇO ENTREGA SE HOUVER -->
-            @if (Route::has('login') && $data['consumo_local_viagem_delivery'] == 3)
-            @auth('cliente')
+        </div>
+        <!-- FIM INFORMAÇÕES LOJA -->
 
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="absolute top-0 mx-3">
-                    <div class="dropdown mb-2" style="font-size: 14px">
-                        <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <!--SE HOUVER ENDEREÇO SELECIONADO-->
-                            @if($data['endereco_selecionado'] == null)
+        <!-- ENDEREÇO ENTREGA SE HOUVER -->
+        @if (Route::has('login') && $data['consumo_local_viagem_delivery'] == 3)
+        @auth('cliente')
 
-                            Selecione endereço entrega
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="absolute top-0 mx-3">
+                <div class="dropdown mb-2" style="font-size: 14px">
+                    <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                        @if($data['endereco_selecionado'] == null)
 
-                            <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
-                            @else
+                        Selecione endereço entrega
 
-                            <!--EXIBIR APENAS SELECIONADO-->
-                            @foreach($data['cliente_enderecos'] as $endereco)
-                            @if($endereco->id == $data['endereco_selecionado'])
+                        <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                        @else
 
-                            {{$endereco->rua}}, {{$endereco->numero}}
+                        <!--EXIBIR APENAS SELECIONADO-->
+                        @foreach($data['cliente_enderecos'] as $endereco)
+                        @if($endereco->id == $data['endereco_selecionado'])
 
-                            @endif
-                            @endforeach
-                            <!--FIM EXIBIR APENAS SELECIONADO-->
+                        {{$endereco->rua}}, {{$endereco->numero}}
 
-                            @endif
-                            <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
-                        </a>
+                        @endif
+                        @endforeach
+                        <!--FIM EXIBIR APENAS SELECIONADO-->
 
-                        <ul class="dropdown-menu" style="font-size: 12px">
-                            @foreach($data['cliente_enderecos'] as $endereco)
-                            @if($endereco != $data['endereco_selecionado'])
-                            <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
-                                    <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
-                                    {{$endereco->numero}}
-                                </a>
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
-                    </div>
+                        @endif
+                        <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
+                    </a>
+
+                    <ul class="dropdown-menu" style="font-size: 12px">
+                        @foreach($data['cliente_enderecos'] as $endereco)
+                        @if($endereco != $data['endereco_selecionado'])
+                        <li>
+                            <a class="dropdown-item"
+                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                                <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
+                                {{$endereco->numero}}
+                            </a>
+                        </li>
+                        @endif
+                        @endforeach
+                    </ul>
                 </div>
             </div>
-
-            @endauth
-            @endif
-            <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
         </div>
-        <!-- BANNER E LOJA -->
+
+        @endauth
+        @endif
+        <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
 
     </div>
     <!-- FIM EXIBIR PARA TELAS MENORES LOJA -->
@@ -273,8 +270,8 @@
     <div class="large-screen-content d-none">
 
         <!-- FUNDO LOJA CARDAPIO -->
-        <div class="cardapio-loja d-flex align-items-center justify-content-center">
-
+        <div class="d-flex align-items-center justify-content-center"
+            style="background-image: url('{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/banner') }}'); background-position: center; background-repeat: no-repeat; background-size: cover">
             <!-- LOJA CARD -->
             <div class="bg-white m-3 p-3 rounded border">
 
