@@ -10,7 +10,7 @@ class ClienteController extends Controller
 {
      //LISTAGEM
      public function index(){
-        $clientes = Cliente::all();
+        $clientes = Cliente::with('pedido')->get();
         return view('cliente/listar', compact('clientes'));
     }
 

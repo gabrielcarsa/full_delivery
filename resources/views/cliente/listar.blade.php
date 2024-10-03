@@ -30,7 +30,7 @@
                 <h2 class="my-3 fw-bolder fs-1">Clientes <span class="text-secondary fs-3">({{$clientes->count()}})</span></h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
                     href="{{ route('cliente.novo') }}">
                     <span class="material-symbols-outlined mr-1">
                         add
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="col d-flex align-items-center justify-content-end p-0">
-                        <button type="submit" class="btn btn-primary fw-semibold d-flex align-items-center justify-content-center py-1 m-0 w-100">
+                        <button type="submit" class="btn bg-padrao text-white fw-semibold d-flex align-items-center justify-content-center py-1 m-0 w-100">
                             <span class="material-symbols-outlined mr-1">
                                 search
                             </span>
@@ -84,6 +84,7 @@
                     <th scope="col">CPF</th>
                     <th scope="col">Telefone</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Qtnd pedidos</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -96,6 +97,7 @@
                     <td>{{$cliente->cpf}}</td>
                     <td>{{$cliente->telefone}}</td>
                     <td>{{$cliente->email}}</td>
+                    <td>{{count($cliente->pedido)}}</td>
                     <td>
                         <a href="{{ route('cliente.editar', ['id' => $cliente->id]) }}"
                             class="acoes-listar text-decoration-none">
