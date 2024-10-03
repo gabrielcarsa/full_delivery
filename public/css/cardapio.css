@@ -34,3 +34,9 @@
 .texto-truncate-100w {
     max-width: none;
 }
+
+@media(min-width: 920px) {
+    .container-cardapio{
+        padding: 0 20%;
+    }
+}
