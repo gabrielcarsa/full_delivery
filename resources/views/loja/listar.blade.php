@@ -29,7 +29,7 @@
                 <h2 class="my-3 fw-bolder fs-1">Loja <span class="text-secondary fs-3">({{$lojas->count()}})</span></h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn btn-primary m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
                     href="{{route('loja.configurar')}}">
                     <span class="material-symbols-outlined mr-1">
                         add
@@ -108,7 +108,7 @@
                 </p>
                 
                 <div class="d-flex">
-                    <a href="{{route('loja.configurar', ['id' => $loja->id])}}" class="text-decoration-none p-2 text-white fw-semibold rounded" style="background-color: #FD0146 !important">
+                    <a href="{{route('loja.configurar', ['id' => $loja->id])}}" class="text-decoration-none p-2 rounded border-padrao text-padrao shadow-sm">
                         Configurações
                     </a>
 
@@ -116,7 +116,9 @@
                     @else
                     <form action="{{'/escolher-loja/'.$loja->id}}" method="post">
                         @csrf
-                        <button type="submit" class="mx-2 p-2 text-white fw-semibold rounded w-100" style="background-color: #FD0146 !important">Escolher loja</button>
+                        <button type="submit" class="mx-2 p-2 text-white fw-semibold rounded w-100 bg-padrao">
+                            Escolher loja
+                        </button>
                     </form>
                     @endif
                 </div>
