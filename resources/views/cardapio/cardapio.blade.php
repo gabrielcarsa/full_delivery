@@ -113,296 +113,157 @@
     @endif
     <!-- FIM DROPDOWN TROCAR CONSUMO -->
 
+    <!-- BANNER LOJA -->
+    <div class="d-flex align-items-center justify-content-center relative">
 
-    <!-- EXIBIR PARA TELAS MAIORES E MENORES LOJA -->
-
-
-    <!-- EXIBIR PARA TELAS MENORES LOJA -->
-    <div class="small-screen-content d-none">
-
-        <!-- BANNER LOJA -->
-        <div class="d-flex align-items-center justify-content-center">
-            <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/banner') }}">
-        </div>
-        <!-- FIM BANNER LOJA -->
-
-        <div class="d-flex justify-content-between">
-            <!-- IMAGEM LOJA -->
-            <div class="p-2">
-                <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
-                    class="rounded-circle" style="max-width: 90px;">
-            </div>
-            <!-- FIM IMAGEM LOJA -->
-
-            <!-- LOJA TITULO -->
-            <div class="d-flex align-items-center">
-                <div class="mx-3">
-                    <div class="d-flex justify-content-end">
-                        <h2 class="fs-2 fw-bolder m-0">{{$data['categoria_produto'][0]->loja->nome}}</h2>
-                    </div>
-
-                    <!-- INFORMAÇÕES LOJA -->
-                    <div class="d-flex justify-content-end" style="font-size: 13px">
-                        <!-- VERIFICAR SE ESTÁ ABERTO -->
-                        @if($data['categoria_produto'][0]->loja->is_open)
-                        <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined mr-1 fs-6"
-                                style="font-variation-settings: 'FILL' 1;">
-                                circle
-                            </span>
-                            <span>
-                                Aberto
-                            </span>
-                        </p>
-
-                        @else
-                        <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined mr-1 fs-6">
-                                circle
-                            </span>
-                            <span>
-                                Fechado
-                            </span>
-                        </p>
-                        @endif
-                    </div>
-                    <!-- FIM VERIFICAR SE ESTÁ ABERTO -->
-                </div>
-
-                <!-- ARROW INFOS -->
-                <a href="" class="d-flex justify-content-center text-decoration-none text-black mr-2"
-                    data-bs-toggle="modal" data-bs-target="#modalHorarios">
-                    <span class="material-symbols-outlined">
-                        chevron_right
-                    </span>
-                </a>
-                <!-- FIM ARROW INFOS -->
-
-            </div>
-            <!-- FIM LOJA TITULO -->
-
-        </div>
-
-        <!-- INFORMAÇÕES LOJA -->
-        <div class="p-3" style="font-size: 13px">
-
-            <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                <span class="material-symbols-outlined mr-1">
-                    attach_money
-                </span>
-                <span>
-                    Pedido minímo: R$ 20,00
-                </span>
-            </p>
-            <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                <span class="material-symbols-outlined mr-1">
-                    location_on
-                </span>
-                <span>
-                    {{$data['categoria_produto'][0]->loja->rua}},
-                    {{$data['categoria_produto'][0]->loja->numero}}
-                    {{$data['categoria_produto'][0]->loja->bairro}} -
-                    {{$data['categoria_produto'][0]->loja->cidade}}
-                    {{$data['categoria_produto'][0]->loja->estado}}
-                </span>
-            </p>
-
-        </div>
-        <!-- FIM INFORMAÇÕES LOJA -->
+        <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/banner') }}">
 
         <!-- ENDEREÇO ENTREGA SE HOUVER -->
         @if (Route::has('login') && $data['consumo_local_viagem_delivery'] == 3)
         @auth('cliente')
 
-        <div class="d-flex align-items-center justify-content-center">
-            <div class="absolute top-0 mx-3">
-                <div class="dropdown mb-2" style="font-size: 14px">
-                    <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <!--SE HOUVER ENDEREÇO SELECIONADO-->
-                        @if($data['endereco_selecionado'] == null)
+        <div class="p-2 absolute top-0 bg-white rounded m-2"  style="font-size: 13px">
+            <div class="dropdown">
+                <a class="text-padrao fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <!--SE HOUVER ENDEREÇO SELECIONADO-->
+                    @if($data['endereco_selecionado'] == null)
 
-                        Selecione endereço entrega
+                    Selecione endereço entrega
 
-                        <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
-                        @else
+                    <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
+                    @else
 
-                        <!--EXIBIR APENAS SELECIONADO-->
-                        @foreach($data['cliente_enderecos'] as $endereco)
-                        @if($endereco->id == $data['endereco_selecionado'])
+                    <!--EXIBIR APENAS SELECIONADO-->
+                    @foreach($data['cliente_enderecos'] as $endereco)
+                    @if($endereco->id == $data['endereco_selecionado'])
 
-                        {{$endereco->rua}}, {{$endereco->numero}}
+                    {{$endereco->rua}}, {{$endereco->numero}}
 
-                        @endif
-                        @endforeach
-                        <!--FIM EXIBIR APENAS SELECIONADO-->
+                    @endif
+                    @endforeach
+                    <!--FIM EXIBIR APENAS SELECIONADO-->
 
-                        @endif
-                        <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
-                    </a>
+                    @endif
+                    <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
+                </a>
 
-                    <ul class="dropdown-menu" style="font-size: 12px">
-                        @foreach($data['cliente_enderecos'] as $endereco)
-                        @if($endereco != $data['endereco_selecionado'])
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
-                                <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
-                                {{$endereco->numero}}
-                            </a>
-                        </li>
-                        @endif
-                        @endforeach
-                    </ul>
-                </div>
+                <ul class="dropdown-menu" style="font-size: 13px">
+
+                    @if($data['cliente_enderecos']->isEmpty())
+                    <li>
+                        <a class="dropdown-item"
+                            href="{{ route('cliente_endereco.novo',  ['loja_id' => request('loja_id'), 'consumo_local_viagem_delivery' => request('consumo_local_viagem_delivery'), 'endereco_selecionado' =>  request('endereco_selecionado'), 'endereco_selecionado' =>  request('endereco_selecionado')]) }}">
+                            Você não tem endereços cadastrados,
+                            <strong>clique aqui para cadastrar.</strong>
+                        </a>
+                    </li>
+                    @else
+
+                    @foreach($data['cliente_enderecos'] as $endereco)
+                    @if($endereco != $data['endereco_selecionado'])
+                    <li>
+                        <a class="dropdown-item"
+                            href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
+                            <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}},
+                            {{$endereco->numero}}
+                        </a>
+                    </li>
+                    @endif
+                    @endforeach
+
+                    @endif
+                </ul>
             </div>
         </div>
 
         @endauth
         @endif
         <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
-
     </div>
-    <!-- FIM EXIBIR PARA TELAS MENORES LOJA -->
+    <!-- FIM BANNER LOJA -->
 
+    <div class="d-flex justify-content-between">
+        <!-- IMAGEM LOJA -->
+        <div class="p-2">
+            <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
+                class="rounded-circle" style="max-width: 90px;">
+        </div>
+        <!-- FIM IMAGEM LOJA -->
 
-    <!-- EXIBIR PARA TELAS MAIORES LOJA -->
-    <div class="large-screen-content d-none">
-
-        <!-- FUNDO LOJA CARDAPIO -->
-        <div class="d-flex align-items-center justify-content-center"
-            style="background-image: url('{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/banner') }}'); background-position: center; background-repeat: no-repeat; background-size: cover">
-            <!-- LOJA CARD -->
-            <div class="bg-white m-3 p-3 rounded border">
-
-                <!-- ENDEREÇO ENTREGA SE HOUVER -->
-                @if (Route::has('login') && $data['consumo_local_viagem_delivery'] == 3)
-                @auth('cliente')
-
-                <div class="d-flex justify-content-center dropdown mb-2" style="font-size: 14px">
-                    <a class="text-dark fw-semibold text-decoration-none dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <!--SE HOUVER ENDEREÇO SELECIONADO-->
-                        @if($data['endereco_selecionado'] == null)
-
-                        Selecione endereço entrega
-
-                        <!--SE NÃO HOUVER ENDEREÇO SELECIONADO-->
-                        @else
-
-                        <!--EXIBIR APENAS SELECIONADO-->
-                        @foreach($data['cliente_enderecos'] as $endereco)
-                        @if($endereco->id == $data['endereco_selecionado'])
-
-                        {{$endereco->rua}}, {{$endereco->numero}}
-
-                        @endif
-                        @endforeach
-                        <!--FIM EXIBIR APENAS SELECIONADO-->
-
-                        @endif
-                        <!--FIM SE HOUVER ENDEREÇO SELECIONADO-->
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        @foreach($data['cliente_enderecos'] as $endereco)
-                        @if($endereco != $data['endereco_selecionado'])
-                        <li>
-                            <a class="dropdown-item"
-                                href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3, 'endereco_selecionado' => $endereco->id]) }}">
-                                <span class="fw-bold">{{$endereco->nome}}</span> - {{$endereco->rua}}
-                                {{$endereco->numero}}
-                            </a>
-                        </li>
-                        @endif
-                        @endforeach
-                    </ul>
+        <!-- LOJA TITULO -->
+        <div class="d-flex align-items-center">
+            <div class="mx-3">
+                <div class="d-flex justify-content-end">
+                    <h2 class="fs-2 fw-bolder m-0">{{$data['categoria_produto'][0]->loja->nome}}</h2>
                 </div>
-                @endauth
-                @endif
-                <!-- FIM ENDEREÇO ENTREGA SE HOUVER -->
 
+                <!-- INFORMAÇÕES LOJA -->
+                <div class="d-flex justify-content-end" style="font-size: 13px">
+                    <!-- VERIFICAR SE ESTÁ ABERTO -->
+                    @if($data['categoria_produto'][0]->loja->is_open)
+                    <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
+                        <span class="material-symbols-outlined mr-1 fs-6" style="font-variation-settings: 'FILL' 1;">
+                            circle
+                        </span>
+                        <span>
+                            Aberto
+                        </span>
+                    </p>
 
-                <!-- IMAGEM LOJA -->
-                <div class="d-flex align-items-center justify-content-center">
-                    <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/' . $data['categoria_produto'][0]->loja->logo) }}"
-                        class="rounded-circle" style="max-width: 80px;">
+                    @else
+                    <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
+                        <span class="material-symbols-outlined mr-1 fs-6">
+                            circle
+                        </span>
+                        <span>
+                            Fechado
+                        </span>
+                    </p>
+                    @endif
                 </div>
-                <!-- FIM IMAGEM LOJA -->
-
-                <!-- SOBRE A LOJA -->
-                <div class="px-3">
-                    <h2 class="fs-2 fw-bolder my-2">{{$data['categoria_produto'][0]->loja->nome}}</h2>
-                    <p class="text-secondary m-0 p-0 mb-2">{{$data['categoria_produto'][0]->loja->descricao}}</p>
-
-                    <!-- INFORMAÇÕES LOJA -->
-                    <div class="" style="font-size: 13px">
-                        <!-- VERIFICAR SE ESTÁ ABERTO -->
-                        @if($data['categoria_produto'][0]->loja->is_open)
-                        <p class="d-flex align-items-center text-success fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined mr-1" style="font-variation-settings: 'FILL' 1;">
-                                circle
-                            </span>
-                            <span>
-                                Aberto
-                            </span>
-                        </p>
-
-                        @else
-                        <p class="d-flex align-items-center text-danger fw-semibold m-0 p-0">
-                            <span class="material-symbols-outlined mr-1">
-                                circle
-                            </span>
-                            <span>
-                                Fechado
-                            </span>
-                        </p>
-                        @endif
-
-                        <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                            <span class="material-symbols-outlined mr-1">
-                                attach_money
-                            </span>
-                            <span>
-                                Pedido minímo: R$ 20,00
-                            </span>
-                        </p>
-                        <p class="d-flex align-items-center m-0 p-0 text-secondary">
-                            <span class="material-symbols-outlined mr-1">
-                                location_on
-                            </span>
-                            <span>
-                                {{$data['categoria_produto'][0]->loja->rua}},
-                                {{$data['categoria_produto'][0]->loja->numero}}
-                                {{$data['categoria_produto'][0]->loja->bairro}} -
-                                {{$data['categoria_produto'][0]->loja->cidade}}
-                                {{$data['categoria_produto'][0]->loja->estado}}
-                            </span>
-                        </p>
-
-                    </div>
-                    <!-- FIM INFORMAÇÕES LOJA -->
-
-                    <!-- BOTAO HORARIO FUNCIONAMENTO LOJA -->
-                    <a href="" class="btn border d-flex justify-content-center mt-3" data-bs-toggle="modal"
-                        data-bs-target="#modalHorarios">
-                        Mais sobre
-                    </a>
-                    <!-- FIM BOTAO HORARIO FUNCIONAMENTO LOJA -->
-
-                </div>
-                <!-- FIM SOBRE A LOJA -->
-
+                <!-- FIM VERIFICAR SE ESTÁ ABERTO -->
             </div>
-            <!-- FIM LOJA CARD -->
+
+            <!-- ARROW INFOS -->
+            <a href="" class="d-flex justify-content-center text-decoration-none text-black mr-2" data-bs-toggle="modal"
+                data-bs-target="#modalHorarios">
+                <span class="material-symbols-outlined">
+                    chevron_right
+                </span>
+            </a>
+            <!-- FIM ARROW INFOS -->
 
         </div>
-        <!-- FIM FUNDO LOJA CARDAPIO -->
+        <!-- FIM LOJA TITULO -->
 
     </div>
-    <!-- FIM EXIBIR PARA TELAS MAIORES LOJA -->
 
-    <!-- FIM EXIBIR PARA TELAS MAIORES E MENORES LOJA -->
+    <!-- INFORMAÇÕES LOJA -->
+    <div class="p-3" style="font-size: 13px">
+
+        <p class="d-flex align-items-center m-0 p-0 text-secondary">
+            <span class="material-symbols-outlined mr-1">
+                attach_money
+            </span>
+            <span>
+                Pedido minímo: R$ 20,00
+            </span>
+        </p>
+        <p class="d-flex align-items-center m-0 p-0 text-secondary">
+            <span class="material-symbols-outlined mr-1">
+                location_on
+            </span>
+            <span>
+                {{$data['categoria_produto'][0]->loja->rua}},
+                {{$data['categoria_produto'][0]->loja->numero}}
+                {{$data['categoria_produto'][0]->loja->bairro}} -
+                {{$data['categoria_produto'][0]->loja->cidade}}
+                {{$data['categoria_produto'][0]->loja->estado}}
+            </span>
+        </p>
+    </div>
+    <!-- FIM INFORMAÇÕES LOJA -->
 
     <!-- MODAL HORARIO FUNCIONAMENTO LOJA -->
     <div class="modal fade" id="modalHorarios" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -612,22 +473,6 @@
     @endif
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var screenWidth = window.innerWidth;
-
-        if (screenWidth < 768) { // Você pode ajustar o tamanho conforme necessário
-            document.body.classList.add('small-screen');
-        } else {
-            document.body.classList.add('large-screen');
-        }
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-        if (document.body.classList.contains('small-screen')) {
-            document.querySelector('.small-screen-content').classList.remove('d-none');
-        } else if (document.body.classList.contains('large-screen')) {
-            document.querySelector('.large-screen-content').classList.remove('d-none');
-        }
-    });
     document.addEventListener('DOMContentLoaded', function() {
         const sections = document.querySelectorAll('.cardapio-lista h3');
         const navItems = document.querySelectorAll('#categorias-nav .text-decoration-none');
