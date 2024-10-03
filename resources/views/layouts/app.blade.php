@@ -38,15 +38,15 @@
 
         <!-- Page Content -->
         <main>
-            <div class="flex">
-                <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 border-end" style="background-color: #FFFFFF">
-                    <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100">
+            <div class="d-flex">
+                <div class="col-2 px-0 border-end bg-white">
+                    <div class="vh-100 p-3">
                         <p class="p-0 m-0 fw-regular" style="font-size: 14px">conectado como</p>
                         <h4 class="p-0 m-0 fs-3 fw-bold">
                             {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : '---'}}
                         </h4>
                         <a href="{{ route('loja') }}"
-                            class="d-flex align-items-center align-middle fs-6 text-decoration-none">
+                            class="d-flex align-items-center align-middle fs-6 text-decoration-none text-padrao">
                             <span class="material-symbols-outlined fs-6">
                                 change_circle
                             </span>
