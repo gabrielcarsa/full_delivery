@@ -519,6 +519,17 @@ class PedidoController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
         }
+        
+        //Verificar se foi selecionado forma de pagamento 
+        if($consumo_local_viagem_delivery == 3){
+            $validator = Validator::make($request->all(), [
+                'forma_pagamento' => 'required',
+            ]);
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+        }
 
         //Query da Loja selecionada
         $loja = Loja::where('id', $loja_id)->first();

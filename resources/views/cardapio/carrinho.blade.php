@@ -124,7 +124,7 @@
                 <label for="floatingInput">Seu nome</label>
             </div>
             @endif
-            
+
             <div class="form-floating mb-3">
                 <select class="form-select" id="floatingSelect" name="mesa_id"
                     aria-label="Floating label select example">
@@ -390,6 +390,11 @@
                     <div>
                         <h3 class="fw-bolder fs-3">Formas de pagamento</h3>
                         <div class="p-3 border rounded">
+                            @error('forma_pagamento')
+                            <p class="m-0 text-danger">
+                                Selecione!
+                            </p>
+                            @enderror
                             <p class="mx-0 mt-0 mb-2 d-flex align-items-center text-secondary">
                                 <span class="material-symbols-outlined mr-1" style="font-variation-settings: 'FILL' 1;">
                                     warning
@@ -398,7 +403,8 @@
                                     Pagar na entrega
                                 </span>
                             </p>
-                            <p class="fw-bold fs-6" id="forma_pagamento_selecionada">
+                            <p class="fw-bold @error('forma_pagamento') text-danger @enderror fs-6"
+                                id="forma_pagamento_selecionada">
                                 Nenhuma forma selecionada
                             </p>
 
