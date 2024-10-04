@@ -19,7 +19,7 @@
             <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
                 call
             </span>
-            {{$pedido->cliente->telefone}}
+            {{ preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $pedido->cliente->telefone) }}
         </p>
         @endif
     </div>
