@@ -296,11 +296,14 @@
         <!-- SELECIONAR OPÇÃO -->
 
         <div class="container d-flex justify-content-center">
-            <div class="px-3 py-4 m-3 border rounded shadow-sm" style="min-width: 300px">
+            <div class="px-3 py-4 m-3 border rounded shadow-sm bg-white" style="min-width: 300px">
+                <p class="m-0 text-center fs-5 fw-semibold">
+                    Olá, vamos começar?
+                </p>
                 <p class="text-secondary text-center">Selecione uma opção</p>
                 <div class="">
                     <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 1]) }}"
-                        class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                        class="btn bg-padrao text-white my-2 d-flex align-items-center justify-content-center">
                         <span class="material-symbols-outlined mr-1">
                             storefront
                         </span>
@@ -309,7 +312,7 @@
                         </span>
                     </a>
                     <a href="{{ route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 2]) }}"
-                        class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                        class="btn bg-padrao text-white my-2 d-flex align-items-center justify-content-center">
                         <span class="material-symbols-outlined mr-1">
                             room_service
                         </span>
@@ -320,7 +323,7 @@
                     @if (Route::has('login'))
                     @auth('cliente')
                     <a href=" {{route('cardapio', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}"
-                        class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                        class="btn bg-padrao text-white my-2 d-flex align-items-center justify-content-center">
                         <span class="material-symbols-outlined mr-1">
                             sports_motorsports
                         </span>
@@ -330,7 +333,7 @@
                     </a>
                     @else
                     <a href=" {{ route('cliente.login', ['loja_id' => $data['loja_id'], 'consumo_local_viagem_delivery' => 3]) }}"
-                        class="btn btn-primary my-2 d-flex align-items-center justify-content-center">
+                        class="btn bg-padrao text-white my-2 d-flex align-items-center justify-content-center">
                         <span class="material-symbols-outlined mr-1">
                             sports_motorsports
                         </span>
