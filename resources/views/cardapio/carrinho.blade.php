@@ -271,7 +271,7 @@
                                     @else
                                     <a class="d-flex align-items-center text-decoration-none"
                                         href="{{ route('cardapio.deletar_item', ['item_id' => $item['produto']->id]) }}">
-                                        <span class="material-symbols-outlined text-padrao fs-4">
+                                        <span class="material-symbols-outlined text-padrao fs-4" style="font-variation-settings: 'FILL' 1;">
                                             delete
                                         </span>
                                     </a>
