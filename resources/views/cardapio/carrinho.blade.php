@@ -248,7 +248,7 @@
                         <li class="list-group-item">
 
                             <!-- PRODUTO -->
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
                                 <div class="">
                                     <p class="m-0 fw-semibold">
                                         {{ $item['produto']->nome }}
@@ -260,7 +260,7 @@
                                         R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
                                     </p>
                                 </div>
-                                <div class="d-flex align-items-center border rounded p-0 m-0 bg-light">
+                                <div class="d-flex align-items-center border rounded p-1 bg-light">
                                     @if($item['quantidade'] >= 2)
                                     <a class="d-flex align-items-center text-decoration-none"
                                         href="{{ route('cardapio.remover_quantidade', ['item_id' => $item['produto']->id]) }}">
@@ -268,8 +268,15 @@
                                             remove
                                         </span>
                                     </a>
+                                    @else
+                                    <a class="d-flex align-items-center text-decoration-none"
+                                        href="{{ route('cardapio.deletar_item', ['item_id' => $item['produto']->id]) }}">
+                                        <span class="material-symbols-outlined text-padrao fs-4">
+                                            delete
+                                        </span>
+                                    </a>
                                     @endif
-                                    <span class="mx-2">
+                                    <span class="mx-2 fw-semibold">
                                         {{ $item['quantidade'] }}x
                                     </span>
                                     <a class="d-flex align-items-center text-decoration-none"

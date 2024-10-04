@@ -33,8 +33,9 @@ Route::get('/carrinho', [CardapioController::class, 'indexCarrinho'])->name('car
 Route::get('/produto', [CardapioController::class, 'showProduto'])->name('cardapio.produto');
 Route::post('/adicionar-carrinho/{produto_id}', [CardapioController::class, 'storeCarrinho']);
 Route::get('/limpar-carrinho', [CardapioController::class, 'destroyCarrinho'])->name('cardapio.esvaziarCarrinho');
-Route::get('/carrinho/deletar-item', [CardapioController::class, 'remover_quantidade'])->name('cardapio.remover_quantidade');
-Route::get('/carrinho/adicionar-item', [CardapioController::class, 'adicionar_quantidade'])->name('cardapio.adicionar_quantidade');
+Route::get('/carrinho/remover-quantidade', [CardapioController::class, 'remover_quantidade'])->name('cardapio.remover_quantidade');
+Route::get('/carrinho/adicionar-quantidade', [CardapioController::class, 'adicionar_quantidade'])->name('cardapio.adicionar_quantidade');
+Route::get('/carrinho/deletar-item', [CardapioController::class, 'deletar_item'])->name('cardapio.deletar_item');
 
 // CLIENTE CARDAPIO
 Route::get('cliente/login', [ClienteAuthController::class, 'showLoginForm'])->name('cliente.login');

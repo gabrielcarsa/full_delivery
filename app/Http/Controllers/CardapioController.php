@@ -297,4 +297,29 @@ class CardapioController extends Controller
         return redirect()->back();
     }
 
+    // REMOVER ITEM
+    public function deletar_item(Request $request){
+        // Carrinho
+        $carrinho = session()->get('carrinho', []);
+
+        //ID item
+        $item_id = $request->input('item_id');
+
+        //Itens do carrinho
+        foreach($carrinho as $index => $item){
+
+            if($item['produto']->id == $item_id){
+                unset($carrinho[$index]);
+            }
+
+        }
+        // Reorganiza o array para evitar índices vazios após o unset
+        $carrinho = array_values($carrinho);
+
+        // Salva o carrinho atualizado na sessão
+        $request->session()->put('carrinho', $carrinho);
+
+        return redirect()->back();
+    }
+
 }
