@@ -95,7 +95,7 @@
                     <th scope="row">{{$cliente->id}}</th>
                     <td>{{$cliente->nome}}</td>
                     <td>{{$cliente->cpf}}</td>
-                    <td>{{$cliente->telefone}}</td>
+                    <td>{{ preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $cliente->telefone) }}</td>
                     <td>{{$cliente->email}}</td>
                     <td>{{count($cliente->pedido)}}</td>
                     <td>
