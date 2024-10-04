@@ -248,7 +248,7 @@
                         <li class="list-group-item">
 
                             <!-- PRODUTO -->
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-between">
                                 <div class="">
                                     <p class="m-0 fw-semibold">
                                         {{ $item['produto']->nome }}
@@ -260,8 +260,24 @@
                                         R$ {{number_format($item['produto']->preco, 2, ',', '.')}}
                                     </p>
                                 </div>
-                                <div class="d-flex justify-content-end w-100">
-                                    <p class="m-0 fw-semibold">{{$item['quantidade']}}x</p>
+                                <div class="d-flex align-items-center border rounded p-0 m-0 bg-light">
+                                    @if($item['quantidade'] >= 2)
+                                    <a class="d-flex align-items-center text-decoration-none"
+                                        href="{{ route('cardapio.remover_quantidade', ['item_id' => $item['produto']->id]) }}">
+                                        <span class="material-symbols-outlined text-padrao fs-4 fw-bold">
+                                            remove
+                                        </span>
+                                    </a>
+                                    @endif
+                                    <span class="mx-2">
+                                        {{ $item['quantidade'] }}x
+                                    </span>
+                                    <a class="d-flex align-items-center text-decoration-none"
+                                        href="{{ route('cardapio.adicionar_quantidade', ['item_id' => $item['produto']->id]) }}">
+                                        <span class="material-symbols-outlined text-padrao fs-4 fw-bold">
+                                            add
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                             <!-- FIM PRODUTO -->

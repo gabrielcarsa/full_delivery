@@ -251,4 +251,50 @@ class CardapioController extends Controller
         return view('cardapio/produto', compact('produto', 'data'))->with('loja', $loja);
     }
 
+      // REMOVER QTD PEDIDO
+      public function remover_quantidade(Request $request){
+        // Carrinho
+        $carrinho = session()->get('carrinho', []);
+
+        //ID item
+        $item_id = $request->input('item_id');
+
+        //Itens do carrinho
+        foreach($carrinho as $index => $item){
+
+            if($item['produto']->id == $item_id){
+                $carrinho[$index]['quantidade'] -= 1;
+            }
+
+        }
+
+        // Salva o carrinho atualizado na sessão
+        $request->session()->put('carrinho', $carrinho);
+
+        return redirect()->back();
+    }
+
+    // ADICIONAR ITEM
+    public function adicionar_quantidade(Request $request){
+        // Carrinho
+        $carrinho = session()->get('carrinho', []);
+
+        //ID item
+        $item_id = $request->input('item_id');
+
+        //Itens do carrinho
+        foreach($carrinho as $index => $item){
+
+            if($item['produto']->id == $item_id){
+                $carrinho[$index]['quantidade'] += 1;
+            }
+
+        }
+
+        // Salva o carrinho atualizado na sessão
+        $request->session()->put('carrinho', $carrinho);
+
+        return redirect()->back();
+    }
+
 }
