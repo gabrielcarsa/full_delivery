@@ -15,11 +15,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\DistanciaEntregaHelper;
+use App\Services\IfoodService;
+
 
 class CardapioController extends Controller
 {
     // CARDAPIO
     public function index(Request $request){
+
+        $ifoodService = new IfoodService();
+        $merchants = $ifoodService->getMerchants();
+
+        dd($merchants);
 
         //Variaveis via GET
         $loja_id = $request->get('loja_id');
