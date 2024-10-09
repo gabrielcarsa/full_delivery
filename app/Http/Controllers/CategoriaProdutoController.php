@@ -152,7 +152,7 @@ class CategoriaProdutoController extends Controller
         //Catalogs
         foreach($catalogs as $catalog){
             $groups = $ifoodService->getCategories($catalog['catalogId']);
-
+           
             //Groups
             foreach($groups as $group){
 
@@ -195,6 +195,36 @@ class CategoriaProdutoController extends Controller
                             $produto->quantidade_pessoa = 4;
                         }
                         $produto->save();
+
+                        //Se houver opcionais
+                        if($item['hasOptionGroups'] == true){
+
+                            foreach($item['optionGroups'] as $optionGroup){
+
+                                //Cadastro de categoria de opcional de tamanhos de pizza
+                                $categoria_opcional_tamanho = new CategoriaOpcional();
+                                $categoria_opcional_tamanho->nome = $optionGroup['name'];
+                                $categoria_opcional_tamanho->limite = $optionGroup['max'];
+                                $categoria_opcional_tamanho->produto_id = $produto->id;
+                                $categoria_opcional_tamanho->cadastrado_usuario_id = $usuario_id;
+                                $categoria_opcional_tamanho->is_required = $optionGroup['min'] > 0 ? true : false;
+                                $categoria_opcional_tamanho->save();
+
+                                //Tamanhos de pizza
+                                foreach($optionGroup['options'] as $options){
+
+                                    //Cadastro de opcional
+                                    $opcional = new OpcionalProduto();
+                                    $opcional->nome = $options['name'];
+                                    $opcional->categoria_opcional_id = $categoria_opcional_tamanho->id;
+                                    $opcional->cadastrado_usuario_id = $usuario_id;
+                                    $opcional->productIdIfood = $options['id'];
+                                    $opcional->preco = $options['price']['value'];
+                                    $opcional->save();
+                                }
+                            }
+                        }
+
                     }
 
                 }elseif(isset($group['pizza'])){ //Pizza

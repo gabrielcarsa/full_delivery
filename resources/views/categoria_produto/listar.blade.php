@@ -34,14 +34,14 @@
                 </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn bg-padrao text-white mr-2 py-1 px-2 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn bg-white text-padrao mr-2 py-1 shadow-sm px-2 fw-semibold d-flex align-items-center justify-content-center"
                     href="{{ route('categoria_produto.importarCardapioIfood') }}">
                     <span class="material-symbols-outlined mr-1">
                         upgrade
                     </span>
                     Importar cardápio iFood
                 </a>
-                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-semibold d-flex align-items-center justify-content-center"
+                <a class="btn bg-padrao text-white m-0 py-1 px-5 shadow-sm fw-semibold d-flex align-items-center justify-content-center"
                     href="{{ route('categoria_produto.novo') }}">
                     <span class="material-symbols-outlined mr-1">
                         add
