@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\CategoriaProduto;
 use App\Models\Loja;
+use App\Services\IfoodService;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Produto;
 
 class CategoriaProdutoController extends Controller
 {
@@ -124,5 +127,45 @@ class CategoriaProdutoController extends Controller
         ->get();
 
         return response()->json($categoria_produto);
+    }
+
+    public function importarCardapioIfood(){
+
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+        }
+
+        //Sessão do loja que está conectado
+        $loja_id = session('lojaConectado')['id'];
+
+        //Usuário logado
+        $usuario_id = Auth::user()->id;
+        
+        //instancindo IfoodService
+        $ifoodService = new IfoodService();
+
+        //Obter catálogos
+        $catalogs = $ifoodService->getCatalogs();
+
+        foreach($catalogs as $catalog){
+            $groups = $ifoodService->getCategories($catalog['catalogId']);
+            
+            foreach($groups as $group){
+
+                //Cadastro de categoria
+                $categoria = new CategoriaProduto();
+                $categoria->nome = $group['name'];
+                $categoria->descricao = "";
+                $categoria->ordem = $group['sequence'];
+                $categoria->loja_id = $loja_id;
+                $categoria->cadastrado_usuario_id = $usuario_id;
+
+                $categoria->save();
+            }
+            
+        }
+
+        return redirect()->back()->with('success', 'Importado com sucesso');
+
     }
 }

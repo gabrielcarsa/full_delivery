@@ -15,6 +15,7 @@ class IfoodService
         $this->client = new Client();
     }
 
+    //Obter AccessToken
     public function getAccessToken()
     {
         // Obtém token mais recente
@@ -27,6 +28,7 @@ class IfoodService
         return $this->refreshAccessToken();
     }
 
+    //Atualizar AccessToken
     public function refreshAccessToken()
     {
         // Obtém token mais recente
@@ -35,12 +37,12 @@ class IfoodService
         if($token != null){
             $response = $this->client->post('https://merchant-api.ifood.com.br/authentication/v1.0/oauth/token', [
                 'form_params' => [
-                    'grant_type' => 'refresh_token',
-                    'client_id' => env('IFOOD_CLIENT_ID'),
-                    'client_secret' => env('IFOOD_CLIENT_SECRET'),
+                    'grantType' => 'refresh_token',
+                    'clientId' => env('IFOOD_CLIENT_ID'),
+                    'clientSecret' => env('IFOOD_CLIENT_SECRET'),
                     'authorizationCode' => 'RSLD-LDPV',
                     'authorizationCodeVerifier' => 'ml6xrrvn42i6x3kfuwp4dnvknqmx14pict8uc3xocofjsfhyhkv76tmymh3bsknhtgbxunjjonxjvxtfoixyb40fm5ieut21wg',
-                    'refresh_token' => $token->refreshToken,
+                    'refreshToken' => $token->refresh_token,
                 ]
             ]);
         }else{
@@ -68,6 +70,7 @@ class IfoodService
         return $data['accessToken'];
     }
 
+    //Obter Merchants
     public function getMerchants(){
 
         $ifoodService = new IfoodService();
@@ -75,6 +78,42 @@ class IfoodService
         
         // Exemplo de requisição à API do iFood
         $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/merchant/v1.0/merchants', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+            ]
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data;
+    }
+
+    //Obter Merchants
+    public function getCatalogs(){
+
+        $ifoodService = new IfoodService();
+        $token = $ifoodService->getAccessToken();
+        
+        // Obter cardápios iFood
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.env('IFOOD_MERCHANT_ID').'/catalogs', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+            ]
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data;
+    }
+
+    //Obter Categorias e produtos
+    public function getCategories($catalogId){
+
+        $ifoodService = new IfoodService();
+        $token = $ifoodService->getAccessToken();
+        
+        // Obter Categorias e Produtos iFood
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.env('IFOOD_MERCHANT_ID').'/catalogs/'.$catalogId.'/categories', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]

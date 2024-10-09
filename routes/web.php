@@ -103,6 +103,7 @@ Route::middleware([
         Route::put('/categoria_produto/alterar/{usuario_id}/{categoria_id}', [CategoriaProdutoController::class, 'update']);
         Route::delete('/categoria_produto/apagar/{id}', [CategoriaProdutoController::class, 'destroy'])->name('categoria_produto.excluir');
         Route::get('/categoria_produto/JSON', [CategoriaProdutoController::class, 'indexJSON'])->name('categoria_produto.JSON');
+        Route::get('/categoria_produto/importar-ifood', [CategoriaProdutoController::class, 'importarCardapioIfood'])->name('categoria_produto.importarCardapioIfood');
 
         //PRODUTO
         Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos');
