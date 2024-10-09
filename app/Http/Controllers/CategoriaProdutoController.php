@@ -11,6 +11,8 @@ use App\Models\Loja;
 use App\Services\IfoodService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Produto;
+use App\Models\CategoriaOpcional;
+use App\Models\OpcionalProduto;
 
 class CategoriaProdutoController extends Controller
 {
@@ -147,9 +149,11 @@ class CategoriaProdutoController extends Controller
         //Obter catálogos
         $catalogs = $ifoodService->getCatalogs();
 
+        //Catalogs
         foreach($catalogs as $catalog){
             $groups = $ifoodService->getCategories($catalog['catalogId']);
-            
+
+            //Groups
             foreach($groups as $group){
 
                 //Cadastro de categoria
@@ -159,8 +163,151 @@ class CategoriaProdutoController extends Controller
                 $categoria->ordem = $group['sequence'];
                 $categoria->loja_id = $loja_id;
                 $categoria->cadastrado_usuario_id = $usuario_id;
-
                 $categoria->save();
+
+                //Items
+                if(isset($group['items'])){
+                    
+                    foreach($group['items'] as $item){
+
+                        //Cadastro de produto
+                        $produto = new Produto();
+                        $produto->nome = $item['name'];
+                        $produto->descricao = isset($item['description']) ? $item['description'] : null;
+                        $produto->disponibilidade = $item['status'] == 'AVAILABLE' ? true : false;
+                        $produto->tempo_preparo_min_minutos = 5; //Valor padrão
+                        $produto->tempo_preparo_max_minutos = 10; //Valor padrão
+                        $produto->preco = $item['price']['value'];
+                        $produto->categoria_produto_id = $categoria->id;
+                        $produto->cadastrado_usuario_id = $usuario_id;
+                        $produto->externalCodeIfood = $item['externalCode'];
+                        $produto->productIdIfood = $item['productId'];
+
+                        if($item['serving'] == 'SERVES_1'){
+                            $produto->quantidade_pessoa = 1;
+                        }elseif($item['serving'] == 'SERVES_2'){
+                            $produto->quantidade_pessoa = 2;
+                        }
+                        elseif($item['serving'] == 'SERVES_3'){
+                            $produto->quantidade_pessoa = 3;
+                        }
+                        elseif($item['serving'] == 'SERVES_4'){
+                            $produto->quantidade_pessoa = 4;
+                        }
+                        $produto->save();
+                    }
+
+                }elseif(isset($group['pizza'])){ //Pizza
+
+                    //Toppings
+                    foreach($group['pizza']['toppings'] as $toppings){
+
+                        //Cadastro de produto
+                        $produto = new Produto();
+                        $produto->nome = $toppings['name'];
+                        $produto->descricao = $toppings['description'];
+                        $produto->disponibilidade = $toppings['status'] == 'AVAILABLE' ? true : false;
+                        $produto->tempo_preparo_min_minutos = 5; //Valor padrão
+                        $produto->tempo_preparo_max_minutos = 10; //Valor padrão
+                        $produto->categoria_produto_id = $categoria->id;
+                        $produto->cadastrado_usuario_id = $usuario_id;
+                        $produto->externalCodeIfood = $toppings['externalCode'];
+                        $produto->productIdIfood = $toppings['id'];
+                        $produto->save();
+
+                        //Se houver tamanhos de pizzas
+                        if(isset($group['pizza']['sizes'])){
+
+                            //Cadastro de categoria de opcional de tamanhos de pizza
+                            $categoria_opcional_tamanho = new CategoriaOpcional();
+                            $categoria_opcional_tamanho->nome = "Tamanhos";
+                            $categoria_opcional_tamanho->limite = 1;
+                            $categoria_opcional_tamanho->produto_id = $produto->id;
+                            $categoria_opcional_tamanho->cadastrado_usuario_id = $usuario_id;
+                            $categoria_opcional_tamanho->is_required = true;
+                            $categoria_opcional_tamanho->save();
+
+                            //Tamanhos de pizza
+                            foreach($group['pizza']['sizes'] as $sizes){
+
+                                //Cadastro de opcional
+                                $opcional = new OpcionalProduto();
+                                $opcional->nome = $sizes['name'];
+                                $opcional->categoria_opcional_id = $categoria_opcional_tamanho->id;
+                                $opcional->cadastrado_usuario_id = $usuario_id;
+                                $opcional->externalCodeIfood = $sizes['externalCode'];
+                                $opcional->productIdIfood = $sizes['id'];
+
+                                //Preços toppings
+                                foreach($toppings['prices'] as $id => $price){
+                                    
+                                    //Se for o mesmo ID
+                                    if($sizes['id'] == $id){
+                                        $opcional->preco = $price['value'];
+                                    }
+                                }
+                                $opcional->save();
+                            }
+                        }
+
+                        //Se houver massas de pizzas
+                        if(isset($group['pizza']['crusts'])){
+
+                            //Cadastro de categoria de opcional de massas de pizza
+                            $categoria_opcional_tamanho = new CategoriaOpcional();
+                            $categoria_opcional_tamanho->nome = "Massa";
+                            $categoria_opcional_tamanho->limite = 1;
+                            $categoria_opcional_tamanho->produto_id = $produto->id;
+                            $categoria_opcional_tamanho->cadastrado_usuario_id = $usuario_id;
+                            $categoria_opcional_tamanho->is_required = true;
+                            $categoria_opcional_tamanho->save();
+
+                            //massas de pizza
+                            foreach($group['pizza']['crusts'] as $crusts){
+                                
+                                //Cadastro de opcional
+                                $opcional = new OpcionalProduto();
+                                $opcional->nome = $crusts['name'];
+                                $opcional->categoria_opcional_id = $categoria_opcional_tamanho->id;
+                                $opcional->cadastrado_usuario_id = $usuario_id;
+                                $opcional->preco = $crusts['price']['value'];
+                                $opcional->externalCodeIfood = $sizes['externalCode'];
+                                $opcional->productIdIfood = $sizes['id'];
+                                $opcional->save();
+                            }
+                        }
+
+                        //Se houver bordas de pizzas
+                        if(isset($group['pizza']['edges'])){
+
+                            //Cadastro de categoria de opcional de bordas de pizza
+                            $categoria_opcional_tamanho = new CategoriaOpcional();
+                            $categoria_opcional_tamanho->nome = "Borda";
+                            $categoria_opcional_tamanho->limite = 1;
+                            $categoria_opcional_tamanho->produto_id = $produto->id;
+                            $categoria_opcional_tamanho->cadastrado_usuario_id = $usuario_id;
+                            $categoria_opcional_tamanho->is_required = true;
+                            $categoria_opcional_tamanho->save();
+
+                            //bordas de pizza
+                            foreach($group['pizza']['edges'] as $edges){
+                                
+                                //Cadastro de opcional
+                                $opcional = new OpcionalProduto();
+                                $opcional->nome = $edges['name'];
+                                $opcional->categoria_opcional_id = $categoria_opcional_tamanho->id;
+                                $opcional->cadastrado_usuario_id = $usuario_id;
+                                $opcional->preco = $edges['price']['value'];
+                                $opcional->productIdIfood = $sizes['id'];
+                                $opcional->save();
+                            }
+                        }
+
+                    }
+                }
+
+
+
             }
             
         }

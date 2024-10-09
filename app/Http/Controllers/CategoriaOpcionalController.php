@@ -59,7 +59,7 @@ class CategoriaOpcionalController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        //Cadastro de opcional
+        //Cadastro de categoria de opcional
         $categoria_opcional = new CategoriaOpcional();
         $categoria_opcional->nome = $request->input('nome');
         $categoria_opcional->limite = $request->input('limite');
