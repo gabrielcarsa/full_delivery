@@ -419,7 +419,7 @@
 
                                     <!-- IMG PRODUTO -->
                                     <div class="col-6 d-flex align-items-center justify-content-center">
-                                        <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
+                                        <img src="{{ $produto->imagem == null ? (empty($produto->imagemIfood) ? asset('storage/images/sem-imagem.png') : $produto->imagemIfood) : asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
                                             class="rounded img-produto shadow-sm" alt="{{$produto->nome}}" style="min-width:110px; max-width: 200px">
                                     </div>
                                     <!-- FIM IMG PRODUTO -->
