@@ -84,7 +84,7 @@
                 <label class="input-group-text" for="inputImagem">Imagem</label>
                 <input type="file" class="form-control" name="imagem" id="inputImagem" required>
             </div>
-            <p class="fs-6 text-secondary m-0 pl-1">Imagem deve ser quadrada e ser jpeg,png ou jpg</p>
+            <p class="fs-6 text-secondary m-0 pl-1">Resolução mínima: 300x275. Formatos: JPEG, JPG, PNG e HEIC</p>
             @endif
 
             <div class="col-md-6">

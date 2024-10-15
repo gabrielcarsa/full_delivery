@@ -54,7 +54,7 @@ class ProdutoController extends Controller
             'imagem' => [
                 'required',
                 'image',
-                'mimes:jpeg,png,jpg',
+                'mimes:jpeg,png,jpg,heic',
                 'max:20480',
                 function ($attribute, $value, $fail) {
                     // Verifique se é uma imagem válida
@@ -67,9 +67,9 @@ class ProdutoController extends Controller
                     // Obtém as dimensões da imagem
                     list($width, $height) = $imageInfo;
             
-                    // Verifique se é quadrada
-                    if ($width !== $height) {
-                        $fail('A imagem deve ser quadrada.');
+                     // Verifique se a imagem tem pelo menos 300x275 de resolução
+                    if ($width < 300 || $height < 275) {
+                        $fail('A imagem deve ter no mínimo 300x275 pixels de resolução.');
                     }
                 },
             ],
