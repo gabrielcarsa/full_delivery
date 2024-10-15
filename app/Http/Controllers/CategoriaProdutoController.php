@@ -155,7 +155,7 @@ class CategoriaProdutoController extends Controller
            
             //Groups
             foreach($groups as $group){
-
+            
                 //Cadastro de categoria
                 $categoria = new CategoriaProduto();
                 $categoria->nome = $group['name'];
@@ -182,6 +182,7 @@ class CategoriaProdutoController extends Controller
                         $produto->cadastrado_usuario_id = $usuario_id;
                         $produto->externalCodeIfood = $item['externalCode'];
                         $produto->productIdIfood = $item['productId'];
+                        $produto->imagemIfood = $item['imagePath'];
 
                         if($item['serving'] == 'SERVES_1'){
                             $produto->quantidade_pessoa = 1;
@@ -231,7 +232,7 @@ class CategoriaProdutoController extends Controller
 
                     //Toppings
                     foreach($group['pizza']['toppings'] as $toppings){
-
+                      
                         //Cadastro de produto
                         $produto = new Produto();
                         $produto->nome = $toppings['name'];
@@ -243,6 +244,7 @@ class CategoriaProdutoController extends Controller
                         $produto->cadastrado_usuario_id = $usuario_id;
                         $produto->externalCodeIfood = $toppings['externalCode'];
                         $produto->productIdIfood = $toppings['id'];
+                        $produto->imagemIfood = $toppings['image'];
                         $produto->save();
 
                         //Se houver tamanhos de pizzas

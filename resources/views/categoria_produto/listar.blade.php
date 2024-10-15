@@ -200,8 +200,8 @@
                     <!-- FIM LOGO DESTACAR PRODUTO -->
 
                     <!-- IMAGEM PRODUTO -->
-                    <img src="{{ asset('storage/'.$categoria->loja->nome.'/imagens_produtos/'.$produto->imagem) }}"
-                        style="width: 120px;" class="">
+                    <img src="{{ $produto->imagem == null ? $produto->imagemIfood : asset('storage/'.$categoria->loja->nome.'/imagens_produtos/'.$produto->imagem) }}"
+                        style="width: 200px;" class="">
                     <!-- FIM IMAGEM PRODUTO -->
 
                     <div class="px-2">
