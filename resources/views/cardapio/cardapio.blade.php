@@ -401,7 +401,7 @@
                                     <div class="col-6 p-1">
                                         <div class="">
                                             <h5 class="fs-5 fw-semibold">{{$produto->nome}}</h5>
-                                            <p class="text-secondary text-truncate m-0" style="font-size: 13px">
+                                            <p class="text-secondary text-wrapper m-0" style="font-size: 13px;">
                                                 {{$produto->descricao}}
                                             </p>
                                             <p class="my-1" style="font-size: 13px">
@@ -420,7 +420,7 @@
                                     <!-- IMG PRODUTO -->
                                     <div class="col-6 d-flex align-items-center justify-content-center">
                                         <img src="{{ asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
-                                            class="rounded img-produto shadow-sm" alt="{{$produto->nome}}" width="90px">
+                                            class="rounded img-produto shadow-sm" alt="{{$produto->nome}}" style="min-width:110px; max-width: 200px">
                                     </div>
                                     <!-- FIM IMG PRODUTO -->
 

@@ -15,6 +15,13 @@
 .wallpaper-cardapio {
     background-color: #fd0146;
 }
+.text-wrapper{
+    display: -webkit-box; 
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Número de linhas permitidas */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adiciona os três pontinhos */
+}
 
 .btn-categoria-cardapio {
     background-color: #fd0146 !important;
