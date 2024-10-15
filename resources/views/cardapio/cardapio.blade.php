@@ -359,9 +359,9 @@
                 <!-- CATEGORIAS -->
                 <div class="bg-body-tertiary d-flex overflow-x-scroll sticky-top w100 py-2" id="categorias-nav">
                     @foreach($data['categoria_produto'] as $categoria)
-                    <div class="m-3">
+                    <div class="mx-1 my-3">
                         <a href="#{{$categoria->nome}}" id="nav-{{$categoria->nome}}"
-                            class="text-decoration-none text-black rounded px-3 py-2 shadow-md">
+                            class="text-decoration-none text-black rounded px-3 py-2 shadow-md text-truncate">
                             {{$categoria->nome}}
                         </a>
                     </div>

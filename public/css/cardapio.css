@@ -38,9 +38,6 @@
     background-size: cover;
 }
 
-.texto-truncate-100w {
-    max-width: none;
-}
 
 @media(min-width: 920px) {
     .container-cardapio{
