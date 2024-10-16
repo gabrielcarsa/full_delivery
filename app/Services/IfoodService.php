@@ -88,7 +88,7 @@ class IfoodService
         return $data;
     }
 
-    //Obter Merchants
+    //Obter Catalogs
     public function getCatalogs(){
 
         $ifoodService = new IfoodService();
@@ -121,6 +121,23 @@ class IfoodService
 
         $data = json_decode($response->getBody()->getContents(), true);
 
+        return $data;
+    }
+
+    //Obter Pollings
+    public function getPollings(){
+
+        $ifoodService = new IfoodService();
+        $token = $ifoodService->getAccessToken();
+        
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/events/v1.0/events:polling?types=PLC,REC,CFM&groups=ORDER_STATUS,DELIVERY', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+            ]
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+        
         return $data;
     }
 }
