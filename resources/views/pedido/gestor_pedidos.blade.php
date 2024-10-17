@@ -183,6 +183,7 @@
 
         <!-- PEDIDOS GRID -->
         <div class="row g-1" id="pedidos-grid">
+            
             @if(isset($data['pedidos']))
 
             <!-- PEDIDOS -->
@@ -250,22 +251,22 @@
 
     <script type="text/javascript">
     $(document).ready(function() {
-    function atualizarPedidos() {
-        $.ajax({
-            url: "{{ route('pedidos.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null ] ) }}",
-            type: 'GET',
-            success: function(data) {
-                $('#pedidos-grid').html(data); // Insere o HTML retornado
-            }
-        });
-    }
+        function atualizarPedidos() {
+            $.ajax({
+                url: "{{ route('pedidos.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null ] ) }}",
+                type: 'GET',
+                success: function(data) {
+                    $('#pedidos-grid').html(data); // Insere o HTML retornado
+                }
+            });
+        }
 
-    // Atualiza os pedidos a cada 30 segundos
-    setInterval(atualizarPedidos, 30000);
+        // Atualiza os pedidos a cada 30 segundos
+        setInterval(atualizarPedidos, 30000);
 
-    // Primeira chamada ao carregar a página
-    atualizarPedidos();
-});
+        // Primeira chamada ao carregar a página
+        atualizarPedidos();
+    });
     </script>
 
 </x-app-layout>
