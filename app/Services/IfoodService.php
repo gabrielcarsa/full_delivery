@@ -130,7 +130,24 @@ class IfoodService
         $ifoodService = new IfoodService();
         $token = $ifoodService->getAccessToken();
         
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/events/v1.0/events:polling?types=PLC,REC,CFM&groups=ORDER_STATUS,DELIVERY', [
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/events/v1.0/events:polling', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+            ]
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+        
+        return $data;
+    }
+
+    //Obter detalhes do pedido
+    public function getOrder($pedido_id){
+
+        $ifoodService = new IfoodService();
+        $token = $ifoodService->getAccessToken();
+        
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id, [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]

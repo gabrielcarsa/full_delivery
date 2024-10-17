@@ -105,23 +105,37 @@ class PedidoController extends Controller
 
         $id_selecionado = $request->get('id_selecionado');
 
-        $pedidos = Pedido::where('loja_id', $id_loja)
-            ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
-            ->orderBy('feito_em', 'DESC')
-            ->get();
-
-        return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
-    }
-
-    //PEDIDOS IFOOD NO BANCO DE DADOS
-    public function ifood_pedidos(){
         //instancindo IfoodService
         $ifoodService = new IfoodService();
 
         //Obter catálogos
         $polling = $ifoodService->getPollings();
+
+        //Query pedidos da loja
+        $pedidos = Pedido::where('loja_id', $id_loja)
+        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
+        ->orderBy('feito_em', 'DESC')
+        ->get();
+
+        //Salvando polling
+        foreach($polling as $evento){
+     
+            //Tipo de grupo do evento
+            if($evento['code'] == "PLC"){
+                
+                //Armazenando pedido ID
+                $pedido_id = $evento['orderId'];
+
+                //Obtendo detalhes do pedido
+                $pedido = $ifoodService->getOrder($pedido_id);
+                
+                dd($pedido);
+            }
+        }
+
         dd($polling);
 
+        return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
     }
 
     // ATUALIZAR STATUS PEDIDO

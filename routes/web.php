@@ -150,7 +150,6 @@ Route::middleware([
         Route::get('/pedido/remover-quantidade', [PedidoController::class, 'remover_quantidade'])->name('pedido.remover_quantidade');
         Route::get('/pedido/deletar-item', [PedidoController::class, 'deletar_item'])->name('pedido.deletar_item');
         Route::get('/pedido/adicionar-item', [PedidoController::class, 'adicionar_item'])->name('pedido.adicionar_item');
-        Route::get('/pedido/polling-ifood', [PedidoController::class, 'ifood_pedidos'])->name('pedido.ifood_pedidos');
         Route::get('/pedidos/atualizar', [PedidoController::class, 'refresh_pedidos'])->name('pedidos.atualizar');
 
 
