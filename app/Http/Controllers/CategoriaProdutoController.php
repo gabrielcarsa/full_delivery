@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CategoriaProduto;
 use App\Models\Loja;
 use App\Services\IfoodService;
+use App\Services\CardapioService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Produto;
 use App\Models\CategoriaOpcional;
@@ -52,14 +53,19 @@ class CategoriaProdutoController extends Controller
             'descricao' => 'required|string|max:100',
         ]);
 
+        //instanciando CardapioService
+        $cardapioService = new CardapioService();
+
+        $categoria = [
+            'nome' => $request->input('nome'),
+            'descricao' =>  $request->input('descricao'),
+            'ordem' => $request->input('ordem'),
+            'loja_id' =>  $request->input('loja_id'),
+            'cadastrado_usuario_id' =>  $usuario_id,
+        ];
+
         //Cadastro de categoria
-        $categoria = new CategoriaProduto();
-        $categoria->nome = $request->input('nome');
-        $categoria->descricao = $request->input('descricao');
-        $categoria->ordem = $request->input('ordem');
-        $categoria->loja_id = $request->input('loja_id');
-        $categoria->cadastrado_usuario_id = $usuario_id;
-        $categoria->save();
+        $cardapioService->storeCategoria($categoria); 
 
         return redirect()->back()->with('success', 'Cadastro feito com sucesso');
 
@@ -143,7 +149,7 @@ class CategoriaProdutoController extends Controller
         //Usuário logado
         $usuario_id = Auth::user()->id;
         
-        //instancindo IfoodService
+        //instanciando IfoodService
         $ifoodService = new IfoodService();
 
         //Obter catálogos
