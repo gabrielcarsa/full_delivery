@@ -155,21 +155,26 @@ class CategoriaProdutoController extends Controller
         //Obter catálogos
         $catalogs = $ifoodService->getCatalogs();
 
+        //instanciando CardapioService
+        $cardapioService = new CardapioService();
+
         //Catalogs
         foreach($catalogs as $catalog){
             $groups = $ifoodService->getCategories($catalog['catalogId']);
            
             //Groups
             foreach($groups as $group){
-            
+
+                $categoria = [
+                    'nome' =>  $group['name'],
+                    'descricao' =>  "",
+                    'ordem' => $group['sequence'],
+                    'loja_id' =>  $loja_id,
+                    'cadastrado_usuario_id' =>  $usuario_id,
+                ];
+        
                 //Cadastro de categoria
-                $categoria = new CategoriaProduto();
-                $categoria->nome = $group['name'];
-                $categoria->descricao = "";
-                $categoria->ordem = $group['sequence'];
-                $categoria->loja_id = $loja_id;
-                $categoria->cadastrado_usuario_id = $usuario_id;
-                $categoria->save();
+                $cardapioService->storeCategoria($categoria); 
 
                 //Items
                 if(isset($group['items'])){
