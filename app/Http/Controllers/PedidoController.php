@@ -117,23 +117,115 @@ class PedidoController extends Controller
         ->orderBy('feito_em', 'DESC')
         ->get();
 
-        //Salvando polling
-        foreach($polling as $evento){
-     
-            //Tipo de grupo do evento
-            if($evento['code'] == "PLC"){
-                
-                //Armazenando pedido ID
-                $pedido_id = $evento['orderId'];
+        //Se houver evento
+        if($polling != null){
 
-                //Obtendo detalhes do pedido
-                $pedido = $ifoodService->getOrder($pedido_id);
+            //Salvando polling
+            foreach($polling as $evento){
                 
-                dd($pedido);
+                //Tipo de grupo do evento
+                if($evento['code'] == "PLC"){
+                    
+                    //Armazenando pedido ID
+                    $pedido_id = $evento['orderId'];
+
+                    //Obtendo detalhes do pedido
+                    $pedidoPolling = $ifoodService->getOrder($pedido_id);
+
+                    //Salvar pedido
+                    $pedido = new Pedido();
+                    $pedido->status = 0;
+                    $pedido->consumo_local_viagem_delivery = $pedidoPolling['orderType'] == 'DELIVERY' ? 3 : 2;//1. Local, 2. Viagem, 3. Delivery
+                    $pedido->feito_em = Carbon::parse($pedidoPolling['createdAt'])->toDateTimeString();
+                    $pedido->is_simulacao = $pedidoPolling['isTest'] == true ? true : false;   
+                    $pedido->loja_id = $id_loja;
+
+                    //Pagamentos
+                    foreach($pedidoPolling['payments']['methods'] as $methods){
+                        $pedido->total = $methods['value'];
+                        $pedido->is_pagamento_entrega = $methods['type'] == "ONLINE" ? false : true;
+                        $pedido->situacao = $methods['type'] == "ONLINE" ? 2 : 0;
+                    }
+                    $pedido->taxa_ifood = $pedidoPolling['total']['additionalFees'];
+
+                    //Cliente
+                    $pedido->nome_cliente = $pedidoPolling['customer']['name'];
+                    $pedido->observacao = 'Número cliente (iFood): '.$pedidoPolling['customer']['phone']['number'].'. Localizador: '.$pedidoPolling['customer']['phone']['localizer'];
+
+                    //Salvando pedido
+                    $pedido->save();
+
+                    /*
+                    --- Cadastro de entrega ---
+                    */
+                    //TODO: Delivery by Merchant
+                    if($pedido->consumo_local_viagem_delivery == 3){
+                        $entrega = new Entrega();
+                        $entrega->pedido_id = $pedido->id;
+                        $entrega->cep = $pedidoPolling['delivery']['deliveryAddress']['postalCode'];
+                        $entrega->rua = $pedidoPolling['delivery']['deliveryAddress']['streetName'];
+                        $entrega->bairro = $pedidoPolling['delivery']['deliveryAddress']['neighborhood'];
+                        $entrega->cidade = $pedidoPolling['delivery']['deliveryAddress']['city'];
+                        $entrega->estado = $pedidoPolling['delivery']['deliveryAddress']['state'];
+                        $entrega->numero = $pedidoPolling['delivery']['deliveryAddress']['streetNumber'];
+                        $entrega->complemento = $pedidoPolling['delivery']['deliveryAddress']['complement'];
+                        $entrega->taxa_entrega = $pedidoPolling['total']['deliveryFee'];
+                        $entrega->save();
+                    }
+            
+            
+                    /*
+                    --- Cadastro de item do pedido ---
+                    */
+                    foreach($pedidoPolling['items'] as $item){
+
+                        //Buscando produto
+                        $produto_id = $item['id'];
+                        $qtd_produto = $item['quantity'];
+
+                        //Verificando se produto existe
+                        $produto_aux = Produto::where('productIdIfood', $produto_id);
+            
+                        $item_pedido = new ItemPedido();
+                        $item_pedido->pedido_id = $pedido->id;
+                        $item_pedido->produto_id = $produto_id; 
+                        $item_pedido->quantidade = $qtd_produto;
+                        $item_pedido->preco_unitario = $item['unitPrice']; 
+                        $item_pedido->subtotal = $item['totalPrice']; 
+                        $item_pedido->observacao = $item['observations']; 
+                        $item_pedido->save();
+            
+                        //Definindo tempo de preparo por produto
+                        $tempo_preparo_min += $produto_aux->tempo_preparo_min_minutos;
+                        $tempo_preparo_max += $produto_aux->tempo_preparo_max_minutos;
+            
+                        //Se existir opcionais
+                        if($item['options'] != null){
+                            
+                            foreach($item['options'] as $item_opcional){
+
+                                //Buscando opcional
+                                $opcional_id = $item_opcional['id'];
+                                $qtd_opcional = $item_opcional['quantity'];
+
+                                //Verificando se produto existe
+                                $opcional_produto_aux = OpcionalProduto::where('productIdIfood', $opcional_id);
+                
+                                $opcional_item_pedido = new OpcionalItem();
+                                $opcional_item_pedido->item_pedido_id = $item_pedido->id;
+                                $opcional_item_pedido->opcional_produto_id = $opcional_id;
+                                $opcional_item_pedido->quantidade = $qtd_opcional;
+                                $opcional_item_pedido->preco_unitario = $item_opcional['unitPrice']; 
+                                $opcional_item_pedido->subtotal = $item_opcional['price']; 
+                                $opcional_item_pedido->save();
+            
+                            }
+                        } 
+            
+                    }
+                }
             }
         }
-
-        dd($polling);
 
         return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
     }

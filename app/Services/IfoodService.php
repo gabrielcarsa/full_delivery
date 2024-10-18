@@ -15,6 +15,21 @@ class IfoodService
         $this->client = new Client();
     }
 
+    //Obter código do iFood Merchant
+    public function getMerchantIdFoomy(){
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
+
+        //Obter código do MERCHANT
+        $loja = Loja::find($loja_id);
+
+        return $loja->ifood_merchant_id;
+    }
+
     //Obter AccessToken
     public function getAccessToken()
     {
@@ -92,10 +107,15 @@ class IfoodService
     public function getCatalogs(){
 
         $ifoodService = new IfoodService();
+
+        //Obter accessToken
         $token = $ifoodService->getAccessToken();
+
+        //Obter MerchantID
+        $merchantID = $ifoodService->getMerchantIdFoomy();
         
         // Obter cardápios iFood
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.env('IFOOD_MERCHANT_ID').'/catalogs', [
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.$merchantID.'/catalogs', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
@@ -110,10 +130,15 @@ class IfoodService
     public function getCategories($catalogId){
 
         $ifoodService = new IfoodService();
+
+        //Obter accessToken
         $token = $ifoodService->getAccessToken();
+
+       //Obter MerchantID
+       $merchantID = $ifoodService->getMerchantIdFoomy();
         
         // Obter Categorias e Produtos iFood
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.env('IFOOD_MERCHANT_ID').'/catalogs/'.$catalogId.'/categories', [
+        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.$merchantID.'/catalogs/'.$catalogId.'/categories', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
