@@ -22,7 +22,7 @@ class CardapioService
         $categoria->cadastrado_usuario_id = $categoriaCadastrar['cadastrado_usuario_id'];
         $categoria->save();
 
-        return true;
+        return $categoria;
     }
 
     //Cadastrar Produto
@@ -39,13 +39,13 @@ class CardapioService
         $produto->quantidade_pessoa = $produtoCadastrar['quantidade_pessoa'];
         $produto->categoria_produto_id = $produtoCadastrar['categoria_produto_id'];
         $produto->cadastrado_usuario_id = $produtoCadastrar['cadastrado_usuario_id'];
-        $produto->imagem = $produtoCadastrar['imagem'];
+        $produto->imagem = $produtoCadastrar['imagem'] ?? null;
         $produto->externalCodeIfood = $produtoCadastrar['externalCodeIfood'] ?? null;
         $produto->productIdIfood = $produtoCadastrar['productIdIfood'] ?? null;
         $produto->imagemIfood = $produtoCadastrar['imagemIfood'] ?? null;
         $produto->save();
 
-        return true;
+        return $produto;
 
     }
 

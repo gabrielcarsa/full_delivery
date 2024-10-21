@@ -174,39 +174,44 @@ class CategoriaProdutoController extends Controller
                 ];
         
                 //Cadastro de categoria
-                $cardapioService->storeCategoria($categoria); 
+                $categoria = $cardapioService->storeCategoria($categoria); 
 
                 //Items
                 if(isset($group['items'])){
                     
                     foreach($group['items'] as $item){
 
-                        //Cadastro de produto
-                        $produto = new Produto();
-                        $produto->nome = $item['name'];
-                        $produto->descricao = isset($item['description']) ? $item['description'] : null;
-                        $produto->disponibilidade = $item['status'] == 'AVAILABLE' ? true : false;
-                        $produto->tempo_preparo_min_minutos = 5; //Valor padrão
-                        $produto->tempo_preparo_max_minutos = 10; //Valor padrão
-                        $produto->preco = $item['price']['value'];
-                        $produto->categoria_produto_id = $categoria->id;
-                        $produto->cadastrado_usuario_id = $usuario_id;
-                        $produto->externalCodeIfood = $item['externalCode'];
-                        $produto->productIdIfood = $item['productId'];
-                        $produto->imagemIfood = $item['imagePath'];
+                        $qtd_pessoa = null;
 
                         if($item['serving'] == 'SERVES_1'){
-                            $produto->quantidade_pessoa = 1;
+                            $qtd_pessoa = 1;
                         }elseif($item['serving'] == 'SERVES_2'){
-                            $produto->quantidade_pessoa = 2;
+                            $qtd_pessoa = 2;
                         }
                         elseif($item['serving'] == 'SERVES_3'){
-                            $produto->quantidade_pessoa = 3;
+                            $qtd_pessoa = 3;
                         }
                         elseif($item['serving'] == 'SERVES_4'){
-                            $produto->quantidade_pessoa = 4;
+                            $qtd_pessoa = 4;
                         }
-                        $produto->save();
+
+                        $produto = [
+                            'nome' => $item['name'],
+                            'descricao' => isset($item['description']) ? $item['description'] : null,
+                            'disponibilidade' => $item['status'] == 'AVAILABLE' ? true : false,
+                            'tempo_preparo_min_minutos' => 5,
+                            'tempo_preparo_max_minutos' => 10,
+                            'preco' => $item['price']['value'],
+                            'categoria_produto_id' => $categoria->id,
+                            'cadastrado_usuario_id' => $usuario_id,
+                            'externalCodeIfood' => $item['externalCode'],
+                            'productIdIfood' => $item['productId'],
+                            'imagemIfood' => $item['imagePath'],
+                            'quantidade_pessoa' => $qtd_pessoa,
+                        ];
+
+                        //Cadastro de produto
+                        $produto = $cardapioService->storeProduto($produto); 
 
                         //Se houver opcionais
                         if($item['hasOptionGroups'] == true){

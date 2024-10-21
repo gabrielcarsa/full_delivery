@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\IfoodToken;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use App\Models\Loja;
 
 class IfoodService
 {
