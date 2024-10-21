@@ -8,6 +8,7 @@ use App\Models\Produto;
 use App\Models\CategoriaProduto;
 use App\Models\Loja;
 use Illuminate\Support\Facades\Storage;
+use App\Services\CardapioService;
 
 class ProdutoController extends Controller
 {
@@ -87,18 +88,7 @@ class ProdutoController extends Controller
         $categoria = CategoriaProduto::where('id', $categoria_produto_id)->first();
         $loja = Loja::where('id', $categoria->loja_id)->first();
 
-        //Cadastro de produto
-        $produto = new Produto();
-        $produto->nome = $request->input('nome');
-        $produto->descricao = $request->input('descricao');
-        $produto->disponibilidade = $request->input('disponibilidade');
-        $produto->tempo_preparo_min_minutos = $request->input('tempo_preparo_min_minutos');
-        $produto->tempo_preparo_max_minutos = $request->input('tempo_preparo_max_minutos');
-        $produto->preco = $request->input('preco');
-
-        $produto->quantidade_pessoa = $request->input('quantidade_pessoa');
-        $produto->categoria_produto_id = $categoria_produto_id;
-        $produto->cadastrado_usuario_id = $usuario_id;
+        //Se houver imagem
         if ($request->hasFile('imagem')) {
             //Colocando nome único no arquivo
             $imagemNome = $request->file('imagem')->getClientOriginalName();
@@ -106,9 +96,26 @@ class ProdutoController extends Controller
             $nomeArquivo = $imagemNome . '_' . time() . '.' . $request->file('imagem')->getClientOriginalExtension();
 
             $request->file('imagem')->storeAs('public/'.$loja->nome.'/imagens_produtos', $nomeArquivo);
-            $produto->imagem = $nomeArquivo;
         }
-        $produto->save();
+
+        $produto = [
+            'nome' => $request->input('nome'),
+            'descricao' => $request->input('descricao'),
+            'disponibilidade' => $request->input('disponibilidade'),
+            'tempo_preparo_min_minutos' => $request->input('tempo_preparo_min_minutos'),
+            'tempo_preparo_max_minutos' => $request->input('tempo_preparo_max_minutos'),
+            'preco' => $request->input('preco'),
+            'quantidade_pessoa' => $request->input('quantidade_pessoa'),
+            'categoria_produto_id' => $categoria_produto_id,
+            'cadastrado_usuario_id' => $usuario_id,
+            'imagem' => $nomeArquivo,
+        ];
+
+        //instanciando CardapioService
+        $cardapioService = new CardapioService();
+
+        //Cadastro de produto
+        $cardapioService->storeProduto($produto);
 
         return redirect()->back()->with('success', 'Cadastro feito com sucesso');
 
