@@ -56,7 +56,7 @@
     <!-- FIM CONSUMO -->
 </div>
 
-@if($pedido->consumo_local_viagem_delivery == 3)
+@if($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
 <p class="m-0 px-3 d-flex align-items-center">
     <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
         calendar_clock
@@ -79,7 +79,7 @@
 <!-- FIM INFORMAÇÕES -->
 
 <!-- PAGAMENTO -->
-@if($pedido->consumo_local_viagem_delivery == 3)
+@if($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
     <div class="">
@@ -106,7 +106,6 @@
     </div>
 </div>
 @endif
-
 <!-- FIM PAGAMENTO -->
 
 <!-- PEDIDO -->

@@ -283,13 +283,14 @@
                 Para viagem
             </p>
 
-            @elseif($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
+            @elseif($pedido->consumo_local_viagem_delivery == 3)
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
                     two_wheeler
                 </span>
                 Entrega
             </p>
+            @if($pedido->via_ifood == false)
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5 text-secondary"
                     style="font-variation-settings: 'FILL' 1;">
@@ -299,7 +300,13 @@
                 -
                 {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
             </p>
+            @else
+            <p class="text-padrao fw-semibold">
+                via iFood
+            </p>
             @endif
+            @endif
+            
             <!-- CONSUMO -->
 
             <!-- FORMA PAGAMENTO -->
