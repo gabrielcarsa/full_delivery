@@ -151,6 +151,7 @@ Route::middleware([
         Route::get('/pedido/deletar-item', [PedidoController::class, 'deletar_item'])->name('pedido.deletar_item');
         Route::get('/pedido/adicionar-item', [PedidoController::class, 'adicionar_item'])->name('pedido.adicionar_item');
         Route::get('/pedidos/atualizar', [PedidoController::class, 'refresh_pedidos'])->name('pedidos.atualizar');
+        Route::get('/pedidos/polling-ifood', [PedidoController::class, 'polling_ifood'])->name('pedidos.polling');
 
 
         //CUPOM

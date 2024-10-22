@@ -183,7 +183,7 @@
 
         <!-- PEDIDOS GRID -->
         <div class="row g-1" id="pedidos-grid">
-            
+
             @if(isset($data['pedidos']))
 
             <!-- PEDIDOS -->
@@ -266,6 +266,23 @@
 
         // Primeira chamada ao carregar a página
         atualizarPedidos();
+    });
+
+    $(document).ready(function() {
+
+        function pollingAPI() {
+            $.ajax({
+                url: "{{ route('pedidos.polling') }}",
+                type: 'GET',
+            });
+        }
+
+        // Atualiza os pedidos a cada 30 segundos
+        setInterval(pollingAPI, 30000);
+
+        // Primeira chamada ao carregar a página
+        pollingAPI();
+
     });
     </script>
 

@@ -107,14 +107,23 @@ class PedidoController extends Controller
         //instancindo IfoodService
         $ifoodService = new IfoodService();
 
-        //Obter catálogos
-        $polling = $ifoodService->getPollings();
-
         //Query pedidos da loja
         $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('feito_em', 'DESC')
         ->get();
+
+        return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
+    }
+
+    //Polling a cada 30s API iFood
+    public function polling_ifood(){
+
+        //instancindo IfoodService
+        $ifoodService = new IfoodService();
+
+        //Obter pollings
+        $polling = $ifoodService->getPollings();
         
         //Se houver evento
         if($polling != null){
@@ -125,8 +134,6 @@ class PedidoController extends Controller
             //Processar polling
             $pollingResultado = $pollingService->polling($polling);
         }
-
-        return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
     }
 
     // ATUALIZAR STATUS PEDIDO
