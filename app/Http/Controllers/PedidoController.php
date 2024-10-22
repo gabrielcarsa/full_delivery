@@ -24,6 +24,15 @@ use App\Services\PollingIfoodService;
 
 class PedidoController extends Controller
 {
+    
+    protected $ifoodService;
+
+    public function __construct()
+    {
+        //instanciando IfoodService
+        $this->ifoodService = new IfoodService();
+    }
+
     //-------------------------
     //PAINEL DE PEDIDOS INTERNO
     //-------------------------
@@ -104,9 +113,6 @@ class PedidoController extends Controller
 
         $id_selecionado = $request->get('id_selecionado');
 
-        //instancindo IfoodService
-        $ifoodService = new IfoodService();
-
         //Query pedidos da loja
         $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
@@ -119,11 +125,8 @@ class PedidoController extends Controller
     //Polling a cada 30s API iFood
     public function polling_ifood(){
 
-        //instancindo IfoodService
-        $ifoodService = new IfoodService();
-
         //Obter pollings
-        $polling = $ifoodService->getPollings();
+        $polling = $this->ifoodService->getPollings();
         
         //Se houver evento
         if($polling != null){
