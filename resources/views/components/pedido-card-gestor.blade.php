@@ -283,7 +283,7 @@
                 Para viagem
             </p>
 
-            @elseif($pedido->consumo_local_viagem_delivery == 3)
+            @elseif($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
                     two_wheeler
@@ -303,7 +303,7 @@
             <!-- CONSUMO -->
 
             <!-- FORMA PAGAMENTO -->
-            @if($pedido->consumo_local_viagem_delivery == 3)
+            @if($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
 
             @if($pedido->forma_pagamento_loja->id != null)
 
