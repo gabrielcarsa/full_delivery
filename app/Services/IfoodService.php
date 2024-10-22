@@ -184,4 +184,22 @@ class IfoodService
         return $data;
     }
 
+    //Acknowledgment evento polling
+    public function postAcknowledgment($acknowledgment_id){
+        $ifoodService = new IfoodService();
+        $token = $ifoodService->getAccessToken();
+        
+        $response = $ifoodService->client->post('https://merchant-api.ifood.com.br/events/v1.0/events/acknowledgment', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                [
+                    'id' => $acknowledgment_id,
+                ],
+            ]
+        ]);
+    }
+
 }

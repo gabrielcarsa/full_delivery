@@ -28,8 +28,15 @@ class PollingIfoodService
         //Loja conectada
         $loja_id = session('lojaConectado')['id'];
 
-        //Salvando polling
+        /*----------------------------
+        ------------------------------
+        SALVANDO POLLING
+        ------------------------------
+        ----------------------------*/
         foreach($polling as $evento){
+
+            //Evento polling ID
+            $eventoId = $evento['id']; 
       
             //Tipo de grupo do evento
             if($evento['code'] == "PLC"){
@@ -46,7 +53,9 @@ class PollingIfoodService
                     //Obtendo detalhes do pedido
                     $pedidoPolling = $ifoodService->getOrder($order_id);
 
-                    //Salvar pedido
+                    /*----------------------------
+                    CADASTRANDO PEDIDO
+                    ----------------------------*/
                     $pedido = new Pedido();
                     $pedido->status = 0;
                     $pedido->consumo_local_viagem_delivery = $pedidoPolling['orderType'] == 'DELIVERY' ? 3 : 2;//1. Local, 2. Viagem, 3. Delivery
@@ -71,10 +80,9 @@ class PollingIfoodService
                     //Salvando pedido
                     $pedido->save();
 
-                    /*
-                    --- Cadastro de entrega ---
-                    */
-
+                    /*----------------------------
+                    CADASTRANDO DE ENTREGA DO PEDIDO
+                    ----------------------------*/
                     //TODO: Delivery by Merchant
                     if($pedido->consumo_local_viagem_delivery == 3){
                         $entrega = new Entrega();
@@ -91,9 +99,9 @@ class PollingIfoodService
                     }
             
             
-                    /*
-                    --- Cadastro de item do pedido ---
-                    */
+                    /*----------------------------
+                    CADASTRANDO ITEMS DO PEDIDO
+                    ----------------------------*/
                     foreach($pedidoPolling['items'] as $item){
 
                         //instanciando CardapioService
@@ -209,8 +217,10 @@ class PollingIfoodService
             
                     }
                 }
-
             }
+
+            //Acknowledgment do polling
+            $ifoodService->postAcknowledgment($eventoId);
         }
     }
 }
