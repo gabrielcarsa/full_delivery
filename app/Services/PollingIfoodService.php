@@ -85,17 +85,18 @@ class PollingIfoodService
                     ----------------------------*/
                     //TODO: Delivery by Merchant
                     if($pedido->consumo_local_viagem_delivery == 3){
-                        $entrega = new Entrega();
-                        $entrega->pedido_id = $pedido->id;
-                        $entrega->cep = $pedidoPolling['delivery']['deliveryAddress']['postalCode'];
-                        $entrega->rua = $pedidoPolling['delivery']['deliveryAddress']['streetName'];
-                        $entrega->bairro = $pedidoPolling['delivery']['deliveryAddress']['neighborhood'];
-                        $entrega->cidade = $pedidoPolling['delivery']['deliveryAddress']['city'];
-                        $entrega->estado = $pedidoPolling['delivery']['deliveryAddress']['state'];
-                        $entrega->numero = $pedidoPolling['delivery']['deliveryAddress']['streetNumber'];
-                        $entrega->complemento = $pedidoPolling['delivery']['deliveryAddress']['complement'];
-                        $entrega->taxa_entrega = $pedidoPolling['total']['deliveryFee'];
-                        $entrega->save();
+
+                        Entrega::create([
+                            'pedido_id' => $pedido->id,
+                            'cep' => $pedidoPolling['delivery']['deliveryAddress']['postalCode'],
+                            'rua' => $pedidoPolling['delivery']['deliveryAddress']['streetName'],
+                            'bairro' => $pedidoPolling['delivery']['deliveryAddress']['neighborhood'],
+                            'cidade' => $pedidoPolling['delivery']['deliveryAddress']['city'],
+                            'estado' => $pedidoPolling['delivery']['deliveryAddress']['state'],
+                            'numero' => $pedidoPolling['delivery']['deliveryAddress']['streetNumber'],
+                            'complemento' => $pedidoPolling['delivery']['deliveryAddress']['complement'],
+                            'taxa_entrega' => $pedidoPolling['total']['deliveryFee'],
+                        ]);
                     }
             
             
