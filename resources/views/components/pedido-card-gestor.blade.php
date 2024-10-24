@@ -88,14 +88,12 @@
                 </button>
 
                 @elseif($pedido->status == 4)
-                <button class="btn btn-success dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <button class="btn btn-success rounded-pill">
                     Concluído
                 </button>
 
                 @elseif($pedido->status == 5)
-                <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <button class="btn btn-secondary rounded-pill">
                     Cancelado
                 </button>
 
