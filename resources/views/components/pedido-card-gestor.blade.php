@@ -11,7 +11,7 @@
                 # 0{{$pedido->id}}0
             </p>
 
-            <h4 class="fw-bold fs-5 text-dark text-uppercase">
+            <h4 class="fw-bold fs-5 text-dark text-uppercase text-wrapper">
                 @if($pedido->cliente_id != null)
                 {{$pedido->cliente->nome}}
                 @else
@@ -59,44 +59,6 @@
         </div>
         <!-- FIM MODAL CANCELAR -->
 
-        <!-- MODAL REJEITAR PEDIDO -->
-        <div class="modal fade" id="rejeitarModal{{$pedido->id}}" tabindex="-1" aria-labelledby="rejeitarModal"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <!-- FORM ACAO -->
-                <form action="{{route('pedido.rejeitar', ['id' => $pedido->id])}}" method="POST" class="my-2">
-                    @csrf
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="rejeitarModal">Deseja mesmo
-                                rejeitar esse pedido # 0{{$pedido->id}}0?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="px-4">
-                                Após rejeitar pedido essa ação não poderá ser desfeita!
-                            </p>
-                            <div class="form-floating mt-1">
-                                <input type="text" class="form-control @error('motivo') is-invalid @enderror"
-                                    id="inputArea" name="motivo" autocomplete="off" required>
-                                <label for="inputArea">Qual o motivo?</label>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary"
-                                data-bs-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-danger px-5">
-                                Rejeitar
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <!-- FIM FORM -->
-            </div>
-        </div>
-        <!-- FIM MODAL REJEITAR -->
-
         <!-- BOTÃO DROPDOWN NO CANTO COM STATUS -->
         <div class="col-md-4 d-flex align-items-start justify-content-end">
             <!-- DROPDOWN -->
@@ -116,19 +78,19 @@
                 @elseif($pedido->status == 2)
                 <button class="btn btn-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    A caminho
+                    Pronto p/ retirar
                 </button>
 
                 @elseif($pedido->status == 3)
-                <button class="btn btn-success dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
+                <button class="btn btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    Concluído
+                    A caminho
                 </button>
 
                 @elseif($pedido->status == 4)
-                <button class="btn btn-danger dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
+                <button class="btn btn-success dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    Rejeitado
+                    Concluído
                 </button>
 
                 @elseif($pedido->status == 5)
@@ -158,7 +120,7 @@
                     </li>
                     <li>
                         <a href="" class="dropdown-item d-flex align-items-center text-danger" data-bs-toggle="modal"
-                            data-bs-target="#rejeitarModal{{$pedido->id}}">
+                            data-bs-target="#cancelarModal{{$pedido->id}}">
                             <span class="material-symbols-outlined mr-1">
                                 dangerous
                             </span>
@@ -169,11 +131,36 @@
                     </li>
 
                     @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 3)
-                    <!-- Pedido em preparo -> enviar entrega caso seja delivery -->
+                    <!-- Pedido em preparo -> pronto para retirar -->
                     <li>
                         <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                             class="dropdown-item d-flex align-items-center">
                             <span class="material-symbols-outlined">
+                                check_circle
+                            </span>
+                            <span>
+                                Pronto p/ retirar
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dropdown-item d-flex align-items-center text-danger" data-bs-toggle="modal"
+                            data-bs-target="#cancelarModal{{$pedido->id}}">
+                            <span class="material-symbols-outlined mr-1">
+                                dangerous
+                            </span>
+                            <span>
+                                Cancelar pedido
+                            </span>
+                        </a>
+                    </li>
+
+                    @elseif($pedido->status == 2 && $pedido->consumo_local_viagem_delivery == 3)
+                    <!-- Pronto para retirar -> Ir para entrega -->
+                    <li>
+                        <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
+                            class="dropdown-item d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-1">
                                 sports_motorsports
                             </span>
                             <span>
@@ -193,8 +180,8 @@
                         </a>
                     </li>
 
-                    @elseif($pedido->status == 2 && $pedido->consumo_local_viagem_delivery == 3)
-                    <!-- Pedido a caminho -> entregue caso seja delivery -->
+                    @elseif($pedido->status == 3 && $pedido->consumo_local_viagem_delivery == 3)
+                    <!-- Ir para entrega -> Concluído -->
                     <li>
                         <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
                             class="dropdown-item d-flex align-items-center">

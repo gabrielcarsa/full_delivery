@@ -1,29 +1,28 @@
 <!-- INFORMAÇÕES -->
 
-<div class="row px-3">
-    <div class="col">
-        <p class="m-0 d-flex align-items-center text-uppercase">
-            <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
-                person
-            </span>
-            @if($pedido->cliente_id != null)
-            {{$pedido->cliente->nome}}
-            @else
-            {{$pedido->nome_cliente}}
-            @endif
-        </p>
-    </div>
-    <div class="col">
+<div class="px-3">
+    <p class="m-0 d-flex align-items-center text-uppercase">
+        <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+            person
+        </span>
         @if($pedido->cliente_id != null)
-        <p class="m-0 d-flex align-items-center">
-            <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
-                call
-            </span>
-            {{ preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $pedido->cliente->telefone) }}
-        </p>
+        {{$pedido->cliente->nome}}
+        @else
+        {{$pedido->nome_cliente}}
         @endif
-    </div>
+    </p>
 </div>
+
+@if($pedido->cliente_id != null)
+<div class="px-3">
+    <p class="m-0 d-flex align-items-center">
+        <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+            call
+        </span>
+        {{ preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $pedido->cliente->telefone) }}
+    </p>
+</div>
+@endif
 
 <div class="px-3">
     <!-- CONSUMO -->

@@ -160,14 +160,14 @@ class PedidoController extends Controller
 
         //Se for pedido pra consumo no local e ele estiver em preparo o próximo passo é ser concluído e não ir para a entrega
         if($pedido->consumo_local_viagem_delivery == 1 && $status_atual == 1){
-            $pedido->status = $status_atual + 2;
+            $pedido->status = $status_atual + 3;
         }else{
             $pedido->status++;
         }
 
-        //Concluir pedido
+        //Concluir pedido pagamento
         if($pedido->consumo_local_viagem_delivery == 3){
-            if($pedido->status == 3 || $pedido->status == 4 || $pedido->status == 5 ){
+            if($pedido->status == 4){
                 $pedido->situacao = 2;
             }
         }
@@ -177,29 +177,7 @@ class PedidoController extends Controller
 
     }
 
-    // REJEITAR PEDIDO
-    public function rejeitar(Request $request){
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro');
-        }
-
-        //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
-        $loja = Loja::where('id', $id_loja)->first();
-
-        //Dados pedido
-        $pedido_id = $request->input('id');
-        
-        //Pedido
-        $pedido = Pedido::find($pedido_id);
-        $pedido->status = 4;
-        $pedido->mensagem_cancelamento_rejeicao = $request->input('motivo');
-        $pedido->save();
-        return redirect()->back()->with('error', 'Pedido rejeitado');
-
-    }
-
+ 
     // CANCELAR PEDIDO
     public function cancelar(Request $request){
         //Verificar se há loja selecionado
@@ -217,7 +195,7 @@ class PedidoController extends Controller
         //Pedido
         $pedido = Pedido::find($pedido_id);
         $pedido->status = 5;
-        $pedido->mensagem_cancelamento_rejeicao = $request->input('motivo');
+        $pedido->mensagem_cancelamento = $request->input('motivo');
         $pedido->save();
         return redirect()->back()->with('error', 'Pedido cancelado');
 

@@ -86,11 +86,11 @@
                         @elseif($filtro == 1)
                         Em preparo
                         @elseif($filtro == 2)
-                        A caminho
+                        Pronto p/ retirar
                         @elseif($filtro == 3)
-                        Concluídos
+                        A caminho
                         @elseif($filtro == 4)
-                        Rejeitados
+                        Concluídos
                         @elseif($filtro == 5)
                         Cancelados
                         @endif
@@ -134,7 +134,7 @@
                             style="font-variation-settings: 'FILL' 1;">
                             radio_button_unchecked
                         </span>
-                        A caminho
+                        Pronto p/ retirar
                     </a>
                     @endif
 
@@ -142,11 +142,10 @@
                     <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
                         class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-success mr-1"
-                            style="font-variation-settings: 'FILL' 1;">
+                        <span class="material-symbols-outlined text-primary mr-1">
                             radio_button_unchecked
                         </span>
-                        Concluídos
+                        A caminho
                     </a>
                     @endif
 
@@ -154,11 +153,11 @@
                     <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
                         class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-danger mr-1"
+                        <span class="material-symbols-outlined text-success mr-1"
                             style="font-variation-settings: 'FILL' 1;">
                             radio_button_unchecked
                         </span>
-                        Rejeitados
+                        Concluídos
                     </a>
                     @endif
 
