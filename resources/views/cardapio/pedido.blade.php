@@ -86,25 +86,25 @@
                         <div class="d-flex">
                             <span class="material-symbols-outlined d-flex align-items-center text-primary mr-1"
                                 style="font-variation-settings: 'FILL' 1;">
+                                hourglass_top
+                            </span>
+                            <p class="m-0 p-0">Aguardando entregador retirar</p>
+                        </div>
+                        @elseif($pedido->status == 3)
+                        <div class="d-flex">
+                            <span class="material-symbols-outlined text-success d-flex align-items-center mr-1"
+                                style="font-variation-settings: 'FILL' 1;">
                                 sports_motorsports
                             </span>
                             <p class="m-0 p-0">Pedido a caminho</p>
                         </div>
-                        @elseif($pedido->status == 3)
+                        @elseif($pedido->status == 4)
                         <div class="d-flex">
                             <span class="material-symbols-outlined text-success d-flex align-items-center mr-1"
                                 style="font-variation-settings: 'FILL' 1;">
                                 check_circle
                             </span>
                             <p class="m-0 p-0">Pedido Concluído</p>
-                        </div>
-                        @elseif($pedido->status == 4)
-                        <div class="d-flex">
-                            <span class="material-symbols-outlined text-danger d-flex align-items-center mr-1"
-                                style="font-variation-settings: 'FILL' 1;">
-                                error
-                            </span>
-                            <p class="m-0 p-0">Pedido Rejeitado</p>
                         </div>
                         @elseif($pedido->status == 5)
                         <div class="d-flex">

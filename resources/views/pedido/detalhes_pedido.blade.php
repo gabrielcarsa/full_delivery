@@ -67,8 +67,8 @@
         @endif
         <!-- FIM CLIENTE NÃO LOGADO -->
 
-        <!--  PEDIDO REJEITADO, CANCELADO OU NORMAL -->
-        @if($data['pedido']->status == 4 || $data['pedido']->status == 5 )
+        <!--  PEDIDO CANCELADO OU NORMAL -->
+        @if($data['pedido']->status == 5 )
 
         <div class="p-3 my-3 border rounded bg-light">
             <div class="d-flex align-items-center">
@@ -76,116 +76,74 @@
                     error
                 </span>
                 <p class="m-0 text-danger fw-semibold">
-                    {{$data['pedido']->status == 4 ? 'Pedido Rejeitado' : 'Pedido Cancelado'}}
+                    Pedido Cancelado
                 </p>
             </div>
             <p class="mb-0 mt-2">
-                {{$data['pedido']->mensagem_cancelamento_rejeicao}}
+                {{$data['pedido']->mensagem_cancelamento}}
             </p>
         </div>
 
         @else
 
         <!-- ETAPAS STATUS -->
-        <div class="d-flex align-items-center justify-content-between my-3">
+        <div class="mb-3">
 
-            <!-- PEDIDO PENDENTE -->
-            <div class="{{$data['pedido']->status == 0 ? 'text-black' : 'text-secondary'}}">
-                <div class="m-0">
-                    @if($data['pedido']->status > 0)
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    @else
-                    <p class="m-0 fs-1 fw-bolder {{ $data['pedido']->status > 0 ? 'text-padrao' : '' }}">
-                        1.
-                    </p>
-                    @endif
+            @if($data['pedido']->status == 0)
+            <p>
+                Pedido pendente
+            </p>
+            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-padrao" style="width: 5%">
                 </div>
-                <p class="m-0" style="font-size: 13px !important">
-                    Pedido Pendente
-                </p>
             </div>
-            <!-- FIM PEDIDO PENDENTE -->
 
-            <!-- LINHA INTERMEDIARIA -->
-            <div class="{{ $data['pedido']->status > 0 ? 'bg-padrao' : 'bg-light border' }} rounded"
-                style="width: 100% !important; height: 5px;">
-            </div>
-            <!-- FIM LINHA INTERMEDIARIA -->
-
-            <!-- PEDIDO PREPARANDO -->
-            <div class="ms-3 {{$data['pedido']->status == 1 ? 'text-black' : 'text-secondary'}}">
-                <div class="m-0">
-                    @if($data['pedido']->status > 1)
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    @else
-                    <p class="m-0 fs-1 fw-bolder {{ $data['pedido']->status > 1 ? 'text-padrao' : '' }}">
-                        2.
-                    </p>
-                    @endif
+            @elseif($data['pedido']->status == 1)
+            <p>
+                Pedido em preparo
+            </p>
+            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-padrao" style="width: 25%">
                 </div>
-                <p class="m-0" style="font-size: 13px !important">
-                    Em preparo
-                </p>
             </div>
-            <!-- FIM PEDIDO PREPARANDO -->
 
-            <!-- LINHA INTERMEDIARIA -->
-            <div class="{{ $data['pedido']->status > 1 ? 'bg-padrao' : 'bg-light border' }} rounded m-1"
-                style="width: 100% !important; height: 5px;">
-            </div>
-            <!-- FIM LINHA INTERMEDIARIA -->
-
-            <!-- PEDIDO ENTREGA -->
-            @if($data['pedido']->consumo_local_viagem_delivery == 3)
-
-            <div class="ms-3 {{$data['pedido']->status == 2 ? 'text-black' : 'text-secondary'}}">
-                <div class="m-0">
-                    @if($data['pedido']->status > 2)
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    @else
-                    <p class="m-0 fs-1 fw-bolder {{ $data['pedido']->status > 2 ? 'text-padrao' : '' }}">
-                        3.
-                    </p>
-                    @endif
+            @elseif($data['pedido']->status == 2)
+            <p>
+                Pedido pronto para entregador retirar
+            </p>
+            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-padrao" style="width: 50%">
                 </div>
-                <p class="m-0" style="font-size: 13px !important">
-                    Sair entrega
-                </p>
             </div>
 
-            <!-- LINHA INTERMEDIARIA -->
-            <div class="{{ $data['pedido']->status > 2 ? 'bg-padrao' : 'bg-light border' }} rounded m-1"
-                style="width: 100% !important; height: 5px;">
+            @elseif($data['pedido']->status == 3)
+            <p>
+                Pedido a caminho
+            </p>
+            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-padrao" style="width: 75%">
+                </div>
             </div>
-            <!-- FIM LINHA INTERMEDIARIA -->
 
+            @elseif($data['pedido']->status == 4)
+            <p class="my-2 fs-5 fw-semibold d-flex align-items-center">
+                <span class="material-symbols-outlined text-padrao" style="font-variation-settings: 'FILL' 1;">
+                    check_circle
+                </span>
+                <span class="ml-1">
+                    Pedido concluído
+                </span>
+            </p>
+            <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-padrao" style="width: 100%">
+                </div>
+            </div>
+
+            @elseif($data['pedido']->status == 5)
+            <p>
+                Pedido cancelado
+            </p>
             @endif
-            <!-- FIM PEDIDO ENTREGA -->
-
-            <!-- PEDIDO CONCLUIDO -->
-            <div class="{{$data['pedido']->status == 3 ? 'text-black' : 'text-secondary'}}">
-                <div class="m-0">
-                    @if($data['pedido']->status > 2)
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    @else
-                    <p class="m-0 fs-1 fw-bolder {{ $data['pedido']->status > 2 ? 'text-padrao' : '' }}">
-                        {{ $data['pedido']->consumo_local_viagem_delivery == 3 ? '4.' : '3.' }}
-                    </p>
-                    @endif
-                </div>
-                <p class="m-0" style="font-size: 13px !important">
-                    Pedido Concluído
-                </p>
-            </div>
-            <!-- FIM PEDIDO ENTREGA -->
 
         </div>
         <!--  FIM ETAPAS STATUS -->
@@ -196,7 +154,7 @@
         <!--  LOJA -->
         <div class="border p-3 rounded my-2">
             <p class="text-secondary">
-                Feito em 
+                Feito em
                 {{\Carbon\Carbon::parse($data['pedido']->feito_em)->format('d/m/Y')}} -
                 {{\Carbon\Carbon::parse($data['pedido']->feito_em)->format('H:i')}}
             </p>
