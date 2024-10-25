@@ -252,7 +252,7 @@
     $(document).ready(function() {
         function atualizarPedidos() {
             $.ajax({
-                url: "{{ route('pedidos.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null, 'filtro' => request()->get('filtro') ] ) }}",
+                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null, 'filtro' => request()->get('filtro') ] ) }}",
                 type: 'GET',
                 success: function(data) {
                     $('#pedidos-grid').html(data); // Insere o HTML retornado
@@ -271,7 +271,7 @@
 
         function pollingAPI() {
             $.ajax({
-                url: "{{ route('pedidos.polling') }}",
+                url: "{{ route('pedido.polling') }}",
                 type: 'GET',
             });
         }
