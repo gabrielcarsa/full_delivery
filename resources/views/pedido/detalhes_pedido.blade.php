@@ -90,7 +90,7 @@
         <div class="mb-3">
 
             @if($data['pedido']->status == 0)
-            <p>
+            <p class="my-2 fs-5 fw-semibold">
                 Pedido pendente
             </p>
             <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
@@ -99,7 +99,7 @@
             </div>
 
             @elseif($data['pedido']->status == 1)
-            <p>
+            <p class="my-2 fs-5 fw-semibold">
                 Pedido em preparo
             </p>
             <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
@@ -108,7 +108,7 @@
             </div>
 
             @elseif($data['pedido']->status == 2)
-            <p>
+            <p class="my-2 fs-5 fw-semibold">
                 Pedido pronto para entregador retirar
             </p>
             <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
@@ -117,7 +117,7 @@
             </div>
 
             @elseif($data['pedido']->status == 3)
-            <p>
+            <p class="my-2 fs-5 fw-semibold">
                 Pedido a caminho
             </p>
             <div class="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
@@ -140,9 +140,22 @@
             </div>
 
             @elseif($data['pedido']->status == 5)
-            <p>
+            <p class="my-2 fs-5 fw-semibold">
                 Pedido cancelado
             </p>
+            <div class="p-3 my-3 border rounded bg-light">
+                <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined text-danger fw-semibold mr-1">
+                        error
+                    </span>
+                    <p class="m-0 text-danger fw-semibold">
+                        Pedido Cancelado
+                    </p>
+                </div>
+                <p class="mb-0 mt-2">
+                    {{$data['pedido']->mensagem_cancelamento_rejeicao}}
+                </p>
+            </div>
             @endif
 
         </div>
@@ -221,7 +234,7 @@
                         <div class="d-flex">
                             <!-- IMAGEM PRODUTO -->
                             <div class="d-flex align-items-center ">
-                                <img src="{{ asset('storage/'.$item['pedido']->loja->nome.'/imagens_produtos/'.$item['produto']->imagem) }}"
+                                <img src="{{ $item['produto']->imagem == null ? (empty($item['produto']->imagemIfood) ? asset('storage/images/sem-imagem.png') : $item['produto']->imagemIfood) : asset('storage/' . $item['pedido']->loja->nome . '/imagens_produtos/' . $item['produto']->imagem) }}"
                                     class="rounded" alt="{{$item['produto']->nome}}"
                                     style="min-width: 50px !important; max-width: 50px !important">
                             </div>
