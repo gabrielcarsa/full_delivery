@@ -116,8 +116,18 @@ class PedidoController extends Controller
         //Query pedidos da loja
         $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
-        ->orderBy('feito_em', 'DESC')
-        ->get();
+        ->orderBy('feito_em', 'DESC');
+
+        //Filtros
+        $filtro = $request->input('filtro');
+
+        // Verificando filtro e apĺicando
+        if($filtro != null){
+            $pedidos->where('status', $filtro);
+        }
+
+        //Executa a query
+        $pedidos = $pedidos->get();
 
         return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
     }
