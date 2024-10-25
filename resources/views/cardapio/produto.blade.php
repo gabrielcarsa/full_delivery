@@ -22,7 +22,7 @@
 
             <!-- IMAGEM PRODUTO -->
             <div class="col-md-6 d-flex align-items-center justify-content-center">
-                <img src="{{ asset('storage/'.$loja->nome.'/imagens_produtos/'.$produto->imagem) }}"
+                <img src="{{ $produto->imagem == null ? (empty($produto->imagemIfood) ? asset('storage/images/sem-imagem.png') : $produto->imagemIfood) : asset('storage/' . $data['categoria_produto'][0]->loja->nome . '/imagens_produtos/' . $produto->imagem) }}"
                     class="rounded img-fluid mb-3" alt="{{$produto->nome}}">
             </div>
             <!-- FIM IMAGEM PRODUTO -->
