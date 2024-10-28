@@ -85,8 +85,7 @@ class PollingIfoodService
                     ----------------------------*/
                     //TODO: Delivery by Merchant
                     if($pedido->consumo_local_viagem_delivery == 3){
-
-                        Entrega::create([
+                        dd(Entrega::create([
                             'pedido_id' => $pedido->id,
                             'cep' => $pedidoPolling['delivery']['deliveryAddress']['postalCode'],
                             'rua' => $pedidoPolling['delivery']['deliveryAddress']['streetName'],
@@ -96,7 +95,8 @@ class PollingIfoodService
                             'numero' => $pedidoPolling['delivery']['deliveryAddress']['streetNumber'],
                             'complemento' => $pedidoPolling['delivery']['deliveryAddress']['complement'],
                             'taxa_entrega' => $pedidoPolling['total']['deliveryFee'],
-                        ]);
+                        ]));
+                    
                     }
             
             

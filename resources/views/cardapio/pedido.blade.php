@@ -51,15 +51,15 @@
                 </div>
                 <hr>
                 <!-- PREVISÃO -->
-                @if($pedido->consumo_local_viagem_delivery == 3)
+                @if($pedido->consumo_local_viagem_delivery == 3  && $pedido->via_ifood == false)
                 <div class="mt-1 mb-3">
                     <p class="text-secondary m-0">
                         Previsão de entrega
                     </p>
                     <p class="text-black m-0 fs-5">
-                        {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_min)->format('H:i') }}
+                        {{ \Carbon\Carbon::parse($pedido->entrega->tempo_min)->format('H:i') }}
                         -
-                        {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
+                        {{ \Carbon\Carbon::parse($pedido->entrega->tempo_max)->format('H:i') }}
                     </p>
                 </div>
                 @endif

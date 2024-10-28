@@ -689,8 +689,12 @@ class PedidoController extends Controller
             $entrega->taxa_entrega = $taxa_entrega;
 
             $distancia_km = $distancia / 1000;
-            $entrega->tempo_min = $tempo_preparo_min + (2 * $distancia_km);
-            $entrega->tempo_max = $tempo_preparo_max + (5 * $distancia_km);
+            $auxMinutosMin = $tempo_preparo_min + (2 * $distancia_km);
+            $auxMinutosMax = $tempo_preparo_max + (5 * $distancia_km);
+
+            $entrega->tempo_min = Carbon::now()->addMinutes($auxMinutosMin)->toDateTimeString();
+            $entrega->tempo_max = Carbon::now()->addMinutes($auxMinutosMax)->toDateTimeString();            
+
             $entrega->save();
         }
 

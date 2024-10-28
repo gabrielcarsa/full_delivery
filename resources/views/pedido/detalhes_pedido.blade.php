@@ -20,15 +20,15 @@
     <div class="container my-5">
 
         <!-- PREVISÃO -->
-        @if($data['pedido']->consumo_local_viagem_delivery == 3)
+        @if($data['pedido']->consumo_local_viagem_delivery == 3 && $data['pedido']->via_ifood == false)
         <div class="mt-1 mb-3">
             <p class="text-secondary m-0">
                 Previsão de entrega
             </p>
             <p class="text-black m-0 fs-5">
-                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->addMinutes($data['pedido']->entrega->tempo_min)->format('H:i') }}
+                {{ \Carbon\Carbon::parse($data['pedido']->entrega->tempo_min)->format('H:i') }}
                 -
-                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->addMinutes($data['pedido']->entrega->tempo_max)->format('H:i') }}
+                {{ \Carbon\Carbon::parse($data['pedido']->entrega->tempo_max)->format('H:i') }}
             </p>
             <p class="m-0 d-flex align-items-center text-secondary border p-2 rounded"
                 style="font-size: 13px !important">

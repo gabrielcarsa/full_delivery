@@ -11,6 +11,12 @@ class Entrega extends Model
     public $timestamps = false;
     protected $table = 'entrega';
 
+    protected $fillable = [
+        'pedido_id', 'cep', 'rua', 'bairro', 'cidade', 'estado', 'numero', 'complemento', 'taxa_entrega'
+        // Adicione outros campos conforme necessário
+    ];
+
+
     public function pedido()
     {
         return $this->belongsTo(Pedido::class);
