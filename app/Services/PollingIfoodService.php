@@ -46,7 +46,7 @@ class PollingIfoodService
 
                 //Verificar se já não existe o ID
                 $order = Pedido::where('orderIdIfood', $order_id)->first();
-
+            
                 //Se não existir order
                 if($order == null){
                     
@@ -59,7 +59,7 @@ class PollingIfoodService
                     $pedido = new Pedido();
                     $pedido->status = 0;
                     $pedido->consumo_local_viagem_delivery = $pedidoPolling['orderType'] == 'DELIVERY' ? 3 : 2;//1. Local, 2. Viagem, 3. Delivery
-                    $pedido->feito_em = Carbon::parse($pedidoPolling['createdAt'])->toDateTimeString();
+                    $pedido->feito_em = Carbon::parse($pedidoPolling['createdAt'])->setTimezone('America/Cuiaba')->toDateTimeString();
                     $pedido->is_simulacao = $pedidoPolling['isTest'] == true ? true : false;   
                     $pedido->loja_id = $loja_id;
                     $pedido->orderIdIfood = $order_id;
@@ -85,7 +85,7 @@ class PollingIfoodService
                     ----------------------------*/
                     //TODO: Delivery by Merchant
                     if($pedido->consumo_local_viagem_delivery == 3){
-                        dd(Entrega::create([
+                        Entrega::create([
                             'pedido_id' => $pedido->id,
                             'cep' => $pedidoPolling['delivery']['deliveryAddress']['postalCode'],
                             'rua' => $pedidoPolling['delivery']['deliveryAddress']['streetName'],
@@ -95,7 +95,7 @@ class PollingIfoodService
                             'numero' => $pedidoPolling['delivery']['deliveryAddress']['streetNumber'],
                             'complemento' => $pedidoPolling['delivery']['deliveryAddress']['complement'],
                             'taxa_entrega' => $pedidoPolling['total']['deliveryFee'],
-                        ]));
+                        ]);
                     
                     }
             

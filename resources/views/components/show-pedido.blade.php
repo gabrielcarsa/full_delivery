@@ -295,7 +295,6 @@
                 @if($isset_opcionais == true)
                 <tr style="font-size:14px">
                     <td></td>
-                    <td></td>
                     <td>
 
                         <!-- CATEGORIAS DE OPCIONAIS -->
