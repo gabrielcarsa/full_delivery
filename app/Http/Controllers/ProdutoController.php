@@ -8,7 +8,6 @@ use App\Models\Produto;
 use App\Models\CategoriaProduto;
 use App\Models\Loja;
 use Illuminate\Support\Facades\Storage;
-use App\Services\CardapioService;
 
 class ProdutoController extends Controller
 {
@@ -98,7 +97,7 @@ class ProdutoController extends Controller
             $request->file('imagem')->storeAs('public/'.$loja->nome.'/imagens_produtos', $nomeArquivo);
         }
 
-        $produto = [
+        Produto::create([
             'nome' => $request->input('nome'),
             'descricao' => $request->input('descricao'),
             'disponibilidade' => $request->input('disponibilidade'),
@@ -109,13 +108,7 @@ class ProdutoController extends Controller
             'categoria_produto_id' => $categoria_produto_id,
             'cadastrado_usuario_id' => $usuario_id,
             'imagem' => $nomeArquivo,
-        ];
-
-        //instanciando CardapioService
-        $cardapioService = new CardapioService();
-
-        //Cadastro de produto
-        $cardapioService->storeProduto($produto);
+        ]);
 
         return redirect()->back()->with('success', 'Cadastro feito com sucesso');
 

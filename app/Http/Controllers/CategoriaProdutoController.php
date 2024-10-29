@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CategoriaProduto;
 use App\Models\Loja;
 use App\Services\IfoodService;
-use App\Services\CardapioService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Produto;
 use App\Models\CategoriaOpcional;
@@ -53,19 +52,14 @@ class CategoriaProdutoController extends Controller
             'descricao' => 'required|string|max:100',
         ]);
 
-        //instanciando CardapioService
-        $cardapioService = new CardapioService();
-
-        $categoria = [
+        //Cadastrando Categoria
+        CategoriaProduto::create([
             'nome' => $request->input('nome'),
             'descricao' =>  $request->input('descricao'),
             'ordem' => $request->input('ordem'),
             'loja_id' =>  $request->input('loja_id'),
             'cadastrado_usuario_id' =>  $usuario_id,
-        ];
-
-        //Cadastro de categoria
-        $cardapioService->storeCategoria($categoria); 
+        ]);
 
         return redirect()->back()->with('success', 'Cadastro feito com sucesso');
 
@@ -155,9 +149,6 @@ class CategoriaProdutoController extends Controller
         //Obter catálogos
         $catalogs = $ifoodService->getCatalogs();
 
-        //instanciando CardapioService
-        $cardapioService = new CardapioService();
-
         //Catalogs
         foreach($catalogs as $catalog){
             $groups = $ifoodService->getCategories($catalog['catalogId']);
@@ -165,16 +156,13 @@ class CategoriaProdutoController extends Controller
             //Groups
             foreach($groups as $group){
 
-                $categoria = [
+                $categoria = CategoriaProduto::create([
                     'nome' =>  $group['name'],
                     'descricao' =>  "",
                     'ordem' => $group['sequence'],
                     'loja_id' =>  $loja_id,
                     'cadastrado_usuario_id' =>  $usuario_id,
-                ];
-        
-                //Cadastro de categoria
-                $categoria = $cardapioService->storeCategoria($categoria); 
+                ]);
 
                 //Items
                 if(isset($group['items'])){
@@ -195,7 +183,7 @@ class CategoriaProdutoController extends Controller
                             $qtd_pessoa = 4;
                         }
 
-                        $produto = [
+                        $produto = Produto::create([
                             'nome' => $item['name'],
                             'descricao' => isset($item['description']) ? $item['description'] : null,
                             'disponibilidade' => $item['status'] == 'AVAILABLE' ? true : false,
@@ -208,10 +196,7 @@ class CategoriaProdutoController extends Controller
                             'productIdIfood' => $item['productId'],
                             'imagemIfood' => $item['imagePath'],
                             'quantidade_pessoa' => $qtd_pessoa,
-                        ];
-
-                        //Cadastro de produto
-                        $produto = $cardapioService->storeProduto($produto); 
+                        ]);
 
                         //Se houver opcionais
                         if($item['hasOptionGroups'] == true){

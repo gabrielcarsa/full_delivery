@@ -10,6 +10,8 @@ class CategoriaProduto extends Model
     use HasFactory;
     protected $table = 'categoria_produto';
 
+    protected $guarded = [];
+
     //RELACIONAMENTOS
     
     public function loja()

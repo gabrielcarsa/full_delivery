@@ -9,7 +9,6 @@ use App\Models\OpcionalProduto;
 use App\Models\Pedido;
 use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
-use App\Services\CardapioService;
 use App\Services\IfoodService;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -78,9 +77,6 @@ class PollingIfoodService
         ----------------------------*/
         foreach($pedidoPolling['items'] as $item){
 
-            //instanciando CardapioService
-            $cardapioService = new CardapioService();
-
             //Buscando produto
             $produto_ifood_id = $item['id'];
             $qtd_produto = $item['quantity'];
@@ -97,18 +93,17 @@ class PollingIfoodService
                 //Cadastrando categoria automatica para produtos iFood não importados
                 if($categoria == null){
                     
-                    $categoria_aux = [
+                    $categoria = CategoriaProduto::create([
                         'nome' => 'CATEGORIA CRIADA AUTOMATICAMENTE',
                         'descricao' =>  'Categoria criada por Foomy pois produto não foi importado via iFood',
                         'ordem' => null,
                         'loja_id' =>  $loja_id,
                         'cadastrado_usuario_id' => $usuario_id,
-                    ];  
+                    ]);  
 
-                    $categoria = $cardapioService->storeCategoria($categoria_aux);
                 }         
 
-                $produto_aux = [
+                $produto = Produto::create([
                     'nome' => $item['name'],
                     'descricao' => 'Produto cadastrado automaticamente via Foomy - Gestor de Pedidos. Produto não importado do iFood anteriormente.',
                     'disponibilidade' => false,
@@ -120,9 +115,7 @@ class PollingIfoodService
                     'productIdIfood' => $item['id'],
                     'imagemIfood' => $item['imageUrl'],
                     'quantidade_pessoa' => 1,
-                ];
-
-                $produto = $cardapioService->storeProduto($produto_aux);
+                ]);
 
             }
 

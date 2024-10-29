@@ -10,7 +10,9 @@ class Produto extends Model
     use HasFactory;
     protected $table = 'produto';
 
-     //RELACIONAMENTOS
+    protected $guarded = [];
+
+    //RELACIONAMENTOS
     
     // Relação muitos para um com Categoria de Produto
     public function categoria()
