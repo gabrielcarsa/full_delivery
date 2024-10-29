@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContaBancaria extends Model
+class Movimentacao extends Model
 {
     use HasFactory;
-    protected $table = 'conta_bancaria';
+    protected $table = "movimentacao";
     protected $guarded = [];
 
-    public function lancamento(){
-        return $this->hasMany(Lancamento::class);
+    public function conta_bancaria(){
+        return $this->belongsTo(ContaBancaria::class);
     }
 
-    public function movimentacao(){
-        return $this->hasMany(Movimentacao::class);
+    public function lancamento(){
+        return $this->belongsTo(Lancamento::class);
     }
 
     public function usuarioCadastrador()

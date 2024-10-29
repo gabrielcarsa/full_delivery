@@ -23,6 +23,10 @@ class Lancamento extends Model
         return $this->belongsTo(Cliente::class);
     }
 
+    public function conta_bancaria(){
+        return $this->belongsTo(ContaBancaria::class);
+    }
+
     public function usuarioCadastrador()
     {
        return $this->belongsTo(User::class, 'cadastrado_usuario_id');
@@ -35,6 +39,10 @@ class Lancamento extends Model
 
     public function parcela_lancamento(){
         return $this->HasMany(ParcelaLancamento::class);
+    }
+
+    public function movimentacao(){
+        return $this->hasOne(Movimentacao::class);
     }
 
 }
