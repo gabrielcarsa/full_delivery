@@ -22,4 +22,19 @@ class Lancamento extends Model
     public function cliente(){
         return $this->belongsTo(Cliente::class);
     }
+
+    public function usuarioCadastrador()
+    {
+       return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+    }
+
+    public function usuarioAlterador()
+    {
+       return $this->belongsTo(User::class, 'alterado_usuario_id');
+    }
+
+    public function parcela_lancamento(){
+        return $this->HasMany(ParcelaLancamento::class);
+    }
+
 }
