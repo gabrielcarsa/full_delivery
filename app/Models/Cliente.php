@@ -58,4 +58,8 @@ class Cliente extends Authenticatable
         return $this->hasMany(ClienteEndereco::class);
     }
 
+    public function lancamento(){
+        return $this->hasMany(Lancamento::class);
+    }
+
 }
