@@ -10,6 +10,8 @@ class ItemPedido extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'item_pedido';
+    protected $guarded = [];
+
 
     public function pedido()
     {

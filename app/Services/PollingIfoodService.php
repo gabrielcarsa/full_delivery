@@ -119,15 +119,14 @@ class PollingIfoodService
 
             }
 
-            $item_pedido = new ItemPedido();
-            $item_pedido->pedido_id = $pedido->id;
-            $item_pedido->produto_id = $produto->id; 
-            $item_pedido->quantidade = $qtd_produto;
-            $item_pedido->preco_unitario = $item['unitPrice']; 
-            $item_pedido->subtotal = $item['totalPrice']; 
-            $item_pedido->observacao = $item['observations']; 
-            $item_pedido->save();
-
+            $item_pedido = ItemPedido::create([
+                'pedido_id' => $pedido->id,
+                'produto_id' => $produto->id,
+                'quantidade' => $qtd_produto,
+                'preco_unitario' => $item['unitPrice'],
+                'subtotal' => $item['totalPrice'],
+                'observacao' => $item['observations'],
+            ]);
 
             //Se existir opcionais
             if($item['options'] != null){
@@ -151,33 +150,35 @@ class PollingIfoodService
                         if($categoria_opcional == null){
                         
                             //Cadastrando categoria opcional
-                            $categoria_opcional = new CategoriaOpcional();
-                            $categoria_opcional->nome = $item_opcional['groupName'];
-                            $categoria_opcional->limite = 1;
-                            $categoria_opcional->produto_id = $produto->id;
-                            $categoria_opcional->cadastrado_usuario_id = $usuario_id;
-                            $categoria_opcional->is_required = false;
-                            $categoria_opcional->save();
+                            $categoria_opcional = CategoriaOpcional::create([
+                                'nome' => $item_opcional['groupName'],
+                                'limite' => 1,
+                                'produto_id' => $produto->id,
+                                'cadastrado_usuario_id' => $usuario_id,
+                                'is_required' => false,
+                            ]);
+                  
                         }     
                         
                         //Cadastro de opcional
-                        $opcional_produto = new OpcionalProduto();
-                        $opcional_produto->nome = $item_opcional['name'];
-                        $opcional_produto->categoria_opcional_id = $categoria_opcional->id;
-                        $opcional_produto->cadastrado_usuario_id = $usuario_id;
-                        $opcional_produto->productIdIfood = $item_opcional['id'];
-                        $opcional_produto->preco = $item_opcional['unitPrice'];
-                        $opcional_produto->save();
+                        $opcional_produto = OpcionalProduto::create([
+                            'nome' => $item_opcional['name'],
+                            'categoria_opcional_id' => $categoria_opcional->id,
+                            'cadastrado_usuario_id' => $usuario_id,
+                            'productIdIfood' => $item_opcional['id'],
+                            'preco' => $item_opcional['unitPrice'],
+                        ]);
+
                     }
     
                     //Salvando Opcional Item
-                    $opcional_item_pedido = new OpcionalItem();
-                    $opcional_item_pedido->item_pedido_id = $item_pedido->id;
-                    $opcional_item_pedido->opcional_produto_id = $opcional_produto->id;
-                    $opcional_item_pedido->quantidade = $qtd_opcional;
-                    $opcional_item_pedido->preco_unitario = $item_opcional['unitPrice']; 
-                    $opcional_item_pedido->subtotal = $item_opcional['price']; 
-                    $opcional_item_pedido->save();
+                    $opcional_item_pedido = OpcionalItem::create([
+                        'item_pedido_id' => $item_pedido->id,
+                        'opcional_produto_id' => $opcional_produto->id,
+                        'quantidade' => $qtd_opcional,
+                        'preco_unitario' => $item_opcional['unitPrice'],
+                        'subtotal' => $item_opcional['price'],
+                    ]);
 
                 }
             } 

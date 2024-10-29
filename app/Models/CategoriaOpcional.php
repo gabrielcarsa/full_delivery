@@ -9,6 +9,7 @@ class CategoriaOpcional extends Model
 {
     use HasFactory;
     protected $table = 'categoria_opcional';
+    protected $guarded = [];
 
 
     public function produto()

@@ -10,6 +10,7 @@ class OpcionalItem extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'opcional_item';
+    protected $guarded = [];
 
     // Relação muitos para um com Item de Pedido
     public function item_pedido()

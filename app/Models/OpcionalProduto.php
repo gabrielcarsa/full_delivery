@@ -9,6 +9,7 @@ class OpcionalProduto extends Model
 {
     use HasFactory;
     protected $table = 'opcional_produto';
+    protected $guarded = [];
 
     //RELACIONAMENTOS
 
