@@ -15,6 +15,7 @@ use App\Http\Controllers\ClienteEnderecoController;
 use App\Http\Controllers\CategoriaOpcionalController;
 use App\Http\Controllers\FormaPagamentoLojaController;
 use App\Http\Controllers\MesaController;
+use App\Http\Controllers\LancamentoController;
 
 
 /*
@@ -176,4 +177,8 @@ Route::middleware([
 
         Route::get('/gestor-mesas', [MesaController::class, 'gestor'])->name('mesa.gestor');
         Route::get('/gestor-mesas/detalhes', [MesaController::class, 'show'])->name('mesa.show');
+
+        //CONTAS A RECEBER
+        Route::get('/contas-receber', [LancamentoController::class, 'indexContasReceber'])->name('contas_receber.index');
+        
 });

@@ -197,8 +197,24 @@
                                         <a class="dropdown-item" href="#">Vendas</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">Formas de
-                                            pagamento</a>
+                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
+                                            Formas de pagamento
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('contas_receber.index') }}">
+                                            Contas a receber
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
+                                            Contas a pagar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
+                                            Movimentações
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
