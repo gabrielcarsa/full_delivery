@@ -63,7 +63,7 @@
 
                     <!-- ROW -->
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             <label for="inputCategoria" class="form-label">
                                 Categoria
                             </label>
@@ -77,7 +77,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             <label for="inputCliente" class="form-label">
                                 Cliente
                             </label>
@@ -91,7 +91,7 @@
                             </select>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             <label for="inputContaBancaria" class="form-label">
                                 Conta bancária
                             </label>
@@ -110,14 +110,14 @@
 
                     <!-- ROW -->
                     <div class="row my-3">
-                        <div class="col-2">
+                        <div class="col-sm-2">
                             <label for="inputIdParcela" class="form-label">
                                 ID parcela
                             </label>
                             <input type="text" name="parcela_id" class="form-control" id="inputIdParcela"
                                 placeholder="Ex.: 1584">
                         </div>
-                        <div class="col-2">
+                        <div class="col-sm-2">
                             <label for="inputDataVencimentoDe" class="form-label">
                                 Data início
                             </label>
@@ -125,7 +125,7 @@
                                 value="{{!empty($contas) ? $contas->nome : old('periodoDe')}}" class="form-control"
                                 id="inputDataVencimentoDe">
                         </div>
-                        <div class="col-2">
+                        <div class="col-sm-2">
                             <label for="inputDataVencimentoAte" class="form-label">
                                 Data fim
                             </label>
@@ -133,7 +133,7 @@
                                 value="{{!empty($contas) ? $contas->nome : old('periodoAte')}}" class="form-control"
                                 id="inputDataVencimentoAte">
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <label for="inputsChecksTipoPeriodo" class="form-label">
                                 Tipo período
                             </label>
@@ -171,7 +171,7 @@
 
                         <!-- ROW -->
                         <div class="row mt-3">
-                            <div class="col-6">
+                            <div class="col-sm-6">
                                 <label for="inputsChecksTipoPeriodo" class="form-label">
                                     Situação
                                 </label>
