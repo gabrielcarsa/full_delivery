@@ -47,18 +47,22 @@
         <form action="" method="post" autocomplete="off">
             @csrf
 
+            <!-- CARD FORM -->
             <div class="border rounded">
 
+                <!-- CARD FORM HEADER -->
                 <div class="p-3 border-bottom">
                     <p class="m-0 fs-5 fw-bold">
                         Filtros para listagem
                     </p>
                 </div>
+                <!-- FIM CARD FORM HEADER -->
 
+                <!-- CARD FORM BODY -->
                 <div class="bg-white p-3">
 
+                    <!-- ROW -->
                     <div class="row">
-
                         <div class="col-4">
                             <label for="inputCategoria" class="form-label">
                                 Categoria
@@ -102,8 +106,17 @@
                         </div>
 
                     </div>
+                    <!-- FIM ROW -->
 
+                    <!-- ROW -->
                     <div class="row my-3">
+                        <div class="col-2">
+                            <label for="inputIdParcela" class="form-label">
+                                ID parcela
+                            </label>
+                            <input type="text" name="parcela_id" class="form-control" id="inputIdParcela"
+                                placeholder="Ex.: 1584">
+                        </div>
                         <div class="col-2">
                             <label for="inputDataVencimentoDe" class="form-label">
                                 Data início
@@ -126,25 +139,85 @@
                             </label>
                             <div class="inputsChecksTipoPeriodo">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio1" value="option1">
-                                    <label class="form-check-label" for="inlineRadio1">1</label>
+                                    <input class="form-check-input" type="radio" name="tipoPeriodo"
+                                        id="periodoLancamento" value="0">
+                                    <label class="form-check-label" for="periodoLancamento">
+                                        Lançamento
+                                    </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="inlineRadio2" value="option2">
-                                    <label class="form-check-label" for="inlineRadio2">2</label>
+                                    <input class="form-check-input" type="radio" name="tipoPeriodo"
+                                        id="periodoVencimento" value="1">
+                                    <label class="form-check-label" for="periodoVencimento">
+                                        Vencimento
+                                    </label>
                                 </div>
-                                
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoPeriodo"
+                                        id="periodoRecebimento" value="2">
+                                    <label class="form-check-label" for="periodoRecebimento">
+                                        Recebimento
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipoPeriodo" id="periodoBaixa"
+                                        value="3">
+                                    <label class="form-check-label" for="periodoBaixa">
+                                        Baixa
+                                    </label>
+                                </div>
                             </div>
-
                         </div>
 
+                        <!-- ROW -->
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label for="inputsChecksTipoPeriodo" class="form-label">
+                                    Situação
+                                </label>
+                                <div class="inputsChecksTipoPeriodo">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="situacao"
+                                            id="periodoLancamento" value="3" checked>
+                                        <label class="form-check-label" for="periodoLancamento">
+                                            Todos
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="situacao"
+                                            id="periodoVencimento" value="0">
+                                        <label class="form-check-label" for="periodoVencimento">
+                                            A vencer
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="situacao"
+                                            id="periodoRecebimento" value="1">
+                                        <label class="form-check-label" for="periodoRecebimento">
+                                            Pagos
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- FIM ROW -->
+
+                    </div>
+                    <!-- FIM ROW -->
+
+                    <div class="d-flex">
+                        <button type="submit" class="btn bg-padrao text-white px-4 fw-semibold">
+                            Consultar
+                        </button>
                     </div>
 
                 </div>
+                <!-- FIM CARD FORM BODY -->
 
             </div>
+            <!-- FIM CARD FORM -->
+
         </form>
         <!-- FIM FORM -->
 
