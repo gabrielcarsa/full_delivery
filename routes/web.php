@@ -16,6 +16,8 @@ use App\Http\Controllers\CategoriaOpcionalController;
 use App\Http\Controllers\FormaPagamentoLojaController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\LancamentoController;
+use App\Http\Controllers\CategoriaFinanceiroController;
+
 
 
 /*
@@ -180,5 +182,9 @@ Route::middleware([
 
         //CONTAS A RECEBER
         Route::get('/contas-receber', [LancamentoController::class, 'indexContasReceber'])->name('contas_receber.index');
+
+        //CATEGORIA FINANCEIRO
+        Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');
+        Route::get('/categoria-financeiro/novo', [CategoriaFinanceiroController::class, 'create'])->name('categoria_financeiro.novo');
         
 });

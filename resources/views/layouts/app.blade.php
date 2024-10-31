@@ -252,6 +252,33 @@
                                 </ul>
                             </li>
 
+                            <!-- Nav Item - FINANCEIRO DROPEND -->
+                            <li class="nav-item dropend">
+                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
+                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span class="material-symbols-outlined">
+                                        settings
+                                    </span>
+                                    <span class="ml-1 d-none d-sm-inline">
+                                        Configurações
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
+                                            Categoria Financeiro
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            Contas Correntes
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+
                         </ul>
 
                     </div>
