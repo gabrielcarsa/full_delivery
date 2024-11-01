@@ -44,7 +44,7 @@
             <!-- CARD FORM BODY -->
             <div class="bg-white p-3">
 
-                <form action="{{ route('categoria_financeiro.store') }}" method="post">
+                <form action="{{route('categoria_financeiro.store')}}" method="post">
                     @csrf
                     <!-- ROW -->
                     <div class="row my-3">
@@ -72,19 +72,20 @@
                                 Nome da categoria
                             </label>
                             <input type="text" name="nome" class="form-control" id="inputNome"
-                                placeholder="Ex.: Salário, Aluguel, Venda de ABCDE...">
+                                placeholder="Ex.: Salário, Aluguel, Venda de ABCDE..." autocomplete="off">
                         </div>
 
                     </div>
                     <!-- FIM ROW -->
 
+                    <div class="d-flex">
+                        <button type="submit" class="btn bg-padrao text-white px-4 fw-semibold">
+                            Salvar
+                        </button>
+                    </div>
+
                 </form>
 
-                <div class="d-flex">
-                    <button type="submit" class="btn bg-padrao text-white px-4 fw-semibold">
-                        Salvar
-                    </button>
-                </div>
 
             </div>
             <!-- FIM CARD FORM BODY -->
@@ -119,7 +120,9 @@
                         <tr>
                             <th scope="row">{{$categoria->id}}</th>
                             <td class="text-uppercase">{{$categoria->nome}}</td>
-                            <td>{{$categoria->usuario_cadastrador->nome}}</td>
+                            <td class="text-truncate" style="max-width: 30px">
+                                {{$categoria->usuario_cadastrador->name}}
+                            </td>
                             <td>
                                 <a href="" class="acoes-listar text-decoration-none">
                                     <span class="material-symbols-outlined">
@@ -197,7 +200,9 @@
                         <tr>
                             <th scope="row">{{$categoria->id}}</th>
                             <td class="text-uppercase">{{$categoria->nome}}</td>
-                            <td>{{$categoria->usuario_cadastrador->nome}}</td>
+                            <td class="text-truncate" style="max-width: 30px">
+                                {{$categoria->usuario_cadastrador->name}}
+                            </td>
                             <td>
                                 <a href="" class="acoes-listar text-decoration-none">
                                     <span class="material-symbols-outlined">

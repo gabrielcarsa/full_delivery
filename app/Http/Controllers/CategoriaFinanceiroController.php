@@ -13,10 +13,10 @@ class CategoriaFinanceiroController extends Controller
     public function index(){
 
         //Obtendo todas categorias a receber
-        $categorias_receber = CategoriaFinanceiro::where('tipo', 0)->get();
+        $categorias_pagar = CategoriaFinanceiro::where('tipo', 0)->get();
 
         //Obtendo todas categorias a pagar
-        $categorias_pagar = CategoriaFinanceiro::where('tipo', 1)->get();
+        $categorias_receber = CategoriaFinanceiro::where('tipo', 1)->get();
 
         $categorias = [
             'categorias_receber' => $categorias_receber,
