@@ -25,23 +25,72 @@
         <!-- FIM MENSAGENS -->
 
         <!-- HEADER -->
-        <div class="row">
-            <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">
-                    Categoria Financeiro
-                </h2>
-            </div>
-            <div class="col d-flex align-items-center justify-content-end p-0">
-                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="{{ route('categoria_financeiro.novo') }}">
-                    <span class="material-symbols-outlined mr-1">
-                        add
-                    </span>
-                    Nova categoria
-                </a>
-            </div>
-        </div>
+        <h2 class="my-3 fw-bolder fs-1">
+            Categoria Financeiro
+        </h2>
         <!-- FIM HEADER -->
+
+        <!-- CARD FORM -->
+        <div class="border rounded mb-3">
+
+            <!-- CARD FORM HEADER -->
+            <div class="p-3 border-bottom">
+                <p class="m-0 fs-5 fw-bold">
+                    Nova categoria
+                </p>
+            </div>
+            <!-- FIM CARD FORM HEADER -->
+
+            <!-- CARD FORM BODY -->
+            <div class="bg-white p-3">
+
+                <form action="{{ route('categoria_financeiro.store') }}" method="post">
+                    @csrf
+                    <!-- ROW -->
+                    <div class="row my-3">
+
+
+                        <div class="col-sm-4">
+                            <label for="inputTipo" class="form-label">
+                                Tipo
+                            </label>
+                            <select id="inputTipo" name="tipo" class="form-select form-control">
+                                <option value="0" select>
+                                    -- Selecione --
+                                </option>
+                                <option value="1">
+                                    Conta a receber
+                                </option>
+                                <option value="2">
+                                    Conta a pagar
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="inputNome" class="form-label">
+                                Nome da categoria
+                            </label>
+                            <input type="text" name="nome" class="form-control" id="inputNome"
+                                placeholder="Ex.: Salário, Aluguel, Venda de ABCDE...">
+                        </div>
+
+                    </div>
+                    <!-- FIM ROW -->
+
+                </form>
+
+                <div class="d-flex">
+                    <button type="submit" class="btn bg-padrao text-white px-4 fw-semibold">
+                        Salvar
+                    </button>
+                </div>
+
+            </div>
+            <!-- FIM CARD FORM BODY -->
+
+        </div>
+        <!-- FIM CARD FORM -->
 
         @if(isset($categorias))
 
@@ -60,6 +109,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
+                            <th scope="col">Cadastrado por</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -69,6 +119,7 @@
                         <tr>
                             <th scope="row">{{$categoria->id}}</th>
                             <td class="text-uppercase">{{$categoria->nome}}</td>
+                            <td>{{$categoria->usuario_cadastrador->nome}}</td>
                             <td>
                                 <a href="" class="acoes-listar text-decoration-none">
                                     <span class="material-symbols-outlined">
@@ -127,7 +178,7 @@
             <div class="col-sm-5 bg-white border rounded p-3">
 
                 <p class="fs-4 fw-bold">
-                Categorias de contas a pagar
+                    Categorias de contas a pagar
                 </p>
 
                 <!-- TABLE -->
@@ -136,6 +187,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
+                            <th scope="col">Cadastrado por</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -145,6 +197,7 @@
                         <tr>
                             <th scope="row">{{$categoria->id}}</th>
                             <td class="text-uppercase">{{$categoria->nome}}</td>
+                            <td>{{$categoria->usuario_cadastrador->nome}}</td>
                             <td>
                                 <a href="" class="acoes-listar text-decoration-none">
                                     <span class="material-symbols-outlined">

@@ -185,6 +185,6 @@ Route::middleware([
 
         //CATEGORIA FINANCEIRO
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');
-        Route::get('/categoria-financeiro/novo', [CategoriaFinanceiroController::class, 'create'])->name('categoria_financeiro.novo');
+        Route::post('/categoria-financeiro/cadastrar', [CategoriaFinanceiroController::class, 'store'])->name('categoria_financeiro.store');
         
 });

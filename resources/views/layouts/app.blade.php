@@ -272,7 +272,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="">
-                                            Contas Correntes
+                                            Conta Corrente
                                         </a>
                                     </li>
                                     
