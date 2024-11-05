@@ -90,7 +90,8 @@
                             <label for="inputTipo" class="form-label">
                                 Tipo
                             </label>
-                            <select id="inputTipo" name="tipo" class="form-select form-control @error('tipo') is-invalid @enderror">
+                            <select id="inputTipo" name="tipo"
+                                class="form-select form-control @error('tipo') is-invalid @enderror">
                                 <option value="0" select>
                                     -- Selecione --
                                 </option>
@@ -107,8 +108,9 @@
                             <label for="inputNome" class="form-label">
                                 Nome da categoria
                             </label>
-                            <input type="text" name="nome" class="form-control @error('nome') is-invalid @enderror" id="inputNome"
-                                placeholder="Ex.: Salário, Aluguel, Venda de ABCDE..." autocomplete="off">
+                            <input type="text" name="nome" class="form-control @error('nome') is-invalid @enderror"
+                                id="inputNome" placeholder="Ex.: Salário, Aluguel, Venda de ABCDE..."
+                                autocomplete="off">
                         </div>
 
                     </div>
@@ -160,12 +162,13 @@
                                 {{$categoria->usuario_cadastrador->name}}
                             </td>
                             <td>
-                                <a href="" class="acoes-listar text-decoration-none">
+                                <a href="" data-bs-toggle="modal" class="text-primary text-decoration-none"
+                                    data-bs-target="#editarModal{{$categoria->id}}">
                                     <span class="material-symbols-outlined">
                                         edit
                                     </span>
                                 </a>
-                                <a href="" data-bs-toggle="modal" class="acoes-listar text-danger"
+                                <a href="" data-bs-toggle="modal" class="text-danger text-decoration-none"
                                     data-bs-target="#exampleModal{{$categoria->id}}">
                                     <span class="material-symbols-outlined">
                                         delete
@@ -179,8 +182,9 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                                                {{$categoria->nome}}?</h1>
+                                            <p class="modal-title fs-5" id="exampleModalLabel">
+                                                Excluir {{$categoria->nome}}?
+                                            </p>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -193,8 +197,9 @@
                                             <form action="" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Sim, eu
-                                                    tenho</button>
+                                                <button type="submit" class="btn btn-danger">
+                                                    Sim, eu tenho
+                                                </button>
                                             </form>
 
                                         </div>
@@ -203,6 +208,45 @@
                             </div>
                             <!-- MODAL EXCLUIR -->
 
+                            <!-- MODAL EDITAR -->
+                            <div class="modal fade" id="editarModal{{$categoria->id}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <p class="modal-title fs-5" id="exampleModalLabel">
+                                                Renomear {{$categoria->nome}}?
+                                            </p>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form
+                                            action="{{ route('categoria_financeiro.edit', ['id' => $categoria->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+
+                                                <label for="inputNome" class="form-label">
+                                                    Novo nome
+                                                </label>
+                                                <input type="text" name="nome"
+                                                    class="form-control @error('nome') is-invalid @enderror"
+                                                    id="inputNome"
+                                                    placeholder="Ex.: Salário, Aluguel, Venda de ABCDE..."
+                                                    autocomplete="off">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn bg-padrao text-white">
+                                                    Salvar
+                                                </button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL EDITAR -->
                         </tr>
                         @endforeach
                         <!-- FIM categorias -->
@@ -238,12 +282,13 @@
                                 {{$categoria->usuario_cadastrador->name}}
                             </td>
                             <td>
-                                <a href="" class="acoes-listar text-decoration-none">
+                                <a href="" data-bs-toggle="modal" class="text-primary text-decoration-none"
+                                    data-bs-target="#editarModal{{$categoria->id}}">
                                     <span class="material-symbols-outlined">
                                         edit
                                     </span>
                                 </a>
-                                <a href="" data-bs-toggle="modal" class="acoes-listar text-danger"
+                                <a href="" data-bs-toggle="modal" class="text-danger text-decoration-none"
                                     data-bs-target="#exampleModal{{$categoria->id}}">
                                     <span class="material-symbols-outlined">
                                         delete
@@ -257,8 +302,9 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir
-                                                {{$categoria->nome}}?</h1>
+                                            <p class="modal-title fs-5" id="exampleModalLabel">
+                                                Excluir {{$categoria->nome}}?
+                                            </p>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -271,8 +317,9 @@
                                             <form action="" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Sim, eu
-                                                    tenho</button>
+                                                <button type="submit" class="btn btn-danger">
+                                                    Sim, eu tenho
+                                                </button>
                                             </form>
 
                                         </div>
@@ -280,6 +327,46 @@
                                 </div>
                             </div>
                             <!-- MODAL EXCLUIR -->
+
+                            <!-- MODAL EDITAR -->
+                            <div class="modal fade" id="editarModal{{$categoria->id}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <p class="modal-title fs-5" id="exampleModalLabel">
+                                                Renomear {{$categoria->nome}}?
+                                            </p>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form
+                                            action="{{ route('categoria_financeiro.edit', ['id' => $categoria->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+
+                                                <label for="inputNome" class="form-label">
+                                                    Novo nome
+                                                </label>
+                                                <input type="text" name="nome"
+                                                    class="form-control @error('nome') is-invalid @enderror"
+                                                    id="inputNome"
+                                                    placeholder="Ex.: Salário, Aluguel, Venda de ABCDE..."
+                                                    autocomplete="off">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn bg-padrao text-white">
+                                                    Salvar
+                                                </button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL EDITAR -->
 
                         </tr>
                         @endforeach

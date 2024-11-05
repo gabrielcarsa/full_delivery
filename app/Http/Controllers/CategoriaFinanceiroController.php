@@ -53,4 +53,28 @@ class CategoriaFinanceiroController extends Controller
         return redirect()->back()->with('success', 'Cadastrado com sucesso');
     
     }
+
+    //EDITAR NOME CATEGORIA
+    public function edit(Request $request){
+
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $categoria_id = $request->input('id');
+        $nome = $request->input('nome');
+
+        $categoria = CategoriaFinanceiro::find($categoria_id);
+        $categoria->nome = $nome;
+        $categoria->alterado_usuario_id = Auth::guard()->user()->id;
+        $categoria->save();
+
+        return redirect()->back()->with('success', 'Nome alterado com sucesso');
+    }
 }
