@@ -187,5 +187,6 @@ Route::middleware([
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');
         Route::post('/categoria-financeiro/cadastrar', [CategoriaFinanceiroController::class, 'store'])->name('categoria_financeiro.store');
         Route::put('/categoria-financeiro/editar', [CategoriaFinanceiroController::class, 'edit'])->name('categoria_financeiro.edit');
+        Route::delete('/categoria-financeiro/apagar', [CategoriaFinanceiroController::class, 'destroy'])->name('categoria_financeiro.excluir');
         
 });

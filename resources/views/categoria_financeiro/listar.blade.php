@@ -194,7 +194,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Não</button>
-                                            <form action="" method="POST">
+                                            <form action="{{ route('categoria_financeiro.excluir', ['id' => $categoria->id]) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">
@@ -314,7 +314,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Não</button>
-                                            <form action="" method="POST">
+                                            <form action="{{ route('categoria_financeiro.excluir', ['id' => $categoria->id]) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">

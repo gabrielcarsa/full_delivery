@@ -77,4 +77,15 @@ class CategoriaFinanceiroController extends Controller
 
         return redirect()->back()->with('success', 'Nome alterado com sucesso');
     }
+
+    //EXCLUIR
+    public function destroy(Request $request){
+
+        $categoria_id = $request->input('id');
+
+        $categoria = CategoriaFinanceiro::find($categoria_id);
+        $categoria->delete();
+
+        return redirect()->back()->with('success', 'Excluido com sucesso');
+    }
 }
