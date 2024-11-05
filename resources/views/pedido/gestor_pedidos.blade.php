@@ -7,7 +7,7 @@
             <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
                 data-bs-autohide="true">
                 <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
                         check_circle
                     </span>
                     <div class="toast-body">

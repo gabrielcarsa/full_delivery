@@ -3,25 +3,61 @@
     <div class="container">
 
         <!-- MENSAGENS -->
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="toast-container position-fixed top-0 end-0">
+            @if(session('success'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
+                        check_circle
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('success') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('error') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        @foreach ($errors->all() as $error)
+                        <p class="fs-5 m-0">
+                            {{ $error }}
+                        </p>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
         </div>
-        @endif
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         <!-- FIM MENSAGENS -->
 
         <!-- HEADER -->
@@ -54,7 +90,7 @@
                             <label for="inputTipo" class="form-label">
                                 Tipo
                             </label>
-                            <select id="inputTipo" name="tipo" class="form-select form-control">
+                            <select id="inputTipo" name="tipo" class="form-select form-control @error('tipo') is-invalid @enderror">
                                 <option value="0" select>
                                     -- Selecione --
                                 </option>
@@ -71,7 +107,7 @@
                             <label for="inputNome" class="form-label">
                                 Nome da categoria
                             </label>
-                            <input type="text" name="nome" class="form-control" id="inputNome"
+                            <input type="text" name="nome" class="form-control @error('nome') is-invalid @enderror" id="inputNome"
                                 placeholder="Ex.: Salário, Aluguel, Venda de ABCDE..." autocomplete="off">
                         </div>
 
@@ -96,9 +132,9 @@
         @if(isset($categorias))
 
         <!-- TABLES CATEGORIAS -->
-        <div class="row">
+        <div class="d-flex justify-content-between">
 
-            <div class="col-sm-5 bg-white border rounded p-3">
+            <div class="w-100 bg-white border rounded p-3 mx-1">
 
                 <p class="fs-4 fw-bold">
                     Categorias de contas a receber
@@ -176,9 +212,7 @@
                 <!-- FIM TABLE -->
             </div>
 
-            <div class="col-sm-2"></div>
-
-            <div class="col-sm-5 bg-white border rounded p-3">
+            <div class="w-100 bg-white border rounded p-3 mx-1">
 
                 <p class="fs-4 fw-bold">
                     Categorias de contas a pagar
