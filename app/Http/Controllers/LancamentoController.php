@@ -20,6 +20,17 @@ class LancamentoController extends Controller
         return view('lancamento.contas_receber_listar');
     }
 
+    //LISTAGEM CONTAS A RECEBER
+    public function indexAllContasReceber(){
+        $parcelas = ParcelaLancamento::with('lancamento')
+        ->whereHas('lancamento', function ($query) {
+            $query->where('tipo', 1); 
+        })
+        ->get();
+
+        return view('lancamento.contas_receber_listar', compact('parcelas'));
+    }
+
     //INDEX CONTAS A PAGAR
     public function indexContasPagar(){
         return view('lancamento.contas_pagar_listar');

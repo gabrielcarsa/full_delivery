@@ -182,6 +182,7 @@ Route::middleware([
         
         //LANÇAMENTO
         Route::get('/contas-receber', [LancamentoController::class, 'indexContasReceber'])->name('contas_receber.index');
+        Route::get('/contas-receber/listar', [LancamentoController::class, 'indexAllContasReceber'])->name('contas_receber.indexAll');
         Route::get('/lancamento/novo', [LancamentoController::class, 'create'])->name('lancamento.novo');
         Route::post('/lancamento/cadastrar', [LancamentoController::class, 'store'])->name('lancamento.store');
 

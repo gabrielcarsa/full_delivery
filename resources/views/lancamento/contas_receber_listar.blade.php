@@ -44,7 +44,7 @@
         <!-- FIM HEADER -->
 
         <!-- FORM -->
-        <form action="" method="post" autocomplete="off">
+        <form action="{{route('contas_receber.indexAll')}}" method="get" autocomplete="off">
             @csrf
 
             <!-- CARD FORM -->
@@ -221,6 +221,67 @@
         </form>
         <!-- FIM FORM -->
 
+        <!-- PARCELAS -->
+        @if(isset($parcelas))
+        <div class="bg-white p-3 rounded border my-3">
+            <!-- HEADER TABLE PARCELAS -->
+            <div class="mb-3">
+                <button class="btn border-padrao text-padrao dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Exportar
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">PDF</a></li>
+                </ul>
+            </div>
+            <!-- FIM HEADER TABLE PARCELAS -->
+
+            <!-- TABLE PARCELAS  -->
+            <table class="table table-hover table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" id="selecionar_todos" name="selecionar_todos" />
+                        </th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Loja</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Nº Parcela</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Vencimento</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- PARCELAS -->
+                    @foreach ($parcelas as $parcela)
+                    <tr>
+                        <td>
+                            <input data-bs-toggle="collapse" data-bs-target="#collapse{{$parcela->id}}"
+                                aria-expanded="false" aria-controls="collapse{{$parcela->id}}" type="checkbox" id=""
+                                name="checkboxes[]" value="{{ $parcela->id }}" />
+                        </td>
+                        <td>{{$parcela->id}}</td>
+                        <td>{{$parcela->lancamento->loja->nome}}</td>
+                        <td>{{$parcela->lancamento->cliente->nome}}</td>
+                        <td>{{$parcela->numero_parcela}} de {{$parcela->lancamento->quantidade_parcela}}</td>
+                        <td>{{$parcela->lancamento->categoria_financeiro->nome }}</td>
+                        <td>{{$parcela->lancamento->descricao}}</td>
+                        <td>{{\Carbon\Carbon::parse($parcela->data_vencimento)->format('d/m/Y') }}</td>
+                        <td>R$ {{number_format($parcela->valor, 2, ',', '.')}}</td>
+                        <td>{{$parcela->situacao == 1 ? 'Recebido' : 'Em aberto'}}</td>
+                    </tr>
+                    @endforeach
+                    <!-- FIM PARCELAS -->
+
+                </tbody>
+            </table>
+            <!-- FIM TABLE PARCELAS -->
+            @endif
+        </div>
+        <!-- FIM PARCELAS -->
 
     </div>
 
