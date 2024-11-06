@@ -23,8 +23,8 @@ class Lancamento extends Model
         return $this->belongsTo(Cliente::class);
     }
 
-    public function conta_bancaria(){
-        return $this->belongsTo(ContaBancaria::class);
+    public function loja(){
+        return $this->belongsTo(Loja::class);
     }
 
     public function usuarioCadastrador()

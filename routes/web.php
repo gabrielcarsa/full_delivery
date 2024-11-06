@@ -179,9 +179,12 @@ Route::middleware([
 
         Route::get('/gestor-mesas', [MesaController::class, 'gestor'])->name('mesa.gestor');
         Route::get('/gestor-mesas/detalhes', [MesaController::class, 'show'])->name('mesa.show');
-
-        //CONTAS A RECEBER
+        
+        //LANÇAMENTO
         Route::get('/contas-receber', [LancamentoController::class, 'indexContasReceber'])->name('contas_receber.index');
+        Route::get('/lancamento/novo', [LancamentoController::class, 'create'])->name('lancamento.novo');
+        Route::post('/lancamento/cadastrar', [LancamentoController::class, 'store'])->name('lancamento.store');
+
 
         //CATEGORIA FINANCEIRO
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');

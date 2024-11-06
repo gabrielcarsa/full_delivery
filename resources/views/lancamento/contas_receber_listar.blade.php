@@ -33,7 +33,7 @@
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="{{ route('cliente.novo') }}">
+                    href="{{ route('lancamento.novo', ['varPagarOuReceber' => 1]) }}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>

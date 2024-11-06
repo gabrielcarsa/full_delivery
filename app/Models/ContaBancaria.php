@@ -11,10 +11,6 @@ class ContaBancaria extends Model
     protected $table = 'conta_bancaria';
     protected $guarded = [];
 
-    public function lancamento(){
-        return $this->hasMany(Lancamento::class);
-    }
-
     public function movimentacao(){
         return $this->hasMany(Movimentacao::class);
     }

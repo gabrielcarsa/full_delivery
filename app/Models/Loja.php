@@ -46,4 +46,9 @@ class Loja extends Model
      {
         return $this->hasMany(Mesa::class);
      }
+
+     public function lancamento()
+     {
+        return $this->hasMany(Lancamento::class);
+     }
 }
