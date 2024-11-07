@@ -15,26 +15,45 @@ use Illuminate\Support\Facades\Auth;
 
 class LancamentoController extends Controller
 {
-    //INDEX CONTAS A RECEBER
+    //INDEX CONTAS A PAGAR
     public function indexContasReceber(){
-        return view('lancamento.contas_receber_listar');
+        //Pagar(0) ou Receber(1)
+        $varPagarOuReceber = 1;
+        return view('lancamento.listar', compact('varPagarOuReceber'));
     }
 
     //LISTAGEM CONTAS A RECEBER
     public function indexAllContasReceber(){
+        //Pagar(0) ou Receber(1)
+        $varPagarOuReceber = 1;
         $parcelas = ParcelaLancamento::with('lancamento')
         ->whereHas('lancamento', function ($query) {
             $query->where('tipo', 1); 
         })
         ->get();
 
-        return view('lancamento.contas_receber_listar', compact('parcelas'));
+        return view('lancamento.listar', compact('parcelas', 'varPagarOuReceber'));
     }
 
     //INDEX CONTAS A PAGAR
     public function indexContasPagar(){
-        return view('lancamento.contas_pagar_listar');
+        //Pagar(0) ou Receber(1)
+        $varPagarOuReceber = 0;
+        return view('lancamento.listar', compact('varPagarOuReceber'));
     }
+
+    //LISTAGEM CONTAS A PAGAR
+    public function indexAllContasPagar(){
+    //Pagar(0) ou Receber(1)
+    $varPagarOuReceber = 0;
+    $parcelas = ParcelaLancamento::with('lancamento')
+    ->whereHas('lancamento', function ($query) {
+        $query->where('tipo', 0); 
+    })
+    ->get();
+
+    return view('lancamento.listar', compact('parcelas', 'varPagarOuReceber'));
+}
 
     //NOVO LANÇAMENTO
     public function create(Request $request){

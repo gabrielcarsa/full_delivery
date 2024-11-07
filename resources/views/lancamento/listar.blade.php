@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col">
                 <h2 class="my-3 fw-bolder fs-1">
-                    Contas a receber
+                    {{$varPagarOuReceber == 0 ? 'Contas a pagar' : 'Contas a receber'}}
                 </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
@@ -37,14 +37,14 @@
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>
-                    Novo recebimento
+                    {{$varPagarOuReceber == 0 ? 'Novo pagamento' : 'Novo recebimento'}}
                 </a>
             </div>
         </div>
         <!-- FIM HEADER -->
 
         <!-- FORM -->
-        <form action="{{route('contas_receber.indexAll')}}" method="get" autocomplete="off">
+        <form action="{{route($varPagarOuReceber == 0 ? 'contas_pagar.indexAll' : 'contas_receber.indexAll')}}" method="get" autocomplete="off">
             @csrf
 
             <!-- CARD FORM -->
@@ -154,9 +154,9 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="tipoPeriodo"
-                                        id="periodoRecebimento" value="2">
-                                    <label class="form-check-label" for="periodoRecebimento">
-                                        Recebimento
+                                        id="periodoPagamento" value="2">
+                                    <label class="form-check-label" for="periodoPagamento">
+                                        Pagamento
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
