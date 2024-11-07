@@ -138,7 +138,7 @@ class LancamentoController extends Controller
                 'lancamento_id' => $lancamento->id,
                 'numero_parcela' => $i,
                 'situacao' => 0,
-                'valor' => $i < 1 && $valor_entrada != null ? $valor_entrada : $request->input('valor_parcela'),
+                'valor' => $i < 2 && $valor_entrada != null ? $valor_entrada : $request->input('valor_parcela'),
                 'cadastrado_usuario_id' => Auth::guard()->user()->id,
                 'data_vencimento' => $i > 1 ? $dataVencimentoCarbon->addMonth() : $dataVencimentoCarbon,
             ]);
