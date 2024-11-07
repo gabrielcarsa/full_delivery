@@ -27,13 +27,13 @@
         <!-- HEADER -->
         <div class="">
             <h2 class="my-3 fw-bolder fs-1">
-                Nova conta a receber
+                {{$varPagarOuReceber == 0 ? 'Nova conta a pagar' : 'Nova conta a receber'}}
             </h2>
         </div>
         <!-- FIM HEADER -->
 
         <div class="bg-white rounded p-3 border">
-            <form action="{{ route('lancamento.store', ['varPagarOuReceber' => 1]) }}" method="post">
+            <form action="{{ route('lancamento.store', ['varPagarOuReceber' => $varPagarOuReceber == 0 ? 0 : 1]) }}" method="post">
                 @csrf
                 <!-- LINHA -->
                 <div class="row">
@@ -56,13 +56,29 @@
                     </div>
                     <div class="col-4">
                         <label for="inputClientesFornecedores" class="form-label">
-                            Cliente
+                            {{$varPagarOuReceber == 0 ? 'Fornecedor' : 'Cliente'}}
                         </label>
                         <select id="inputClientesFornecedores" name="cliente_fornecedor_id"
                             class="form-select form-control">
                             <option value="1" select>
                                 -- Selecione --
                             </option>
+
+                            <!-- VERIFICANDO CLIENTE OU FORNCEDOR -->
+                            @if($varPagarOuReceber == 0)
+
+                            <!-- FORNECEDOR -->
+                            @if($data['fornecedores'] != null)
+                            @foreach($data['fornecedores'] as $fornecedor)
+                            <option value="{{$fornecedor->id}}">
+                                {{$fornecedor->nome}}
+                            </option>
+                            @endforeach
+                            @endif
+
+                            @else
+
+                            <!-- CLIENTE -->
                             @if($data['clientes'] != null)
                             @foreach($data['clientes'] as $cliente)
                             <option value="{{$cliente->id}}">
@@ -70,6 +86,10 @@
                             </option>
                             @endforeach
                             @endif
+                          
+                            @endif
+                            <!-- FIM VERIFICANDO CLIENTE OU FORNCEDOR -->
+
                         </select>
                     </div>
                     <div class="col-4">

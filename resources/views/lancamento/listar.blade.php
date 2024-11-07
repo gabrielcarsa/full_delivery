@@ -33,7 +33,7 @@
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="{{ route('lancamento.novo', ['varPagarOuReceber' => 1]) }}">
+                    href="{{ route('lancamento.novo', ['varPagarOuReceber' => $varPagarOuReceber == 0 ? 0 : 1]) }}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>
@@ -44,7 +44,8 @@
         <!-- FIM HEADER -->
 
         <!-- FORM -->
-        <form action="{{route($varPagarOuReceber == 0 ? 'contas_pagar.indexAll' : 'contas_receber.indexAll')}}" method="get" autocomplete="off">
+        <form action="{{route($varPagarOuReceber == 0 ? 'contas_pagar.indexAll' : 'contas_receber.indexAll')}}"
+            method="get" autocomplete="off">
             @csrf
 
             <!-- CARD FORM -->
@@ -78,10 +79,10 @@
                         </div>
 
                         <div class="col-sm-4">
-                            <label for="inputCliente" class="form-label">
-                                Cliente
+                            <label for="inputClienteFornecedor" class="form-label">
+                                {{$varPagarOuReceber == 0 ? 'Fornecedor' : 'Cliente'}}
                             </label>
-                            <select id="inputCliente" name="cliente_id" class="form-select form-control">
+                            <select id="inputClienteFornecedor" name="cliente_fornecedor_id" class="form-select form-control">
                                 <option value="1" select>
                                     -- Selecione --
                                 </option>
@@ -245,7 +246,7 @@
                         </th>
                         <th scope="col">ID</th>
                         <th scope="col">Loja</th>
-                        <th scope="col">Cliente</th>
+                        <th scope="col">{{$varPagarOuReceber == 0 ? 'Fornecedores' : 'Clientes'}}</th>
                         <th scope="col">Nº Parcela</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Descrição</th>
@@ -265,7 +266,11 @@
                         </td>
                         <td>{{$parcela->id}}</td>
                         <td>{{$parcela->lancamento->loja->nome}}</td>
+                        @if($varPagarOuReceber == 0)
+                        <td>{{$parcela->lancamento->fornecedor->nome}}</td>
+                        @else
                         <td>{{$parcela->lancamento->cliente->nome}}</td>
+                        @endif
                         <td>{{$parcela->numero_parcela}} de {{$parcela->lancamento->quantidade_parcela}}</td>
                         <td>{{$parcela->lancamento->categoria_financeiro->nome }}</td>
                         <td>{{$parcela->lancamento->descricao}}</td>

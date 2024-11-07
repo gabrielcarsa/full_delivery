@@ -78,14 +78,13 @@ class LancamentoController extends Controller
         $lojas = Loja::all();
 
         $data = [
-            'varPagarOuReceber' => $varPagarOuReceber,
             'categorias' => $categorias,
             'lojas' => $lojas,
             'clientes' => $clientes,
             'fornecedores' => $fornecedores,
         ];
 
-        return view('lancamento.novo', compact('data'));
+        return view('lancamento.novo', compact('data', 'varPagarOuReceber'));
     }
 
     //SALVAR LANÇAMENTO
@@ -96,7 +95,6 @@ class LancamentoController extends Controller
         
         //Pagar(0) ou Receber(1)
         $varPagarOuReceber = $request->input('varPagarOuReceber');
-
 
         $qtd_parcelas = $request->input('quantidade_parcela');
         $data_vencimento = $request->input('data_vencimento'); 
