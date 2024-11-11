@@ -32,6 +32,54 @@
                 </h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
+                <div class="dropdown mr-2">
+                    <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Ações
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="border-bottom py-2">
+                            <a class="dropdown-item d-flex align-items-center" href="#" id="alterar-valor">
+                                <span class="material-symbols-outlined mr-2">
+                                    attach_money
+                                </span>
+                                Alterar valor parcela
+                            </a>
+                        </li>
+                        <li class="border-bottom py-2">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <span class="material-symbols-outlined mr-2">
+                                    edit_calendar
+                                </span>
+                                Alterar vencimento
+                            </a>
+                        </li>
+                        <li class="border-bottom py-2">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <span class="material-symbols-outlined mr-2">
+                                    payments
+                                </span>
+                                Baixar parcela
+                            </a>
+                        </li>
+                        <li class="border-bottom py-2">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <span class="material-symbols-outlined mr-2">
+                                    undo
+                                </span>
+                                {{$varPagarOuReceber == 0 ? 'Estornar pagamento' : 'Estornar recebimento'}}
+                            </a>
+                        </li>
+                        <li class="py-2">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <span class="material-symbols-outlined mr-2">
+                                    delete
+                                </span>
+                                Estornar parcela
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
                     href="{{ route('lancamento.novo', ['varPagarOuReceber' => $varPagarOuReceber == 0 ? 0 : 1]) }}">
                     <span class="material-symbols-outlined mr-1">
@@ -82,7 +130,8 @@
                             <label for="inputClienteFornecedor" class="form-label">
                                 {{$varPagarOuReceber == 0 ? 'Fornecedor' : 'Cliente'}}
                             </label>
-                            <select id="inputClienteFornecedor" name="cliente_fornecedor_id" class="form-select form-control">
+                            <select id="inputClienteFornecedor" name="cliente_fornecedor_id"
+                                class="form-select form-control">
                                 <option value="1" select>
                                     -- Selecione --
                                 </option>
@@ -289,5 +338,123 @@
         <!-- FIM PARCELAS -->
 
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+
+
+        // Captura o clique no Parcelas Reajustar
+        $("#alterar-valor").click(function(event) {
+            event.preventDefault();
+
+            // Obtenha os valores dos checkboxes selecionados
+            var checkboxesSelecionados = [];
+
+            $("input[name='checkboxes[]']:checked").each(function() {
+                checkboxesSelecionados.push($(this).val());
+            });
+
+            // Crie a URL com os valores dos checkboxes como parâmetros de consulta
+            var url = "{{ route('parcela.editValorParcela') }}?checkboxes=" + checkboxesSelecionados.join(',');
+
+            // Redirecione para a URL com os parâmetros
+            window.location.href = url;
+        });
+
+        // Captura o clique no Alterar Data Vencimento
+        $("#alterar_vencimento").click(function(event) {
+            event.preventDefault();
+
+            // Obtenha os valores dos checkboxes selecionados
+            var checkboxesSelecionados = [];
+
+            $("input[name='checkboxes[]']:checked").each(function() {
+                checkboxesSelecionados.push($(this).val());
+            });
+
+            // Crie a URL com os valores dos checkboxes como parâmetros de consulta
+            var url = "?checkboxes=" + checkboxesSelecionados
+                .join(
+                    ',') + "&origem=contas_pagar";
+
+            // Redirecione para a URL com os parâmetros
+            window.location.href = url;
+        });
+
+        $("#baixar_parcela").click(function(event) {
+            event.preventDefault();
+
+            // Obtenha os valores dos checkboxes selecionados
+            var checkboxesSelecionados = [];
+
+            $("input[name='checkboxes[]']:checked").each(function() {
+                checkboxesSelecionados.push($(this).val());
+            });
+
+            // Crie a URL com os valores dos checkboxes como parâmetros de consulta
+            var url = "?checkboxes=" + checkboxesSelecionados
+                .join(
+                    ',') +
+                "&origem=contas_pagar";
+
+            // Redirecione para a URL com os parâmetros
+            window.location.href = url;
+        });
+
+        $("#estornar_pagamento").click(function(event) {
+            event.preventDefault();
+
+            // Obtenha os valores dos checkboxes selecionados
+            var checkboxesSelecionados = [];
+
+            $("input[name='checkboxes[]']:checked").each(function() {
+                checkboxesSelecionados.push($(this).val());
+            });
+
+            // Crie a URL com os valores dos checkboxes como parâmetros de consulta
+            var url = "?checkboxes=" + checkboxesSelecionados.join(
+                    ',') +
+                "&origem=contas_pagar";
+
+            // Redirecione para a URL com os parâmetros
+            window.location.href = url;
+        });
+
+        $("#estornar_parcela").click(function(event) {
+            event.preventDefault();
+
+            // Obtenha os valores dos checkboxes selecionados
+            var checkboxesSelecionados = [];
+
+            $("input[name='checkboxes[]']:checked").each(function() {
+                checkboxesSelecionados.push($(this).val());
+            });
+
+            // Crie a URL com os valores dos checkboxes como parâmetros de consulta
+            var url = "?checkboxes=" + checkboxesSelecionados
+                .join(
+                    ',') +
+                "&origem=contas_pagar";
+
+            // Redirecione para a URL com os parâmetros
+            window.location.href = url;
+        });
+
+
+        // Selecionar todos checkboxes
+        $("#selecionar_todos").click(function() {
+            // Obtém o estado atual do "Selecionar Todos" dentro da tabela atual
+            var selecionarTodos = $(this).prop('checked');
+
+            // Encontra os checkboxes individuais dentro da tabela atual e marca ou desmarca com base no estado do "Selecionar Todos"
+            $(this).closest('table').find("input[name='checkboxes[]']").prop('checked',
+                selecionarTodos);
+        });
+
+
+    });
+    </script>
 
 </x-app-layout>

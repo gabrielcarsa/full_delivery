@@ -17,6 +17,7 @@ use App\Http\Controllers\FormaPagamentoLojaController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\LancamentoController;
 use App\Http\Controllers\CategoriaFinanceiroController;
+use App\Http\Controllers\ParcelaLancamentoController;
 
 
 
@@ -188,6 +189,8 @@ Route::middleware([
         Route::get('/lancamento/novo', [LancamentoController::class, 'create'])->name('lancamento.novo');
         Route::post('/lancamento/cadastrar', [LancamentoController::class, 'store'])->name('lancamento.store');
 
+        //PARCELA LANÇAMENTO
+        Route::get('/parcela', [ParcelaLancamentoController::class, 'editValorParcela'])->name('parcela.editValorParcela');
 
         //CATEGORIA FINANCEIRO
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');
