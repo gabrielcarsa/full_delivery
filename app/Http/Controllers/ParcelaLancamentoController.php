@@ -9,26 +9,32 @@ use Carbon\Carbon;
 
 class ParcelaLancamentoController extends Controller
 {
+    private function validarCheckboxes($checkboxesSelecionados)
+    {
+        foreach($checkboxesSelecionados as $parcelaId) {
+            $parcela = ParcelaLancamento::find($parcelaId);
+            if($parcela && $parcela->situacao == 1) {
+                return redirect()->back()->with('error', 'Selecione apenas parcelas em aberto! Dica: para alterar parcelas já pagas, estorne o pagamento!');
+            }
+        }
+        return null;
+    }
+
+    private function redirecionarComSucesso($tipo)
+    {
+        $rota = $tipo == 0 ? 'contas_pagar.index' : 'contas_receber.index';
+        return redirect()->route($rota)->with('success', 'Parcelas alteradas com sucesso');
+    }
+
     //VIEW PARA ALTERAR VALOR PARCELA
     public function editValorParcela(Request $request){
 
-        // Verifique se a chave 'checkboxes' está presente na requisição
-        if ($request->has('checkboxes') && $request->filled('checkboxes')) {
-            // Recupere os valores dos checkboxes da consulta da URL
-            $checkboxesSelecionados = $request->input('checkboxes');
+        if ($request->filled('checkboxes')) {
 
-            // Converta os valores dos checkboxes em um array
-            $checkboxesSelecionados = explode(',', $checkboxesSelecionados); 
+            $checkboxesSelecionados = explode(',', $request->input('checkboxes'));
+            $validacao = $this->validarCheckboxes($checkboxesSelecionados);
 
-            //Verificar se há parcelas pagas
-            foreach($checkboxesSelecionados as $parcelaId) {
-                $parcela = ParcelaLancamento::find($parcelaId);
-
-                //Se houver parcelas pagas redireciona de volta
-                if($parcela->situacao == 1){
-                    return redirect()->back()->with('error', 'Selecione apenas parcelas em aberto! Dica: para alterar parcelas já pagas estornar o pagamento!');
-                }
-            }
+            if ($validacao) return $validacao;
 
             //Select nas parcelas
             foreach ($checkboxesSelecionados as $parcelaId) {
@@ -74,34 +80,18 @@ class ParcelaLancamentoController extends Controller
 
         $pagarOuReceber = Lancamento::find($lancamentoID);
 
-        if($pagarOuReceber->tipo == 0){
-            return redirect()->route('contas_pagar.index')->with('success', 'Parcelas alteradas com sucesso');   
-        }else{
-            return redirect()->route('contas_receber.index')->with('success', 'Parcelas alteradas com sucesso');   
-        }
-             
+        return $this->redirecionarComSucesso($pagarOuReceber->tipo);
     }
 
     //VIEW PARA ALTERAR DATA VENCIMENTO PARCELA
     public function editVencimentoParcela(Request $request){
 
-        // Verifique se a chave 'checkboxes' está presente na requisição
-        if ($request->has('checkboxes') && $request->filled('checkboxes')) {
-            // Recupere os valores dos checkboxes da consulta da URL
-            $checkboxesSelecionados = $request->input('checkboxes');
+        if ($request->filled('checkboxes')) {
+           
+            $checkboxesSelecionados = explode(',', $request->input('checkboxes'));
+            $validacao = $this->validarCheckboxes($checkboxesSelecionados);
 
-            // Converta os valores dos checkboxes em um array
-            $checkboxesSelecionados = explode(',', $checkboxesSelecionados); 
-
-            //Verificar se há parcelas pagas
-            foreach($checkboxesSelecionados as $parcelaId) {
-                $parcela = ParcelaLancamento::find($parcelaId);
-
-                //Se houver parcelas pagas redireciona de volta
-                if($parcela->situacao == 1){
-                    return redirect()->back()->with('error', 'Selecione apenas parcelas em aberto! Dica: para alterar parcelas já pagas estornar o pagamento!');
-                }
-            }
+            if ($validacao) return $validacao;
 
             //Select nas parcelas
             foreach ($checkboxesSelecionados as $parcelaId) {
@@ -153,11 +143,6 @@ class ParcelaLancamentoController extends Controller
 
         $pagarOuReceber = Lancamento::find($lancamentoID);
 
-        if($pagarOuReceber->tipo == 0){
-            return redirect()->route('contas_pagar.index')->with('success', 'Parcelas alteradas com sucesso');   
-        }else{
-            return redirect()->route('contas_receber.index')->with('success', 'Parcelas alteradas com sucesso');   
-        }
-             
+        return $this->redirecionarComSucesso($pagarOuReceber->tipo);
     }
 }
