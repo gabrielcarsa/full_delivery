@@ -37,8 +37,9 @@
         <!-- FIM HEADER -->
 
         <div class="bg-white rounded p-3 border">
-            <form action="" method="post">
+            <form action="{{ route('parcela.updateValorParcela') }}" method="post">
                 @csrf
+                @method('PUT')
 
                 @if($varOperacao == "alterarValor")
                 <div class="col-2">
@@ -62,38 +63,51 @@
                 </div>
                 @endif
 
-                <div class="border rounded p-3 my-3 text-center">
+                <div class="border rounded p-3 my-3">
                     <p class="fw-semibold">
-                        Parcelas a serem alteradas:
+                        {{count($parcelas)}} parcelas a serem alteradas:
                     </p>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Loja</th>
-                                <th scope="col">Nº</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Data de vencimento</th>
-                                <th scope="col">Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- PARCELAS -->
-                            @foreach ($parcelas as $parcela)
-                            <tr>
-                                <td>{{$parcela[0]->id}}</td>
-                                <td>{{$parcela[0]->lancamento->loja->nome}}</td>
-                                <td>{{$parcela[0]->numero_parcela}} de {{$parcela[0]->lancamento->quantidade_parcela}}
-                                </td>
-                                <td>{{$parcela[0]->lancamento->categoria_financeiro->nome }}</td>
-                                <td>{{\Carbon\Carbon::parse($parcela[0]->data_vencimento)->format('d/m/Y') }}</td>
-                                <td>R$ {{number_format($parcela[0]->valor, 2, ',', '.')}}</td>
-                            </tr>
-                            @endforeach
-                            <!-- FIM PARCELAS -->
-                        </tbody>
-                    </table>
+                    <!-- PARCELAS -->
+                    @foreach ($parcelas as $parcela)
+                    <div class="row my-2">
+                        <div class="col-md-1">
+                            <label for="inputIdParcelas" class="form-label">ID</label>
+                            <input type="text" name="" value="{{ $parcela[0]->id }}" readonly disabled
+                                class="form-control" id="inputIdParcelas">
+                            <input type="hidden" name="parcela_id[]" value="{{ $parcela[0]->id }}">
+                        </div>
+                        <div class="col-md-1">
+                            <label for="" class="form-label">Nº parcela</label>
+                            <input type="text" name="numero_parcela"
+                                value="{{ $parcela[0]->numero_parcela }} / {{ $parcela[0]->lancamento->quantidade_parcela }}"
+                                readonly disabled class="form-control" id="">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="" class="form-label">Categoria</label>
+                            <input type="text" name="categoria"
+                                value="{{ $parcela[0]->lancamento->categoria_financeiro->nome }}" readonly disabled
+                                class="form-control" id="">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputDataVencimentoParcelas" class="form-label">
+                                Data de vencimento
+                            </label>
+                            <input type="text" name="data_vencimento_parcela"
+                                value="{{ \Carbon\Carbon::parse( $parcela[0]->data_vencimento )->format('d/m/Y') }}"
+                                readonly disabled class="form-control" id="inputDataVencimentoParcelas">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputValorParcelas" class="form-label">Valor</label>
+                            <input type="text" name="valor_parcela"
+                                value="{{ number_format($parcela[0]->valor, 2, ',', '.') }}" readonly disabled
+                                class="form-control" id="inputValorParcelas">
+                        </div>
+                    </div>
+
+                    @endforeach
+                    <!-- FIM PARCELAS -->
+
                 </div>
 
                 <div class="p-3 d-flex justify-content-end">

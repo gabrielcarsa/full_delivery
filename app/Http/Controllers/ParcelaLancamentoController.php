@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ParcelaLancamento;
+use App\Models\Lancamento;
 
 class ParcelaLancamentoController extends Controller
 {
@@ -45,5 +46,37 @@ class ParcelaLancamentoController extends Controller
         }
     }
 
-    
+    public function updateValorParcela(Request $request){
+        //Transformar em formato correto para salvar no BD e validação
+        $request->merge([
+            'valor_parcela' => str_replace(['.', ','], ['', '.'], $request->get('valor_parcela')),
+        ]);
+
+        $validated = $request->validate([
+            'valor_parcela' => 'required|numeric|min:0.1',
+        ]);
+
+        //Pegar um lancamento ID para verificar se é Conta a Pagar ou Receber
+        $lancamentoID = null;
+
+        //IDs das parcelas a serem alteradas
+        $parcelasIds = $request->get('parcela_id', []);
+
+        foreach($parcelasIds as $p){
+            $parcela = ParcelaLancamento::find($p);
+            $parcela->valor = $request->input('valor_parcela');
+            $parcela->save();
+
+            $lancamentoID = $parcela->lancamento_id;
+        }
+
+        $pagarOuReceber = Lancamento::find($lancamentoID);
+
+        if($pagarOuReceber->tipo == 0){
+            return redirect()->route('contas_pagar.index')->with('success', 'Parcelas alteradas com sucesso');   
+        }else{
+            return redirect()->route('contas_receber.index')->with('success', 'Parcelas alteradas com sucesso');   
+        }
+             
+    }
 }

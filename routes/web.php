@@ -190,7 +190,8 @@ Route::middleware([
         Route::post('/lancamento/cadastrar', [LancamentoController::class, 'store'])->name('lancamento.store');
 
         //PARCELA LANÇAMENTO
-        Route::get('/parcela', [ParcelaLancamentoController::class, 'editValorParcela'])->name('parcela.editValorParcela');
+        Route::get('/parcela/editar-valor', [ParcelaLancamentoController::class, 'editValorParcela'])->name('parcela.editValorParcela');
+        Route::put('/parcela/alterar-valor', [ParcelaLancamentoController::class, 'updateValorParcela'])->name('parcela.updateValorParcela');
 
         //CATEGORIA FINANCEIRO
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');
