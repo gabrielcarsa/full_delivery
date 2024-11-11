@@ -37,7 +37,11 @@
         <!-- FIM HEADER -->
 
         <div class="bg-white rounded p-3 border">
+            @if($varOperacao == "alterarValor")
             <form action="{{ route('parcela.updateValorParcela') }}" method="post">
+            @elseif($varOperacao == "alterarVencimento")
+            <form action="{{ route('parcela.updateVencimentoParcela') }}" method="post">
+            @endif
                 @csrf
                 @method('PUT')
 

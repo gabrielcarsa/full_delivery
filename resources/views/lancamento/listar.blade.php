@@ -3,25 +3,61 @@
     <div class="container">
 
         <!-- MENSAGENS -->
-        @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="toast-container position-fixed top-0 end-0">
+            @if(session('success'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
+                        check_circle
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('success') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('error') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        @foreach ($errors->all() as $error)
+                        <p class="fs-5 m-0">
+                            {{ $error }}
+                        </p>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
         </div>
-        @endif
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-        @endif
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         <!-- FIM MENSAGENS -->
 
         <!-- HEADER -->
@@ -47,7 +83,7 @@
                             </a>
                         </li>
                         <li class="border-bottom py-2">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="#" id="alterar-vencimento">
                                 <span class="material-symbols-outlined mr-2">
                                     edit_calendar
                                 </span>
@@ -357,14 +393,15 @@
             });
 
             // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-            var url = "{{ route('parcela.editValorParcela') }}?checkboxes=" + checkboxesSelecionados.join(',');
+            var url = "{{ route('parcela.editValorParcela') }}?checkboxes=" + checkboxesSelecionados
+                .join(',');
 
             // Redirecione para a URL com os parâmetros
             window.location.href = url;
         });
 
         // Captura o clique no Alterar Data Vencimento
-        $("#alterar_vencimento").click(function(event) {
+        $("#alterar-vencimento").click(function(event) {
             event.preventDefault();
 
             // Obtenha os valores dos checkboxes selecionados
@@ -375,9 +412,8 @@
             });
 
             // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-            var url = "?checkboxes=" + checkboxesSelecionados
-                .join(
-                    ',') + "&origem=contas_pagar";
+            var url = "{{route('parcela.editVencimentoParcela')}}?checkboxes=" + checkboxesSelecionados
+                .join(',');
 
             // Redirecione para a URL com os parâmetros
             window.location.href = url;

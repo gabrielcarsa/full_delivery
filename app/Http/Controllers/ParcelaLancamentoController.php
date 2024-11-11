@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ParcelaLancamento;
 use App\Models\Lancamento;
+use Carbon\Carbon;
 
 class ParcelaLancamentoController extends Controller
 {
@@ -46,6 +47,7 @@ class ParcelaLancamentoController extends Controller
         }
     }
 
+    //SALVAR ALTERAÇÃO VALOR DAS PARCELAS
     public function updateValorParcela(Request $request){
         //Transformar em formato correto para salvar no BD e validação
         $request->merge([
@@ -65,6 +67,85 @@ class ParcelaLancamentoController extends Controller
         foreach($parcelasIds as $p){
             $parcela = ParcelaLancamento::find($p);
             $parcela->valor = $request->input('valor_parcela');
+            $parcela->save();
+
+            $lancamentoID = $parcela->lancamento_id;
+        }
+
+        $pagarOuReceber = Lancamento::find($lancamentoID);
+
+        if($pagarOuReceber->tipo == 0){
+            return redirect()->route('contas_pagar.index')->with('success', 'Parcelas alteradas com sucesso');   
+        }else{
+            return redirect()->route('contas_receber.index')->with('success', 'Parcelas alteradas com sucesso');   
+        }
+             
+    }
+
+    //VIEW PARA ALTERAR DATA VENCIMENTO PARCELA
+    public function editVencimentoParcela(Request $request){
+
+        // Verifique se a chave 'checkboxes' está presente na requisição
+        if ($request->has('checkboxes') && $request->filled('checkboxes')) {
+            // Recupere os valores dos checkboxes da consulta da URL
+            $checkboxesSelecionados = $request->input('checkboxes');
+
+            // Converta os valores dos checkboxes em um array
+            $checkboxesSelecionados = explode(',', $checkboxesSelecionados); 
+
+            //Verificar se há parcelas pagas
+            foreach($checkboxesSelecionados as $parcelaId) {
+                $parcela = ParcelaLancamento::find($parcelaId);
+
+                //Se houver parcelas pagas redireciona de volta
+                if($parcela->situacao == 1){
+                    return redirect()->back()->with('error', 'Selecione apenas parcelas em aberto! Dica: para alterar parcelas já pagas estornar o pagamento!');
+                }
+            }
+
+            //Select nas parcelas
+            foreach ($checkboxesSelecionados as $parcelaId) {
+                $parcelas[] = ParcelaLancamento::with('lancamento')
+                ->where('id', $parcelaId)
+                ->get();
+            }
+
+            //Variável para ajudar identificar operação a ser feita na view
+            $varOperacao = "alterarVencimento";
+
+            return view('parcela_lancamento/editar', compact('parcelas', 'varOperacao'));
+
+        }else{
+            return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
+        }
+    }
+
+    //SALVAR ALTERAÇÃO VENCIMENTO DAS PARCELAS
+    public function updateVencimentoParcela(Request $request){
+
+        $validated = $request->validate([
+            'data_vencimento' => 'required|date',
+        ]);
+
+        //Pegar um lancamento ID para verificar se é Conta a Pagar ou Receber
+        $lancamentoID = null;
+
+        //IDs das parcelas a serem alteradas
+        $parcelasIds = $request->get('parcela_id', []);
+        
+        $data_vencimento = $request->input('data_vencimento');
+
+        //Data formatada Carbon
+        $dataCarbon = Carbon::createFromFormat('Y-m-d', $data_vencimento);
+
+        foreach($parcelasIds as $i => $p){
+            $parcela = ParcelaLancamento::find($p);
+
+            if($i > 0){
+                $parcela->data_vencimento = $dataCarbon->addMonth();
+            }else{
+                $parcela->data_vencimento = $data_vencimento;
+            }
             $parcela->save();
 
             $lancamentoID = $parcela->lancamento_id;
