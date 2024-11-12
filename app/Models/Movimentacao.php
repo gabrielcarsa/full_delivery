@@ -28,4 +28,8 @@ class Movimentacao extends Model
     {
        return $this->belongsTo(User::class, 'alterado_usuario_id');
     }
+
+    public function parcela_lancamento(){
+        return $this->belongsTo(ParcelaLancamento::class);
+    }
 }

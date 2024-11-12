@@ -66,8 +66,8 @@
                                 </th>
                                 <th scope="row">
                                     <input type="text" name="valor"
-                                        value="{{ number_format($parcela[0]->valor, 2, ',', '.') }}" readonly
-                                        disabled class="form-control">
+                                        value="{{ number_format($parcela[0]->valor, 2, ',', '.') }}" readonly disabled
+                                        class="form-control">
                                 </th>
                                 <th scope="row">
                                     <input type="text" name="data_vencimento"
@@ -92,6 +92,31 @@
                     </table>
                     <!-- FIM TABELA PARCELAS -->
 
+                </div>
+
+                <div class="row row-form-destacar">
+                    <div class="col-md-4">
+                        <label for="inputTitularConta" class="form-label">Conta corrente</label>
+                        <select id="inputTitularConta" name="titular_conta_id" class="form-select form-control">
+                            <option value="0" {{ old('titular_conta_id') == 0 ? 'selected' : '' }}>-- Selecione --
+                            </option>
+                            @foreach ($data['titular_conta'] as $t)
+                            <option value="{{ $t->id_titular_conta }}"
+                                {{ old('titular_conta_id') == $t->id_titular_conta ? 'selected' : '' }}>
+                                @if(empty($t->nome))
+                                {{$t->razao_social}}
+                                @else
+                                {{$t->nome}}
+                                @endif
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="inputParcial" class="form-label">Baixa parcial? </label>
+                        <input id="inputParcial" type="checkbox" name="baixa_parcial">
+                    </div>
                 </div>
 
                 <div class="p-3 d-flex justify-content-end">

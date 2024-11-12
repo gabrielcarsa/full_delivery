@@ -14,4 +14,8 @@ class ParcelaLancamento extends Model
     public function lancamento(){
         return $this->belongsTo(Lancamento::class);
     }
+
+    public function movimentacao(){
+        return $this->hasMany(Movimentacao::class);
+    }
 }

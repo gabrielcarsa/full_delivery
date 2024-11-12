@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ParcelaLancamento;
 use App\Models\Lancamento;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ParcelaLancamentoController extends Controller
 {
@@ -163,7 +164,12 @@ class ParcelaLancamentoController extends Controller
                 ->get();
             }
 
-            return view('parcela_lancamento/baixar', compact('parcelas'));
+            $lancamentoID = $parcelas[0][0]->lancamento_id;
+            $lancamento = Lancamento::find($lancamentoID);
+            $loja_id = $lancamento->loja_id;
+            $loja = Loja::find($loja_id);
+
+            return view('parcela_lancamento/baixar', compact('parcelas', 'loja'));
 
         }else{
             return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
@@ -173,5 +179,62 @@ class ParcelaLancamentoController extends Controller
     //
     public function updateBaixarParcela(Request $request){
 
+        //Transformar em formato correto para salvar no BD e validação
+        $request->merge([
+            'valor_pago' => str_replace(['.', ','], ['', '.'], $request->get('valor', [])),
+        ]);
+
+        //Validação
+        $validated = $request->validate([
+            'data.*' => 'required|date',
+            'valor_pago.*' => 'required|numeric|min:0.1',
+        ]);
+
+        $idParcelas = $request->get('parcela_id', []);
+        $valorPago = $request->get('valor_pago', []);
+        $dataPagamento = $request->get('data', []);
+
+        //Verificar para não ser possível dar baixa com datas futuras
+        foreach ($dataPagamento as $d) {
+            if (strtotime($d) > strtotime(date('Y-m-d'))) {
+                return redirect()->back()->with('error', 'Não é possível baixar com datas futuras!');
+            }
+        }   
+
+        $i = 0;
+
+        foreach ($idParcelas as $id) {
+
+            //Baixar parcela
+            $parcela = ParcelaLancamento::find($id);
+            $parcela->valor_pago = $valorPago[$i];
+            $parcela->data_pagamento = $dataPagamento[$i];
+            $parcela->data_baixa = Carbon::now()->format('Y-m-d H:i:s');
+            $parcela->usuario_baixa_id = Auth::guard()->user()->id;
+            $parcela->situacao = 1;
+            $parcela->save();
+
+            //Selecionar ID do Lançamento
+            $lancamentoID = $parcela->lancamento_id;
+            
+            //Obter lançamento
+            $lancamento = Lancamento::find($lancamentoID);
+
+            //Criando movimentação
+            $movimentacao = Movimentacao::create([
+                'data_movimentacao' => $dataPagamento[$i],
+                'loja_id' => $request->input('loja_id'),
+                'tipo' => $lancamento->tipo,
+                'valor' => $valorPago[$i],
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+                'parcela_lancamento_id' => $parcela->id,
+            ]);
+            
+            $i++;
+        }
+
+        $pagarOuReceber = Lancamento::find($lancamentoID);
+
+        return $this->redirecionarComSucesso($pagarOuReceber->tipo);
     }
 }
