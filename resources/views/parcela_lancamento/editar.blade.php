@@ -97,7 +97,7 @@
                             <label for="inputDataVencimentoParcelas" class="form-label">
                                 Data de vencimento
                             </label>
-                            <input type="text" name="data_vencimento_parcela"
+                            <input type="text" name="data_vencimento"
                                 value="{{ \Carbon\Carbon::parse( $parcela[0]->data_vencimento )->format('d/m/Y') }}"
                                 readonly disabled class="form-control" id="inputDataVencimentoParcelas">
                         </div>

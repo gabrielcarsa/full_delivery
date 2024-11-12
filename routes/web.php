@@ -194,6 +194,8 @@ Route::middleware([
         Route::put('/parcela/alterar-valor', [ParcelaLancamentoController::class, 'updateValorParcela'])->name('parcela.updateValorParcela');
         Route::get('/parcela/editar-vencimento', [ParcelaLancamentoController::class, 'editVencimentoParcela'])->name('parcela.editVencimentoParcela');
         Route::put('/parcela/alterar-vencimento', [ParcelaLancamentoController::class, 'updateVencimentoParcela'])->name('parcela.updateVencimentoParcela');
+        Route::get('/parcela/editar-baixar', [ParcelaLancamentoController::class, 'editBaixarParcela'])->name('parcela.editBaixarParcela');
+        Route::put('/parcela/alterar-baixar', [ParcelaLancamentoController::class, 'updateBaixarParcela'])->name('parcela.updateBaixarParcela');
 
         //CATEGORIA FINANCEIRO
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');

@@ -91,7 +91,7 @@
                             </a>
                         </li>
                         <li class="border-bottom py-2">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="#" id="baixar-parcela">
                                 <span class="material-symbols-outlined mr-2">
                                     payments
                                 </span>
@@ -419,7 +419,7 @@
             window.location.href = url;
         });
 
-        $("#baixar_parcela").click(function(event) {
+        $("#baixar-parcela").click(function(event) {
             event.preventDefault();
 
             // Obtenha os valores dos checkboxes selecionados
@@ -430,10 +430,8 @@
             });
 
             // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-            var url = "?checkboxes=" + checkboxesSelecionados
-                .join(
-                    ',') +
-                "&origem=contas_pagar";
+            var url = "{{ route('parcela.editBaixarParcela') }}?checkboxes=" + checkboxesSelecionados
+                .join(',');
 
             // Redirecione para a URL com os parâmetros
             window.location.href = url;

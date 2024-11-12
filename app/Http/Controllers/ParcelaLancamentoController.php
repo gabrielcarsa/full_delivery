@@ -145,4 +145,33 @@ class ParcelaLancamentoController extends Controller
 
         return $this->redirecionarComSucesso($pagarOuReceber->tipo);
     }
+
+    //BAIXAR PARCELA VIEW
+    public function editBaixarParcela(Request $request){
+
+        if ($request->filled('checkboxes')) {
+           
+            $checkboxesSelecionados = explode(',', $request->input('checkboxes'));
+            $validacao = $this->validarCheckboxes($checkboxesSelecionados);
+
+            if ($validacao) return $validacao;
+
+            //Select nas parcelas
+            foreach ($checkboxesSelecionados as $parcelaId) {
+                $parcelas[] = ParcelaLancamento::with('lancamento')
+                ->where('id', $parcelaId)
+                ->get();
+            }
+
+            return view('parcela_lancamento/baixar', compact('parcelas'));
+
+        }else{
+            return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
+        }
+    }
+
+    //
+    public function updateBaixarParcela(Request $request){
+
+    }
 }
