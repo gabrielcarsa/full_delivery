@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ParcelaLancamento;
 use App\Models\Lancamento;
+use App\Models\Loja;
+use App\Models\ContaCorrente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -164,12 +166,21 @@ class ParcelaLancamentoController extends Controller
                 ->get();
             }
 
+            //Obter Lançamento para obter Loja selecionada
             $lancamentoID = $parcelas[0][0]->lancamento_id;
             $lancamento = Lancamento::find($lancamentoID);
             $loja_id = $lancamento->loja_id;
             $loja = Loja::find($loja_id);
 
-            return view('parcela_lancamento/baixar', compact('parcelas', 'loja'));
+            //Obter Contas Corrente dessa loja
+            $contas_corrente = ContaCorrente::where('loja_id', $loja_id)->get();
+
+            $dados = [
+                'contas_corrente' => $contas_corrente,
+                'loja' => $loja,
+            ];
+
+            return view('parcela_lancamento/baixar', compact('parcelas', 'dados'));
 
         }else{
             return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');

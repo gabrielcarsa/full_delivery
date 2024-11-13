@@ -11,8 +11,8 @@ class Movimentacao extends Model
     protected $table = "movimentacao";
     protected $guarded = [];
 
-    public function conta_bancaria(){
-        return $this->belongsTo(ContaBancaria::class);
+    public function conta_corrente(){
+        return $this->belongsTo(ContaCorrente::class);
     }
 
     public function lancamento(){

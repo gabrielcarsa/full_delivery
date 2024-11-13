@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContaBancaria extends Model
+class ContaCorrente extends Model
 {
     use HasFactory;
-    protected $table = 'conta_bancaria';
+    protected $table = 'conta_corrente';
     protected $guarded = [];
 
     public function movimentacao(){

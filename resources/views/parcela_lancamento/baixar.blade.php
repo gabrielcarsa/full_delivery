@@ -94,28 +94,23 @@
 
                 </div>
 
-                <div class="row row-form-destacar">
+                <div class="row px-3">
                     <div class="col-md-4">
-                        <label for="inputTitularConta" class="form-label">Conta corrente</label>
-                        <select id="inputTitularConta" name="titular_conta_id" class="form-select form-control">
-                            <option value="0" {{ old('titular_conta_id') == 0 ? 'selected' : '' }}>-- Selecione --
+                        <label for="inputLoja" class="form-label">Loja</label>
+                        <input type="text" name="" readonly disabled id="inputLoja" value="{{$dados['loja']->nome}}" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputContaCorrente" class="form-label">Conta corrente</label>
+                        <select id="inputContaCorrente" name="conta_corrente_id" class="form-select form-control">
+                            <option value="0" {{ old('conta_corrente_id') == 0 ? 'selected' : '' }}>-- Selecione --
                             </option>
-                            @foreach ($data['titular_conta'] as $t)
-                            <option value="{{ $t->id_titular_conta }}"
-                                {{ old('titular_conta_id') == $t->id_titular_conta ? 'selected' : '' }}>
-                                @if(empty($t->nome))
-                                {{$t->razao_social}}
-                                @else
-                                {{$t->nome}}
-                                @endif
+                            @foreach ($dados['contas_corrente'] as $conta)
+                            <option value="{{ $conta->id }}"
+                                {{ old('conta_corrente_id') == $conta->id ? 'selected' : '' }}>
+                                {{$conta->nome}}
                             </option>
                             @endforeach
                         </select>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for="inputParcial" class="form-label">Baixa parcial? </label>
-                        <input id="inputParcial" type="checkbox" name="baixa_parcial">
                     </div>
                 </div>
 
