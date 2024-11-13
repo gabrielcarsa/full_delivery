@@ -271,7 +271,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="">
+                                        <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
                                             Conta Corrente
                                         </a>
                                     </li>

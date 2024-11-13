@@ -18,7 +18,7 @@ use App\Http\Controllers\MesaController;
 use App\Http\Controllers\LancamentoController;
 use App\Http\Controllers\CategoriaFinanceiroController;
 use App\Http\Controllers\ParcelaLancamentoController;
-
+use App\Http\Controllers\ContaCorrenteController;
 
 
 /*
@@ -203,4 +203,7 @@ Route::middleware([
         Route::put('/categoria-financeiro/editar', [CategoriaFinanceiroController::class, 'edit'])->name('categoria_financeiro.edit');
         Route::delete('/categoria-financeiro/apagar', [CategoriaFinanceiroController::class, 'destroy'])->name('categoria_financeiro.excluir');
         
+
+        //CONTA CORRENTE
+        Route::get('/conta-corrente', [ContaCorrenteController::class, 'index'])->name('conta_corrente.listar');
 });

@@ -51,4 +51,9 @@ class Loja extends Model
      {
         return $this->hasMany(Lancamento::class);
      }
+
+     public function conta_corrente()
+     {
+        return $this->hasMany(ContaCorrente::class);
+     }
 }
