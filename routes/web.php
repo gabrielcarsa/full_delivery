@@ -207,5 +207,7 @@ Route::middleware([
         Route::get('/conta-corrente', [ContaCorrenteController::class, 'index'])->name('conta_corrente.listar');
         Route::get('/conta-corrente/novo', [ContaCorrenteController::class, 'create'])->name('conta_corrente.novo');
         Route::post('/conta-corrente/cadastrar', [ContaCorrenteController::class, 'store'])->name('conta_corrente.store');
+        Route::get('/conta-corrente/editar', [ContaCorrenteController::class, 'edit'])->name('conta_corrente.edit');
+        Route::put('/conta-corrente/alterar', [ContaCorrenteController::class, 'update'])->name('conta_corrente.update');
 
 });

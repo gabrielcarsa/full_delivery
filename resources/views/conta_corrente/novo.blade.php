@@ -62,7 +62,7 @@
 
         <!-- HEADER -->
         <h2 class="mt-3 mb-0 fw-bolder fs-1">
-            Conta Corrente
+            Conta Corrente {{!empty($conta_corrente) ? ' - ' . $conta_corrente->nome : ''}}
         </h2>
         <!-- FIM HEADER -->
 
@@ -70,7 +70,7 @@
         <div class="bg-white border p-3 rounded my-3">
 
             <!-- FORM -->
-            <form action="{{ route('conta_corrente.store') }}" method="post" autocomplete="off">
+            <form action="{{ !empty($conta_corrente) ? route('conta_corrente.update', ['id' => $conta_corrente->id]) : route('conta_corrente.store') }}" method="post" autocomplete="off">
                 @csrf
                 @if(!empty($conta_corrente))
                 @method('PUT')
@@ -94,7 +94,7 @@
                 <!-- FIM LINHA -->
 
                 <!-- LINHA -->
-                <div class="row my-1">
+                <div class="row my-2">
                     <div class="col-6">
                         <label for="inputAgencia" class="form-label">Agência</label>
                         <input type="text" name="agencia"
