@@ -66,13 +66,10 @@
                 <h2 class="mt-3 mb-0 fw-bolder fs-1">
                     Conta Corrente
                 </h2>
-                <p class="m-0 text-secondary">
-                    Loja selecionada - {{$contas_corrente[0]->loja->nome}}
-                </p>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="{{ route('cliente.novo') }}">
+                    href="{{ route('conta_corrente.novo') }}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>

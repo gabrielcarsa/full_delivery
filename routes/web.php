@@ -203,7 +203,9 @@ Route::middleware([
         Route::put('/categoria-financeiro/editar', [CategoriaFinanceiroController::class, 'edit'])->name('categoria_financeiro.edit');
         Route::delete('/categoria-financeiro/apagar', [CategoriaFinanceiroController::class, 'destroy'])->name('categoria_financeiro.excluir');
         
-
         //CONTA CORRENTE
         Route::get('/conta-corrente', [ContaCorrenteController::class, 'index'])->name('conta_corrente.listar');
+        Route::get('/conta-corrente/novo', [ContaCorrenteController::class, 'create'])->name('conta_corrente.novo');
+        Route::post('/conta-corrente/cadastrar', [ContaCorrenteController::class, 'store'])->name('conta_corrente.store');
+
 });
