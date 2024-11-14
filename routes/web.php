@@ -209,5 +209,6 @@ Route::middleware([
         Route::post('/conta-corrente/cadastrar', [ContaCorrenteController::class, 'store'])->name('conta_corrente.store');
         Route::get('/conta-corrente/editar', [ContaCorrenteController::class, 'edit'])->name('conta_corrente.edit');
         Route::put('/conta-corrente/alterar', [ContaCorrenteController::class, 'update'])->name('conta_corrente.update');
+        Route::delete('/conta-corrente/apagar', [ContaCorrenteController::class, 'destroy'])->name('conta_corrente.destroy');
 
 });

@@ -110,4 +110,15 @@ class ContaCorrenteController extends Controller
 
         return redirect()->route('conta_corrente.listar')->with('success', 'Alteração feita com sucesso!');
     }
+
+    //EXCLUIR
+    public function destroy(Request $request){
+        
+        //ID
+        $id = $request->input('id');
+
+        $conta_corrente = ContaCorrente::find($id);
+        $conta_corrente->delete();
+        return redirect()->back()->with('success', 'Conta excluída com sucesso');
+    }
 }

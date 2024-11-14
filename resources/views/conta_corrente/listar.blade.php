@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                    <form action="" method="POST">
+                                    <form action="{{ route('conta_corrente.destroy', ['id' => $conta->id]) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">
