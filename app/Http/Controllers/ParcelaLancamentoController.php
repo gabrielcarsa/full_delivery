@@ -7,6 +7,7 @@ use App\Models\ParcelaLancamento;
 use App\Models\Lancamento;
 use App\Models\Loja;
 use App\Models\ContaCorrente;
+use App\Models\Movimentacao;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -192,13 +193,14 @@ class ParcelaLancamentoController extends Controller
 
         //Transformar em formato correto para salvar no BD e validação
         $request->merge([
-            'valor_pago' => str_replace(['.', ','], ['', '.'], $request->get('valor', [])),
+            'valor_pago' => str_replace(['.', ','], ['', '.'], $request->get('valor_pago', [])),
         ]);
 
         //Validação
         $validated = $request->validate([
             'data.*' => 'required|date',
             'valor_pago.*' => 'required|numeric|min:0.1',
+            'conta_corrente_id' => 'required|numeric|min:1',
         ]);
 
         $idParcelas = $request->get('parcela_id', []);
@@ -221,7 +223,7 @@ class ParcelaLancamentoController extends Controller
             $parcela->valor_pago = $valorPago[$i];
             $parcela->data_pagamento = $dataPagamento[$i];
             $parcela->data_baixa = Carbon::now()->format('Y-m-d H:i:s');
-            $parcela->usuario_baixa_id = Auth::guard()->user()->id;
+            $parcela->baixado_usuario_id = Auth::guard()->user()->id;
             $parcela->situacao = 1;
             $parcela->save();
 
@@ -239,6 +241,7 @@ class ParcelaLancamentoController extends Controller
                 'valor' => $valorPago[$i],
                 'cadastrado_usuario_id' => Auth::guard()->user()->id,
                 'parcela_lancamento_id' => $parcela->id,
+                'conta_corrente_id' => $request->input('conta_corrente_id'),
             ]);
             
             $i++;

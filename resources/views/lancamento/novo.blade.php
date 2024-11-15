@@ -33,7 +33,8 @@
         <!-- FIM HEADER -->
 
         <div class="bg-white rounded p-3 border">
-            <form action="{{ route('lancamento.store', ['varPagarOuReceber' => $varPagarOuReceber == 0 ? 0 : 1]) }}" method="post">
+            <form action="{{ route('lancamento.store', ['varPagarOuReceber' => $varPagarOuReceber == 0 ? 0 : 1]) }}"
+                method="post" autocomplete="off">
                 @csrf
                 <!-- LINHA -->
                 <div class="row">
@@ -86,7 +87,7 @@
                             </option>
                             @endforeach
                             @endif
-                          
+
                             @endif
                             <!-- FIM VERIFICANDO CLIENTE OU FORNCEDOR -->
 
@@ -127,7 +128,8 @@
                             Quantidade de parcelas
                         </label>
                         <input type="text" name="quantidade_parcela"
-                            class="form-control @error('quantidade_parcela') is-invalid @enderror" id="inputQtndParcela">
+                            class="form-control @error('quantidade_parcela') is-invalid @enderror"
+                            id="inputQtndParcela">
                     </div>
                     <div class="col-2">
                         <label for="inputVencimento" class="form-label">
@@ -140,8 +142,8 @@
                         <label for="inputValor" class="form-label">
                             Valor
                         </label>
-                        <input type="text" name="valor_parcela" class="form-control @error('valor_parcela') is-invalid @enderror"
-                            id="inputValor">
+                        <input type="text" name="valor_parcela"
+                            class="form-control @error('valor_parcela') is-invalid @enderror" id="inputValor">
                     </div>
                     <div class="col-2">
                         <label for="inputValor" class="form-label">

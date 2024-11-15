@@ -361,7 +361,7 @@
                         <td>{{$parcela->lancamento->descricao}}</td>
                         <td>{{\Carbon\Carbon::parse($parcela->data_vencimento)->format('d/m/Y') }}</td>
                         <td>R$ {{number_format($parcela->valor, 2, ',', '.')}}</td>
-                        <td>{{$parcela->situacao == 1 ? 'Recebido' : 'Em aberto'}}</td>
+                        <td>{{$parcela->situacao == 1 ? 'Pago' : 'Em aberto'}}</td>
                     </tr>
                     @endforeach
                     <!-- FIM PARCELAS -->

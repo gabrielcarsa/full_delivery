@@ -34,7 +34,7 @@
 
         <div class="bg-white rounded p-3 border">
 
-            <form action="" method="post">
+            <form action="{{ route('parcela.updateBaixarParcela') }}" method="post">
                 @csrf
                 @method('PUT')
 
@@ -76,7 +76,7 @@
                                 </th>
                                 <th scope="row">
                                     <input type="text" name="valor_pago[]" id="inputValorPago"
-                                        value="{{ old('valor_pago.' . $index) != null ?  old('valor_pago.' . $index) : '' }}"
+                                        value="{{ old('valor_pago.' . $index) != null ?  number_format(old('valor_pago.' . $index), 2, ',', '.') : '' }}"
                                         class="form-control @error('valor_pago.' . $index) is-invalid @enderror">
                                 </th>
                                 <th scope="row">
