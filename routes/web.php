@@ -19,6 +19,7 @@ use App\Http\Controllers\LancamentoController;
 use App\Http\Controllers\CategoriaFinanceiroController;
 use App\Http\Controllers\ParcelaLancamentoController;
 use App\Http\Controllers\ContaCorrenteController;
+use App\Http\Controllers\MovimentacaoController;
 
 
 /*
@@ -210,5 +211,8 @@ Route::middleware([
         Route::get('/conta-corrente/editar', [ContaCorrenteController::class, 'edit'])->name('conta_corrente.edit');
         Route::put('/conta-corrente/alterar', [ContaCorrenteController::class, 'update'])->name('conta_corrente.update');
         Route::delete('/conta-corrente/apagar', [ContaCorrenteController::class, 'destroy'])->name('conta_corrente.destroy');
+
+        //MOVIMENTAÇÃO
+        Route::get('/movimentacao', [MovimentacaoController::class, 'showFormConsulta'])->name('movimentacao.showFormConsulta');
 
 });

@@ -212,7 +212,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
+                                        <a class="dropdown-item" href="{{ route('movimentacao.showFormConsulta') }}">
                                             Movimentações
                                         </a>
                                     </li>
