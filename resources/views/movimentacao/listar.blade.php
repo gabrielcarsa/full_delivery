@@ -171,9 +171,6 @@
             <table class="table table-hover table-bordered text-center">
                 <thead>
                     <tr>
-                        <th scope="col">
-                            <input type="checkbox" id="selecionar_todos" name="selecionar_todos" />
-                        </th>
                         <th scope="col">ID</th>
                         <th scope="col">Cliente/Fornecedor</th>
                         <th scope="col">Categoria</th>
@@ -187,14 +184,22 @@
                     <!-- MOVIMENTAÇÃO -->
                     @foreach ($movimentacoes as $movimentacao)
                     <tr>
-                        <td>{{$movimentacao->id}}</td>
+                        <td>
+                            {{$movimentacao->id}}
+                        </td>
                         @if($movimentacao->tipo == 0)
-                        <td>{{$movimentacao->lancamento->fornecedor->nome}}</td>
+                        <td class="text-uppercase">
+                            {{$movimentacao->parcela_lancamento->lancamento->fornecedor->nome}}
+                        </td>
                         @else
-                        <td>{{$movimentacao->lancamento->cliente->nome}}</td>
+                        <td class="text-uppercase">
+                            {{$movimentacao->parcela_lancamento->lancamento->cliente->nome}}
+                        </td>
                         @endif
-                        <td>{{$movimentacao->lancamento->categoria_financeiro->nome }}</td>
-                        <td>{{$movimentacao->lancamento->descricao}}</td>
+                        <td class="text-uppercase">
+                            {{$movimentacao->parcela_lancamento->lancamento->categoria_financeiro->nome }}
+                        </td>
+                        <td>{{$movimentacao->parcela_lancamento->lancamento->descricao}}</td>
                         <td>{{\Carbon\Carbon::parse($movimentacao->data_movimentacao)->format('d/m/Y') }}</td>
                         <td>R$ {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
                         <td></td>

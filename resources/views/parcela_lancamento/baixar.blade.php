@@ -98,6 +98,7 @@
                     <div class="col-md-4">
                         <label for="inputLoja" class="form-label">Loja</label>
                         <input type="text" name="" readonly disabled id="inputLoja" value="{{$dados['loja']->nome}}" class="form-control">
+                        <input type="hidden" name="loja_id" value="{{$dados['loja']->id}}">
                     </div>
                     <div class="col-md-4">
                         <label for="inputContaCorrente" class="form-label">Conta corrente</label>

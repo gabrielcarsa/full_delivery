@@ -19,6 +19,10 @@ class Movimentacao extends Model
         return $this->belongsTo(Lancamento::class);
     }
 
+    public function loja(){
+        return $this->belongsTo(Loja::class);
+    }
+
     public function usuarioCadastrador()
     {
        return $this->belongsTo(User::class, 'cadastrado_usuario_id');

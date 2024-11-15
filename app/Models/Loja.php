@@ -7,53 +7,59 @@ use Illuminate\Database\Eloquent\Model;
 
 class Loja extends Model
 {
-    use HasFactory;
-    protected $table = 'loja';
+   use HasFactory;
+   protected $table = 'loja';
 
-     //RELACIONAMENTOS 
+   //RELACIONAMENTOS 
 
-     public function usuarioCadastrador()
-     {
-        return $this->belongsTo(User::class, 'cadastrado_usuario_id');
-     }
- 
-     public function usuarioAlterador()
-     {
-        return $this->belongsTo(User::class, 'alterado_usuario_id');
-     }
+   public function usuarioCadastrador()
+   {
+      return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+   }
 
-     public function categorias()
-     {
-        return $this->hasMany(CategoriaProduto::class);
-     }
+   public function usuarioAlterador()
+   {
+      return $this->belongsTo(User::class, 'alterado_usuario_id');
+   }
 
-     public function pedidos()
-     {
-        return $this->hasMany(Pedido::class);
-     }
+   public function categorias()
+   {
+      return $this->hasMany(CategoriaProduto::class);
+   }
 
-     public function horarios()
-     {
-        return $this->hasMany(HorarioFuncionamento::class);
-     }
- 
-     public function cupons()
-     {
-        return $this->hasMany(Cupom::class);
-     }
+   public function pedidos()
+   {
+      return $this->hasMany(Pedido::class);
+   }
 
-     public function mesa()
-     {
-        return $this->hasMany(Mesa::class);
-     }
+   public function horarios()
+   {
+      return $this->hasMany(HorarioFuncionamento::class);
+   }
 
-     public function lancamento()
-     {
-        return $this->hasMany(Lancamento::class);
-     }
+   public function cupons()
+   {
+      return $this->hasMany(Cupom::class);
+   }
 
-     public function conta_corrente()
-     {
-        return $this->hasMany(ContaCorrente::class);
-     }
+   public function mesa()
+   {
+      return $this->hasMany(Mesa::class);
+   }
+
+   public function lancamento()
+   {
+      return $this->hasMany(Lancamento::class);
+   }
+
+   public function conta_corrente()
+   {
+      return $this->hasMany(ContaCorrente::class);
+   }
+
+   public function movimentacao()
+   {
+      return $this->hasMany(Movimentacao::class);
+   }
+
 }
