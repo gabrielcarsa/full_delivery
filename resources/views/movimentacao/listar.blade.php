@@ -80,7 +80,7 @@
         <!-- FIM HEADER -->
 
         <!-- FORM -->
-        <form action="" method="get" autocomplete="off">
+        <form action="{{ route('movimentacao.index') }}" method="get" autocomplete="off">
             @csrf
 
             <!-- CARD FORM -->
@@ -101,20 +101,26 @@
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label for="inputData" class="form-label">Data início</label>
-                            <input type="date" name="data_inicio" id="inputData" value="" class="form-control">
+                            <input type="date" name="data_inicio" id="inputData"
+                                value="{{ old('data_inicio') ? old('data_inicio') : request('data_inicio') }}"
+                                class="form-control @error('data_inicio') is-invalid @enderror">
                         </div>
                         <div class="col-md-3">
                             <label for="inputData" class="form-label">Data fim</label>
-                            <input type="date" name="data_fim" id="inputData" value="" class="form-control">
+                            <input type="date" name="data_fim" id="inputData"
+                                value="{{ old('data_fim') ? old('data_fim') : request('data_fim') }}"
+                                class="form-control @error('data_fim') is-invalid @enderror">
                         </div>
                         <div class="col-md-3">
                             <label for="inputLoja" class="form-label">Loja</label>
                             <input type="text" name="" readonly disabled id="inputLoja" value="{{$dados['loja']->nome}}"
                                 class="form-control">
+                            <input type="hidden" name="loja_id" value="{{$dados['loja']->id}}">
                         </div>
                         <div class="col-md-3">
                             <label for="inputContaCorrente" class="form-label">Conta corrente</label>
-                            <select id="inputContaCorrente" name="conta_corrente_id" class="form-select form-control">
+                            <select id="inputContaCorrente" name="conta_corrente_id"
+                                class="form-select form-control @error('conta_corrente_id') is-invalid @enderror">
                                 <option value="0" {{ old('conta_corrente_id') == 0 ? 'selected' : '' }}>-- Selecione --
                                 </option>
                                 @foreach ($dados['contas_corrente'] as $conta)

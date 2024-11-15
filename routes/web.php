@@ -214,5 +214,6 @@ Route::middleware([
 
         //MOVIMENTAÇÃO
         Route::get('/movimentacao', [MovimentacaoController::class, 'showFormConsulta'])->name('movimentacao.showFormConsulta');
+        Route::get('/movimentacao/listar', [MovimentacaoController::class, 'index'])->name('movimentacao.index');
 
 });
