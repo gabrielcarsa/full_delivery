@@ -177,7 +177,7 @@
                         <th scope="col">Descrição</th>
                         <th scope="col">Data</th>
                         <th scope="col">Valor</th>
-                        <th scope="col">Ações</th>
+                        <th scope="col">Saldo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -185,7 +185,9 @@
                     @foreach ($movimentacoes as $movimentacao)
                     <tr>
                         <td>
-                            {{$movimentacao->id}}
+                            <a href="" class="text-padrao">
+                                {{$movimentacao->id}}
+                            </a>
                         </td>
                         @if($movimentacao->tipo == 0)
                         <td class="text-uppercase">
@@ -202,7 +204,8 @@
                         <td>{{$movimentacao->parcela_lancamento->lancamento->descricao}}</td>
                         <td>{{\Carbon\Carbon::parse($movimentacao->data_movimentacao)->format('d/m/Y') }}</td>
                         <td>R$ {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
-                        <td></td>
+                        <td>
+                        </td>
                     </tr>
                     @endforeach
                     <!-- FIM MOVIMENTAÇÃO -->

@@ -201,14 +201,14 @@
                                 ID parcela
                             </label>
                             <input type="text" name="parcela_id" class="form-control" id="inputIdParcela"
-                                placeholder="Ex.: 1584">
+                                placeholder="Ex.: 1584" value="{{request('parcela_id')}}">
                         </div>
                         <div class="col-sm-2">
                             <label for="inputDataVencimentoDe" class="form-label">
                                 Data início
                             </label>
                             <input type="date" name="periodoDe"
-                                value="{{!empty($contas) ? $contas->nome : old('periodoDe')}}" class="form-control"
+                                value="{{request('periodoDe')}}" class="form-control"
                                 id="inputDataVencimentoDe">
                         </div>
                         <div class="col-sm-2">
@@ -216,7 +216,7 @@
                                 Data fim
                             </label>
                             <input type="date" name="periodoAte"
-                                value="{{!empty($contas) ? $contas->nome : old('periodoAte')}}" class="form-control"
+                                value="{{request('periodoAte')}}" class="form-control"
                                 id="inputDataVencimentoAte">
                         </div>
                         <div class="col-sm-6">

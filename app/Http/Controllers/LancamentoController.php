@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LancamentoController extends Controller
 {
-    //INDEX CONTAS A PAGAR
+    //INDEX CONTAS A RECEBER
     public function indexContasReceber(){
         //Pagar(0) ou Receber(1)
         $varPagarOuReceber = 1;
@@ -23,14 +23,22 @@ class LancamentoController extends Controller
     }
 
     //LISTAGEM CONTAS A RECEBER
-    public function indexAllContasReceber(){
+    public function indexAllContasReceber(Request $request){
         //Pagar(0) ou Receber(1)
         $varPagarOuReceber = 1;
-        $parcelas = ParcelaLancamento::with('lancamento')
+
+        //Query das parcelas
+        $queryParcelas = ParcelaLancamento::with('lancamento')
         ->whereHas('lancamento', function ($query) {
             $query->where('tipo', 1); 
-        })
-        ->get();
+        });
+
+        //Filtros
+        if(!empty($request->input('parcela_id'))){
+            $queryParcelas->where('id', $request->input('parcela_id'));
+        }
+        
+        $parcelas = $queryParcelas->get();
 
         return view('lancamento.listar', compact('parcelas', 'varPagarOuReceber'));
     }
@@ -43,14 +51,22 @@ class LancamentoController extends Controller
     }
 
     //LISTAGEM CONTAS A PAGAR
-    public function indexAllContasPagar(){
+    public function indexAllContasPagar(Request $request){
     //Pagar(0) ou Receber(1)
     $varPagarOuReceber = 0;
-    $parcelas = ParcelaLancamento::with('lancamento')
+
+    //Filtro das parcelas
+    $queryParcelas = ParcelaLancamento::with('lancamento')
     ->whereHas('lancamento', function ($query) {
         $query->where('tipo', 0); 
-    })
-    ->get();
+    });
+
+    //Filtros
+    if(!empty($request->input('parcela_id'))){
+        $queryParcelas->where('id', $request->input('parcela_id'));
+    }
+    
+    $parcelas = $queryParcelas->get();
 
     return view('lancamento.listar', compact('parcelas', 'varPagarOuReceber'));
 }
