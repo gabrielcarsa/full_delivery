@@ -113,7 +113,7 @@
                         <label for="inputNumeroConta" class="form-label">Saldo Inicial</label>
                         <input type="text" name="saldo" {{!empty($conta_corrente) ? 'disable onlyread' : ''}}
                             value="{{old('saldo')}}" class="form-control @error('saldo') is-invalid @enderror"
-                            id="inputNumeroConta">
+                            id="inputNumeroConta" required>
                     </div>
                 </div>
                 <!-- FIM LINHA -->
@@ -132,5 +132,30 @@
         <!-- FIM CARD FORM -->
 
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $(document).on('input', 'input[id^="inputNumeroConta"]', function() {
+            // Remova os caracteres não numéricos
+            var unmaskedValue = $(this).val().replace(/\D/g, '');
+
+            // Adicione a máscara apenas ao input de valor relacionado à mudança
+            $(this).val(mask(unmaskedValue));
+        });
+
+        function mask(value) {
+            // Converte o valor para número
+            var numberValue = parseFloat(value) / 100;
+
+            // Formata o número com vírgula como separador decimal e duas casas decimais
+            return numberValue.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2
+            });
+        }
+    });
+    </script>
+
 
 </x-app-layout>

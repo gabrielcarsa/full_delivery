@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ContaCorrente;
+use App\Models\Saldo;
 use Illuminate\Support\Facades\Auth;
 
 class ContaCorrenteController extends Controller
@@ -49,15 +50,26 @@ class ContaCorrenteController extends Controller
             'banco' => 'required|string|max:50',
             'agencia' => 'nullable|string|max:50',
             'numero_conta' => 'nullable|string|max:50',
+            'saldo' => 'required|string|max:50',
         ]);
 
-        ContaCorrente::create([
+        $request->merge([
+            'saldo' => str_replace(['.', ','], ['', '.'], $request->input('saldo')),
+        ]);
+
+        $conta_corrente = ContaCorrente::create([
             'nome' => $request->input('nome'),
             'banco' => $request->input('banco'),
             'agencia' => $request->input('agencia'),
             'numero_conta' => $request->input('numero_conta'),
             'loja_id' => $lojaIdConectado,
             'cadastrado_usuario_id' => Auth::guard()->user()->id,
+        ]);
+
+        Saldo::create([
+            'saldo' => $request->input('saldo'),
+            'conta_corrente_id' => $conta_corrente->id,
+            'data' => now()->toDateString(),
         ]);
 
         return redirect()->route('conta_corrente.listar')->with('success', 'Cadastro feito com sucesso!');

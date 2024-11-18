@@ -93,6 +93,7 @@
                     <th scope="col">Ag.</th>
                     <th scope="col">Núm. Conta</th>
                     <th scope="col">Cadastrado por</th>
+                    <th scope="col">Saldo</th>
                     <th scope="col">Ações</th>
                 </tr>
             </thead>
@@ -105,11 +106,15 @@
                     <td class="text-uppercase">{{$conta->banco}}</td>
                     <td class="text-uppercase">{{$conta->agencia}}</td>
                     <td class="text-uppercase">{{$conta->numero_conta}}</td>
-                    <td class="text-truncate" style="max-width: 30px">
+                    <td class="text-truncate" style="max-width: 20px">
                         {{$conta->usuarioCadastrador->name}}
                     </td>
+                    <td class="">
+                        R$ {{number_format($conta->saldo->last()->saldo, 2, ',', '.')}}
+                    </td>
                     <td>
-                        <a href="{{ route('conta_corrente.edit', ['id' => $conta->id] ) }}" class="text-primary text-decoration-none">
+                        <a href="{{ route('conta_corrente.edit', ['id' => $conta->id] ) }}"
+                            class="text-primary text-decoration-none">
                             <span class="material-symbols-outlined">
                                 edit
                             </span>
@@ -139,7 +144,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                    <form action="{{ route('conta_corrente.destroy', ['id' => $conta->id]) }}" method="POST">
+                                    <form action="{{ route('conta_corrente.destroy', ['id' => $conta->id]) }}"
+                                        method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">
