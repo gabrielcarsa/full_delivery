@@ -185,7 +185,7 @@
                     @foreach ($movimentacoes as $movimentacao)
                     <tr>
                         <td>
-                            <a href="" class="text-padrao">
+                            <a href="{{ $movimentacao->tipo == 0 ? route('contas_pagar.indexAll', ['parcela_id' => $movimentacao->parcela_lancamento_id]) : route('contas_receber.indexAll', ['parcela_id' => $movimentacao->parcela_lancamento_id]) }}" class="text-padrao">
                                 {{$movimentacao->id}}
                             </a>
                         </td>
@@ -203,7 +203,7 @@
                         </td>
                         <td>{{$movimentacao->parcela_lancamento->lancamento->descricao}}</td>
                         <td>{{\Carbon\Carbon::parse($movimentacao->data_movimentacao)->format('d/m/Y') }}</td>
-                        <td>R$ {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
+                        <td>{{$movimentacao->tipo == 0 ? '- ' : ''}}R$ {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
                         <td>
                         </td>
                     </tr>
