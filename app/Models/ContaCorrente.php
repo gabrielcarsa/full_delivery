@@ -29,4 +29,8 @@ class ContaCorrente extends Model
    {
       return $this->belongsTo(User::class, 'alterado_usuario_id');
    }
+
+   public function saldo(){
+      return $this->hasMany(Saldo::class);
+   }
 }

@@ -70,7 +70,9 @@
         <div class="bg-white border p-3 rounded my-3">
 
             <!-- FORM -->
-            <form action="{{ !empty($conta_corrente) ? route('conta_corrente.update', ['id' => $conta_corrente->id]) : route('conta_corrente.store') }}" method="post" autocomplete="off">
+            <form
+                action="{{ !empty($conta_corrente) ? route('conta_corrente.update', ['id' => $conta_corrente->id]) : route('conta_corrente.store') }}"
+                method="post" autocomplete="off">
                 @csrf
                 @if(!empty($conta_corrente))
                 @method('PUT')
@@ -95,17 +97,23 @@
 
                 <!-- LINHA -->
                 <div class="row my-2">
-                    <div class="col-6">
+                    <div class="col-5">
                         <label for="inputAgencia" class="form-label">Agência</label>
                         <input type="text" name="agencia"
                             value="{{!empty($conta_corrente) ? $conta_corrente->agencia : old('agencia')}}"
                             class="form-control @error('agencia') is-invalid @enderror" id="inputAgencia">
                     </div>
-                    <div class="col-6">
+                    <div class="col-5">
                         <label for="inputNumeroConta" class="form-label">Número da conta</label>
                         <input type="text" name="numero_conta"
                             value="{{!empty($conta_corrente) ? $conta_corrente->numero_conta : old('numero_conta')}}"
                             class="form-control @error('numero_conta') is-invalid @enderror" id="inputNumeroConta">
+                    </div>
+                    <div class="col-2">
+                        <label for="inputNumeroConta" class="form-label">Saldo Inicial</label>
+                        <input type="text" name="saldo" {{!empty($conta_corrente) ? 'disable onlyread' : ''}}
+                            value="{{old('saldo')}}" class="form-control @error('saldo') is-invalid @enderror"
+                            id="inputNumeroConta">
                     </div>
                 </div>
                 <!-- FIM LINHA -->
