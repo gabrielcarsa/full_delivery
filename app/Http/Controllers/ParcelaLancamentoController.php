@@ -8,6 +8,7 @@ use App\Models\Lancamento;
 use App\Models\Loja;
 use App\Models\ContaCorrente;
 use App\Models\Movimentacao;
+use App\Models\Saldo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -218,6 +219,28 @@ class ParcelaLancamentoController extends Controller
 
         foreach ($idParcelas as $id) {
 
+            //Saldo da data
+            $saldo = Saldo::where('data', $dataPagamento[$i])
+            ->where('conta_corrente_id', $request->input('conta_corrente_id'))
+            ->first(); //First pois só pode ter um saldo para uma data
+
+            // Verificando se Saldo existe para aquela data
+            if (is_null($saldo)) {
+
+                //Cadastrando Saldo
+                Saldo::create([
+                    'saldo' => $lancamento->tipo == 0 ? - $valorPago[$i] : $valorPago[$i],
+                    'conta_corrente_id' => $request->input('conta_corrente_id'),
+                    'data' => $dataPagamento[$i],
+                ]);
+
+            } else {
+
+                //Atualizando valor saldo
+                $saldo->saldo = $lancamento->tipo == 0 ? $saldo->saldo - $valorPago[$i] : $saldo->saldo + $valorPago[$i];
+                $saldo->save();
+            }
+
             //Baixar parcela
             $parcela = ParcelaLancamento::find($id);
             $parcela->valor_pago = $valorPago[$i];
@@ -234,7 +257,7 @@ class ParcelaLancamentoController extends Controller
             $lancamento = Lancamento::find($lancamentoID);
 
             //Criando movimentação
-            $movimentacao = Movimentacao::create([
+            Movimentacao::create([
                 'data_movimentacao' => $dataPagamento[$i],
                 'loja_id' => $request->input('loja_id'),
                 'tipo' => $lancamento->tipo,
