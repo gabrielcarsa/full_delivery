@@ -208,16 +208,44 @@ class ParcelaLancamentoController extends Controller
         $valorPago = $request->get('valor_pago', []);
         $dataPagamento = $request->get('data', []);
 
-        //Verificar para não ser possível dar baixa com datas futuras
+       
         foreach ($dataPagamento as $d) {
+
+            //Verificar para não ser possível dar baixa com datas futuras
             if (strtotime($d) > strtotime(date('Y-m-d'))) {
                 return redirect()->back()->with('error', 'Não é possível baixar com datas futuras!');
+            }
+
+            //Obter última data de Movimentacao
+            $ultimaMovimentacao = Movimentacao::where('data_movimentacao', '>', $d)
+            ->where('conta_corrente_id', $request->input('conta_corrente_id'))
+            ->get();
+
+            //Não permitir baixa de parcelas anterior há movimentações mais recentes, pois pode dar incosistência nos Saldos
+            if($ultimaMovimentacao->isNotEmpty()){
+                $dataReferenciaFormatada = Carbon::parse($ultimaMovimentacao[0]->data_movimentacao)->format('d/m/Y');
+                return redirect()->back()->with('error', 'Não é possível baixar com datas anteriores de '.$dataReferenciaFormatada);
             }
         }   
 
         $i = 0;
 
         foreach ($idParcelas as $id) {
+
+            //Baixar parcela
+            $parcela = ParcelaLancamento::find($id);
+            $parcela->valor_pago = $valorPago[$i];
+            $parcela->data_pagamento = $dataPagamento[$i];
+            $parcela->data_baixa = Carbon::now()->format('Y-m-d H:i:s');
+            $parcela->baixado_usuario_id = Auth::guard()->user()->id;
+            $parcela->situacao = 1;
+            $parcela->save();
+
+            //Selecionar ID do Lançamento
+            $lancamentoID = $parcela->lancamento_id;
+        
+            //Obter lançamento
+            $lancamento = Lancamento::find($lancamentoID);
 
             //Saldo da data
             $saldo = Saldo::where('data', $dataPagamento[$i])
@@ -240,21 +268,6 @@ class ParcelaLancamentoController extends Controller
                 $saldo->saldo = $lancamento->tipo == 0 ? $saldo->saldo - $valorPago[$i] : $saldo->saldo + $valorPago[$i];
                 $saldo->save();
             }
-
-            //Baixar parcela
-            $parcela = ParcelaLancamento::find($id);
-            $parcela->valor_pago = $valorPago[$i];
-            $parcela->data_pagamento = $dataPagamento[$i];
-            $parcela->data_baixa = Carbon::now()->format('Y-m-d H:i:s');
-            $parcela->baixado_usuario_id = Auth::guard()->user()->id;
-            $parcela->situacao = 1;
-            $parcela->save();
-
-            //Selecionar ID do Lançamento
-            $lancamentoID = $parcela->lancamento_id;
-            
-            //Obter lançamento
-            $lancamento = Lancamento::find($lancamentoID);
 
             //Criando movimentação
             Movimentacao::create([
