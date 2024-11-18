@@ -62,6 +62,7 @@ class ContaCorrenteController extends Controller
             'banco' => $request->input('banco'),
             'agencia' => $request->input('agencia'),
             'numero_conta' => $request->input('numero_conta'),
+            'saldo_inicial' => $request->input('saldo'),
             'loja_id' => $lojaIdConectado,
             'cadastrado_usuario_id' => Auth::guard()->user()->id,
         ]);
