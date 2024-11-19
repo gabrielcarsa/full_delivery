@@ -83,90 +83,122 @@
         <!-- FIM HEADER -->
 
         @if(isset($contas_corrente))
-        <!-- TABLE -->
-        <table class="table table-padrao border-top table align-middle my-3">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Banco</th>
-                    <th scope="col">Ag.</th>
-                    <th scope="col">Núm. Conta</th>
-                    <th scope="col">Cadastrado por</th>
-                    <th scope="col">Saldo</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- CONTAS -->
-                @foreach ($contas_corrente as $conta)
-                <tr>
-                    <td scope="row">{{$conta->id}}</td>
-                    <td class="text-uppercase">{{$conta->nome}}</td>
-                    <td class="text-uppercase">{{$conta->banco}}</td>
-                    <td class="text-uppercase">{{$conta->agencia}}</td>
-                    <td class="text-uppercase">{{$conta->numero_conta}}</td>
-                    <td class="text-truncate" style="max-width: 20px">
-                        {{$conta->usuarioCadastrador->name}}
-                    </td>
-                    <td class="">
+
+        <!-- CONTAS -->
+        @foreach ($contas_corrente as $conta)
+
+        <div class="card p-3">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="m-0 text-secondary">
+                        #{{$conta->id}}
+                    </p>
+                    <p class="fw-bold m-0 fs-4">
+                        {{$conta->nome}}
+                    </p>
+                </div>
+                <div>
+                    <p class="m-0 text-secondary">
+                        Saldo atual
+                    </p>
+                    <p class="m-0 fw-semibold fs-5">
                         R$ {{number_format($conta->saldo->last()->saldo, 2, ',', '.')}}
-                    </td>
-                    <td>
-                        <a href="{{ route('conta_corrente.edit', ['id' => $conta->id] ) }}"
-                            class="text-primary text-decoration-none">
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span>
-                        </a>
-                        <a href="" data-bs-toggle="modal" class="text-danger text-decoration-none"
-                            data-bs-target="#exampleModal{{$conta->id}}">
-                            <span class="material-symbols-outlined">
-                                delete
-                            </span>
-                        </a>
-                    </td>
+                    </p>
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col">
+                    <p class="text-secondary m-0">
+                        Banco
+                    </p>
+                    <p class="m-0">
+                        {{$conta->banco}}
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="text-secondary m-0">
+                        Agência
+                    </p>
+                    <p class="m-0">
+                        {{$conta->agencia ?? '000'}}
+                    </p>
+                </div>
+                <div class="col">
+                    <p class="text-secondary m-0">
+                        Número Conta
+                    </p>
+                    <p class="m-0">
+                        {{$conta->numero_conta ?? '000'}}
+                    </p>
+                </div>
+            </div>
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <a href="{{ route('saldo.index', ['conta_corrente_id' => $conta->id]) }}"
+                        class="btn bg-padrao d-flex align-items-center justify-content-center text-white fw-semibold">
+                        <span class="material-symbols-outlined mr-1">
+                            monitoring
+                        </span>
+                        Acompanhar saldo
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="{{ route('conta_corrente.edit', ['id' => $conta->id] ) }}"
+                        class="btn btn-outline-primary d-flex align-items-center justify-content-center">
+                        <span class="material-symbols-outlined mr-1">
+                            edit
+                        </span>
+                        Editar
+                    </a>
+                </div>
+                <div class="col-sm-4">
+                    <a href="" data-bs-toggle="modal"
+                        class="btn btn-outline-danger d-flex align-items-center justify-content-center"
+                        data-bs-target="#exampleModal{{$conta->id}}">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                        Excluir
+                    </a>
+                </div>
+                <!-- MODAL EXCLUIR -->
+                <div class="modal fade" id="exampleModal{{$conta->id}}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <p class="modal-title fs-5" id="exampleModalLabel">
+                                    Excluir {{$conta->nome}}?
+                                </p>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Essa ação é irreversível! Tem certeza?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                                <form action="{{ route('conta_corrente.destroy', ['id' => $conta->id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">
+                                        Sim, eu tenho
+                                    </button>
+                                </form>
 
-                    <!-- MODAL EXCLUIR -->
-                    <div class="modal fade" id="exampleModal{{$conta->id}}" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <p class="modal-title fs-5" id="exampleModalLabel">
-                                        Excluir {{$conta->nome}}?
-                                    </p>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Essa ação é irreversível! Tem certeza?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                    <form action="{{ route('conta_corrente.destroy', ['id' => $conta->id]) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
-                                            Sim, eu tenho
-                                        </button>
-                                    </form>
-
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- MODAL EXCLUIR -->
-                </tr>
-                @endforeach
-                <!-- FIM CONTAS -->
+                </div>
+                <!-- MODAL EXCLUIR -->
+            </div>
+        </div>
+        @endforeach
+        <!-- FIM CONTAS -->
 
-            </tbody>
-        </table>
-        <!-- FIM TABLE -->
+        @endif
 
     </div>
-    @endif
 
 </x-app-layout>

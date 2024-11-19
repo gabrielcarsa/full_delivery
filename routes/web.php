@@ -20,7 +20,7 @@ use App\Http\Controllers\CategoriaFinanceiroController;
 use App\Http\Controllers\ParcelaLancamentoController;
 use App\Http\Controllers\ContaCorrenteController;
 use App\Http\Controllers\MovimentacaoController;
-
+use App\Http\Controllers\SaldoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -215,5 +215,8 @@ Route::middleware([
         //MOVIMENTAÇÃO
         Route::get('/movimentacao', [MovimentacaoController::class, 'showFormConsulta'])->name('movimentacao.showFormConsulta');
         Route::get('/movimentacao/listar', [MovimentacaoController::class, 'index'])->name('movimentacao.index');
+
+        //SALDO
+        Route::get('/saldo', [SaldoController::class, 'index'])->name('saldo.index');
 
 });
