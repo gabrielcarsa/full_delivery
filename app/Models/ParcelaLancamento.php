@@ -18,4 +18,19 @@ class ParcelaLancamento extends Model
     public function movimentacao(){
         return $this->hasMany(Movimentacao::class);
     }
+
+    public function usuarioCadastrador()
+    {
+       return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+    }
+
+    public function usuarioAlterador()
+    {
+       return $this->belongsTo(User::class, 'alterado_usuario_id');
+    }
+
+    public function usuarioBaixado()
+    {
+       return $this->belongsTo(User::class, 'baixado_usuario_id');
+    }
 }

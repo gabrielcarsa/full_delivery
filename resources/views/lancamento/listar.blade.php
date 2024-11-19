@@ -207,16 +207,14 @@
                             <label for="inputDataVencimentoDe" class="form-label">
                                 Data início
                             </label>
-                            <input type="date" name="periodoDe"
-                                value="{{request('periodoDe')}}" class="form-control"
+                            <input type="date" name="periodoDe" value="{{request('periodoDe')}}" class="form-control"
                                 id="inputDataVencimentoDe">
                         </div>
                         <div class="col-sm-2">
                             <label for="inputDataVencimentoAte" class="form-label">
                                 Data fim
                             </label>
-                            <input type="date" name="periodoAte"
-                                value="{{request('periodoAte')}}" class="form-control"
+                            <input type="date" name="periodoAte" value="{{request('periodoAte')}}" class="form-control"
                                 id="inputDataVencimentoAte">
                         </div>
                         <div class="col-sm-6">
@@ -338,6 +336,7 @@
                         <th scope="col">Vencimento</th>
                         <th scope="col">Valor</th>
                         <th scope="col">Situação</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -362,10 +361,36 @@
                         <td>{{\Carbon\Carbon::parse($parcela->data_vencimento)->format('d/m/Y') }}</td>
                         <td>R$ {{number_format($parcela->valor, 2, ',', '.')}}</td>
                         <td>{{$parcela->situacao == 1 ? 'Pago' : 'Em aberto'}}</td>
+                        <td>
+                            <a class="text-decoration-none text-padrao" data-bs-toggle="collapse" href="#collapseParcela{{$parcela->id}}" role="button"
+                                aria-expanded="false" aria-controls="collapseParcela{{$parcela->id}}">
+                                <span class="material-symbols-outlined">
+                                    keyboard_arrow_down
+                                </span>
+                            </a>
+                        </td>
                     </tr>
+                    <td colspan="11" class="collapse" id="collapseParcela{{$parcela->id}}">
+                        <div class="p-3 text-start bg-gray-100">
+                            <p class="m-0">
+                                Lançado por {{$parcela->usuarioCadastrador->name}}.
+                            </p>
+                            <p class="m-0">
+                                Lançado em {{\Carbon\Carbon::parse($parcela->created_at)->format('d/m/Y H:i')}}.
+                            </p>
+                            @if($parcela->situacao == 1)
+                            <p class="m-0">
+                                Baixado por {{$parcela->usuarioBaixado->name}} em
+                                {{\Carbon\Carbon::parse($parcela->data_baixa)->format('d/m/Y H:i')}}.
+                            </p>
+                            <p class="m-0">
+                                Pago em {{\Carbon\Carbon::parse($parcela->data_pagamento)->format('d/m/Y')}}.
+                            </p>
+                            @endif
+                        </div>
+                    </td>
                     @endforeach
                     <!-- FIM PARCELAS -->
-
                 </tbody>
             </table>
             <!-- FIM TABLE PARCELAS -->
