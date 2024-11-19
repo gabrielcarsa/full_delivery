@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Loja;
 use App\Models\ContaCorrente;
 use App\Models\Movimentacao;
+use App\Models\Saldo;
 
 class MovimentacaoController extends Controller
 {
@@ -64,9 +65,16 @@ class MovimentacaoController extends Controller
         //Obter Contas Corrente dessa loja
         $contas_corrente = ContaCorrente::where('loja_id', $loja_id)->get();
 
+        // Saldo anterior
+        $saldo_anterior = Saldo::orderBy('data', 'desc')
+        ->where('data', '<', $dataInicio)
+        ->where('conta_corrente_id', '=', $conta_corrente_id)
+        ->first(); 
+
         $dados = [
             'contas_corrente' => $contas_corrente,
             'loja' => $loja,
+            'saldo_anterior' => $saldo_anterior,
         ];
 
         return view('movimentacao/listar', compact('movimentacoes', 'dados'));

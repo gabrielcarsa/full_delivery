@@ -153,7 +153,79 @@
         <!-- MOVIMENTAÇÕES -->
         @if(isset($movimentacoes))
 
-        <div class="bg-white p-3 rounded border my-3">
+        <!-- SALDOS -->
+        <div class="row g-3 mt-1 mb-3">
+            <div class="col-md-3">
+                <div class="d-flex bg-white align-items-center p-3 shadow-sm rounded">
+                    <span class="material-symbols-outlined bg-light p-2 rounded fs-3 text-padrao bg-gray-100">
+                        date_range
+                    </span>
+                    <div class="ml-3">
+                        <p class="m-0 fw-semibold">
+                            Saldo anterior
+                            {{!is_null($dados['saldo_anterior']) ? $dados['saldo_anterior']->data : ''}}
+                        </p>
+                        <p class="m-0">
+                            @if(!is_null($dados['saldo_anterior']))
+                            R$ {{number_format($dados['saldo_anterior']->saldo, 2, ',', '.')}}
+                            @else
+                            R$ {{number_format($movimentacoes[0]->conta_corrente->saldo_inicial, 2, ',', '.')}}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex bg-white align-items-center p-3 shadow-sm rounded">
+                    <span class="material-symbols-outlined bg-light p-2 rounded fs-3 text-padrao bg-gray-100">
+                        attach_money
+                    </span>
+                    <div class="ml-3">
+                        <p class="m-0 fw-semibold">
+                            Saldo atual
+                            {{!is_null($dados['saldo_anterior']) ? $dados['saldo_anterior']->data : ''}}
+                        </p>
+                        <p class="m-0">
+                            R$ {{number_format($movimentacoes[0]->conta_corrente->saldo->last()->saldo, 2, ',', '.')}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex bg-white align-items-center p-3 shadow-sm rounded">
+                    <span class="material-symbols-outlined bg-light p-2 rounded fs-3 text-padrao bg-gray-100">
+                        storefront
+                    </span>
+                    <div class="ml-3">
+                        <p class="m-0 fw-semibold">
+                            Loja
+                        </p>
+                        <p class="m-0">
+                            {{$movimentacoes[0]->conta_corrente->loja->nome}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex bg-white align-items-center p-3 shadow-sm rounded">
+                    <span class="material-symbols-outlined bg-light p-2 rounded fs-3 text-padrao bg-gray-100">
+                        attach_money
+                    </span>
+                    <div class="ml-3">
+                        <p class="m-0 fw-semibold">
+                            Conta Corrente
+                        </p>
+                        <p class="m-0">
+                            {{$movimentacoes[0]->conta_corrente->nome}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIM SALDOS -->
+
+        <div class="bg-white p-3 rounded border">
 
             <!-- HEADER TABLE MOVIMENTAÇÕES -->
             <div class="mb-3">
@@ -185,7 +257,8 @@
                     @foreach ($movimentacoes as $movimentacao)
                     <tr>
                         <td>
-                            <a href="{{ $movimentacao->tipo == 0 ? route('contas_pagar.indexAll', ['parcela_id' => $movimentacao->parcela_lancamento_id]) : route('contas_receber.indexAll', ['parcela_id' => $movimentacao->parcela_lancamento_id]) }}" class="text-padrao">
+                            <a href="{{ $movimentacao->tipo == 0 ? route('contas_pagar.indexAll', ['parcela_id' => $movimentacao->parcela_lancamento_id]) : route('contas_receber.indexAll', ['parcela_id' => $movimentacao->parcela_lancamento_id]) }}"
+                                class="text-padrao">
                                 {{$movimentacao->id}}
                             </a>
                         </td>
@@ -203,7 +276,8 @@
                         </td>
                         <td>{{$movimentacao->parcela_lancamento->lancamento->descricao}}</td>
                         <td>{{\Carbon\Carbon::parse($movimentacao->data_movimentacao)->format('d/m/Y') }}</td>
-                        <td>{{$movimentacao->tipo == 0 ? '- ' : ''}}R$ {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
+                        <td>{{$movimentacao->tipo == 0 ? '- ' : ''}}R$
+                            {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
                         <td>
                         </td>
                     </tr>
