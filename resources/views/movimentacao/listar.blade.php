@@ -153,6 +153,12 @@
         <!-- MOVIMENTAÇÕES -->
         @if(isset($movimentacoes))
 
+        <!-- VARIAVEL SALDO ANTERIOR -->
+        @php
+        $saldo_anterior = $dados['saldo_anterior']->saldo ?? $movimentacoes[0]->conta_corrente->saldo_inicial;
+        $saldo_movimentacao = $saldo_anterior;
+        @endphp
+
         <!-- SALDOS -->
         <div class="row g-3 mt-1 mb-3">
             <div class="col-md-3">
@@ -166,11 +172,7 @@
                             {{!is_null($dados['saldo_anterior']) ? $dados['saldo_anterior']->data : ''}}
                         </p>
                         <p class="m-0">
-                            @if(!is_null($dados['saldo_anterior']))
-                            R$ {{number_format($dados['saldo_anterior']->saldo, 2, ',', '.')}}
-                            @else
-                            R$ {{number_format($movimentacoes[0]->conta_corrente->saldo_inicial, 2, ',', '.')}}
-                            @endif
+                            R$ {{number_format($saldo_anterior, 2, ',', '.')}}
                         </p>
                     </div>
                 </div>
@@ -276,9 +278,15 @@
                         </td>
                         <td>{{$movimentacao->parcela_lancamento->lancamento->descricao}}</td>
                         <td>{{\Carbon\Carbon::parse($movimentacao->data_movimentacao)->format('d/m/Y') }}</td>
-                        <td>{{$movimentacao->tipo == 0 ? '- ' : ''}}R$
-                            {{number_format($movimentacao->valor, 2, ',', '.')}}</td>
-                        <td>
+                        <td class="fw-bold {{$movimentacao->tipo == 0 ? 'text-danger' : 'text-success'}}">
+                            {{$movimentacao->tipo == 0 ? '- ' : ''}}
+                            R$ {{number_format($movimentacao->valor, 2, ',', '.')}}
+                        </td>
+                        <td class="text-secondary">
+                            @php
+                            $saldo_movimentacao = $movimentacao->tipo == 0 ? $saldo_movimentacao - $movimentacao->valor : $saldo_movimentacao + $movimentacao->valor;
+                            @endphp
+                            {{number_format($saldo_movimentacao, 2, ',', '.')}}
                         </td>
                     </tr>
                     @endforeach
