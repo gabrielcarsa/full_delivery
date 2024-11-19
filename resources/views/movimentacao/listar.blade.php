@@ -169,7 +169,7 @@
                     <div class="ml-3">
                         <p class="m-0 fw-semibold">
                             Saldo anterior
-                            {{!is_null($dados['saldo_anterior']) ? $dados['saldo_anterior']->data : ''}}
+                            {{!is_null($dados['saldo_anterior']) ? \Carbon\Carbon::parse($dados['saldo_anterior']->data)->format('d/m/Y') : ''}}
                         </p>
                         <p class="m-0">
                             R$ {{number_format($saldo_anterior, 2, ',', '.')}}
@@ -185,7 +185,6 @@
                     <div class="ml-3">
                         <p class="m-0 fw-semibold">
                             Saldo atual
-                            {{!is_null($dados['saldo_anterior']) ? $dados['saldo_anterior']->data : ''}}
                         </p>
                         <p class="m-0">
                             R$ {{number_format($movimentacoes[0]->conta_corrente->saldo->last()->saldo, 2, ',', '.')}}

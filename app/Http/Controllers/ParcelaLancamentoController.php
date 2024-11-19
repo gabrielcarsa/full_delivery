@@ -255,9 +255,15 @@ class ParcelaLancamentoController extends Controller
             // Verificando se Saldo existe para aquela data
             if (is_null($saldo)) {
 
+                // Saldo anterior
+                $saldo_anterior = Saldo::orderBy('data', 'desc')
+                ->where('data', '<', $dataPagamento[$i])
+                ->where('conta_corrente_id', '=', $request->input('conta_corrente_id'))
+                ->first(); 
+
                 //Cadastrando Saldo
                 Saldo::create([
-                    'saldo' => $lancamento->tipo == 0 ? - $valorPago[$i] : $valorPago[$i],
+                    'saldo' => $lancamento->tipo == 0 ? $saldo_anterior->saldo - $valorPago[$i] : $saldo_anterior->saldo + $valorPago[$i],
                     'conta_corrente_id' => $request->input('conta_corrente_id'),
                     'data' => $dataPagamento[$i],
                 ]);
