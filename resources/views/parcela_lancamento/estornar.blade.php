@@ -34,7 +34,7 @@
 
         <div class="bg-white rounded p-3 border">
 
-            <form action="{{ route('parcela.updateBaixarParcela') }}" method="post">
+            <form action="{{ $estornarRecebimento ? route('parcela.updateEstornarPagamentoRecebimento') : route('parcela.updateEstornarPagamentoRecebimento') }}" method="post">
                 @csrf
                 @method('PUT')
 

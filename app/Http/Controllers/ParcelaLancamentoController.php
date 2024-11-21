@@ -189,7 +189,7 @@ class ParcelaLancamentoController extends Controller
         }
     }
 
-    //
+    //BAIXAR PARCELAS
     public function updateBaixarParcela(Request $request){
 
         //Transformar em formato correto para salvar no BD e validação
@@ -338,5 +338,69 @@ class ParcelaLancamentoController extends Controller
         }else{
             return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
         }
+    }
+
+    //BAIXAR PARCELAS
+    public function updateEstornarPagamentoRecebimento(Request $request){
+
+        $idParcelas = $request->get('parcela_id', []);
+
+        //Validação estorno com data de pagamento que possui saldo mais recente
+        foreach ($idParcelas as $id) {
+
+            //Buscando parcela
+            $parcela = ParcelaLancamento::find($id);
+
+            //Saldos futuros do que o da data de pagamento
+            $saldo = Saldo::orderBy('data', 'desc')
+            ->where('data', '>', $parcela->data_pagamento)
+            ->where('conta_corrente_id', '=', $parcela->movimentacao->conta_corrente_id)
+            ->get(); 
+
+            if($saldo->isNotEmpty()){
+
+                $dataReferenciaFormatada = Carbon::parse($saldo[0]->data)->format('d/m/Y');
+
+                return redirect()->back()->with('error', 'Não é possível estornar o pagamento/recebimento com datas anteriores a '. $dataReferenciaFormatada);
+           
+            }
+        }
+
+        $i = 0;
+
+        foreach ($idParcelas as $id) {
+
+            //Baixar parcela
+            $parcela = ParcelaLancamento::find($id);
+            $parcela->valor_pago = null;
+            $parcela->data_pagamento = null;
+            $parcela->data_baixa = null;
+            $parcela->baixado_usuario_id = null;
+            $parcela->situacao = 0;
+            $parcela->save();
+
+            //Tipo Lançamento
+            $pagarOuReceber = $parcela->lancamento->tipo;
+
+            //Buscando movimentação
+            $movimentacao_id = $parcela->movimentacao->id;
+            $movimentacao = Movimentacao::find($movimentacao_id);
+       
+            //Saldo para alterar
+            $saldo = Saldo::where('data', $movimentacao->data_movimentacao)
+            ->where('conta_corrente_id', '=', $movimentacao->conta_corrente_id)
+            ->first(); 
+
+            //Alterando Saldo
+            $saldo->saldo = $pagarOuReceber == 0 ? $saldo->saldo + $movimentacao->valor : $saldo->saldo - $movimentacao->valor;
+            $saldo->save();
+
+            //Excluindo movimentação
+            $movimentacao->delete();
+            
+            $i++;
+        }
+
+        return $this->redirecionarComSucesso($pagarOuReceber);
     }
 }
