@@ -308,4 +308,35 @@ class ParcelaLancamentoController extends Controller
 
         return $this->redirecionarComSucesso($pagarOuReceber->tipo);
     }
+
+    // VIEW ESTORNAR PAGAMENTO OU RECEBIMENTO
+    public function editEstornarPagamentoRecebimento(Request $request){
+
+        if ($request->filled('checkboxes')) {
+           
+            $checkboxesSelecionados = explode(',', $request->input('checkboxes'));
+
+            //Validar parcelas apenas pagas
+            foreach($checkboxesSelecionados as $parcelaId) {
+                $parcela = ParcelaLancamento::find($parcelaId);
+                if($parcela && $parcela->situacao == 0) {
+                    return redirect()->back()->with('error', 'Selecione apenas parcelas pagas!');
+                }
+            }
+
+            //Select nas parcelas
+            foreach ($checkboxesSelecionados as $parcelaId) {
+                $parcelas[] = ParcelaLancamento::with('lancamento')
+                ->where('id', $parcelaId)
+                ->get();
+            }
+
+            $estornarRecebimento = true;
+
+            return view('parcela_lancamento/estornar', compact('parcelas', 'estornarRecebimento'));
+
+        }else{
+            return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
+        }
+    }
 }

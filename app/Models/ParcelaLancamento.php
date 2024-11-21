@@ -16,7 +16,7 @@ class ParcelaLancamento extends Model
     }
 
     public function movimentacao(){
-        return $this->hasMany(Movimentacao::class);
+        return $this->hasOne(Movimentacao::class);
     }
 
     public function usuarioCadastrador()

@@ -197,7 +197,8 @@ Route::middleware([
         Route::put('/parcela/alterar-vencimento', [ParcelaLancamentoController::class, 'updateVencimentoParcela'])->name('parcela.updateVencimentoParcela');
         Route::get('/parcela/editar-baixar', [ParcelaLancamentoController::class, 'editBaixarParcela'])->name('parcela.editBaixarParcela');
         Route::put('/parcela/alterar-baixar', [ParcelaLancamentoController::class, 'updateBaixarParcela'])->name('parcela.updateBaixarParcela');
-
+        Route::get('/parcela/estornar-pagamento-recebimento', [ParcelaLancamentoController::class, 'editEstornarPagamentoRecebimento'])->name('parcela.editEstornarPagamentoRecebimento');
+        
         //CATEGORIA FINANCEIRO
         Route::get('/categoria-financeiro', [CategoriaFinanceiroController::class, 'index'])->name('categoria_financeiro.listar');
         Route::post('/categoria-financeiro/cadastrar', [CategoriaFinanceiroController::class, 'store'])->name('categoria_financeiro.store');

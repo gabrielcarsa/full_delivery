@@ -99,7 +99,8 @@
                             </a>
                         </li>
                         <li class="border-bottom py-2">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="#"
+                                id="estornar-pagamento-recebimento">
                                 <span class="material-symbols-outlined mr-2">
                                     undo
                                 </span>
@@ -362,8 +363,9 @@
                         <td>R$ {{number_format($parcela->valor, 2, ',', '.')}}</td>
                         <td>{{$parcela->situacao == 1 ? 'Pago' : 'Em aberto'}}</td>
                         <td>
-                            <a class="text-decoration-none text-padrao" data-bs-toggle="collapse" href="#collapseParcela{{$parcela->id}}" role="button"
-                                aria-expanded="false" aria-controls="collapseParcela{{$parcela->id}}">
+                            <a class="text-decoration-none text-padrao" data-bs-toggle="collapse"
+                                href="#collapseParcela{{$parcela->id}}" role="button" aria-expanded="false"
+                                aria-controls="collapseParcela{{$parcela->id}}">
                                 <span class="material-symbols-outlined">
                                     keyboard_arrow_down
                                 </span>
@@ -462,7 +464,7 @@
             window.location.href = url;
         });
 
-        $("#estornar_pagamento").click(function(event) {
+        $("#estornar-pagamento-recebimento").click(function(event) {
             event.preventDefault();
 
             // Obtenha os valores dos checkboxes selecionados
@@ -473,9 +475,7 @@
             });
 
             // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-            var url = "?checkboxes=" + checkboxesSelecionados.join(
-                    ',') +
-                "&origem=contas_pagar";
+            var url = "{{ route('parcela.editEstornarPagamentoRecebimento') }}?checkboxes=" + checkboxesSelecionados.join(',');
 
             // Redirecione para a URL com os parâmetros
             window.location.href = url;
