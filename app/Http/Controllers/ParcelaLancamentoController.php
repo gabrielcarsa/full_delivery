@@ -261,9 +261,24 @@ class ParcelaLancamentoController extends Controller
                 ->where('conta_corrente_id', '=', $request->input('conta_corrente_id'))
                 ->first(); 
 
+                $saldoAux = 0;
+
+                //Se não existir saldo cadastrado
+                if(is_null($saldo_anterior)){
+
+                    //Conta corrente para usar valor do saldo inicial
+                    $conta_corrente = ContaCorrente::find($request->input('conta_corrente_id'));
+
+                    //Trocando valores para saldo inicial da conta corrente
+                    $saldoAux = $conta_corrente->saldo_inicial;
+
+                }else{
+                    $saldoAux = $saldo_anterior->saldo;
+                }
+
                 //Cadastrando Saldo
                 Saldo::create([
-                    'saldo' => $lancamento->tipo == 0 ? $saldo_anterior->saldo - $valorPago[$i] : $saldo_anterior->saldo + $valorPago[$i],
+                    'saldo' => $lancamento->tipo == 0 ? $saldoAux - $valorPago[$i] : $saldoAux + $valorPago[$i],
                     'conta_corrente_id' => $request->input('conta_corrente_id'),
                     'data' => $dataPagamento[$i],
                 ]);
