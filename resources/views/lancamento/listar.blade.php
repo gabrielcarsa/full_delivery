@@ -108,7 +108,7 @@
                             </a>
                         </li>
                         <li class="py-2">
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="#" id="estornar-parcela">
                                 <span class="material-symbols-outlined mr-2">
                                     delete
                                 </span>
@@ -475,13 +475,14 @@
             });
 
             // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-            var url = "{{ route('parcela.editEstornarPagamentoRecebimento') }}?checkboxes=" + checkboxesSelecionados.join(',');
+            var url = "{{ route('parcela.editEstornarPagamentoRecebimento') }}?checkboxes=" +
+                checkboxesSelecionados.join(',');
 
             // Redirecione para a URL com os parâmetros
             window.location.href = url;
         });
 
-        $("#estornar_parcela").click(function(event) {
+        $("#estornar-parcela").click(function(event) {
             event.preventDefault();
 
             // Obtenha os valores dos checkboxes selecionados
@@ -492,10 +493,8 @@
             });
 
             // Crie a URL com os valores dos checkboxes como parâmetros de consulta
-            var url = "?checkboxes=" + checkboxesSelecionados
-                .join(
-                    ',') +
-                "&origem=contas_pagar";
+            var url = "{{ route('parcela.editEstornarParcela') }}?checkboxes=" + checkboxesSelecionados
+                .join(',');
 
             // Redirecione para a URL com os parâmetros
             window.location.href = url;

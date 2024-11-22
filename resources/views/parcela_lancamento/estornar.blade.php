@@ -27,14 +27,16 @@
         <!-- HEADER -->
         <div class="">
             <h2 class="my-3 fw-bolder fs-1">
-                Estornar {{$estornarRecebimento ? 'recebimento' : 'parcela'}}
+                Estornar {{isset($estornarPagRec) ? ($parcelas[0][0]->lancamento->tipo == 0 ? 'pagamento' : 'recebimento') : 'parcela'}}
             </h2>
         </div>
         <!-- FIM HEADER -->
 
         <div class="bg-white rounded p-3 border">
 
-            <form action="{{ $estornarRecebimento ? route('parcela.updateEstornarPagamentoRecebimento') : route('parcela.updateEstornarPagamentoRecebimento') }}" method="post">
+            <form
+                action="{{ isset($estornarPagRec) ? route('parcela.updateEstornarPagamentoRecebimento') : route('parcela.updateEstornarParcela') }}"
+                method="post">
                 @csrf
                 @method('PUT')
 
@@ -52,7 +54,9 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Valor</th>
                                 <th scope="col">Data Vencimento</th>
+                                @if(isset($estornarPagRec))
                                 <th scope="col">Conta Corrente</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -66,12 +70,14 @@
                                     <input type="hidden" name="parcela_id[]" value="{{ $parcela[0]->id }}">
                                 </th>
                                 <th scope="row">
-                                    <input type="text" name="" value="{{ $parcela[0]->numero_parcela }} / {{ $parcela[0]->lancamento->quantidade_parcela }}" readonly disabled
-                                        class="form-control">
+                                    <input type="text" name=""
+                                        value="{{ $parcela[0]->numero_parcela }} / {{ $parcela[0]->lancamento->quantidade_parcela }}"
+                                        readonly disabled class="form-control">
                                 </th>
                                 <th scope="row">
-                                    <input type="text" name="" value="{{ $parcela[0]->lancamento->categoria_financeiro->nome }}" readonly disabled
-                                        class="form-control">
+                                    <input type="text" name=""
+                                        value="{{ $parcela[0]->lancamento->categoria_financeiro->nome }}" readonly
+                                        disabled class="form-control">
                                 </th>
                                 <th scope="row">
                                     <input type="text" name="valor"
@@ -83,10 +89,12 @@
                                         value="{{ \Carbon\Carbon::parse( $parcela[0]->data_vencimento )->format('d/m/Y') }}"
                                         readonly disabled class="form-control">
                                 </th>
+                                @if(isset($estornarPagRec))
                                 <th scope="row">
                                     <input type="text" value="{{ $parcela[0]->movimentacao->conta_corrente->nome }}"
                                         readonly disabled class="form-control">
                                 </th>
+                                @endif
                             </tr>
 
                             @endforeach

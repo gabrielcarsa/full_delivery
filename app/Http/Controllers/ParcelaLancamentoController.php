@@ -331,9 +331,9 @@ class ParcelaLancamentoController extends Controller
                 ->get();
             }
 
-            $estornarRecebimento = true;
+            $estornarPagRec = true;
 
-            return view('parcela_lancamento/estornar', compact('parcelas', 'estornarRecebimento'));
+            return view('parcela_lancamento/estornar', compact('parcelas', 'estornarPagRec'));
 
         }else{
             return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
@@ -402,5 +402,64 @@ class ParcelaLancamentoController extends Controller
         }
 
         return $this->redirecionarComSucesso($pagarOuReceber);
+    }
+
+     // VIEW ESTORNAR PARCELA
+     public function editEstornarParcela(Request $request){
+
+        if ($request->filled('checkboxes')) {
+           
+            $checkboxesSelecionados = explode(',', $request->input('checkboxes'));
+
+            $validacao = $this->validarCheckboxes($checkboxesSelecionados);
+
+            if ($validacao) return $validacao;
+
+            //Select nas parcelas
+            foreach ($checkboxesSelecionados as $parcelaId) {
+                $parcelas[] = ParcelaLancamento::with('lancamento')
+                ->where('id', $parcelaId)
+                ->get();
+            }
+
+            return view('parcela_lancamento/estornar', compact('parcelas'));
+
+        }else{
+            return redirect()->back()->with('error', 'Nenhuma parcela selecionada!');
+        }
+    }
+
+    //BAIXAR PARCELAS
+    public function updateEstornarParcela(Request $request){
+
+        $idParcelas = $request->get('parcela_id', []);
+
+        $i = 0;
+
+        foreach ($idParcelas as $id) {
+
+            //Buscar parcela
+            $parcela = ParcelaLancamento::find($id);
+
+            //Selecionar ID do Lançamento
+            $lancamentoID = $parcela->lancamento_id;
+        
+            //Obter lançamento
+            $lancamento = Lancamento::find($lancamentoID);
+
+            //Excluir Lançamento se só houver essa parcela
+            if($lancamento->parcela_lancamento->count() <= 1){
+                $lancamento->delete();
+            }
+
+            //Excluir parcela
+            $parcela->delete();
+
+            $i++;
+        }
+
+        $pagarOuReceber = Lancamento::find($lancamentoID);
+
+        return $this->redirecionarComSucesso($pagarOuReceber->tipo);
     }
 }

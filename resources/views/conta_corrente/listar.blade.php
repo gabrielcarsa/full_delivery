@@ -87,7 +87,7 @@
         <!-- CONTAS -->
         @foreach ($contas_corrente as $conta)
 
-        <div class="card p-3">
+        <div class="card p-3 mb-3">
             <div class="d-flex justify-content-between">
                 <div>
                     <p class="m-0 text-secondary">
