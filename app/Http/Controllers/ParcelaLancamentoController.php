@@ -247,49 +247,12 @@ class ParcelaLancamentoController extends Controller
             //Obter lançamento
             $lancamento = Lancamento::find($lancamentoID);
 
-            //Saldo da data
-            $saldo = Saldo::where('data', $dataPagamento[$i])
-            ->where('conta_corrente_id', $request->input('conta_corrente_id'))
-            ->first(); //First pois só pode ter um saldo para uma data
+            //Instaciando SaldoController para salvar Saldo
+            $saldoController = new SaldoController();
 
-            // Verificando se Saldo existe para aquela data
-            if (is_null($saldo)) {
-
-                // Saldo anterior
-                $saldo_anterior = Saldo::orderBy('data', 'desc')
-                ->where('data', '<', $dataPagamento[$i])
-                ->where('conta_corrente_id', '=', $request->input('conta_corrente_id'))
-                ->first(); 
-
-                $saldoAux = 0;
-
-                //Se não existir saldo cadastrado
-                if(is_null($saldo_anterior)){
-
-                    //Conta corrente para usar valor do saldo inicial
-                    $conta_corrente = ContaCorrente::find($request->input('conta_corrente_id'));
-
-                    //Trocando valores para saldo inicial da conta corrente
-                    $saldoAux = $conta_corrente->saldo_inicial;
-
-                }else{
-                    $saldoAux = $saldo_anterior->saldo;
-                }
-
-                //Cadastrando Saldo
-                Saldo::create([
-                    'saldo' => $lancamento->tipo == 0 ? $saldoAux - $valorPago[$i] : $saldoAux + $valorPago[$i],
-                    'conta_corrente_id' => $request->input('conta_corrente_id'),
-                    'data' => $dataPagamento[$i],
-                ]);
-
-            } else {
-
-                //Atualizando valor saldo
-                $saldo->saldo = $lancamento->tipo == 0 ? $saldo->saldo - $valorPago[$i] : $saldo->saldo + $valorPago[$i];
-                $saldo->save();
-            }
-
+            //Cadastrando Saldo
+            $saldoController->store($valorPago[$i], $dataPagamento[$i], $request->input('conta_corrente_id'), $lancamento->tipo);
+        
             //Criando movimentação
             Movimentacao::create([
                 'data_movimentacao' => $dataPagamento[$i],

@@ -41,4 +41,52 @@ class SaldoController extends Controller
 
         return view('saldo.listar', compact('dados'));
     }
+
+    //SALVAR SALDO
+    public function store($valor, $data, $conta_corrente_id, $tipo){
+
+        //Saldo da data
+        $saldo = Saldo::where('data', $data)
+        ->where('conta_corrente_id', $conta_corrente_id)
+        ->first(); //First pois só pode ter um saldo para uma data
+
+        // Verificando se Saldo existe para aquela data
+        if (is_null($saldo)) {
+
+            // Saldo anterior
+            $saldo_anterior = Saldo::orderBy('data', 'desc')
+            ->where('data', '<', $data)
+            ->where('conta_corrente_id', '=', $conta_corrente_id)
+            ->first(); 
+
+            $saldoAux = 0;
+
+            //Se não existir saldo cadastrado
+            if(is_null($saldo_anterior)){
+
+                //Conta corrente para usar valor do saldo inicial
+                $conta_corrente = ContaCorrente::find($conta_corrente_id);
+
+                //Trocando valores para saldo inicial da conta corrente
+                $saldoAux = $conta_corrente->saldo_inicial;
+
+            }else{
+                $saldoAux = $saldo_anterior->saldo;
+            }
+
+            //Cadastrando Saldo
+            Saldo::create([
+                'saldo' => $tipo == 0 ? $saldoAux - $valor : $saldoAux + $valor,
+                'conta_corrente_id' => $conta_corrente_id,
+                'data' => $data,
+            ]);
+
+        } else {
+
+            //Atualizando valor saldo
+            $saldo->saldo = $tipo == 0 ? $saldo->saldo - $valor : $saldo->saldo + $valor;
+            $saldo->save();
+        }
+
+    }
 }
