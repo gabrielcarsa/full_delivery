@@ -2,6 +2,64 @@
 
     <div class="container">
 
+        <!-- MENSAGENS -->
+        <div class="toast-container position-fixed top-0 end-0">
+            @if(session('success'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
+                        check_circle
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('success') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        <p class="fs-5 m-0">
+                            {{ session('error') }}
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+            @if ($errors->any())
+            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-autohide="true">
+                <div class="d-flex align-items-center p-3">
+                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
+                        error
+                    </span>
+                    <div class="toast-body">
+                        @foreach ($errors->all() as $error)
+                        <p class="fs-5 m-0">
+                            {{ $error }}
+                        </p>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            @endif
+        </div>
+        <!-- FIM MENSAGENS -->
+
         <!-- HEADER -->
         <div class="d-flex align-items-center justify-content-between">
             <div class="">
@@ -23,67 +81,6 @@
         <!-- CARD -->
         <div class="bg-white rounded shadow-sm p-3 my-3">
 
-            <!-- MENSAGENS -->
-            <div class="toast-container position-fixed top-0 end-0">
-                @if(session('success'))
-                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-autohide="true">
-                    <div class="d-flex align-items-center p-3">
-                        <span class="material-symbols-outlined fs-1 text-success"
-                            style="font-variation-settings:'FILL' 1;">
-                            check_circle
-                        </span>
-                        <div class="toast-body">
-                            <p class="fs-5 m-0">
-                                {{ session('success') }}
-                            </p>
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                </div>
-                @endif
-                @if (session('error'))
-                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-autohide="true">
-                    <div class="d-flex align-items-center p-3">
-                        <span class="material-symbols-outlined fs-1 text-padrao"
-                            style="font-variation-settings:'FILL' 1;">
-                            error
-                        </span>
-                        <div class="toast-body">
-                            <p class="fs-5 m-0">
-                                {{ session('error') }}
-                            </p>
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                </div>
-                @endif
-                @if ($errors->any())
-                <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-autohide="true">
-                    <div class="d-flex align-items-center p-3">
-                        <span class="material-symbols-outlined fs-1 text-padrao"
-                            style="font-variation-settings:'FILL' 1;">
-                            error
-                        </span>
-                        <div class="toast-body">
-                            @foreach ($errors->all() as $error)
-                            <p class="fs-5 m-0">
-                                {{ $error }}
-                            </p>
-                            @endforeach
-                        </div>
-                        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                </div>
-                @endif
-            </div>
-            <!-- FIM MENSAGENS -->
-
             <!-- BODY -->
             <div class="card-body">
                 <p class="fw-semibold">
@@ -91,7 +88,7 @@
                 </p>
 
                 <!-- FORM -->
-                <form class="" action="" method="post" autocomplete="off">
+                <form action="{{ route('movimentacao.store') }}" method="post" autocomplete="off">
                     @csrf
 
                     <!-- LINHA -->
@@ -131,8 +128,8 @@
                             <select id="inputTipoMovimentacao" required name="movimentacoes[0][tipo_movimentacao]"
                                 class="form-select form-control">
                                 <option value="0" select>-- Selecione --</option>
-                                <option value="1">Entrada</option>
-                                <option value="2">Saída</option>
+                                <option value="1">Saída</option>
+                                <option value="2">Entrada</option>
                             </select>
                         </div>
 
@@ -140,14 +137,14 @@
                             <label for="inputCliente" class="form-label">
                                 Categoria
                             </label>
-                            <select id="inputCliente" required name="movimentacoes[0][categoria_financeiro]"
-                                class="form-select form-control @error('categoria_financeiro') is-invalid @enderror">
-                                <option value="0" {{ old('categoria_financeiro') == 0 ? 'selected' : '' }}>
+                            <select id="inputCliente" required name="movimentacoes[0][categoria_financeiro_id]"
+                                class="form-select form-control @error('categoria_financeiro_id') is-invalid @enderror">
+                                <option value="0" {{ old('categoria_financeiro_id') == 0 ? 'selected' : '' }}>
                                     -- Selecione --
                                 </option>
                                 @foreach ($dados['categorias'] as $categoria)
                                 <option value="{{ $categoria->id }}"
-                                    {{ old('categoria_financeiro') == $categoria->id ? 'selected' : '' }}>
+                                    {{ old('categoria_financeiro_id') == $categoria->id ? 'selected' : '' }}>
                                     {{$categoria->nome}}
                                 </option>
                                 @endforeach
@@ -158,14 +155,14 @@
                             <label for="inputCliente" class="form-label">
                                 Cliente
                             </label>
-                            <select id="inputCliente" required name="movimentacoes[0][cliente]"
-                                class="form-select form-control @error('cliente') is-invalid @enderror">
-                                <option value="0" {{ old('cliente') == 0 ? 'selected' : '' }}>
+                            <select id="inputCliente" required name="movimentacoes[0][cliente_id]"
+                                class="form-select form-control @error('cliente_id') is-invalid @enderror">
+                                <option value="0" {{ old('cliente_id') == 0 ? 'selected' : '' }}>
                                     -- Selecione --
                                 </option>
                                 @foreach ($dados['clientes'] as $cliente)
                                 <option value="{{ $cliente->id }}"
-                                    {{ old('cliente') == $cliente->id ? 'selected' : '' }}>
+                                    {{ old('cliente_id') == $cliente->id ? 'selected' : '' }}>
                                     {{$cliente->nome}}
                                 </option>
                                 @endforeach
@@ -176,14 +173,14 @@
                             <label for="inputFornecedor" class="form-label">
                                 Fornecedor
                             </label>
-                            <select id="inputFornecedor" required name="movimentacoes[0][fornecedor]"
-                                class="form-select form-control @error('fornecedor') is-invalid @enderror">
-                                <option value="0" {{ old('fornecedor') == 0 ? 'selected' : '' }}>
+                            <select id="inputFornecedor" required name="movimentacoes[0][fornecedor_id]"
+                                class="form-select form-control @error('fornecedor_id') is-invalid @enderror">
+                                <option value="0" {{ old('fornecedor_id') == 0 ? 'selected' : '' }}>
                                     -- Selecione --
                                 </option>
                                 @foreach ($dados['fornecedores'] as $fornecedor)
                                 <option value="{{ $fornecedor->id }}"
-                                    {{ old('fornecedor') == $fornecedor->id ? 'selected' : '' }}>
+                                    {{ old('fornecedor_id') == $fornecedor->id ? 'selected' : '' }}>
                                     {{$fornecedor->nome}}
                                 </option>
                                 @endforeach
@@ -230,10 +227,10 @@
             var parentRow = $(this).closest('.movimentacao'); // Encontra a linha atual
 
             // Mostra/oculta os campos de cliente e fornecedor com base no tipo selecionado
-            if (selectedType == '1') { // Entrada
+            if (selectedType == '2') { // Entrada
                 parentRow.find('.cliente-container').show();
                 parentRow.find('.fornecedor-container').hide();
-            } else if (selectedType == '2') { // Saída
+            } else if (selectedType == '1') { // Saída
                 parentRow.find('.fornecedor-container').show();
                 parentRow.find('.cliente-container').hide();
             } else {

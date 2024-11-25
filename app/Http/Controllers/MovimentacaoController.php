@@ -10,6 +10,9 @@ use App\Models\Saldo;
 use App\Models\Cliente;
 use App\Models\Fornecedor;
 use App\Models\CategoriaFinanceiro;
+use App\Models\ParcelaLancamento;
+use App\Models\Lancamento;
+use Illuminate\Support\Facades\Auth;
 
 class MovimentacaoController extends Controller
 {
@@ -114,5 +117,85 @@ class MovimentacaoController extends Controller
         ];
 
         return view('movimentacao/novo', compact('dados'));
+    }
+
+    //CADASTRAR MOVIMENTAÇÕES
+    public function store(Request $request){
+
+        //Definindo data para cadastrar
+        date_default_timezone_set('America/Cuiaba');    
+
+        //Validação
+        $validated = $request->validate([
+            'data' => 'required|date',
+            'conta_corrente_id' => 'required|numeric|min:1',
+        ]);
+
+        /* ------
+        Salve as movimentações
+        ------ */
+        foreach ($request->input('movimentacoes') as $movimentacaoData) {
+        
+            $valor = str_replace(',', '.', str_replace('.', '', $movimentacaoData['valor']));
+
+            $varPagarOuReceber = $movimentacaoData['tipo_movimentacao'] == 1 ? 0 : 1;
+
+            //Validar
+            $validated = $request->validate([
+                "movimentacoes.*.tipo_movimentacao" => 'required|numeric|min:1',
+                "movimentacoes.*.categoria_financeiro_id" => 'required|numeric|min:1',
+                "movimentacoes.*.cliente_id" => $varPagarOuReceber == 0 ? 'nullable|numeric' : 'required|numeric|min:1',
+                "movimentacoes.*.fornecedor_id" => $varPagarOuReceber == 0 ? 'required|numeric|min:1' : 'nullable|numeric',
+                "movimentacoes.*.valor" => 'required|min:0.1',
+                "movimentacoes.*.descricao" => 'nullable|string|max:255',
+            ]);
+
+            //Cadastrando lancamento
+            $lancamento = Lancamento::create([
+                'loja_id' => $request->input('loja_id'),
+                'tipo' => $varPagarOuReceber,
+                'cliente_id' => $varPagarOuReceber == 0 ? null : $movimentacaoData['cliente_id'],
+                'fornecedor_id' => $varPagarOuReceber == 0 ? $movimentacaoData['fornecedor_id'] : null,
+                'categoria_financeiro_id' => $movimentacaoData['categoria_financeiro_id'],
+                'quantidade_parcela' => 1,
+                'data_vencimento' => $request->input('data'),
+                'valor_parcela' => $valor,
+                'valor_entrada' => null,
+                'descricao' => $movimentacaoData['descricao'],
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+            ]);
+        
+            //Cadastrando parcelas
+            $parcela = ParcelaLancamento::create([
+                'lancamento_id' => $lancamento->id,
+                'numero_parcela' => 1,
+                'situacao' => 1,
+                'valor' => $valor,
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+                'data_vencimento' => $request->input('data'),
+                'valor pago' => $valor,
+                'data_baixa' => Carbon::now()->format('Y-m-d H:i:s'),
+                'baixado_usuario_id' => Auth::guard()->user()->id,
+            ]);
+
+            //Instaciando SaldoController para salvar Saldo
+            $saldoController = new SaldoController();
+
+            //Cadastrando Saldo
+            $saldoController->store($valor, $request->input('data'), $request->input('conta_corrente_id'), $lancamento->tipo);
+
+            //Criando movimentação
+            Movimentacao::create([
+                'data_movimentacao' => $request->input('data'),
+                'loja_id' => $request->input('loja_id'),
+                'tipo' => $lancamento->tipo,
+                'valor' => $valor,
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+                'parcela_lancamento_id' => $parcela->id,
+                'conta_corrente_id' => $request->input('conta_corrente_id'),
+            ]);
+        }
+    
+        return redirect()->back()->with('success', 'Movimentações cadastradas com sucesso');
     }
 }
