@@ -69,7 +69,7 @@
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="">
+                    href="{{ route('movimentacao.create') }}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>

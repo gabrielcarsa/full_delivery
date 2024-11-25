@@ -7,6 +7,9 @@ use App\Models\Loja;
 use App\Models\ContaCorrente;
 use App\Models\Movimentacao;
 use App\Models\Saldo;
+use App\Models\Cliente;
+use App\Models\Fornecedor;
+use App\Models\CategoriaFinanceiro;
 
 class MovimentacaoController extends Controller
 {
@@ -78,5 +81,38 @@ class MovimentacaoController extends Controller
         ];
 
         return view('movimentacao/listar', compact('movimentacoes', 'dados'));
+    }
+
+    //VIEW PARA CADASTRAR MOVIMENTAÇÕES
+    public function create(){
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar os mesas');
+        }
+
+        $loja = Loja::find(session('lojaConectado')['id']);
+
+        //Cliente
+        $clientes = Cliente::all();
+
+        //Fornecedores
+        $fornecedores = Fornecedor::all();
+
+        //Obter Contas Corrente dessa loja
+        $contas_corrente = ContaCorrente::where('loja_id', $loja->id)->get();
+
+        //Categorias
+        $categorias = CategoriaFinanceiro::all();
+
+        $dados = [
+            'contas_corrente' => $contas_corrente,
+            'loja' => $loja,
+            'clientes' => $clientes,
+            'fornecedores' => $fornecedores,
+            'categorias' => $categorias,
+        ];
+
+        return view('movimentacao/novo', compact('dados'));
     }
 }

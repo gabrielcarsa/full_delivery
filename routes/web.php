@@ -219,6 +219,7 @@ Route::middleware([
         //MOVIMENTAÇÃO
         Route::get('/movimentacao', [MovimentacaoController::class, 'showFormConsulta'])->name('movimentacao.showFormConsulta');
         Route::get('/movimentacao/listar', [MovimentacaoController::class, 'index'])->name('movimentacao.index');
+        Route::get('/movimentacao/novo', [MovimentacaoController::class, 'create'])->name('movimentacao.create');
 
         //SALDO
         Route::get('/saldo', [SaldoController::class, 'index'])->name('saldo.index');
