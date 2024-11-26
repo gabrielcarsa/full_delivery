@@ -3,61 +3,25 @@
     <div class="container">
 
         <!-- MENSAGENS -->
-        <div class="toast-container position-fixed top-0 end-0">
-            @if(session('success'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('success') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('error') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        @foreach ($errors->all() as $error)
-                        <p class="fs-5 m-0">
-                            {{ $error }}
-                        </p>
-                        @endforeach
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
         </div>
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
         <!-- FIM MENSAGENS -->
 
         <!-- HEADER -->
@@ -90,6 +54,7 @@
                 <!-- FORM -->
                 <form action="{{ route('movimentacao.store') }}" method="post" autocomplete="off">
                     @csrf
+
 
                     <!-- LINHA -->
                     <div class="row bg-gray-100 p-3 rounded">
@@ -127,24 +92,42 @@
                             <label for="inputTipoMovimentacao" id="tipo_movimentacao" class="form-label">Tipo*</label>
                             <select id="inputTipoMovimentacao" required name="movimentacoes[0][tipo_movimentacao]"
                                 class="form-select form-control">
-                                <option value="0" select>-- Selecione --</option>
-                                <option value="1">Saída</option>
-                                <option value="2">Entrada</option>
+                                <option value="" select>-- Selecione --</option>
+                                <option value="0">Saída</option>
+                                <option value="1">Entrada</option>
                             </select>
                         </div>
 
-                        <div class="col-md-2" id="categoriaField">
-                            <label for="inputCliente" class="form-label">
+                        <div class="col-md-2" id="categoria-pagar">
+                            <label for="inputCatPagar" class="form-label">
                                 Categoria
                             </label>
-                            <select id="inputCliente" required name="movimentacoes[0][categoria_financeiro_id]"
-                                class="form-select form-control @error('categoria_financeiro_id') is-invalid @enderror">
-                                <option value="0" {{ old('categoria_financeiro_id') == 0 ? 'selected' : '' }}>
+                            <select id="inputCatPagar" name="movimentacoes[0][categoria_pagar_id]"
+                                class="form-select form-control @error('categoria_pagar_id') is-invalid @enderror">
+                                <option value="" {{ old('categoria_pagar_id') == 0 ? 'selected' : '' }}>
                                     -- Selecione --
                                 </option>
-                                @foreach ($dados['categorias'] as $categoria)
+                                @foreach ($dados['categorias_pagar'] as $categoria)
                                 <option value="{{ $categoria->id }}"
-                                    {{ old('categoria_financeiro_id') == $categoria->id ? 'selected' : '' }}>
+                                    {{ old('categoria_pagar_id') == $categoria->id ? 'selected' : '' }}>
+                                    {{$categoria->nome}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-2" id="categoria-receber">
+                            <label for="inputCatReceber" class="form-label">
+                                Categoria
+                            </label>
+                            <select id="inputCatReceber" name="movimentacoes[0][categoria_receber_id]"
+                                class="form-select form-control @error('categoria_receber_id') is-invalid @enderror">
+                                <option value="" {{ old('categoria_receber_id') == 0 ? 'selected' : '' }}>
+                                    -- Selecione --
+                                </option>
+                                @foreach ($dados['categorias_receber'] as $categoria)
+                                <option value="{{ $categoria->id }}"
+                                    {{ old('categoria_receber_id') == $categoria->id ? 'selected' : '' }}>
                                     {{$categoria->nome}}
                                 </option>
                                 @endforeach
@@ -155,9 +138,9 @@
                             <label for="inputCliente" class="form-label">
                                 Cliente
                             </label>
-                            <select id="inputCliente" required name="movimentacoes[0][cliente_id]"
+                            <select id="inputCliente" name="movimentacoes[0][cliente_id]"
                                 class="form-select form-control @error('cliente_id') is-invalid @enderror">
-                                <option value="0" {{ old('cliente_id') == 0 ? 'selected' : '' }}>
+                                <option value="" {{ old('cliente_id') == 0 ? 'selected' : '' }}>
                                     -- Selecione --
                                 </option>
                                 @foreach ($dados['clientes'] as $cliente)
@@ -173,9 +156,9 @@
                             <label for="inputFornecedor" class="form-label">
                                 Fornecedor
                             </label>
-                            <select id="inputFornecedor" required name="movimentacoes[0][fornecedor_id]"
+                            <select id="inputFornecedor" name="movimentacoes[0][fornecedor_id]"
                                 class="form-select form-control @error('fornecedor_id') is-invalid @enderror">
-                                <option value="0" {{ old('fornecedor_id') == 0 ? 'selected' : '' }}>
+                                <option value="" {{ old('fornecedor_id') == 0 ? 'selected' : '' }}>
                                     -- Selecione --
                                 </option>
                                 @foreach ($dados['fornecedores'] as $fornecedor)
@@ -227,20 +210,39 @@
             var parentRow = $(this).closest('.movimentacao'); // Encontra a linha atual
 
             // Mostra/oculta os campos de cliente e fornecedor com base no tipo selecionado
-            if (selectedType == '2') { // Entrada
-                parentRow.find('.cliente-container').show();
-                parentRow.find('.fornecedor-container').hide();
-            } else if (selectedType == '1') { // Saída
-                parentRow.find('.fornecedor-container').show();
-                parentRow.find('.cliente-container').hide();
+            if (selectedType == '1') { // Entrada
+
+                parentRow.find('.cliente-container').show().find('select, input').attr('required',
+                true);
+                parentRow.find('.fornecedor-container').hide().find('select, input').removeAttr(
+                    'required');
+                parentRow.find('#categoria-receber').show().find('select, input').attr('required',
+                true);
+                parentRow.find('#categoria-pagar').hide().find('select, input').removeAttr('required');
+            } else if (selectedType == '0') { // Saída
+                
+                parentRow.find('.fornecedor-container').show().find('select, input').attr('required',
+                    true);
+                parentRow.find('.cliente-container').hide().find('select, input').removeAttr(
+                'required');
+                parentRow.find('#categoria-pagar').show().find('select, input').attr('required', true);
+                parentRow.find('#categoria-receber').hide().find('select, input').removeAttr(
+                'required');
             } else {
-                // Se nenhuma opção válida for selecionada, esconde ambos
-                parentRow.find('.cliente-container, .fornecedor-container').hide();
+                // Se nenhuma opção válida for selecionada, esconde ambos e remove o "required"
+                parentRow.find(
+                        '.cliente-container, .fornecedor-container, #categoria-pagar, #categoria-receber'
+                        )
+                    .hide()
+                    .find('select, input')
+                    .removeAttr('required');
             }
         });
 
-        // Garante o estado inicial correto ao carregar a página ou adicionar novas linhas
-        $('select[name^="movimentacoes"][name$="[tipo_movimentacao]"]').trigger('change');
+        // Garante o estado correto para os campos cliente e fornecedor
+        $('select[name^="movimentacoes"][name$="[tipo_movimentacao]"]').each(function() {
+            $(this).trigger('change');
+        });
 
         // Formatar campo valor em dinheiro com pontos e virgulas dos valores movimentações
         $(document).on('input', 'input[name^="movimentacoes["][name$="[valor]"]', function() {

@@ -14,6 +14,7 @@ use App\Models\ParcelaLancamento;
 use App\Models\Lancamento;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class MovimentacaoController extends Controller
 {
@@ -106,15 +107,20 @@ class MovimentacaoController extends Controller
         //Obter Contas Corrente dessa loja
         $contas_corrente = ContaCorrente::where('loja_id', $loja->id)->get();
 
-        //Categorias
-        $categorias = CategoriaFinanceiro::all();
+        //Categorias a pagar
+        $categorias_pagar = CategoriaFinanceiro::where('tipo', 0)->get();
+
+        //Categorias a receber
+        $categorias_receber = CategoriaFinanceiro::where('tipo', 1)->get();
 
         $dados = [
             'contas_corrente' => $contas_corrente,
             'loja' => $loja,
             'clientes' => $clientes,
             'fornecedores' => $fornecedores,
-            'categorias' => $categorias,
+            'categorias_pagar' => $categorias_pagar,
+            'categorias_receber' => $categorias_receber,
+
         ];
 
         return view('movimentacao/novo', compact('dados'));
@@ -152,28 +158,37 @@ class MovimentacaoController extends Controller
         Salve as movimentações
         ------ */
         foreach ($request->input('movimentacoes') as $movimentacaoData) {
-        
+
             $valor = str_replace(',', '.', str_replace('.', '', $movimentacaoData['valor']));
 
-            $varPagarOuReceber = $movimentacaoData['tipo_movimentacao'] == 1 ? 0 : 1;
+            $varPagarOuReceber = $movimentacaoData['tipo_movimentacao'];
 
-            //Validar
-            $validated = $request->validate([
-                "movimentacoes.*.tipo_movimentacao" => 'required|numeric|min:1',
-                "movimentacoes.*.categoria_financeiro_id" => 'required|numeric|min:1',
-                "movimentacoes.*.cliente_id" => $varPagarOuReceber == 0 ? 'nullable|numeric' : 'required|numeric|min:1',
-                "movimentacoes.*.fornecedor_id" => $varPagarOuReceber == 0 ? 'required|numeric|min:1' : 'nullable|numeric',
-                "movimentacoes.*.valor" => 'required|min:0.1',
-                "movimentacoes.*.descricao" => 'nullable|string|max:255',
-            ]);
+            // Configurar as regras de validação dinamicamente
+            $rules = [
+                "tipo_movimentacao" => 'required|numeric|in:0,1',
+                "categoria_pagar_id" => $varPagarOuReceber == 0 ? 'required|numeric' : 'nullable|numeric',
+                "categoria_receber_id" => $varPagarOuReceber == 1 ? 'required|numeric' : 'nullable|numeric',
+                "cliente_id" => $varPagarOuReceber == 1 ? 'required|numeric' : 'nullable|numeric',
+                "fornecedor_id" => $varPagarOuReceber == 0 ? 'required|numeric' : 'nullable|numeric',
+                "valor" => 'required|string|min:0.1',
+                "descricao" => 'nullable|string|max:255',
+            ];
 
+            // Validação personalizada para cada movimentação
+            $validator = Validator::make($movimentacaoData, $rules);
+
+            // Se falhar, retorna com o erro indicando a linha
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput()->with('error', implode(', ', $validator->errors()->all()));
+            }
+            
             //Cadastrando lancamento
             $lancamento = Lancamento::create([
                 'loja_id' => $request->input('loja_id'),
                 'tipo' => $varPagarOuReceber,
                 'cliente_id' => $varPagarOuReceber == 0 ? null : $movimentacaoData['cliente_id'],
                 'fornecedor_id' => $varPagarOuReceber == 0 ? $movimentacaoData['fornecedor_id'] : null,
-                'categoria_financeiro_id' => $movimentacaoData['categoria_financeiro_id'],
+                'categoria_financeiro_id' => $varPagarOuReceber == 0 ? $movimentacaoData['categoria_pagar_id'] : $movimentacaoData['categoria_receber_id'],
                 'quantidade_parcela' => 1,
                 'data_vencimento' => $request->input('data'),
                 'valor_parcela' => $valor,
@@ -190,7 +205,7 @@ class MovimentacaoController extends Controller
                 'valor' => $valor,
                 'cadastrado_usuario_id' => Auth::guard()->user()->id,
                 'data_vencimento' => $request->input('data'),
-                'valor pago' => $valor,
+                'valor_pago' => $valor,
                 'data_baixa' => Carbon::now()->format('Y-m-d H:i:s'),
                 'baixado_usuario_id' => Auth::guard()->user()->id,
             ]);
