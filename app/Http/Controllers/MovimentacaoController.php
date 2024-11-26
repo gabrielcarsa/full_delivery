@@ -13,6 +13,7 @@ use App\Models\CategoriaFinanceiro;
 use App\Models\ParcelaLancamento;
 use App\Models\Lancamento;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class MovimentacaoController extends Controller
 {
@@ -130,6 +131,22 @@ class MovimentacaoController extends Controller
             'data' => 'required|date',
             'conta_corrente_id' => 'required|numeric|min:1',
         ]);
+
+        //Verificar para não ser possível dar baixa com datas futuras
+        if (strtotime($request->input('data')) > strtotime(date('Y-m-d'))) {
+            return redirect()->back()->with('error', 'Não é possível baixar com datas futuras!');
+        }
+
+        //Obter última data de Movimentacao
+        $ultimaMovimentacao = Movimentacao::where('data_movimentacao', '>', $request->input('data'))
+        ->where('conta_corrente_id', $request->input('conta_corrente_id'))
+        ->get();
+
+        //Não permitir baixa de parcelas anterior há movimentações mais recentes, pois pode dar incosistência nos Saldos
+        if($ultimaMovimentacao->isNotEmpty()){
+            $dataReferenciaFormatada = Carbon::parse($ultimaMovimentacao[0]->data_movimentacao)->format('d/m/Y');
+            return redirect()->back()->with('error', 'Não é possível baixar com datas anteriores de '.$dataReferenciaFormatada);
+        }
 
         /* ------
         Salve as movimentações
