@@ -39,249 +39,209 @@
         <!-- Page Content -->
         <main>
             <div class="d-flex">
-                <div class="col-2 px-0 border-end bg-white">
-                    <div class="vh-100 p-3">
-                        <p class="p-0 m-0 fw-regular" style="font-size: 14px">conectado como</p>
-                        <h4 class="p-0 m-0 fs-3 fw-bold">
-                            {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : '---'}}
-                        </h4>
-                        <a href="{{ route('loja') }}"
-                            class="d-flex align-items-center align-middle fs-6 text-decoration-none text-padrao">
-                            <span class="material-symbols-outlined fs-6">
-                                change_circle
-                            </span>
-                            <span>{{session('lojaConectado') != null ? 'Trocar loja': 'Selecionar loja'}}</span>
-                        </a>
-                        <hr>
-                        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-                            id="menu">
+                <div class="border-end bg-white vh-100">
+                    <ul class="m-0 p-0">
+                        <div class="mx-3 my-1 text-center">
+                            <p class="m-0 text-padrao fw-bold rounded fs-5">
+                                {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : ''}}
+                            </p>
+                        </div>
 
-                            <li class="nav-item">
-                                <a href="{{ route('dashboard') }}"
-                                    class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('dashboard') ? 'nav-link-active' : 'nav-link-desactive'}} text-black">
-                                    <span class="material-symbols-outlined">
-                                        dashboard
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Dashboard</span>
-                                </a>
-                            </li>
+                        <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined fs-3">
+                                    receipt_long
+                                </span>
+                                <p class="m-0 p-0">Pedidos</p>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownCardapio">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('pedido.gestor') }}">
+                                        Gestor de Pedidos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('mesa.gestor') }}">
+                                        Gestor de Mesas
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        receipt_long
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Pedidos</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('pedido.gestor') }}">
-                                            Gestor de Pedidos
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('mesa.gestor') }}">
-                                            Gestor de Mesas
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li class="d-flex align-items-center justify-content-center border-top p-2">
+                            <a class="text-decoration-none text-center {{ request()->routeIs('register') ? 'fw-bold text-padrao' : 'text-secondary'}}"
+                                href="{{ route('register') }}">
+                                <span class="material-symbols-outlined">
+                                    person_add
+                                </span>
+                                <p class="m-0 p-0">Usuário</p>
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('register') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
-                                    href="{{ route('register') }}">
-                                    <span class="material-symbols-outlined">
-                                        person_add
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Cadastrar Usuário</span>
-                                </a>
-                            </li>
+                        <!-- Nav Item - CLIENTES DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    groups
+                                </span>
+                                <p class="m-0 p-0">
+                                    Clientes
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('cliente') }}">
+                                        Clientes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Cashback</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="">Assinaturas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('cupom') }}">Cupons</a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('cliente') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
-                                    href="{{ route('cliente') }}">
-                                    <span class="material-symbols-outlined">
-                                        groups
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline"> Clientes</span>
-                                </a>
-                            </li>
+                        <!-- Nav Item - LOJAS DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    storefront
+                                </span>
+                                <p class="m-0 p-0">
+                                    Loja
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja') }}">
+                                        Minhas Lojas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('mesa') }}">
+                                        Cadastro de Mesas
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-
-                            <!-- Nav Item - LOJAS DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        storefront
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Loja</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('loja') }}">
-                                            Minhas Lojas
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('mesa') }}">
-                                            Cadastro de Mesas
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <!-- Nav Item - ENTREGAS DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        sports_motorsports
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Entregas</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('loja.entrega_taxas') }}">
-                                            Taxas
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('loja.entrega_areas') }}">
-                                            Áreas
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <!-- Nav Item - ENTREGAS DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    sports_motorsports
+                                </span>
+                                <p class="m-0 p-0">Entregas</p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja.entrega_taxas') }}">
+                                        Taxas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja.entrega_areas') }}">
+                                        Áreas
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
-                            <!-- Nav Item - CARDAPIO DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        restaurant_menu
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Cardápio</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Visual</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('categoria_produto') }}">
-                                            Categorias e produtos
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <!-- Nav Item - CARDAPIO DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    restaurant_menu
+                                </span>
+                                <p class="m-0 p-0">Cardápio</p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                <li>
+                                    <a class="dropdown-item" href="#">Visual</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('categoria_produto') }}">
+                                        Categorias e produtos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <!-- Nav Item - FINANCEIRO DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        payments
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Financeiro</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Vendas</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
-                                            Formas de pagamento
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('contas_receber.index') }}">
-                                            Contas a receber
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('contas_pagar.index') }}">
-                                            Contas a pagar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('movimentacao.showFormConsulta') }}">
-                                            Movimentações
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <!-- Nav Item - FINANCEIRO DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    payments
+                                </span>
+                                <p class="m-0 p-0">Financeiro</p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                <li>
+                                    <a class="dropdown-item" href="#">Vendas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
+                                        Formas de pagamento
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('contas_receber.index') }}">
+                                        Contas a receber
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('contas_pagar.index') }}">
+                                        Contas a pagar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('movimentacao.showFormConsulta') }}">
+                                        Movimentações
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 {{ request()->routeIs('notificacoes') ? 'nav-link-active' : 'nav-link-desactive'}} text-black"
-                                    href="">
-                                    <span class="material-symbols-outlined">
-                                        campaign
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Notificações app</span>
-                                </a>
-                            </li>
+                        <!-- Nav Item - FINANCEIRO DROPEND -->
+                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
+                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
+                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-symbols-outlined">
+                                    settings
+                                </span>
+                                <p class="m-0 p-0">
+                                    Ajustes
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
+                                        Categoria Financeiro
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
+                                        Conta Corrente
+                                    </a>
+                                </li>
 
-                            <!-- Nav Item - VANTAGENS DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        favorite
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">Vantagens</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Cashback</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="">Assinaturas</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('cupom') }}">Cupons</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
 
-                            <!-- Nav Item - FINANCEIRO DROPEND -->
-                            <li class="nav-item dropend">
-                                <a class="nav-link d-flex align-items-center align-middle px-0 collapsed nav-link-desactive dropdown-toggle text-black"
-                                    href="#" data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <span class="material-symbols-outlined">
-                                        settings
-                                    </span>
-                                    <span class="ml-1 d-none d-sm-inline">
-                                        Configurações
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
-                                            Categoria Financeiro
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
-                                            Conta Corrente
-                                        </a>
-                                    </li>
-                                    
-                                </ul>
-                            </li>
-
-                        </ul>
-
-                    </div>
+                    </ul>
                 </div>
 
                 <!-- CONTEÚDO -->
