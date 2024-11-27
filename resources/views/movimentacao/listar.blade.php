@@ -283,7 +283,8 @@
                         </td>
                         <td class="text-secondary">
                             @php
-                            $saldo_movimentacao = $movimentacao->tipo == 0 ? $saldo_movimentacao - $movimentacao->valor : $saldo_movimentacao + $movimentacao->valor;
+                            $saldo_movimentacao = $movimentacao->tipo == 0 ? $saldo_movimentacao - $movimentacao->valor
+                            : $saldo_movimentacao + $movimentacao->valor;
                             @endphp
                             {{number_format($saldo_movimentacao, 2, ',', '.')}}
                         </td>
