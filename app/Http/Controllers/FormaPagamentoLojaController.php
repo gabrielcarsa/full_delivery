@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\FormaPagamentoLoja;
+use App\Models\ContaCorrente;
 
 use Illuminate\Http\Request;
 
@@ -16,16 +17,20 @@ class FormaPagamentoLojaController extends Controller
         }
 
         //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
+        $loja_id  = session('lojaConectado')['id'];
 
         //Formas de pagamento da Loja
-        $formas_pagamento_loja = FormaPagamentoLoja::where('loja_id', $id_loja)->get();
+        $formas_pagamento_loja = FormaPagamentoLoja::where('loja_id', $loja_id)->get();
 
-        $data = [
+        //Contas Corrente
+        $contas_corrente = ContaCorrente::where('loja_id', $loja_id)->get();
+
+        $dados = [
             'formas_pagamento_loja' => $formas_pagamento_loja,
+            'contas_corrente' => $contas_corrente,
         ];
 
-        return view('forma_pagamento_loja/listar', compact('data'));
+        return view('forma_pagamento_loja/listar', compact('dados'));
     }
 
     //Alterar e salvar formas de pagamento selecionadas
@@ -59,5 +64,21 @@ class FormaPagamentoLojaController extends Controller
         
         
         return redirect()->back();
+    }
+
+    //VINCULAR FORMA COM CONTA CORRENTE
+    public function updateVincular(Request $request){
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar pedidos');
+        }
+
+        $forma_pagamento = FormaPagamentoLoja::find($request->input('id'));
+        $forma_pagamento->conta_corrente_id = $request->input('conta_corrente_id');
+        $forma_pagamento->save();
+
+        return redirect()->back()->with('success', 'Vinculado com sucesso');
+
     }
 }

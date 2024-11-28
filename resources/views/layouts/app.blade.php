@@ -212,6 +212,11 @@
                                         Movimentações
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
+                                        Conta Corrente
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -230,11 +235,6 @@
                                 <li>
                                     <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
                                         Categoria Financeiro
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
-                                        Conta Corrente
                                     </a>
                                 </li>
 

@@ -171,6 +171,7 @@ Route::middleware([
         //FORMAS DE PAGAMENTO LOJA
         Route::get('/forma-pagamento', [FormaPagamentoLojaController::class, 'index'])->name('forma_pagamento');
         Route::post('/forma-pagamento/cadastrar', [FormaPagamentoLojaController::class, 'store'])->name('forma_pagamento.cadastrar');
+        Route::get('/forma-pagamento/vincular-conta-corrente', [FormaPagamentoLojaController::class, 'updateVincular'])->name('forma_pagamento.updateVincular');
 
         //MESA
         Route::get('/mesa', [MesaController::class, 'index'])->name('mesa');

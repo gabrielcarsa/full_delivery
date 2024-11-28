@@ -33,4 +33,8 @@ class ContaCorrente extends Model
    public function saldo(){
       return $this->hasMany(Saldo::class);
    }
+
+   public function formaPagamentoLoja(){
+      return $this->hasMany(FormaPagamentoLoja::class);
+   }
 }

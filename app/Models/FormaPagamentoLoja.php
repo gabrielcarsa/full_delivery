@@ -15,4 +15,9 @@ class FormaPagamentoLoja extends Model
     {
         return $this->hasMany(Pedido::class);
     }
+
+    public function conta_corrente()
+    {
+        return $this->belongsTo(ContaCorrente::class);
+    }
 }
