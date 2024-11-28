@@ -48,9 +48,10 @@
                         </div>
 
                         <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="material-symbols-outlined fs-3">
                                     receipt_long
                                 </span>
@@ -81,9 +82,9 @@
                         </li>
 
                         <!-- Nav Item - CLIENTES DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="material-symbols-outlined">
                                     groups
                                 </span>
@@ -93,9 +94,25 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">
                                 <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Cadastro geral
+                                    </p>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('cliente') }}">
                                         Clientes
                                     </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('cliente') }}">
+                                        Fornecedores
+                                    </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Vantagens
+                                    </p>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="#">Cashback</a>
@@ -110,9 +127,10 @@
                         </li>
 
                         <!-- Nav Item - LOJAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="material-symbols-outlined">
                                     storefront
                                 </span>
@@ -135,9 +153,10 @@
                         </li>
 
                         <!-- Nav Item - ENTREGAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="material-symbols-outlined">
                                     sports_motorsports
                                 </span>
@@ -159,9 +178,10 @@
 
 
                         <!-- Nav Item - CARDAPIO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="material-symbols-outlined">
                                     restaurant_menu
                                 </span>
@@ -180,9 +200,10 @@
                         </li>
 
                         <!-- Nav Item - FINANCEIRO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="material-symbols-outlined">
                                     payments
                                 </span>
@@ -190,12 +211,9 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
-                                    <a class="dropdown-item" href="#">Vendas</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
-                                        Formas de pagamento
-                                    </a>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Financeiro
+                                    </p>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('contas_receber.index') }}">
@@ -212,6 +230,22 @@
                                         Movimentações
                                     </a>
                                 </li>
+                                <hr>
+                                <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Vendas
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Relatórios
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
+                                        Formas de pagamento
+                                    </a>
+                                </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
                                         Conta Corrente
@@ -221,9 +255,10 @@
                         </li>
 
                         <!-- Nav Item - FINANCEIRO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top p-2 dropend">
-                            <a class="text-decoration-none text-center text-secondary" href="#" data-toggle="collapse"
-                                id="dropdownCardapio" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <span class="material-symbols-outlined">
                                     settings
                                 </span>
