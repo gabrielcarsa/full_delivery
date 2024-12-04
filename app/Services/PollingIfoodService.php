@@ -17,7 +17,7 @@ use App\Models\Entrega;
 class PollingIfoodService
 {
 
-    public function cadastrarPedido($pedidoPolling, $order_id){
+    private function cadastrarPedido($pedidoPolling, $order_id){
 
         //Usuário logado
         $usuario_id = Auth::user()->id;

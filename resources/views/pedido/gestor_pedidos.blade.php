@@ -67,6 +67,11 @@
             <div class="mt-3">
                 <h2 class="m-0 fw-bolder fs-2 text-black">
                     Gestor de Pedidos
+                    <span class="fs-6 text-secondary fw-light">
+                        @if($data['token'] != null)
+                            Integração iFood online até {{\Carbon\Carbon::parse($data['token']->created_at)->addDays(7)->format('d/m/Y')}}
+                        @endif
+                    </span>
                 </h2>
             </div>
             <!-- FIM TITULO -->

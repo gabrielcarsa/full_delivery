@@ -14,6 +14,7 @@ use App\Models\OpcionalItem;
 use App\Models\Cupom;
 use App\Models\Mesa;
 use App\Models\UsoCupom;
+use App\Models\IfoodToken;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ClienteEndereco;
@@ -45,11 +46,11 @@ class PedidoController extends Controller
         }
 
         //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
-        $loja = Loja::where('id', $id_loja)->first();
+        $loja_id  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $loja_id)->first();
 
         //Query Pedidos
-        $pedidos = Pedido::where('loja_id', $id_loja)
+        $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('feito_em', 'DESC');
 
@@ -63,10 +64,14 @@ class PedidoController extends Controller
 
         //Executa a query
         $pedidos = $pedidos->get();
+
+        // Obtém token mais recente
+        $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
         
         $data = [
             'loja' => $loja,
             'pedidos' => $pedidos,
+            'token' => $token,
         ];
     
         return view('pedido/gestor_pedidos', compact('data'));    
