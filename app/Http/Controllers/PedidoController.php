@@ -51,7 +51,7 @@ class PedidoController extends Controller
 
         //Query Pedidos
         $pedidos = Pedido::where('loja_id', $loja_id)
-        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
+        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('feito_em', 'DESC');
 
         //Filtros
@@ -93,13 +93,13 @@ class PedidoController extends Controller
 
         //Pedidos
         $pedidos = Pedido::where('loja_id', $id_loja)
-        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
+        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('feito_em', 'DESC')
         ->get();
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
+        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
         ->orderBy('feito_em', 'ASC')
         ->first();
         
@@ -120,7 +120,7 @@ class PedidoController extends Controller
 
         //Query pedidos da loja
         $pedidos = Pedido::where('loja_id', $loja_id)
-        ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega')
+        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('feito_em', 'DESC');
 
         //Filtros
@@ -465,7 +465,7 @@ class PedidoController extends Controller
             $cliente_id = Auth::guard('cliente')->user()->id;
 
             $pedidos = Pedido::where('loja_id', $loja_id)
-            ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
+            ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'mesa')
             ->orderBy('feito_em', 'DESC')
             ->where('cliente_id', $cliente_id)
             ->get();
@@ -476,7 +476,7 @@ class PedidoController extends Controller
             
             if($clienteNaoLogado != null){
                 $pedidos = Pedido::where('loja_id', $loja_id)
-                ->with('loja', 'forma_pagamento_foomy', 'forma_pagamento_loja', 'item_pedido', 'cliente', 'entrega', 'mesa')
+                ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'mesa')
                 ->orderBy('feito_em', 'DESC')
                 ->where('mesa_id', $clienteNaoLogado['mesa_id'])
                 ->where('nome_cliente', $clienteNaoLogado['nome_cliente'])
@@ -626,7 +626,7 @@ class PedidoController extends Controller
             }
 
         }elseif($consumo_local_viagem_delivery == 3){ //Verificar delivery
-            $pedido->forma_pagamento_loja_id = $request->input('forma_pagamento');
+            $pedido->forma_pagamento_id = $request->input('forma_pagamento');
         }
 
         $pedido->save();
@@ -754,7 +754,7 @@ class PedidoController extends Controller
         
         //Pedido
         $pedido = Pedido::where('id', $pedido_id)
-        ->with('loja', 'forma_pagamento_loja', 'forma_pagamento_foomy', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
+        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
         ->orderBy('feito_em', 'ASC')
         ->first();
                 

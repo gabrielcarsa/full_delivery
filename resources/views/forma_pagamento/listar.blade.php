@@ -41,9 +41,9 @@
                 <div class="row g-3">
 
                     <!-- FORMAS DE PAGAMENTO -->
-                    @foreach($dados['formas_pagamento_loja'] as $forma_pagamento)
+                    @foreach($dados['formas_pagamento'] as $forma_pagamento)
                     <div class="form-check col-md-6">
-                        <input class="form-check-input" type="checkbox" name="formas_pagamento_loja[]"
+                        <input class="form-check-input" type="checkbox" name="formas_pagamento[]"
                             value="{{$forma_pagamento->id}}" id="flexCheckDefault{{$forma_pagamento->id}}"
                             {{$forma_pagamento->is_ativo == true ? 'checked' : ''}}>
                         <label class="form-check-label d-flex align-items-center"

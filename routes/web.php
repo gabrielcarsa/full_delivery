@@ -13,7 +13,7 @@ use App\Http\Controllers\CupomController;
 use App\Http\Controllers\ClienteAuthController;
 use App\Http\Controllers\ClienteEnderecoController;
 use App\Http\Controllers\CategoriaOpcionalController;
-use App\Http\Controllers\FormaPagamentoLojaController;
+use App\Http\Controllers\FormaPagamentoController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\LancamentoController;
 use App\Http\Controllers\CategoriaFinanceiroController;
@@ -168,10 +168,10 @@ Route::middleware([
         Route::get('/cupom/status', [CupomController::class, 'status'])->name('cupom.status');
         Route::get('/cupom/detalhes', [CupomController::class, 'show'])->name('cupom.show');
 
-        //FORMAS DE PAGAMENTO LOJA
-        Route::get('/forma-pagamento', [FormaPagamentoLojaController::class, 'index'])->name('forma_pagamento');
-        Route::post('/forma-pagamento/cadastrar', [FormaPagamentoLojaController::class, 'store'])->name('forma_pagamento.cadastrar');
-        Route::get('/forma-pagamento/vincular-conta-corrente', [FormaPagamentoLojaController::class, 'updateVincular'])->name('forma_pagamento.updateVincular');
+        //FORMAS DE PAGAMENTO
+        Route::get('/forma-pagamento', [FormaPagamentoController::class, 'index'])->name('forma_pagamento');
+        Route::post('/forma-pagamento/cadastrar', [FormaPagamentoController::class, 'store'])->name('forma_pagamento.cadastrar');
+        Route::get('/forma-pagamento/vincular-conta-corrente', [FormaPagamentoController::class, 'updateVincular'])->name('forma_pagamento.updateVincular');
 
         //MESA
         Route::get('/mesa', [MesaController::class, 'index'])->name('mesa');
