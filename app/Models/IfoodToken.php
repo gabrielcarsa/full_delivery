@@ -10,7 +10,7 @@ class IfoodToken extends Model
     use HasFactory;
     protected $table = 'ifood_tokens';
 
-    protected $fillable = ['access_token', 'expires_at', 'refresh_token'];
+    protected $fillable = ['access_token', 'expires_at', 'refresh_token', 'loja_id'];
     protected $casts = [
         'expires_at' => 'datetime',
     ];
