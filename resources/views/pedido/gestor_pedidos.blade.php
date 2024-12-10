@@ -64,15 +64,28 @@
         <div class="p-2 m-0">
 
             <!-- TITULO -->
-            <div class="mt-3">
-                <h2 class="m-0 fw-bolder fs-2 text-black">
-                    Gestor de Pedidos
-                    <span class="fs-6 text-secondary fw-light">
-                        @if($data['token'] != null)
-                            Integração iFood online até {{\Carbon\Carbon::parse($data['token']->created_at)->addDays(7)->format('d/m/Y')}}
-                        @endif
-                    </span>
-                </h2>
+            <div class="row mt-3">
+                <div class="col">
+                    <h2 class="m-0 fw-bolder fs-2 text-black">
+                        Gestor de Pedidos
+                        <span class="fs-6 text-secondary fw-light">
+                            @if($data['token'] != null)
+                            Integração iFood online até
+                            {{\Carbon\Carbon::parse($data['token']->created_at)->addDays(7)->format('d/m/Y')}}
+                            @endif
+                        </span>
+                    </h2>
+                </div>
+
+                <div class="col d-flex align-items-center justify-content-end p-0">
+                    <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
+                        href="">
+                        <span class="material-symbols-outlined mr-1">
+                            add
+                        </span>
+                        Novo
+                    </a>
+                </div>
             </div>
             <!-- FIM TITULO -->
 
