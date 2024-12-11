@@ -82,8 +82,8 @@
                 </button>
 
                 @elseif($pedido->status == 3)
-                <button class="btn btn-outline-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <button class="btn btn-outline-primary dropdown-toggle rounded-pill" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     A caminho
                 </button>
 
@@ -275,6 +275,26 @@
                 </span>
                 Entrega
             </p>
+            <!-- FIM CONSUMO -->
+
+            <!-- FORMA PAGAMENTO -->
+            @if($pedido->consumo_local_viagem_delivery == 3)
+
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento->imagem . '.svg') }}"
+                    alt="" width="20px">
+                <p class="p-0 ml-1 my-0">
+                    @if($pedido->is_pagamento_entrega == 0)
+                    Pago R$ {{number_format($pedido->total, 2, ',', '.')}} online.
+                    @else
+                    Cobrar R$ {{number_format($pedido->total, 2, ',', '.')}} na entrega.
+                    @endif
+                </p>
+            </div>
+
+            @endif
+            <!-- FIM FORMA PAGAMENTO -->
+
             @if($pedido->via_ifood == false)
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5 text-secondary"
@@ -286,41 +306,11 @@
                 {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
             </p>
             @else
-            <p class="text-padrao fw-semibold">
+            <p class="text-padrao fw-semibold mb-0">
                 via iFood
             </p>
             @endif
             @endif
-            
-            <!-- CONSUMO -->
-
-            <!-- FORMA PAGAMENTO -->
-            @if($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
-
-            @if($pedido->forma_pagamento_loja->id != null)
-
-            <div class="d-flex align-items-center">
-                <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_loja->imagem . '.svg') }}"
-                    alt="" width="20px">
-                <p class="p-0 ml-1 my-0">
-                    Cobrar R$ {{number_format($pedido->total, 2, ',', '.')}} na entrega.
-                </p>
-            </div>
-
-            @else
-
-            <div class="d-flex align-items-center">
-                <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento_foomy->imagem . '.svg') }}"
-                    alt="" width="20px">
-                <p class="p-0 ml-1 my-0">
-                    Pago R$ {{number_format($pedido->total, 2, ',', '.')}} online.
-                </p>
-            </div>
-
-            @endif
-
-            @endif
-            <!-- FIM FORMA PAGAMENTO -->
 
         </div>
         <!-- FIM CORPO PEDIDO -->

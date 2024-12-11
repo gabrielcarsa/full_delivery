@@ -84,19 +84,13 @@
     <div class="">
 
         <!-- FORMA PAGAMENTO -->
-        @if($pedido->forma_pagamento_loja->id != null)
+        @if($pedido->forma_pagamento->id != null)
         <p class="p-0 m-0 fs-6">
             Cobrar do cliente na entrega <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no
-                {{$pedido->forma_pagamento_loja->nome}}</strong>
+                {{$pedido->forma_pagamento->nome}}</strong>
         </p>
         <p class="text-secondary m-0 p-0">
             O entregador deve cobrar esse valor no ato da entrega.
-        </p>
-
-        @else
-        <p class="p-0 m-0">
-            Cliente pagou via site/app <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no
-                {{$pedido->forma_pagamento_foomy->nome}}</strong>
         </p>
         @endif
 
@@ -163,10 +157,9 @@
                 <!-- Variáveis PHP -->
                 @php
                 $total_sem_entrega = 0;
-                $isset_opcionais = false;
                 @endphp
 
-                <!-- Exibir itens do pedido -->
+                <!-- PEDIDOS FOREACH -->
                 @foreach ($pedido->item_pedido as $item)
 
                 <!-- Incrementando sobre valor total -->
@@ -274,130 +267,37 @@
                 </tr>
 
                 <!--VERIFICAR SE EXISTE OPCIONAIS -->
-                @foreach ($item->produto->categoria_opcional as $categoria_opcional)
+                @if($item->opcional_item != null)
 
-                <!-- VERIFICAR SE EXISTE ALGUM OPCIONAL RELACIONADO A ESTA CATEGORIA -->
-                @php
-
-                // Filtra os opcionais do item_pedido que pertencem à categoria atual
-                $opcionais_relacionados = $item->opcional_item->
-                filter(function($opcional_item) use ($categoria_opcional) {
-                return $categoria_opcional->opcional_produto->contains('id',$opcional_item->opcional_produto_id);
-                });
-                if($opcionais_relacionados->isNotEmpty()){
-                $isset_opcionais = true;
-                }
-                @endphp
+                <!-- OPCIONAIS -->
+                @foreach($item->opcional_item as $opcional_item)
+                <tr style="font-size:14px">
+                    <td class="bg-light"></td>
+                    <td class="bg-light">
+                        <p class="fw-bold m-0 text-secondary">
+                            {{$opcional_item->opcional_produto->categoria_opcional->nome}}
+                        </p>
+                        <p class="m-0 text-secondary">
+                            {{$opcional_item->quantidade}}x {{$opcional_item->opcional_produto->nome}}
+                        </p>
+                    </td>
+                    <td class="bg-light text-secondary">
+                        + R$ {{number_format($opcional_item->preco_unitario, 2, ',', '.')}}
+                    </td>
+                    <td class="bg-light text-secondary">
+                        R$ {{number_format($opcional_item->subtotal, 2, ',', '.')}}
+                    </td>
+                    <td class="bg-light"></td>
+                </tr>
+                <!-- FIM OPCIONAIS -->
 
                 @endforeach
+
+                @endif
                 <!-- FIM VERIFICAR SE EXISTE OPCIONAIS -->
 
-                @if($isset_opcionais == true)
-                <tr style="font-size:14px">
-                    <td></td>
-                    <td>
-
-                        <!-- CATEGORIAS DE OPCIONAIS -->
-                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
-
-                        <!-- VERIFICAR SE EXISTE ALGUM OPCIONAL RELACIONADO A ESTA CATEGORIA -->
-                        @php
-
-                        // Filtra os opcionais do item_pedido que pertencem à categoria atual
-
-                        $opcionais_relacionados = $item->opcional_item->filter(function($opcional_item) use
-                        ($categoria_opcional) {
-                        return $categoria_opcional->opcional_produto->contains('id',
-                        $opcional_item->opcional_produto_id);
-                        });
-
-                        @endphp
-
-                        @if($opcionais_relacionados->isNotEmpty())
-                        <p class="col-6 fw-bold m-0 text-secondary">{{$categoria_opcional->nome}}</p>
-
-                        <!-- OPCIONAIS -->
-                        @foreach($opcionais_relacionados as $opcional_item)
-
-                        <!-- VERIFICAR OPCIONAIS -->
-                        @php
-                        // Obter os detalhes do opcional_produto relacionado
-                        $opcional_produto = $categoria_opcional->opcional_produto->firstWhere('id',
-                        $opcional_item->opcional_produto_id);
-                        @endphp
-
-                        <p class="m-0 text-secondary">
-                            {{$opcional_produto->nome}}
-                        </p>
-
-                        <!-- Incrementando sobre valor total -->
-                        @php
-                        $total_sem_entrega += $opcional_item->preco_unitario * $item->quantidade;
-                        @endphp
-                        @endforeach
-                        <!-- FIM OPCIONAIS -->
-                        @endif
-
-                        @endforeach
-                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
-
-                    </td>
-                    <td>
-                        <!-- CATEGORIAS DE OPCIONAIS -->
-                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
-                        <!-- OPCIONAIS -->
-                        @foreach($categoria_opcional->opcional_produto as $opcional)
-
-                        <!-- VERIFICAR OPCIONAIS -->
-                        @php
-                        // Verifica se o opcional está relacionado ao item_pedido
-                        $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
-                        @endphp
-
-                        @if($opcional_item)
-                        <p class="text-secondary">
-                            + R$ {{number_format($opcional->preco, 2, ',', '.')}}
-                        </p>
-                        @endif
-
-                        @endforeach
-                        <!-- FIM OPCIONAIS -->
-
-                        @endforeach
-                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
-                    </td>
-                    <td>
-                        <!-- CATEGORIAS DE OPCIONAIS -->
-                        @foreach ($item->produto->categoria_opcional as $categoria_opcional)
-                        <!-- OPCIONAIS -->
-                        @foreach($categoria_opcional->opcional_produto as $opcional)
-
-                        <!-- VERIFICAR OPCIONAIS -->
-                        @php
-                        // Verifica se o opcional está relacionado ao item_pedido
-                        $opcional_item = $item['opcional_item']->firstWhere('opcional_produto_id', $opcional->id);
-
-                        //Resetar variável
-                        $isset_opcionais = false;
-                        @endphp
-
-                        @if($opcional_item)
-                        <p class="text-secondary">
-                            + R$ {{number_format($opcional->preco * $item->quantidade, 2, ',', '.')}}
-                        </p>
-                        @endif
-
-                        @endforeach
-                        <!-- FIM OPCIONAIS -->
-
-                        @endforeach
-                        <!-- FIM CATEGORIAS DE OPCIONAIS -->
-                    </td>
-                    <td></td>
-                </tr>
-                @endif
-
                 @endforeach
+                <!-- FIM PEDIDOS FOREACH -->
 
             </tbody>
 

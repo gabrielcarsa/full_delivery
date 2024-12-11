@@ -143,8 +143,7 @@ class PollingIfoodService
             ]);
 
             //Se existir opcionais
-            if($item['options'] != null){
-                
+            if(!empty($item['options'])){
                 foreach($item['options'] as $item_opcional){
 
                     //Buscando opcional

@@ -85,14 +85,14 @@ class PedidoController extends Controller
         }
 
         //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
-        $loja = Loja::where('id', $id_loja)->first();
+        $loja_id  = session('lojaConectado')['id'];
+        $loja = Loja::where('id', $loja_id)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');
 
         //Pedidos
-        $pedidos = Pedido::where('loja_id', $id_loja)
+        $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
         ->orderBy('feito_em', 'DESC')
         ->get();
@@ -102,11 +102,15 @@ class PedidoController extends Controller
         ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
         ->orderBy('feito_em', 'ASC')
         ->first();
+
+        // Obtém token mais recente
+        $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
         
         $data = [
             'loja' => $loja,
             'pedido' => $pedido,
             'pedidos' => $pedidos,
+            'token' => $token,
         ];
 
         return view('pedido/gestor_pedidos', compact('data'));       
