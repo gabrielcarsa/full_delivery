@@ -42,7 +42,21 @@ class PollingIfoodService
             $pedido->total = $methods['value'];
             $pedido->is_pagamento_entrega = $methods['type'] == "ONLINE" ? false : true;
             $pedido->situacao = $methods['type'] == "ONLINE" ? 2 : 0;
+
+            //Identificar forma de pagamento
+            if($methods['method'] == "CASH"){
+                $pedido->forma_pagamento_id = 1;
+            }else if($methods['method'] == "DEBIT"){
+                $pedido->forma_pagamento_id = 2;
+            }else if($methods['method'] == "CREDIT"){
+                $pedido->forma_pagamento_id = 3;
+            }else if($methods['method'] == "PIX"){
+                $pedido->forma_pagamento_id = 4;
+            }else if($methods['method'] == "MEAL_VOUCHER" || $methods['method'] == "FOOD_VOUCHER"){
+                $pedido->forma_pagamento_id = 5;
+            }
         }
+        
         $pedido->taxa_ifood = $pedidoPolling['total']['additionalFees'];
 
         //Cliente
