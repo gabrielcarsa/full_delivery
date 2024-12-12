@@ -151,7 +151,7 @@
         <!-- FIM FORM -->
 
         <!-- MOVIMENTAÇÕES -->
-        @if($movimentacoes->isNotEmpty())
+        @if(isset($movimentacoes) && $movimentacoes->isNotEmpty())
 
         <!-- VARIAVEL SALDO ANTERIOR -->
         @php
