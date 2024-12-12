@@ -32,8 +32,7 @@ class IfoodService
     //Obter código do iFood Merchant
     public function getMerchantIdFoomy(){
         
-        $ifoodService = new IfoodService();
-        $loja_id = $ifoodService->getIdlojaConectada();
+        $loja_id = $this->getIdlojaConectada();
 
         //Obter código do MERCHANT
         $loja = Loja::find($loja_id);
@@ -58,8 +57,7 @@ class IfoodService
     public function refreshAccessToken()
     {
         //Obter Loja ID
-        $ifoodService = new IfoodService();
-        $loja_id = $ifoodService->getIdlojaConectada();
+        $loja_id = $this->getIdlojaConectada();
         
         // Obtém token mais recente
         $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
@@ -105,11 +103,10 @@ class IfoodService
     //Obter Merchants
     public function getMerchants(){
 
-        $ifoodService = new IfoodService();
-        $token = $ifoodService->getAccessToken();
+        $token = $this->getAccessToken();
         
         // Exemplo de requisição à API do iFood
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/merchant/v1.0/merchants', [
+        $response = $this->client->get('https://merchant-api.ifood.com.br/merchant/v1.0/merchants', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
@@ -123,16 +120,14 @@ class IfoodService
     //Obter Catalogs
     public function getCatalogs(){
 
-        $ifoodService = new IfoodService();
-
         //Obter accessToken
-        $token = $ifoodService->getAccessToken();
+        $token = $this->getAccessToken();
 
         //Obter MerchantID
-        $merchantID = $ifoodService->getMerchantIdFoomy();
+        $merchantID = $this->getMerchantIdFoomy();
         
         // Obter cardápios iFood
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.$merchantID.'/catalogs', [
+        $response = $this->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.$merchantID.'/catalogs', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
@@ -146,16 +141,14 @@ class IfoodService
     //Obter Categorias e produtos
     public function getCategories($catalogId){
 
-        $ifoodService = new IfoodService();
-
         //Obter accessToken
-        $token = $ifoodService->getAccessToken();
+        $token = $this->getAccessToken();
 
        //Obter MerchantID
-       $merchantID = $ifoodService->getMerchantIdFoomy();
+       $merchantID = $this->getMerchantIdFoomy();
         
         // Obter Categorias e Produtos iFood
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.$merchantID.'/catalogs/'.$catalogId.'/categories', [
+        $response = $this->client->get('https://merchant-api.ifood.com.br/catalog/v2.0/merchants/'.$merchantID.'/catalogs/'.$catalogId.'/categories', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
@@ -169,10 +162,9 @@ class IfoodService
     //Obter Pollings
     public function getPollings(){
 
-        $ifoodService = new IfoodService();
-        $token = $ifoodService->getAccessToken();
+        $token = $this->getAccessToken();
         
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/events/v1.0/events:polling', [
+        $response = $this->client->get('https://merchant-api.ifood.com.br/events/v1.0/events:polling', [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
@@ -186,10 +178,9 @@ class IfoodService
     //Obter detalhes do pedido
     public function getOrder($pedido_id){
 
-        $ifoodService = new IfoodService();
-        $token = $ifoodService->getAccessToken();
+        $token = $this->getAccessToken();
         
-        $response = $ifoodService->client->get('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id, [
+        $response = $this->client->get('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id, [
             'headers' => [
                 'Authorization' => "Bearer $token",
             ]
@@ -202,10 +193,10 @@ class IfoodService
 
     //Acknowledgment evento polling
     public function postAcknowledgment($acknowledgment_id){
-        $ifoodService = new IfoodService();
-        $token = $ifoodService->getAccessToken();
+
+        $token = $this->getAccessToken();
         
-        $response = $ifoodService->client->post('https://merchant-api.ifood.com.br/events/v1.0/events/acknowledgment', [
+        $response = $this->client->post('https://merchant-api.ifood.com.br/events/v1.0/events/acknowledgment', [
             'headers' => [
                 'Authorization' => "Bearer $token",
                 'Content-Type' => 'application/json',

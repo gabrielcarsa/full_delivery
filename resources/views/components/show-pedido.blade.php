@@ -281,11 +281,9 @@
                             {{$opcional_item->quantidade}}x {{$opcional_item->opcional_produto->nome}}
                         </p>
                     </td>
+                    <td class="bg-light"></td>
                     <td class="bg-light text-secondary">
                         + R$ {{number_format($opcional_item->preco_unitario, 2, ',', '.')}}
-                    </td>
-                    <td class="bg-light text-secondary">
-                        R$ {{number_format($opcional_item->subtotal, 2, ',', '.')}}
                     </td>
                     <td class="bg-light"></td>
                 </tr>

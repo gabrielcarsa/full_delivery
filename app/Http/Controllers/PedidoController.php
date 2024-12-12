@@ -30,8 +30,21 @@ class PedidoController extends Controller
 
     public function __construct()
     {
-        //instanciando IfoodService
+        //instanciando
         $this->ifoodService = new IfoodService();
+    }
+
+    //Obter Loja Conectada
+    private function getIdlojaConectada(){
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione um loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
+
+        return $loja_id;
     }
 
     //-------------------------
@@ -40,13 +53,8 @@ class PedidoController extends Controller
 
     //EXIBIR PEDIDOS
     public function gestor(Request $request){
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar os pedidos');
-        }
 
-        //Dados do loja
-        $loja_id  = session('lojaConectado')['id'];
+        $loja_id = $this->getIdlojaConectada();
         $loja = Loja::where('id', $loja_id)->first();
 
         //Query Pedidos
@@ -79,13 +87,9 @@ class PedidoController extends Controller
 
     //EXIBIR PEDIDO
     public function show(Request $request){
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar pedidos');
-        }
 
-        //Dados do loja
-        $loja_id  = session('lojaConectado')['id'];
+        $loja_id = $this->getIdlojaConectada();
+
         $loja = Loja::where('id', $loja_id)->first();
 
         //Dados pedido
@@ -118,7 +122,7 @@ class PedidoController extends Controller
 
     public function refresh_pedidos(Request $request){
 
-        $loja_id = session('lojaConectado')['id'];
+        $loja_id = $this->getIdlojaConectada();
 
         $id_selecionado = $request->get('id_selecionado');
 
@@ -160,14 +164,10 @@ class PedidoController extends Controller
 
     // ATUALIZAR STATUS PEDIDO
     public function update_status(Request $request){
-         //Verificar se há loja selecionado
-         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro');
-        }
 
-        //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
-        $loja = Loja::where('id', $id_loja)->first();
+        $loja_id = $this->getIdlojaConectada();
+
+        $loja = Loja::where('id', $loja_id)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');
@@ -199,14 +199,10 @@ class PedidoController extends Controller
  
     // CANCELAR PEDIDO
     public function cancelar(Request $request){
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro');
-        }
 
-        //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
-        $loja = Loja::where('id', $id_loja)->first();
+        $loja_id = $this->getIdlojaConectada();
+
+        $loja = Loja::where('id', $loja_id)->first();
 
         //Dados pedido
         $pedido_id = $request->input('id');
