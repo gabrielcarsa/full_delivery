@@ -102,7 +102,7 @@
                         Saldo atual
                     </p>
                     <p class="m-0 fw-semibold fs-5">
-                        R$ {{number_format($conta->saldo->last()->saldo, 2, ',', '.')}}
+                        R$ {{number_format($conta->saldo->last()->saldo ?? 0, 2, ',', '.')}}
                     </p>
                 </div>
             </div>
