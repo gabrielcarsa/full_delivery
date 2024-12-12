@@ -45,4 +45,8 @@ class Lancamento extends Model
         return $this->hasOne(Movimentacao::class);
     }
 
+    public function pedido(){
+        return $this->HasMany(Pedido::class);
+    }
+
 }

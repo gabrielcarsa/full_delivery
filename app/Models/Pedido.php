@@ -45,4 +45,9 @@ class Pedido extends Model
     {
         return $this->belongsTo(Mesa::class);
     }
+
+    public function lancamento()
+    {
+        return $this->belongsTo(Lancamento::class);
+    }
 }

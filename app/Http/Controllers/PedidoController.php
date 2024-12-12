@@ -34,19 +34,6 @@ class PedidoController extends Controller
         $this->ifoodService = new IfoodService();
     }
 
-    //Obter Loja Conectada
-    private function getIdlojaConectada(){
-
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro');
-        }
-        //ID loja
-        $loja_id  = session('lojaConectado')['id'];
-
-        return $loja_id;
-    }
-
     //-------------------------
     //PAINEL DE PEDIDOS INTERNO
     //-------------------------
@@ -54,7 +41,13 @@ class PedidoController extends Controller
     //EXIBIR PEDIDOS
     public function gestor(Request $request){
 
-        $loja_id = $this->getIdlojaConectada();
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
+
         $loja = Loja::where('id', $loja_id)->first();
 
         //Query Pedidos
@@ -88,8 +81,13 @@ class PedidoController extends Controller
     //EXIBIR PEDIDO
     public function show(Request $request){
 
-        $loja_id = $this->getIdlojaConectada();
-
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
+        
         $loja = Loja::where('id', $loja_id)->first();
 
         //Dados pedido
@@ -122,8 +120,13 @@ class PedidoController extends Controller
 
     public function refresh_pedidos(Request $request){
 
-        $loja_id = $this->getIdlojaConectada();
-
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
+        
         $id_selecionado = $request->get('id_selecionado');
 
         //Query pedidos da loja
@@ -164,8 +167,13 @@ class PedidoController extends Controller
 
     // ATUALIZAR STATUS PEDIDO
     public function update_status(Request $request){
-
-        $loja_id = $this->getIdlojaConectada();
+        
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
 
         $loja = Loja::where('id', $loja_id)->first();
 
@@ -200,7 +208,12 @@ class PedidoController extends Controller
     // CANCELAR PEDIDO
     public function cancelar(Request $request){
 
-        $loja_id = $this->getIdlojaConectada();
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+        }
+        //ID loja
+        $loja_id  = session('lojaConectado')['id'];
 
         $loja = Loja::where('id', $loja_id)->first();
 

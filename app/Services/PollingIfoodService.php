@@ -9,10 +9,14 @@ use App\Models\OpcionalProduto;
 use App\Models\Pedido;
 use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
+use App\Models\Lancamento;
+use App\Models\ParcelaLancamento;
+use App\Models\Movimentacao;
 use App\Services\IfoodService;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Entrega;
+use App\Http\Controllers\SaldoController;
 
 class PollingIfoodService
 {
@@ -195,15 +199,71 @@ class PollingIfoodService
 
                 }
             } 
+        }
+
+        /*----------------------------
+        CADASTRANDO FINANCEIRO
+        ----------------------------*/
+
+        //Cadastrando lancamento
+        $lancamento = Lancamento::create([
+            'loja_id' => $loja_id,
+            'tipo' => 1,
+            'cliente_id' => 1, //cliente genérico
+            'fornecedor_id' => null,
+            'categoria_financeiro_id' => 1, //categoria de Pedido
+            'quantidade_parcela' => 1,
+            'data_vencimento' => $pedido->feito_em,
+            'valor_parcela' => $pedido->total,
+            'valor_entrada' => null,
+            'descricao' => 'Pedido via iFood',
+            'cadastrado_usuario_id' => Auth::guard()->user()->id,
+        ]);
+    
+        //Cadastrando parcelas
+        $parcela = ParcelaLancamento::create([
+            'lancamento_id' => $lancamento->id,
+            'numero_parcela' => 1,
+            'situacao' => $pedido->situacao == 2 ? 1 : 0,
+            'valor' => $pedido->total,
+            'cadastrado_usuario_id' => Auth::guard()->user()->id,
+            'data_vencimento' => $pedido->feito_em,
+            'valor_pago' => $pedido->situacao == 2 ? $pedido->total : null,
+            'data_baixa' => $pedido->situacao == 2 ? Carbon::now()->format('Y-m-d H:i:s') : null,
+            'baixado_usuario_id' => $pedido->situacao == 2 ? Auth::guard()->user()->id : null,
+        ]);
+
+        //Se houver pagamento efetuado
+        if($pedido->situacao == 2){
+
+            //Instaciando SaldoController para salvar Saldo
+            $saldoController = new SaldoController();
+
+            //Cadastrando Saldo
+            $saldoController->store($pedido->total, $pedido->feito_em, $pedido->forma_pagamento->conta_corrente->id, 1);
+
+            //Criando movimentação
+            Movimentacao::create([
+                'data_movimentacao' => $pedido->feito_em,
+                'loja_id' => $loja_id,
+                'tipo' => 1,
+                'valor' => $pedido->total,
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+                'parcela_lancamento_id' => $parcela->id,
+                'conta_corrente_id' => $pedido->forma_pagamento->conta_corrente->id,
+            ]);
 
         }
+
+        //Salvar Pedido novamente com Lancamento ID
+        $pedido->lancamento_id = $lancamento->id;
+        $pedido->save();
     }
 
     public function polling($polling){
 
         //instancindo IfoodService
         $ifoodService = new IfoodService();
-        $pollingIfoodService = new PollingIfoodService();
 
 
         /*----------------------------
@@ -232,7 +292,7 @@ class PollingIfoodService
                     $pedidoPolling = $ifoodService->getOrder($order_id);
 
                     //Salvando Pedido e suas dependências
-                    $pollingIfoodService->cadastrarPedido($pedidoPolling, $order_id);
+                    $this->cadastrarPedido($pedidoPolling, $order_id);
                    
                 }
             }
