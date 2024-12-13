@@ -35,4 +35,10 @@ class OpcionalItem extends Model
     {
         return $this->belongsTo(OpcionalProduto::class, 'opcional_produto_id');
     }
+
+    public function customizacao_opcional_item()
+    {
+        return $this->hasMany(CustomizacaoOpcionalItem::class);
+    }
+
 }

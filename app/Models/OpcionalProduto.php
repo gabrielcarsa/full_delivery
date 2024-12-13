@@ -19,7 +19,7 @@ class OpcionalProduto extends Model
     }
 
     // Relação um para muitos com Opcionais de Item
-    public function opcionaisItem()
+    public function opcional_item()
     {
         return $this->hasMany(OpcionalItem::class, 'opcional_produto_id');
     }
@@ -32,5 +32,10 @@ class OpcionalProduto extends Model
     public function usuarioAlterador()
     {
         return $this->belongsTo(User::class, 'alterado_usuario_id');
+    }
+
+    public function customizacao_opcional()
+    {
+        return $this->hasMany(customizacaoOpcional::class);
     }
 }
