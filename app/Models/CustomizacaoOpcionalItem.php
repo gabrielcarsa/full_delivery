@@ -10,6 +10,7 @@ class CustomizacaoOpcionalItem extends Model
     use HasFactory;
     protected $table = 'customizacao_opcional_item';
     protected $guarded = [];
+    public $timestamps = false;
 
     //RELACIONAMENTOS
 

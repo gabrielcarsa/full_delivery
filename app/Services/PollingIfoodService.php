@@ -9,6 +9,8 @@ use App\Models\OpcionalProduto;
 use App\Models\Pedido;
 use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
+use App\Models\CustomizacaoOpcional;
+use App\Models\CustomizacaoOpcionalItem;
 use App\Models\Lancamento;
 use App\Models\ParcelaLancamento;
 use App\Models\Movimentacao;
@@ -148,13 +150,14 @@ class PollingIfoodService
 
             //Se existir opcionais
             if(!empty($item['options'])){
+
                 foreach($item['options'] as $item_opcional){
 
                     //Buscando opcional
                     $opcional_ifood_id = $item_opcional['id'];
                     $qtd_opcional = $item_opcional['quantity'];
 
-                    //Verificando se produto existe
+                    //Verificando se opcional existe
                     $opcional_produto = OpcionalProduto::where('productIdIfood', $opcional_ifood_id)->first();
 
                     //Se não houver opcional cadastrado
@@ -196,6 +199,44 @@ class PollingIfoodService
                         'preco_unitario' => $item_opcional['unitPrice'],
                         'subtotal' => $item_opcional['price'],
                     ]);
+
+                    //Customização Opcional
+                    if(!empty($item_opcional['customizations'])){
+
+                        foreach($item_opcional['customizations'] as $customizacao){
+
+                            //Buscando customizacao
+                            $customizacao_ifood_id = $customizacao['id'];
+                            $qtd_customizacao = $customizacao['quantity'];
+
+                            //Verificando se customizacao existe
+                            $customizacaoOpcional = CustomizacaoOpcional::where('productIdIfood', $customizacao_ifood_id)->first();
+
+                            //Se não houver customizacao opcional cadastrado
+                            if($customizacaoOpcional == null){
+
+                                //Cadastro de opcional
+                                $customizacaoOpcional = CustomizacaoOpcional::create([
+                                    'nome' => $customizacao['name'],
+                                    'opcional_produto_id' => $opcional_produto->id,
+                                    'cadastrado_usuario_id' => $usuario_id,
+                                    'productIdIfood' => $customizacao['id'],
+                                    'preco' => $customizacao['unitPrice'],
+                                ]);
+
+                            }
+            
+                            //Salvando Customizacao Opcional Item
+                            $customizacao_opcional_item = CustomizacaoOpcionalItem::create([
+                                'opcional_item_id' => $opcional_item_pedido->id,
+                                'customizacao_opcional_id' => $customizacaoOpcional->id,
+                                'quantidade' =>  $qtd_customizacao,
+                                'preco_unitario' => $customizacao['unitPrice'],
+                                'subtotal' => $customizacao['price'],
+                            ]);
+
+                        }
+                    } 
 
                 }
             } 
