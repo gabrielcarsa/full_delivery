@@ -142,7 +142,7 @@
     </div>
 
     <div class="px-3 py-1 m-2">
-        <table class="table">
+        <table class="table table-borderless">
             <thead>
                 <tr>
                     <th scope="col">Qtnd</th>
@@ -168,7 +168,7 @@
                 @endphp
 
 
-                <tr class="p-0 m-0">
+                <tr class="p-0 m-0 border-top">
                     <td class="bg-white {{$item->situacao == 1 ? 'text-decoration-line-through text-secondary' : '' }}">
                         <span class="d-flex align-items-center">
                             @if($item->quantidade >= 2)
@@ -271,7 +271,8 @@
 
                 <!-- OPCIONAIS -->
                 @foreach($item->opcional_item as $opcional_item)
-                <tr style="font-size:14px">
+
+                <tr style="font-size:14px" class="border-top m-0">
                     <td class="bg-light"></td>
                     <td class="bg-light">
                         <p class="fw-bold m-0 text-secondary">
@@ -287,9 +288,41 @@
                     </td>
                     <td class="bg-light"></td>
                 </tr>
-                <!-- FIM OPCIONAIS -->
+
+                <!-- CUSTOMIZACAO OPCIONAIS -->
+                @if(isset($opcional_item->customizacao_opcional_item) &&
+                $opcional_item->customizacao_opcional_item->isNotEmpty())
+                <tr style="font-size:14px">
+                    <td class="bg-light"></td>
+                    <td class="bg-light">
+                        <p class="ms-3 my-0 text-secondary fw-bold">
+                            Customização de {{$opcional_item->opcional_produto->nome}}
+                        </p>
+                        @foreach($opcional_item->customizacao_opcional_item as $customizacao_opcional_item)
+                        <p class="ms-3 my-0 text-secondary">
+                            {{$customizacao_opcional_item->quantidade}}x
+                            {{$customizacao_opcional_item->customizacao_opcional->nome}}
+                        </p>
+                        @endforeach
+                    </td>
+                    <td class="bg-light"></td>
+                    <td class="bg-light text-secondary">
+                        <p class="m-0 text-light">Preço</p>
+                        @foreach($opcional_item->customizacao_opcional_item as $customizacao_opcional_item)
+                        <p class="m-0 text-secondary">
+                            + R$ {{number_format($customizacao_opcional_item->preco_unitario, 2, ',', '.')}}
+                        </p>
+                        @endforeach
+
+                    </td>
+                    <td class="bg-light"></td>
+                </tr>
+                @endif
+                <!-- FIM CUSTOMIZACAO OPCIONAIS -->
+
 
                 @endforeach
+                <!-- FIM OPCIONAIS -->
 
                 @endif
                 <!-- FIM VERIFICAR SE EXISTE OPCIONAIS -->
@@ -300,13 +333,13 @@
             </tbody>
 
             <tfoot>
-                <tr>
+                <tr class="border-top">
                     <td colspan="3" class="fw-bold bg-white">Subtotal</td>
                     <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
                 </tr>
                 @if($pedido->consumo_local_viagem_delivery == 3)
-                <tr>
+                <tr class="border-top">
                     <td colspan="3" class="fw-bold bg-white">Entrega</td>
                     <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
@@ -314,7 +347,7 @@
                 @endif
 
                 @if(!empty($pedido->uso_cupom))
-                <tr>
+                <tr class="border-top">
                     <td colspan="3" class="fw-regular bg-white">Cupom - {{ $pedido->uso_cupom->cupom->codigo }}</td>
                     @if($pedido->uso_cupom->cupom->tipo_desconto == 1)
                     <td class="text-danger bg-white">
@@ -326,7 +359,7 @@
                     <td class="bg-white"></td>
                 </tr>
                 @endif
-                <tr>
+                <tr class="border-top">
                     <td colspan="3" class="fw-bold bg-white">Total</td>
                     <td class="fw-bolder bg-white"> R$ {{number_format($pedido->total, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
