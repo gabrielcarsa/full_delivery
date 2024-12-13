@@ -128,7 +128,7 @@
                         </a>
                     </li>
 
-                    @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 3)
+                    @elseif($pedido->status == 1 && $pedido->tipo == "DELIVERY")
                     <!-- Pedido em preparo -> pronto para retirar -->
                     <li>
                         <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
@@ -153,7 +153,7 @@
                         </a>
                     </li>
 
-                    @elseif($pedido->status == 2 && $pedido->consumo_local_viagem_delivery == 3)
+                    @elseif($pedido->status == 2 && $pedido->tipo == "DELIVERY")
                     <!-- Pronto para retirar -> Ir para entrega -->
                     <li>
                         <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
@@ -178,7 +178,7 @@
                         </a>
                     </li>
 
-                    @elseif($pedido->status == 3 && $pedido->consumo_local_viagem_delivery == 3)
+                    @elseif($pedido->status == 3 && $pedido->tipo == "DELIVERY")
                     <!-- Ir para entrega -> Concluído -->
                     <li>
                         <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
@@ -203,7 +203,7 @@
                         </a>
                     </li>
 
-                    @elseif($pedido->status == 1 && $pedido->consumo_local_viagem_delivery == 1)
+                    @elseif($pedido->status == 1 && $pedido->tipo == "DINE_IN")
                     <!-- Pedido em preparo -> concluído caso seja comer no local -->
                     <li>
                         <a href="{{route('pedido.update_status', ['id' => $pedido->id])}}"
@@ -252,7 +252,7 @@
             </p>
 
             <!-- CONSUMO -->
-            @if($pedido->consumo_local_viagem_delivery == 1)
+            @if($pedido->tipo == "DINE_IN")
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
                     table_restaurant
@@ -260,7 +260,7 @@
                 Mesa {{$pedido->mesa->nome}}
             </p>
 
-            @elseif($pedido->consumo_local_viagem_delivery == 2)
+            @elseif($pedido->tipo == "TAKEOUT")
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
                     shopping_bag
@@ -268,7 +268,7 @@
                 Para viagem
             </p>
 
-            @elseif($pedido->consumo_local_viagem_delivery == 3)
+            @elseif($pedido->tipo == "DELIVERY")
             <p class="m-0 d-flex align-items-center">
                 <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
                     two_wheeler
@@ -278,7 +278,7 @@
             <!-- FIM CONSUMO -->
 
             <!-- FORMA PAGAMENTO -->
-            @if($pedido->consumo_local_viagem_delivery == 3)
+            @if($pedido->tipo == "DELIVERY")
 
             <div class="d-flex align-items-center">
                 <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento->imagem . '.svg') }}"

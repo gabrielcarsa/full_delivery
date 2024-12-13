@@ -36,7 +36,7 @@ class PollingIfoodService
         ----------------------------*/
         $pedido = new Pedido();
         $pedido->status = 0;
-        $pedido->consumo_local_viagem_delivery = $pedidoPolling['orderType'] == 'DELIVERY' ? 3 : 2;//1. Local, 2. Viagem, 3. Delivery
+        $pedido->tipo = $pedidoPolling['orderType'];
         $pedido->feito_em = Carbon::parse($pedidoPolling['createdAt'])->setTimezone('America/Cuiaba')->toDateTimeString();
         $pedido->is_simulacao = $pedidoPolling['isTest'] == true ? true : false;   
         $pedido->loja_id = $loja_id;
@@ -76,7 +76,7 @@ class PollingIfoodService
         CADASTRANDO DE ENTREGA DO PEDIDO
         ----------------------------*/
         //TODO: Delivery by Merchant
-        if($pedido->consumo_local_viagem_delivery == 3){
+        if($pedido->tipo == "DELIVERY"){
             Entrega::create([
                 'pedido_id' => $pedido->id,
                 'cep' => $pedidoPolling['delivery']['deliveryAddress']['postalCode'],

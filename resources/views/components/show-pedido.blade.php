@@ -26,7 +26,7 @@
 
 <div class="px-3">
     <!-- CONSUMO -->
-    @if($pedido->consumo_local_viagem_delivery == 1)
+    @if($pedido->tipo == "DINE_IN")
     <p class="m-0 d-flex align-items-center">
         <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
             table_restaurant
@@ -34,7 +34,7 @@
         Mesa {{$pedido->mesa->nome}}
     </p>
 
-    @elseif($pedido->consumo_local_viagem_delivery == 2)
+    @elseif($pedido->tipo == "TAKEOUT")
     <p class="m-0 d-flex align-items-center">
         <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
             shopping_bag
@@ -42,7 +42,7 @@
         Para viagem
     </p>
 
-    @elseif($pedido->consumo_local_viagem_delivery == 3)
+    @elseif($pedido->tipo == "DELIVERY")
     <p class="m-0 d-flex align-items-center">
         <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
             two_wheeler
@@ -55,7 +55,7 @@
     <!-- FIM CONSUMO -->
 </div>
 
-@if($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
+@if($pedido->tipo == "DELIVERY" && $pedido->via_ifood == false)
 <p class="m-0 px-3 d-flex align-items-center">
     <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
         calendar_clock
@@ -78,27 +78,22 @@
 <!-- FIM INFORMAÇÕES -->
 
 <!-- PAGAMENTO -->
-@if($pedido->consumo_local_viagem_delivery == 3 && $pedido->via_ifood == false)
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
-    <div class="">
 
-        <!-- FORMA PAGAMENTO -->
-        @if($pedido->forma_pagamento->id != null)
-        <p class="p-0 m-0 fs-6">
-            Cobrar do cliente na entrega <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} no
-                {{$pedido->forma_pagamento->nome}}</strong>
-        </p>
-        <p class="text-secondary m-0 p-0">
-            O entregador deve cobrar esse valor no ato da entrega.
-        </p>
-        @endif
+    @if($pedido->tipo == "DELIVERY")
+    <p class="p-0 m-0 fs-6">
+        {{$pedido->status == 1 ? 'Pago' : 'Cobrar no ato da entrega'}} <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} - {{$pedido->forma_pagamento->nome}}</strong>
+    </p>
+    @elseif($pedido->tipo == "TAKEOUT")
+    <p class="p-0 m-0 fs-6">
+         <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} -
+            {{$pedido->forma_pagamento->nome}}</strong>
+    </p>
+    @endif
 
-        <!-- FIM FORMA PAGAMENTO -->
 
-    </div>
 </div>
-@endif
 <!-- FIM PAGAMENTO -->
 
 <!-- PEDIDO -->
@@ -338,7 +333,16 @@
                     <td class="bg-white">R$ {{number_format($total_sem_entrega, 2, ',', '.')}}</td>
                     <td class="bg-white"></td>
                 </tr>
-                @if($pedido->consumo_local_viagem_delivery == 3)
+
+                @if($pedido->via_ifood == 1)
+                <tr class="border-top">
+                    <td colspan="3" class="fw-bold bg-white">Taxa iFood</td>
+                    <td class="bg-white">R$ {{number_format($pedido->taxa_ifood, 2, ',', '.')}}</td>
+                    <td class="bg-white"></td>
+                </tr>
+                @endif
+
+                @if($pedido->tipo == "DELIVERY")
                 <tr class="border-top">
                     <td colspan="3" class="fw-bold bg-white">Entrega</td>
                     <td class="bg-white">R$ {{number_format($pedido->entrega->taxa_entrega, 2, ',', '.')}}</td>
