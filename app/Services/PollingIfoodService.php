@@ -365,6 +365,7 @@ class PollingIfoodService
 
                 //Atualizar status
                 $order->status = 5;
+                $order->mensagem_cancelamento_rejeicao = $evento['metadata']['CANCEL_REASON'];
                 $order->save();
             }
 
