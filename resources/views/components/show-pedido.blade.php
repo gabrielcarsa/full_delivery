@@ -129,17 +129,17 @@
 
         @elseif($pedido->status == 2)
         <p class="bg-primary py-1 px-2 rounded-pill m-0 text-white">
-            A caminho
+            Pronto para retirar
         </p>
 
         @elseif($pedido->status == 3)
         <p class="bg-success py-1 px-2 rounded-pill m-0 text-white">
-            Concluído
+            A caminho
         </p>
 
         @elseif($pedido->status == 4)
-        <p class="bg-danger py-1 px-2 rounded-pill m-0 text-white">
-            Rejeitado
+        <p class="bg-success py-1 px-2 rounded-pill m-0 text-white">
+            Concluído
         </p>
 
         @elseif($pedido->status == 5)
