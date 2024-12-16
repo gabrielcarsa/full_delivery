@@ -1,5 +1,4 @@
-<!-- INFORMAÇÕES -->
-
+<!-- CLIENTE -->
 <div class="px-3">
     <p class="m-0 d-flex fw-semibold align-items-center text-uppercase">
         <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
@@ -23,6 +22,7 @@
     </p>
 </div>
 @endif
+<!-- FIM CLIENTE -->
 
 <!-- CONSUMO -->
 <div class="px-3">
@@ -45,6 +45,7 @@
 </div>
 <!-- FIM CONSUMO -->
 
+<!-- HORÁRIOS -->
 @if($pedido->tipo == "DELIVERY" && $pedido->via_ifood == false)
 <p class="m-0 px-3 d-flex align-items-center">
     <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
@@ -65,7 +66,14 @@
     {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
     {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
 </p>
-<!-- FIM INFORMAÇÕES -->
+<!-- FIM HORÁRIOS -->
+
+<p class="m-0 px-3 d-flex align-items-center">
+    <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
+        info
+    </span>
+    {{$pedido->observacao}}
+</p>
 
 <!-- ENTREGA -->
 @if($pedido->tipo == "DELIVERY")
