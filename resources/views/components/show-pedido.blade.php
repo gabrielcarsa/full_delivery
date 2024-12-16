@@ -1,7 +1,7 @@
 <!-- INFORMAÇÕES -->
 
 <div class="px-3">
-    <p class="m-0 d-flex align-items-center text-uppercase">
+    <p class="m-0 d-flex fw-semibold align-items-center text-uppercase">
         <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
             person
         </span>
@@ -24,8 +24,8 @@
 </div>
 @endif
 
+<!-- CONSUMO -->
 <div class="px-3">
-    <!-- CONSUMO -->
     @if($pedido->tipo == "DINE_IN")
     <p class="m-0 d-flex align-items-center">
         <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
@@ -41,19 +41,9 @@
         </span>
         Para viagem
     </p>
-
-    @elseif($pedido->tipo == "DELIVERY")
-    <p class="m-0 d-flex align-items-center">
-        <span class="material-symbols-outlined mr-1 fs-5 text-secondary" style="font-variation-settings: 'FILL' 1;">
-            two_wheeler
-        </span>
-        {{$pedido->entrega->rua}} {{$pedido->entrega->numero}},
-        {{$pedido->entrega->bairro}}, {{$pedido->entrega->cidade}}/{{$pedido->entrega->estado}}.
-        {{$pedido->entrega->complemento}}
-    </p>
     @endif
-    <!-- FIM CONSUMO -->
 </div>
+<!-- FIM CONSUMO -->
 
 @if($pedido->tipo == "DELIVERY" && $pedido->via_ifood == false)
 <p class="m-0 px-3 d-flex align-items-center">
@@ -77,22 +67,39 @@
 </p>
 <!-- FIM INFORMAÇÕES -->
 
+<!-- ENTREGA -->
+@if($pedido->tipo == "DELIVERY")
+<div class="bg-white rounded border p-3 my-2">
+    <p class="fw-bolder fs-5 m-0 p-0">Entrega</p>
+    <p class="m-0">
+        {{$pedido->entrega->rua}} {{$pedido->entrega->numero}},
+        {{$pedido->entrega->bairro}}, {{$pedido->entrega->cidade}}/{{$pedido->entrega->estado}}.
+        {{$pedido->entrega->complemento}}
+    </p>
+</div>
+@endif
+<!-- FIM ENTREGA -->
+
 <!-- PAGAMENTO -->
 <div class="bg-white rounded border p-3 my-2">
     <p class="fw-bolder fs-5 m-0 p-0">Pagamento</p>
 
     @if($pedido->tipo == "DELIVERY")
     <p class="p-0 m-0 fs-6">
-        {{$pedido->status == 1 ? 'Pago' : 'Cobrar no ato da entrega'}} <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} - {{$pedido->forma_pagamento->nome}}</strong>
+        {{$pedido->status == 1 ? 'Pago' : 'Cobrar no ato da entrega'}} <strong>R$
+            {{number_format($pedido->total, 2, ',', '.')}} - {{$pedido->forma_pagamento->nome}}</strong>
     </p>
     @elseif($pedido->tipo == "TAKEOUT")
     <p class="p-0 m-0 fs-6">
-         <strong>R$ {{number_format($pedido->total, 2, ',', '.')}} -
-            {{$pedido->forma_pagamento->nome}}</strong>
+        {{$pedido->status == 1 ? 'Pago' : 'Cobrar na retirada'}} <strong>R$
+            {{number_format($pedido->total, 2, ',', '.')}} - {{$pedido->forma_pagamento->nome}}</strong>
+    </p>
+    @elseif($pedido->tipo == "DINE_IN")
+    <p class="p-0 m-0 fs-6">
+        {{$pedido->status == 1 ? 'Pago' : 'Cobrar na mesa/caixa'}} <strong>R$
+            {{number_format($pedido->total, 2, ',', '.')}} - {{$pedido->forma_pagamento->nome}}</strong>
     </p>
     @endif
-
-
 </div>
 <!-- FIM PAGAMENTO -->
 
