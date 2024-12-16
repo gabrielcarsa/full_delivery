@@ -172,6 +172,7 @@ class PedidoController extends Controller
         if(!session('lojaConectado')){
             return redirect('loja')->with('error', 'Selecione uma loja primeiro');
         }
+
         //ID loja
         $loja_id  = session('lojaConectado')['id'];
 
@@ -187,8 +188,22 @@ class PedidoController extends Controller
 
         //Se for pedido pra consumo no local e ele estiver em preparo o próximo passo é ser concluído e não ir para a entrega
         if($pedido->tipo == "DINE_IN" && $status_atual == 1){
+
             $pedido->status = $status_atual + 3;
+
         }else{
+            
+            //Integração iFood, se houver pedido CONFIRMAR
+            if($pedido->status == 0 && $pedido->via_ifood == true){
+                $this->ifoodService->postConfirm($pedido->orderIdIfood);
+                
+            }elseif($pedido->status == 1 && $pedido->via_ifood == true){
+                $this->ifoodService->postReadyToPickUp($pedido->orderIdIfood);
+
+            }elseif($pedido->status == 2 && $pedido->via_ifood == true){
+                $this->ifoodService->postDispatch($pedido->orderIdIfood);
+            }
+
             $pedido->status++;
         }
 
@@ -200,6 +215,7 @@ class PedidoController extends Controller
         }
 
         $pedido->save();
+
         return redirect()->back()->with('success', 'Status atualizado com sucesso');
 
     }

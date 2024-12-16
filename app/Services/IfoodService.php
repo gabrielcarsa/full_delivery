@@ -209,4 +209,43 @@ class IfoodService
         ]);
     }
 
+    //Confirmar pedido
+    public function postConfirm($pedido_id){
+
+        $token = $this->getAccessToken();
+        
+        $response = $this->client->post('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id.'/confirm', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+    }
+
+    //Pedido pronto para retirar
+    public function postReadyToPickUp($pedido_id){
+
+        $token = $this->getAccessToken();
+        
+        $response = $this->client->post('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id.'/readyToPickup', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+    }
+
+    //Pedido dispachado
+    public function postDispatch($pedido_id){
+
+        $token = $this->getAccessToken();
+        
+        $response = $this->client->post('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id.'/dispatch', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+    }
+
 }
