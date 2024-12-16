@@ -316,16 +316,16 @@ class PollingIfoodService
 
             //Evento polling ID
             $eventoId = $evento['id']; 
+
+            //Armazenando pedido ID
+            $order_id = $evento['orderId'];
+
+            //Pedido
+            $order = Pedido::where('orderIdIfood', $order_id)->first();
       
             //Tipo de grupo do evento
-            if($evento['code'] == "PLC"){
-                
-                //Armazenando pedido ID
-                $order_id = $evento['orderId'];
+            if($evento['code'] == "PLC"){//PLACED
 
-                //Verificar se já não existe o ID
-                $order = Pedido::where('orderIdIfood', $order_id)->first();
-            
                 //Se não existir order
                 if($order == null){
                     
@@ -336,6 +336,36 @@ class PollingIfoodService
                     $this->cadastrarPedido($pedidoPolling, $order_id);
                    
                 }
+
+            }elseif($evento['code'] == "CFM"){//CONFIRMED
+                
+                //Atualizar status
+                $order->status = 1;
+                $order->save();
+
+            }elseif($evento['code'] == "RTP"){//READY TO PICKUP
+
+                //Atualizar status
+                $order->status = 2;
+                $order->save();
+
+            }elseif($evento['code'] == "DSP"){//DISPATCHED
+
+                //Atualizar status
+                $order->status = 3;
+                $order->save();
+
+            }elseif($evento['code'] == "CON"){//CONCLUDED
+
+                //Atualizar status
+                $order->status = 4;
+                $order->save();
+                
+            }elseif($evento['code'] == "CAN"){//CANCELLED
+
+                //Atualizar status
+                $order->status = 5;
+                $order->save();
             }
 
             //Acknowledgment do polling
