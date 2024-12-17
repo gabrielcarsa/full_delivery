@@ -14,6 +14,7 @@ use App\Models\CustomizacaoOpcionalItem;
 use App\Models\Lancamento;
 use App\Models\ParcelaLancamento;
 use App\Models\Movimentacao;
+use App\Models\PollingEvento;
 use App\Services\IfoodService;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -306,13 +307,22 @@ class PollingIfoodService
         //instancindo IfoodService
         $ifoodService = new IfoodService();
 
+        //Loja conectada
+        $loja_id = session('lojaConectado')['id'];
 
-        /*----------------------------
-        ------------------------------
-        SALVANDO POLLING
-        ------------------------------
-        ----------------------------*/
+
+        //Evento Polling
         foreach($polling as $evento){
+
+            PollingEvento::create([
+                'id_polling' => $evento['id'],
+                'code' => $evento['code'],
+                'full_code' => $evento['fullCode'],
+                'order_id' => $evento['orderId'],
+                'merchantId' => $evento['merchantId'],
+                'loja_id' => $loja_id,
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+            ]);
 
             //Evento polling ID
             $eventoId = $evento['id']; 
