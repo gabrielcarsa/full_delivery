@@ -238,9 +238,19 @@ class PedidoController extends Controller
         
         //Pedido
         $pedido = Pedido::find($pedido_id);
-        $pedido->status = 5;
-        $pedido->mensagem_cancelamento = $request->input('motivo');
-        $pedido->save();
+
+        //Se Pedido for via iFood
+        if($pedido->via_ifood == true){
+
+            //Solicitar cancelamento no iFood
+            $this->ifoodService->postDispatch($pedido->orderIdIfood);
+            
+        }else{
+            $pedido->status = 5;
+            $pedido->mensagem_cancelamento = $request->input('motivo');
+            $pedido->save();
+        }
+        
         return redirect()->back()->with('error', 'Pedido cancelado');
 
     }

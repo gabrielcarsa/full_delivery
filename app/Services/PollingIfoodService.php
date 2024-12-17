@@ -367,6 +367,42 @@ class PollingIfoodService
                 $order->status = 5;
                 $order->mensagem_cancelamento_rejeicao = $evento['metadata']['CANCEL_REASON'];
                 $order->save();
+
+            
+            }elseif($evento['code'] == "CAR"){//CANCELLATION_REQUESTED
+
+                /*
+                Solicitação de cancelamento feita pelo Merchant (loja) ou pelo iFood 
+                de maneira automática (pedidos não confirmados dentro do prazo) ou de maneira manual 
+                através do nosso time de atendimento
+                */
+
+            }elseif($evento['code'] == "CARF"){//CANCELLATION_REQUEST_FAILED
+
+                /*
+                Solicitação de cancelamento negada
+                */
+                $order->mensagem_cancelamento_rejeicao = $evento['metadata']['CANCELLATION_REQUEST_FAILED_REASON'];
+                $order->save();
+                
+            }elseif($evento['code'] == "CCR"){//CONSUMER_CANCELLATION_REQUESTED
+
+                /*
+                Solicitação de cancelamento feita pelo cliente
+                */
+                
+            }elseif($evento['code'] == "CCA"){//CONSUMER_CANCELLATION_ACCEPTED
+
+                /*
+                A solicitação de cancelamento feita pelo cliente foi aprovada pelo Merchant (loja)
+                */
+                
+            }elseif($evento['code'] == "CCD"){//CONSUMER_CANCELLATION_DENIED
+
+                /*
+                A solicitação de cancelamento feita pelo cliente foi negada pelo Merchant (loja)
+                */
+                
             }
 
             //Acknowledgment do polling

@@ -248,4 +248,17 @@ class IfoodService
         ]);
     }
 
+    //Solicitar cancelamento pedido
+    public function requestCancellation($pedido_id){
+
+        $token = $this->getAccessToken();
+        
+        $response = $this->client->post('https://merchant-api.ifood.com.br/order/v1.0/orders/'.$pedido_id.'/requestCancellation', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+    }
+
 }
