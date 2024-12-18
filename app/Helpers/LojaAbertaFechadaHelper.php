@@ -21,11 +21,11 @@ class LojaAbertaFechadaHelper
             //Se houver integração com iFood
             if($loja->ifood_merchant_id != null){
 
-                $merchant = $ifoodService->getMerchant($loja->ifood_merchant_id);
+                $merchant = $ifoodService->getMerchantStatus($loja->ifood_merchant_id);
 
                 //Verificando se está aberto no iFood
-                if($merchant['status'] == 'AVAILABLE'){
-                    
+                if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
+
                     $loja->is_open = true;
                     $loja->save();
 

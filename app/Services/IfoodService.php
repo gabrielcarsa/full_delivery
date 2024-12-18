@@ -133,6 +133,22 @@ class IfoodService
         return $data;
     }
 
+    public function getMerchantStatus($id){
+
+        $token = $this->getAccessToken();
+        
+        // Exemplo de requisição à API do iFood
+        $response = $this->client->get('https://merchant-api.ifood.com.br/merchant/v1.0/merchants/'.$id.'/status', [
+            'headers' => [
+                'Authorization' => "Bearer $token",
+            ]
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data;
+    }
+
     //Obter Catalogs
     public function getCatalogs(){
 
