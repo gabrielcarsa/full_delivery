@@ -240,7 +240,7 @@
     </div>
     <!-- FIM HEADER PEDIDO -->
 
-    <a href="{{route('pedido.show', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
+    <a href="{{route('pedido.gestor', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
 
         <!-- CORPO PEDIDO -->
         <div class="fw-medium px-3 py-2 text-secondary">

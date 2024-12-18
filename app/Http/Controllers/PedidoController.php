@@ -66,44 +66,21 @@ class PedidoController extends Controller
         //Executa a query
         $pedidos = $pedidos->get();
 
-        // Obtém token mais recente
-        $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
-        
-        $data = [
-            'loja' => $loja,
-            'pedidos' => $pedidos,
-            'token' => $token,
-        ];
-    
-        return view('pedido/interno/gestor', compact('data'));    
-    }
+        //Setando padrão NULL
+        $pedido = null;
 
-    //EXIBIR PEDIDO
-    public function show(Request $request){
-
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
-        }
-        //ID loja
-        $loja_id  = session('lojaConectado')['id'];
-        
-        $loja = Loja::where('id', $loja_id)->first();
-
-        //Dados pedido
+        //Se houver ID do pedido no request
         $pedido_id = $request->input('id');
 
-        //Pedidos
-        $pedidos = Pedido::where('loja_id', $loja_id)
-        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
-        ->orderBy('feito_em', 'DESC')
-        ->get();
-        
         //Pedido
-        $pedido = Pedido::where('id', $pedido_id)
-        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
-        ->orderBy('feito_em', 'ASC')
-        ->first();
+        if($pedido_id != null){
+
+            $pedido = Pedido::where('id', $pedido_id)
+            ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
+            ->orderBy('feito_em', 'ASC')
+            ->first();
+
+        }
 
         // Obtém token mais recente
         $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
@@ -115,9 +92,10 @@ class PedidoController extends Controller
             'token' => $token,
         ];
 
-        return view('pedido/interno/gestor', compact('data'));       
+        return view('pedido/interno/gestor', compact('data'));    
     }
 
+    //ATUALIZAR DADOS DO PEDIDO NOS CARDS
     public function refresh_pedidos(Request $request){
 
         //Verificar se há loja selecionado
@@ -148,7 +126,7 @@ class PedidoController extends Controller
         return view('pedido.interno.card', compact('pedidos', 'id_selecionado'));
     }
 
-    //Polling a cada 30s API iFood
+    //POLLING A CADA 30S IFOOD
     public function polling_ifood(){
 
         //Obter pollings
@@ -805,7 +783,7 @@ class PedidoController extends Controller
             'pedido' => $pedido,
         ];
 
-        return view('pedido/detalhes_pedido', compact('data'));       
+        return view('pedido/cardapio/show', compact('data'));       
     }
 
 }
