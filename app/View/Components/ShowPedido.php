@@ -19,6 +19,6 @@ class ShowPedido extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.show-pedido');
+        return view('pedido.interno.show');
     }
 }

@@ -75,7 +75,7 @@ class PedidoController extends Controller
             'token' => $token,
         ];
     
-        return view('pedido/gestor_pedidos', compact('data'));    
+        return view('pedido/interno/gestor', compact('data'));    
     }
 
     //EXIBIR PEDIDO
@@ -115,7 +115,7 @@ class PedidoController extends Controller
             'token' => $token,
         ];
 
-        return view('pedido/gestor_pedidos', compact('data'));       
+        return view('pedido/interno/gestor', compact('data'));       
     }
 
     public function refresh_pedidos(Request $request){
@@ -145,7 +145,7 @@ class PedidoController extends Controller
         //Executa a query
         $pedidos = $pedidos->get();
 
-        return view('components.pedido-card-gestor', compact('pedidos', 'id_selecionado'));
+        return view('pedido.interno.card', compact('pedidos', 'id_selecionado'));
     }
 
     //Polling a cada 30s API iFood
