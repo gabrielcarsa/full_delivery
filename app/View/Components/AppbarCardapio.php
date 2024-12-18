@@ -15,6 +15,6 @@ class AppbarCardapio extends Component
      */
     public function render(): View
     {
-        return view('components.appbar-cardapio');
+        return view('cardapio.appbar');
     }
 }
