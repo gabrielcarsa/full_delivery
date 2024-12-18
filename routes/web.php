@@ -146,7 +146,6 @@ Route::middleware([
 
         //PEDIDO
         Route::get('/gestor-pedidos', [PedidoController::class, 'gestor'])->name('pedido.gestor');
-        Route::get('/gestor-pedidos/detalhes', [PedidoController::class, 'gestor'])->name('pedido.gestor');
         Route::get('/pedido/update-status', [PedidoController::class, 'update_status'])->name('pedido.update_status');
         Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar'])->name('pedido.cancelar');
         Route::post('/pedido/pagamento-mesa', [PedidoController::class, 'pagamento_mesa'])->name('pedido.pagamento');

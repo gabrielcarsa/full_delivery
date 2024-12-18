@@ -91,7 +91,7 @@
 
             <!-- FILTROS -->
             <div class="overflow-x-scroll w100 m-0">
-                <div class="d-flex flex-nowrap py-3">
+                <div class="d-flex py-3">
                     @php
                     $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
                     @endphp
@@ -123,70 +123,48 @@
 
                     @if($filtro == null || $filtro != 0)
                     <a href="{{ route('pedido.gestor', ['filtro' => 0]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
+                        class="p-2 mr-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-danger mr-1">
-                            radio_button_unchecked
-                        </span>
                         Pendentes
                     </a>
                     @endif
 
                     @if($filtro != 1)
                     <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
+                        class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-warning mr-1"
-                            style="font-variation-settings: 'FILL' 1;">
-                            radio_button_unchecked
-                        </span>
                         Em preparo
                     </a>
                     @endif
 
                     @if($filtro != 2)
                     <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
+                        class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-primary mr-1"
-                            style="font-variation-settings: 'FILL' 1;">
-                            radio_button_unchecked
-                        </span>
                         Pronto p/ retirar
                     </a>
                     @endif
 
                     @if($filtro != 3)
                     <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
+                        class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-primary mr-1">
-                            radio_button_unchecked
-                        </span>
                         A caminho
                     </a>
                     @endif
 
                     @if($filtro != 4)
                     <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
+                        class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-success mr-1"
-                            style="font-variation-settings: 'FILL' 1;">
-                            radio_button_unchecked
-                        </span>
                         Concluídos
                     </a>
                     @endif
 
                     @if($filtro != 5)
                     <a href="{{ route('pedido.gestor', ['filtro' => 5]) }}"
-                        class="p-2 mx-1 border rounded text-decoration-none text-secondary d-flex align-items-center"
+                        class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
                         style="min-width: 110px;">
-                        <span class="material-symbols-outlined text-secondary mr-1"
-                            style="font-variation-settings: 'FILL' 1;">
-                            radio_button_unchecked
-                        </span>
                         Cancelados
                     </a>
                     @endif
@@ -267,7 +245,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script type="text/javascript">
-        
+
     $(document).ready(function() {
         function atualizarPedidos() {
             $.ajax({

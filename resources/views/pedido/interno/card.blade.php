@@ -64,25 +64,25 @@
             <!-- DROPDOWN -->
             <div class="dropdown">
                 @if($pedido->status == 0)
-                <button class="btn btn-outline-danger dropdown-toggle rounded-pill" type="button"
+                <button class="btn btn-warning dropdown-toggle rounded-pill" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Pendente
                 </button>
 
                 @elseif($pedido->status == 1)
-                <button class="btn btn-warning dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
+                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     Em preparo
                 </button>
 
                 @elseif($pedido->status == 2)
-                <button class="btn btn-primary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
+                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     Pronto p/ retirar
                 </button>
 
                 @elseif($pedido->status == 3)
-                <button class="btn btn-outline-primary dropdown-toggle rounded-pill" type="button"
+                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     A caminho
                 </button>
