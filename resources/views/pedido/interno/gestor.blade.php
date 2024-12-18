@@ -179,9 +179,9 @@
         <!-- PEDIDOS GRID -->
         <div class="row g-1" id="pedidos-grid">
 
+            <!-- PEDIDOS -->
             @if(isset($data['pedidos']))
 
-            <!-- PEDIDOS -->
             @foreach($data['pedidos'] as $pedido)
 
             <!-- MODAL DETALHES PEDIDO -->
@@ -197,11 +197,6 @@
                             <p class="m-0 text-secondary">
                                 Recebido {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->diffForHumans() }}
                             </p>
-                            <button type="button" class="pe-auto" data-bs-dismiss="modal" aria-label="Close">
-                                <span class="material-symbols-outlined">
-                                    close
-                                </span>
-                            </button>
                             @endif
                         </div>
                         <div class="modal-body">
@@ -234,18 +229,59 @@
 
 
             @endforeach
-            <!-- FIM PEDIDOS -->
-
             @endif
+            <!-- FIM PEDIDOS -->
 
         </div>
         <!-- FIM PEDIDOS GRID -->
     </div>
 
+    <!-- BOTÃO DE AJUDA -->
+    <div class="dropup fixed-bottom d-flex justify-content-end m-3">
+        <a class="rounded-circle bg-padrao p-3 text-decoration-none" data-bs-toggle="dropdown">
+            <span class="material-symbols-outlined text-white d-flex align-items-center fs-2 fw-bold">
+                help
+            </span>
+        </a>
+        <div class="dropdown-menu p-3">
+            <p class="fw-bold m-0">
+                Ajuda
+            </p>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action">
+                    Como funciona cancelamento de um pedido?
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    Como alterar informações de pedidos?
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    Central de ajuda
+                </a>
+            </div>
+            <p class="fw-bold mt-3 mb-0">
+                Integração iFood: Registros
+            </p>
+            <div class="bg-gray-100">
+                <ul class="m-0 p-3">
+                    @foreach($data['polling_eventos'] as $evento)
+                    <li class="m-0 p-0" style="font-size: 13px">
+                        <p class="m-0">
+                            {{$evento->full_code}} - {{$evento->order_id}} -
+                            {{\Carbon\Carbon::parse($evento->created_at)->format('d/m/Y H:i')}}
+                        </p>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- FIM BOTÃO DE AJUDA -->
+
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script type="text/javascript">
-
     $(document).ready(function() {
         function atualizarPedidos() {
             $.ajax({

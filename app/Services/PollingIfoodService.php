@@ -375,7 +375,7 @@ class PollingIfoodService
 
                 //Atualizar status
                 $order->status = 5;
-                $order->mensagem_cancelamento_rejeicao = $evento['metadata']['CANCEL_REASON'];
+                $order->mensagem_cancelamento = $evento['metadata']['CANCEL_REASON'];
                 $order->save();
 
             
@@ -392,7 +392,7 @@ class PollingIfoodService
                 /*
                 Solicitação de cancelamento negada
                 */
-                $order->mensagem_cancelamento_rejeicao = $evento['metadata']['CANCELLATION_REQUEST_FAILED_REASON'];
+                $order->mensagem_cancelamento = $evento['metadata']['CANCELLATION_REQUEST_FAILED_REASON'];
                 $order->save();
                 
             }elseif($evento['code'] == "CCR"){//CONSUMER_CANCELLATION_REQUESTED

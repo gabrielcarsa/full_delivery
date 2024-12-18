@@ -13,6 +13,7 @@ use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
 use App\Models\Cupom;
 use App\Models\Mesa;
+use App\Models\PollingEvento;
 use App\Models\UsoCupom;
 use App\Models\IfoodToken;
 use Carbon\Carbon;
@@ -84,12 +85,15 @@ class PedidoController extends Controller
 
         // Obtém token mais recente
         $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
+
+        $polling_eventos = PollingEvento::where('loja_id', $loja_id)->limit(3)->orderBy('created_at','DESC')->get();
         
         $data = [
             'loja' => $loja,
             'pedido' => $pedido,
             'pedidos' => $pedidos,
             'token' => $token,
+            'polling_eventos' => $polling_eventos,
         ];
 
         return view('pedido/interno/gestor', compact('data'));    
