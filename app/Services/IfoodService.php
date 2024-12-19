@@ -281,7 +281,7 @@ class IfoodService
     }
 
     //Solicitar cancelamento pedido
-    public function requestCancellation($pedido_id){
+    public function requestCancellation($pedido_id, $reason, $cancellationCode){
 
         $token = $this->getAccessToken();
         
@@ -290,6 +290,12 @@ class IfoodService
                 'Authorization' => "Bearer $token",
                 'Content-Type' => 'application/json',
             ],
+            'json' => [
+                [
+                    'reason' => $reason,
+                    'cancellationCode'=> $cancellationCode,
+                ],
+            ]
         ]);
     }
 

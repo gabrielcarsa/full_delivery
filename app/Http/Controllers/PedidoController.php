@@ -225,7 +225,7 @@ class PedidoController extends Controller
         if($pedido->via_ifood == true){
 
             //Solicitar cancelamento no iFood
-            $this->ifoodService->postDispatch($pedido->orderIdIfood);
+            $this->ifoodService->postDispatch($pedido->orderIdIfood, $request->input('motivo'), $request->input('code'));
 
         }else{
             
