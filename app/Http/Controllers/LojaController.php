@@ -22,25 +22,6 @@ class LojaController extends Controller
         return redirect()->route('loja')->with('success', 'Conectado como '.session('lojaConectado')['nome']);
     }
 
-    public function abrir_fechar(){
-        $id = session('lojaConectado')['id'];
-
-        //Verificando se ID existe
-        if($id != null){
-
-            //Buscando Loja
-            $loja = Loja::where('id' , $id)->first();
-            
-            //Alterando Status da Loja
-            if($loja->is_open == true){
-                $loja->is_open = false;
-            }else{
-                $loja->is_open = true;
-            }
-            $loja->save();
-        }
-        return redirect()->back();
-    }
 
     //LISTAGEM
     public function index(){

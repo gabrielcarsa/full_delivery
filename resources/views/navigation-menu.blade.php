@@ -5,7 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items">
-                    <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none text-dark fs-2 fw-bolder">
+                    <a href="{{ route('dashboard') }}"
+                        class="d-flex align-items-center text-decoration-none text-dark fs-2 fw-bolder">
                         <img src="{{asset("storage/images/logo.png")}}" width="50px" alt="Foomy">
                         Foomy
                     </a>
@@ -27,9 +28,9 @@
                         <span class="fs-6 mx-2">
                             -
                         </span>
-                        <a href="{{ route('loja.abrir_fechar') }}" class="">
-                            Fechar loja
-                        </a>
+                        <button onClick="window.location.reload()" class="text-primary text-decoration-underline">
+                            Recarregar
+                        </button>
                     </div>
                     @elseif(LojaAbertaFechadaHelper::getLojaStatus() == false)
                     <div class="d-flex bg-light p-2 rounded">
@@ -42,9 +43,9 @@
                         <span class="fs-6 mx-2">
                             -
                         </span>
-                        <a href="{{ route('loja.abrir_fechar') }}" class="">
-                            Abrir loja
-                        </a>
+                        <button onClick="window.location.reload()" class="text-primary text-decoration-underline">
+                            Recarregar
+                        </button>
                     </div>
                     @endif
                     @endif

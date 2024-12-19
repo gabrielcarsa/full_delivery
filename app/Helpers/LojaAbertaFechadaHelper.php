@@ -26,13 +26,13 @@ class LojaAbertaFechadaHelper
                 //Verificando se está aberto no iFood
                 if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
 
-                    $loja->is_open = true;
+                    $loja->state = $merchant[0]['state'];
                     $loja->save();
 
                     return true;
                 }else{
 
-                    $loja->is_open = false;
+                    $loja->state = $merchant[0]['state'];
                     $loja->save();
 
                     return false;
@@ -41,7 +41,7 @@ class LojaAbertaFechadaHelper
             }else{
 
                 //Verificar se loja está aberta 
-                if($loja->is_open == true){
+                if($loja->state == "OK" || $loja->state == "WARNING"){
                     return true;
                 }else{
                     return false;
