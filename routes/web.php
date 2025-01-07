@@ -33,7 +33,8 @@ use App\Http\Controllers\SaldoController;
 |
 */
 
-Route::get('/', [CardapioController::class, 'index'])->name('cardapio');
+Route::get('/', function(){return view('inicio');});
+Route::get('/cardapio', [CardapioController::class, 'index'])->name('cardapio');
 Route::get('/carrinho', [CardapioController::class, 'indexCarrinho'])->name('cardapio.carrinho');
 Route::get('/produto', [CardapioController::class, 'showProduto'])->name('cardapio.produto');
 Route::post('/adicionar-carrinho/{produto_id}', [CardapioController::class, 'storeCarrinho']);

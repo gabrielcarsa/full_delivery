@@ -1,0 +1,55 @@
+* {
+    font-family: "Inter", serif;
+}
+
+
+.title {
+    font-size: 35px;
+    font-weight: 700;
+}
+
+
+.bg-padrao {
+    background-color: #FD0146 !important;
+}
+
+
+.bg-grey{
+    background-color: #F3F3F3 !important;
+}
+
+
+.text-padrao {
+    color: #FD0146 !important;
+}
+
+
+.border-padrao {
+    border: 1px solid #FD0146 !important;
+}
+
+
+.border-circular{
+    border-radius: 1.5em;
+}
+
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+    /* remove the gap so it doesn't close */
+}
+
+
+.fill-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+
+.text-destaque{
+    background-color: #FD0146 !important;
+    color: #FFFF;
+    padding: 0 5px;
+    display: inline-block;
+    transform: rotate(-1deg) !important; /* Rotação */
+}

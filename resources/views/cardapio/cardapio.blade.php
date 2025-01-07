@@ -1,4 +1,4 @@
-<x-layout-cardapio>
+<x-cardapio-layout>
 
     <!-- NENHUM RESTAURANTE SELECIONADO -->
 
@@ -527,4 +527,4 @@
     </script>
 
 
-</x-layout-cardapio>
+</x-cardapio-layout>
