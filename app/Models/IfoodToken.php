@@ -14,4 +14,9 @@ class IfoodToken extends Model
     protected $casts = [
         'expires_at' => 'datetime',
     ];
+
+    public function loja()
+    {
+        return $this->belogsTo(Loja::class);
+    }
 }

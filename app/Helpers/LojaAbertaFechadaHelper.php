@@ -19,7 +19,7 @@ class LojaAbertaFechadaHelper
             $loja = Loja::where('id', session('lojaConectado')['id'])->first();
 
             //Se houver integração com iFood
-            if($loja->ifood_merchant_id != null){
+            if($loja->ifood_merchant_id != null && $loja->ifood_token->sortByDesc('expires_at')->first()->expires_at->isFuture()){
 
                 $merchant = $ifoodService->getMerchantStatus($loja->ifood_merchant_id);
 

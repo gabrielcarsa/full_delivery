@@ -61,5 +61,8 @@ class Loja extends Model
    {
       return $this->hasMany(Movimentacao::class);
    }
-
+   public function ifood_token()
+   {
+      return $this->HasMany(IfoodToken::class);
+   }
 }
