@@ -7,8 +7,7 @@
                 <div class="shrink-0 flex items">
                     <a href="{{ route('dashboard') }}"
                         class="d-flex align-items-center text-decoration-none text-dark fs-2 fw-bolder">
-                        <img src="{{asset("storage/images/logo.png")}}" width="50px" alt="Foomy">
-                        Foomy
+                        <img src="{{asset("storage/images/logo-black.png")}}" width="150px" alt="Foomy">
                     </a>
                 </div>
             </div>
