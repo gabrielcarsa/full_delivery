@@ -56,4 +56,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function user_loja()
+    {
+        return $this->HasMany(UserLoja::class);
+    }
 }

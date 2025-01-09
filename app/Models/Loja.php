@@ -65,4 +65,8 @@ class Loja extends Model
    {
       return $this->HasMany(IfoodToken::class);
    }
+   public function user_loja()
+   {
+      return $this->HasMany(UserLoja::class);
+   }
 }

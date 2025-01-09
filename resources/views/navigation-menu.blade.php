@@ -14,11 +14,15 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item mx-1">
-                    <!-- Loja aberta ou fechada -->
-                    <div class="ms-3 relative">
+                    @dd(App\Models\Loja::all())
+                    <div class="dropdown">
+                        <a class="btn bg-light rounded dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Lojas
+                        </a>
                         @if(session('lojaConectado') != null)
                         @if(LojaAbertaFechadaHelper::getLojaStatus() == true)
-                        <div class="d-flex bg-light p-2 rounded">
+                        <div class="dropdown-menu">
                             <p class="m-0 d-flex align-items-center text-success">
                                 <span class="material-symbols-outlined mr-1" style="font-variation-settings: 'FILL' 1;">
                                     circle
@@ -54,8 +58,8 @@
                 </li>
                 <li class="nav-item mx-1">
                     <div class="dropdown">
-                        <a class="btn text-secondary border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="btn text-secondary border rounded dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
 
