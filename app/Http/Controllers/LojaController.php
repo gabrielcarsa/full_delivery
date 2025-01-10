@@ -4,43 +4,75 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Loja;
+use App\Models\UserLoja;
 use App\Models\HorarioFuncionamento;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class LojaController extends Controller
 {
-     //ESCOLHER RESTAURANTE
-     public function choose(Request $request, $id){
+    //ESCOLHER RESTAURANTE GET
+    public function index(){
+
+        //Usuario
+        $user_id = Auth::user()->id;
+
+        //Obter IDs de Lojas relacionadas ao usuário
+        $userLojas = UserLoja::where('user_id', $user_id)->get();
+
+        $lojas = [];
+
+        foreach($userLojas as $userLoja){
+            $lojas[] = Loja::find($userLoja->loja_id)->first();
+        }
+
+        return view('loja.escolher', compact('lojas'));
+        
+    }
+
+    //ESCOLHER RESTAURANTE POST
+    public function choose(Request $request){
+
+        $id = $request->input('id');
+
         //Buscando loja
         $loja = Loja::where('id', $id)->get();
 
         //Definindo variavel de sessão de loja
         session(['lojaConectado' => ['id'=> $id, 'nome'=> $loja[0]->nome]]);
 
-        return redirect()->route('loja')->with('success', 'Conectado como '.session('lojaConectado')['nome']);
+        return redirect()->back()->with('success', 'Conectado como '.session('lojaConectado')['nome']);
+
     }
 
+    //EXIBIR
+    public function show(Request $request){
 
-    //LISTAGEM
-    public function index(){
-        $lojas = Loja::all();
-        $horarios_funcionamento = HorarioFuncionamento::all();
-        return view('loja/listar', compact('lojas', 'horarios_funcionamento'));
-    }
-
-    //RETORNAR VIEW PARA CONFIGURAÇÕES
-    public function configuracao(Request $request){
-        $id = $request->input('id');
-        if($id != null){
-            $loja = Loja::where('id' , $id)->first();
-            $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
-            return view('loja.configuracao', compact('loja', 'horarios'));
-        }else{
-            return view('loja.configuracao');
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
+
+        $id = session('lojaConectado')['id'];
+
+        $loja = Loja::where('id' , $id)->first();
+        $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+        return view('loja.show', compact('loja', 'horarios'));
+       
     }
+
+    //EXIBIR
+    public function edit(Request $request){
+
+        $id = $request->input('id');
+        $loja = Loja::where('id' , $id)->first();
+        $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+        return view('loja.editar', compact('loja', 'horarios'));
+
+    }
+
 
     //CADASTRAR
     public function store(Request $request, $usuario_id){
@@ -226,7 +258,7 @@ class LojaController extends Controller
     public function show_entrega_taxas(){
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+            return redirect('loja.index')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do loja
@@ -311,7 +343,7 @@ class LojaController extends Controller
      public function show_entrega_areas(){
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+            return redirect('loja.index')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do loja

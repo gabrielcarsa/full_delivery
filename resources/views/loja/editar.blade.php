@@ -26,23 +26,23 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Loja <span class="text-secondary fs-3">({{$lojas->count()}})</span></h2>
+                <h2 class="my-3 fw-bolder fs-1">Selecione uma Loja</h2>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="{{route('loja.configurar')}}">
+                    href="{{route('loja.editar')}}">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>
-                    Cadastrar
+                    Cadastrar Loja
                 </a>
             </div>
         </div>
         <!-- FIM HEADER -->
 
 
-        <!-- RESTAURANTES -->
-        @if($lojas->isNotEmpty())
+        <!-- LOJAS -->
+        @if($lojas)
 
         @foreach($lojas as $loja)
         <div
@@ -108,7 +108,7 @@
                 </p>
                 
                 <div class="d-flex">
-                    <a href="{{route('loja.configurar', ['id' => $loja->id])}}" class="text-decoration-none p-2 rounded border-padrao text-padrao shadow-sm">
+                    <a href="{{route('loja.editar', ['id' => $loja->id])}}" class="text-decoration-none p-2 rounded border-padrao text-padrao shadow-sm">
                         Configurações
                     </a>
 
@@ -162,7 +162,7 @@
             <img src="{{asset("storage/images/logo.png")}}" width="150px" alt="Foomy"></a>
             <h3 class="fw-semibold fs-4 mt-4">Bem vindo! Vamos começar essa jornada com o Foomy?</h3>
             <p>Comece configurando as informações do seu loja!</p>
-            <a href="{{route('loja.configurar')}}" class="btn btn-primary px-5">Iniciar</a>
+            <a href="{{route('loja.editar')}}" class="btn btn-primary px-5">Iniciar</a>
         </div>
         <!-- FIM SE NÃO HOUVER RESTAURANTES -->
 

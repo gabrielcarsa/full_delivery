@@ -101,7 +101,7 @@
 
                                 <!-- BTN ESCOLHER LOJA -->
                                 @if(!session('lojaConectado') || session('lojaConectado')['id'] != $loja->id)
-                                <form action="{{'/escolher-loja/'.$loja->id}}" method="post">
+                                <form action="{{route('loja.choose', ['id' => $loja->id])}}" method="post">
                                     @csrf
                                     <button type="submit"
                                         class="mx-2 p-2 text-white fw-semibold rounded w-100 bg-padrao">

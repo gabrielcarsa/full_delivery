@@ -83,16 +83,17 @@ Route::middleware([
         //APENAS REGISTRO DE USUÁRIO SE ESTIVER AUTENTICADO
         Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
         
-        //RESTAURANTE
-        Route::post('/escolher-loja/{id}', [LojaController::class, 'choose']);
-        Route::get('/loja', [LojaController::class, 'index'])->name('loja');
-        Route::get('/loja/configurar', [LojaController::class, 'configuracao'])->name('loja.configurar');
+        //LOJA
+        Route::get('/selecionar-lojas', [LojaController::class, 'index'])->name('loja.index');
+        Route::post('/selecionar-loja', [LojaController::class, 'choose'])->name('loja.choose');
+        Route::get('/loja', [LojaController::class, 'show'])->name('loja');
+        Route::get('/loja/editar', [LojaController::class, 'edit'])->name('loja.editar');
         Route::post('/loja/cadastrar/{usuario_id}', [LojaController::class, 'store']);
         Route::put('/loja/alterar/{usuario_id}/{loja_id}', [LojaController::class, 'update']);
         Route::put('/loja/alterar-logo/{loja_id}', [LojaController::class, 'update_logo']);
         Route::get('/loja/abrir-fechar', [LojaController::class, 'abrir_fechar'])->name('loja.abrir_fechar');
        
-        //ENTREGAS RESTAURANTE
+        //ENTREGAS LOJA
         Route::get('/entregas-taxas', [LojaController::class, 'show_entrega_taxas'])->name('loja.entrega_taxas');
         Route::get('/entregas-areas', [LojaController::class, 'show_entrega_areas'])->name('loja.entrega_areas');
         Route::post('/entregas/gratuita', [LojaController::class, 'taxa_entrega_free'])->name('loja.taxa_entrega_free');

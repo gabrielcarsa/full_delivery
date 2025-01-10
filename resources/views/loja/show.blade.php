@@ -44,7 +44,84 @@
                 @endif
 
                 <!-- CARD GERAL -->
-                <div class="bg-white border rounded p-3">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Active</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false">Dropdown</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <div class="bg-white shadow rounded p-3">
+
+                    <div class="col-2">
+
+                        <!-- BTN EDITAR IMG -->
+                        <a class="position-absolute p-1 text-white rounded d-flex align-items-center text-decoration-none"
+                            style="background-color: #FD0146 !important" data-bs-toggle="modal"
+                            data-bs-target="#modalEditarImagem">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
+                        <!-- FIM BTN EDITAR IMG -->
+
+                        <!-- MODAL -->
+                        <div class="modal fade" id="modalEditarImagem" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar logo loja</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{'/loja/alterar-logo/' . $loja->id}}" method="post"
+                                        autocomplete="off" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="input-group">
+                                                <label class="input-group-text" for="inputImagem">Logo</label>
+                                                <input type="file"
+                                                    class="form-control @error('imagem') is-invalid @enderror"
+                                                    name="logo" id="inputImagem">
+                                            </div>
+                                            <p class="text-secondary ml-2">300 x 300 (px)</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- FIM MODAL -->
+
+                        <!-- LOGO RESTAURANTE -->
+                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250" alt="Logo {{$loja->nome}}"
+                            class="shadow-sm rounded">
+
+                    </div>
 
                     <!-- INFORMAÇÕES GERAIS -->
                     <h3 class="fw-bold ">
@@ -67,7 +144,8 @@
                         <p class="text-secondary ml-2">800 x 400 (px)</p>
                         @else
                         <!-- BANNER RESTAURANTE -->
-                        <img src='{{asset("storage/$loja->nome/banner")}}' class="rounded img-fluid border p-0 ml-3" style="width: 400px">
+                        <img src='{{asset("storage/$loja->nome/banner")}}' class="rounded img-fluid border p-0 ml-3"
+                            style="width: 400px">
                         <div class="input-group">
                             <label class="input-group-text" for="inputBanner">Alterar banner</label>
                             <input type="file" class="form-control @error('banner') is-invalid @enderror" name="banner"
