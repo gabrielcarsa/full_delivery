@@ -3,11 +3,31 @@
 namespace App\Helpers;
 
 use App\Models\Loja;
+use App\Models\UserLoja;
 use App\Services\IfoodService;
+use Illuminate\Support\Facades\Auth;
 
-class LojaAbertaFechadaHelper
+class LojaHelper
 {
-    public static function getLojaStatus(){
+    public static function getUserLoja(){
+
+        //Usuario
+        $user_id = Auth::user()->id;
+
+        //Obter IDs de Lojas relacionadas ao usuário
+        $userLojas = UserLoja::where('user_id', $user_id)->get();
+
+        $lojas = [];
+
+        foreach($userLojas as $userLoja){
+            $lojas[] = Loja::find($userLoja->loja_id)->first();
+        }
+
+        return $lojas;
+    }
+
+    //Mudar status da loja conectada
+    public static function MudarStatusLoja(){
 
         //instancindo IfoodService
         $ifoodService = new IfoodService();
@@ -29,26 +49,14 @@ class LojaAbertaFechadaHelper
                     $loja->state = $merchant[0]['state'];
                     $loja->save();
 
-                    return true;
                 }else{
 
                     $loja->state = $merchant[0]['state'];
                     $loja->save();
 
-                    return false;
                 }
 
-            }else{
-
-                //Verificar se loja está aberta 
-                if($loja->state == "OK" || $loja->state == "WARNING"){
-                    return true;
-                }else{
-                    return false;
-                }
             }
         }
-        //Se não houver loja conectada
-        return null;
     }
 }
