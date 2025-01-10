@@ -44,8 +44,9 @@ class PedidoController extends Controller
 
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+            return redirect('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
+
         //ID loja
         $loja_id  = session('lojaConectado')['id'];
 
@@ -104,7 +105,7 @@ class PedidoController extends Controller
 
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+            return redirect('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
         //ID loja
         $loja_id  = session('lojaConectado')['id'];
@@ -152,7 +153,7 @@ class PedidoController extends Controller
         
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+            return redirect('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
 
         //ID loja
@@ -208,7 +209,7 @@ class PedidoController extends Controller
 
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione uma loja primeiro');
+            return redirect('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
         //ID loja
         $loja_id  = session('lojaConectado')['id'];

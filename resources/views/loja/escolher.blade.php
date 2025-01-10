@@ -26,7 +26,11 @@
         <!-- HEADER -->
         <div class="row">
             <div class="col">
-                <h2 class="my-3 fw-bolder fs-1">Selecione uma Loja</h2>
+                <h2 class="mt-3 fw-bolder fs-1">Selecione uma Loja</h2>
+                <p class="m-0 text-secondary">
+                    Para realizar as tarefas no sistema <span class="fw-bold">é necessário escolher uma loja para se
+                        conectar</span>, visto que é possível ter mais de 1 Loja cadastrada no Foomy.
+                </p>
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
@@ -52,12 +56,11 @@
 
             <!-- LOGO LOJA -->
             <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250" alt="Logo {{$loja->nome}}"
-                class="rounded">
+                class="rounded-circle">
             <!-- FIM LOGO LOJA -->
 
             <!-- INFO LOJA -->
-            <div class="mx-3">
-
+            <div class="mx-3 d-block">
                 <!-- LOJA CIRCULO STATUS -->
                 @if($loja->state == "OK" || $loja->state == "WARNING")
                 <div class="d-flex align-items-center my-2">
@@ -82,9 +85,10 @@
                 @endif
                 <!-- FIM LOJA CIRCULO STATUS -->
 
-                <h2 class="fs-2 fw-bold">
+                <h2 class="fs-2 fw-bold m-0">
                     {{$loja->nome}}
                 </h2>
+
                 <p class="text-secondary">
                     {{$loja->descricao}}
                 </p>
