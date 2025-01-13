@@ -64,8 +64,10 @@ class LojaController extends Controller
 
         $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
 
+        $equipe = UserLoja::where('loja_id', $id)->get();
         $dados = [
             'horarios' => $horarios,
+            'equipe' => $equipe,
         ];
        
         return view('loja.show', compact('dados', 'loja'));

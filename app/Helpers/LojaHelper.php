@@ -20,9 +20,8 @@ class LojaHelper
         $lojas = [];
 
         foreach($userLojas as $userLoja){
-            $lojas[] = Loja::find($userLoja->loja_id)->first();
+            $lojas[] = Loja::find($userLoja->loja_id);
         }
-
         return $lojas;
     }
 
