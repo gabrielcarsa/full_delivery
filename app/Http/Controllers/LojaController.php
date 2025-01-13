@@ -55,24 +55,22 @@ class LojaController extends Controller
             return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
 
+        //Info Loja
         $id = session('lojaConectado')['id'];
-
         $loja = Loja::where('id' , $id)->first();
+
+        //Controle para exibir conteúdo das views da Loja
+        $tab = $request->get('tab') ?? 'sobre';
+
         $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
-        return view('loja.show', compact('loja', 'horarios'));
+
+        $dados = [
+            'horarios' => $horarios,
+        ];
        
-    }
-
-    //EXIBIR
-    public function edit(Request $request){
-
-        $id = $request->input('id');
-        $loja = Loja::where('id' , $id)->first();
-        $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
-        return view('loja.editar', compact('loja', 'horarios'));
+        return view('loja.show', compact('dados', 'loja'));
 
     }
-
 
     //CADASTRAR
     public function store(Request $request, $usuario_id){

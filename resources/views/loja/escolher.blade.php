@@ -34,7 +34,7 @@
             </div>
             <div class="col d-flex align-items-center justify-content-end p-0">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                    href="{{route('loja.editar')}}">
+                    href="">
                     <span class="material-symbols-outlined mr-1">
                         add
                     </span>
@@ -122,7 +122,7 @@
             <img src="{{asset("storage/images/logo.png")}}" width="150px" alt="Foomy"></a>
             <h3 class="fw-semibold fs-4 mt-4">Bem vindo! Vamos começar essa jornada com o Foomy?</h3>
             <p>Comece configurando as informações do seu loja!</p>
-            <a href="{{route('loja.editar')}}" class="btn btn-primary px-5">Iniciar</a>
+            <a href="" class="btn btn-primary px-5">Iniciar</a>
         </div>
         <!-- FIM SE NÃO HOUVER LOJAS -->
 

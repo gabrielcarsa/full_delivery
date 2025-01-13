@@ -87,7 +87,6 @@ Route::middleware([
         Route::get('/selecionar-lojas', [LojaController::class, 'index'])->name('loja.index');
         Route::post('/selecionar-loja', [LojaController::class, 'choose'])->name('loja.choose');
         Route::get('/loja', [LojaController::class, 'show'])->name('loja');
-        Route::get('/loja/editar', [LojaController::class, 'edit'])->name('loja.editar');
         Route::post('/loja/cadastrar/{usuario_id}', [LojaController::class, 'store']);
         Route::put('/loja/alterar/{usuario_id}/{loja_id}', [LojaController::class, 'update']);
         Route::put('/loja/alterar-logo/{loja_id}', [LojaController::class, 'update_logo']);
