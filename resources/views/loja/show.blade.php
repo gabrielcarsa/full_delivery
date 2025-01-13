@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'equipes' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
+                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'equipe' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
                     href="?tab=equipe">
                     Equipe
                 </a>
@@ -67,7 +67,7 @@
             </li>
         </ul>
 
-        <div class="bg-white shadow-md py-3 mb-3">
+        <div class="bg-white shadow-md py-3 mb-3 rounded">
 
             <!-- VERIFICACAO SEÇOES TAB DA LOJA -->
 
@@ -303,61 +303,6 @@
                 </div>
                 <!-- FIM TAXA DE SERVIÇO -->
 
-                <!-- TAB SOBRE HORARIOS -->
-                @elseif(request('tab') != null && request('tab') == 'horarios')
-
-                <h3 class="fw-bold mt-3">
-                    Horários de funcionamento
-                </h3>
-                <p>
-                    Horários de funcionamento por dias da semana, ele não será usado para abrir e fechar
-                    automático
-                    no sistema, isso deve ser feito manual.
-                </p>
-
-
-                <!-- TAB SOBRE EQUIPE -->
-                @elseif(request('tab') != null && request('tab') == 'equipe')
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cargo</th>
-                            <th scope="col">Nível de acesso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($dados['equipe'] as $colaborador)
-                        <tr>
-                            <th scope="row">
-                                {{$colaborador->id}}
-                            </th>
-                            <td>
-                                {{$colaborador->user->name}}
-                            </td>
-                            <td>
-                                {{$colaborador->user->cargo}}
-                            </td>
-                            <td>
-                                {{$colaborador->user->nivel_acesso}}
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <!-- TAB SOBRE PLANOS -->
-                @elseif(request('tab') != null && request('tab') == 'planos')
-
-                <!-- TAB SOBRE INTEGRACOES -->
-                @elseif(request('tab') != null && request('tab') == 'integracoes')
-
-                @endif
-                <!-- FIM VERIFICACAO SEÇOES TAB DA LOJA -->
-
-
                 <div class="bg-white p-3 d-flex justify-content-end sticky-bottom">
                     <button type="submit" class="btn bg-padrao text-white px-5 fw-semibold">
                         Salvar
@@ -366,6 +311,102 @@
 
             </form>
             <!-- FORM -->
+
+            <!-- TAB SOBRE HORARIOS -->
+            @elseif(request('tab') != null && request('tab') == 'horarios')
+
+            <h3 class="fw-bold mt-3">
+                Horários de funcionamento
+            </h3>
+            <p>
+                Horários de funcionamento por dias da semana, ele não será usado para abrir e fechar
+                automático
+                no sistema, isso deve ser feito manual.
+            </p>
+
+
+            <!-- TAB SOBRE EQUIPE -->
+            @elseif(request('tab') != null && request('tab') == 'equipe')
+
+            <div class="px-3">
+
+                <div class="d-flex justify-content-between py-3">
+                    <div class="input-group w-50">
+                        <input type="text" class="form-control" placeholder="Nome"
+                            aria-label="Nome" aria-describedby="btn-procurar">
+                        <button class="btn btn-outline-dark" type="button" id="btn-procurar">Buscar</button>
+                    </div>
+                    <div class="">
+                        <a href="" class="btn bg-padrao text-white fw-bold">
+                            Adicionar usuário
+                        </a>
+                    </div>
+                </div>
+
+
+
+                <!-- TABLE EQUIPE -->
+                <table class="table border-top">
+                    <thead class="fs-5">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Nível de acesso</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($dados['equipe'] as $colaborador)
+                        <tr>
+                            <td>
+                                #0{{$colaborador->id}}
+                            </td>
+                            <td>
+                                <p class="m-0 fw-semibold">
+                                    {{$colaborador->user->name}}
+                                </p>
+                                <p class="m-0 text-secondary">
+                                    {{$colaborador->user->email}}
+                                </p>
+                            </td>
+                            <td>
+                                {{$colaborador->cargo}}
+                            </td>
+                            <td>
+                                {{$colaborador->nivel_acesso}}
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="border rounded p-2 d-flex aling-items-center" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="material-symbols-outlined">
+                                            more_vert
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <!-- FIM TABLE EQUIPE -->
+
+            </div>
+
+            <!-- TAB SOBRE PLANOS -->
+            @elseif(request('tab') != null && request('tab') == 'planos')
+
+            <!-- TAB SOBRE INTEGRACOES -->
+            @elseif(request('tab') != null && request('tab') == 'integracoes')
+
+            @endif
+            <!-- FIM VERIFICACAO SEÇOES TAB DA LOJA -->
 
         </div>
         <!-- FIM CARD GERAL -->
