@@ -184,7 +184,8 @@
             <!-- FIM LINHA IMAGENS -->
 
             <!-- FORM -->
-            <form class="mt-3" action="{{route('loja.update', ['loja_id' => $loja->id, 'tab' => request('tab')])}}" method="post" autocomplete="off">
+            <form class="mt-3" action="{{route('loja.update', ['loja_id' => $loja->id, 'tab' => request('tab')])}}"
+                method="post" autocomplete="off">
                 @method('PUT')
                 @csrf
 
@@ -315,7 +316,6 @@
 
             <!-- TAB SOBRE HORARIOS -->
             @elseif(request('tab') != null && request('tab') == 'horarios')
-
             <div class="px-3">
                 <div class="d-flex justify-content-end my-3">
                     <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
@@ -488,6 +488,25 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js"></script>
 
     <script>
+    //Calendário Horarios funcionamento
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'pt-br',
+            initialView: 'dayGridWeek', // Exibe os dias da semana
+            headerToolbar: false, // Oculta o cabeçalho padrão
+            footerToolbar: false, // Remove o rodapé
+            dayHeaderFormat: {
+                weekday: 'long'
+            }, // Exibe apenas os nomes dos dias
+            contentHeight: 'auto', // Ajusta o tamanho
+            events: [], // Use essa propriedade para adicionar eventos, se necessário
+            editable: false, // Desabilita a edição
+            selectable: false // Desabilita seleção de datas
+        });
+        calendar.render();
+    });
+    
     // Função para buscar endereço pelo CEP
     async function buscarEndereco() {
         const cep = document.getElementById('inputCep').value.replace(/\D/g, '');
@@ -538,24 +557,5 @@
     // Aplicar a máscara para os campos de telefone 1 e telefone 2
     aplicarMascaraTelefone('inputTelefone1');
     aplicarMascaraTelefone('inputTelefone2');
-
-    //Calendário Horarios funcionamento
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: 'pt-br',
-            initialView: 'dayGridWeek', // Exibe os dias da semana
-            headerToolbar: false, // Oculta o cabeçalho padrão
-            footerToolbar: false, // Remove o rodapé
-            dayHeaderFormat: {
-                weekday: 'long'
-            }, // Exibe apenas os nomes dos dias
-            contentHeight: 'auto', // Ajusta o tamanho
-            events: [], // Use essa propriedade para adicionar eventos, se necessário
-            editable: false, // Desabilita a edição
-            selectable: false // Desabilita seleção de datas
-        });
-        calendar.render();
-    });
     </script>
 </x-app-layout>
