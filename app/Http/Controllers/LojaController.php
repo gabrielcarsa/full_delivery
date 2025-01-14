@@ -86,6 +86,11 @@ class LojaController extends Controller
 
     }
 
+    //VIEW PARA CADASTRAR LOJA
+    public function create(Request $request){
+        return view('loja.create');
+    }
+
     //CADASTRAR
     public function store(Request $request){
 

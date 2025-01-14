@@ -14,6 +14,10 @@
     border: 1px solid #FD0146 !important;
 }
 
+.bg-clear{
+    background-color: #a8a8a8;
+}
+
 .table-padrao th, .table-padrao td {
     background-color: #F3F4F6 !important;
 }
