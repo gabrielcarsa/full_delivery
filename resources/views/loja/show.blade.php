@@ -153,7 +153,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="{{route('loja.update_logo', ['loja_id' => $loja->id])}}" method="post" autocomplete="off" enctype="multipart/form-data">
+                                    <form action="{{route('loja.update_banner', ['loja_id' => $loja->id])}}" method="post" autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-body">
