@@ -108,7 +108,7 @@
                                             <div class="input-group">
                                                 <label class="input-group-text" for="inputImagem">Logo</label>
                                                 <input type="file"
-                                                    class="form-control @error('imagem') is-invalid @enderror"
+                                                    class="form-control @error('logo') is-invalid @enderror"
                                                     name="logo" id="inputImagem">
                                             </div>
                                             <p class="text-secondary ml-2">300 x 300 (px)</p>
@@ -315,21 +315,94 @@
             <!-- TAB SOBRE HORARIOS -->
             @elseif(request('tab') != null && request('tab') == 'horarios')
 
-            <h3 class="fw-bold mt-3">
-                Horários de funcionamento
-            </h3>
-            <p>
-                Horários de funcionamento por dias da semana, ele não será usado para abrir e fechar
-                automático
-                no sistema, isso deve ser feito manual.
-            </p>
+            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js"></script>
 
+            <div class="px-3">
+                <div class="d-flex justify-content-end my-3">
+                    <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
+                        data-bs-target="#modalAdicionarHorario">
+                        Cadastrar horário
+                    </a>
+                </div>
+
+                <!-- MODAL -->
+                <div class="modal fade" id="modalAdicionarHorario" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <p class="modal-title fs-5" id="exampleModalLabel">
+                                    Adicionar horário
+                                </p>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-body">
+
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <label for="inputCep" class="form-label fw-bold m-0">CEP</label>
+                                            <input type="text" name="cep"
+                                                value="{{!empty($loja) ? $loja->cep : old('cep')}}" class="form-control"
+                                                id="inputCep" required>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputHoraAbertura" class="form-label fw-bold m-0">Começa em</label>
+                                            <input type="time" name="hora_fechamento" class="form-control"
+                                                id="inputHoraAbertura" required>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="inputHoraFechamento" class="form-label fw-bold m-0">Começa em</label>
+                                            <input type="time" name="hora_abertura" class="form-control"
+                                                id="inputHoraFechamento" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- FIM MODAL -->
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        locale: 'pt-br',
+                        initialView: 'dayGridWeek', // Exibe os dias da semana
+                        headerToolbar: false, // Oculta o cabeçalho padrão
+                        footerToolbar: false, // Remove o rodapé
+                        dayHeaderFormat: {
+                            weekday: 'long'
+                        }, // Exibe apenas os nomes dos dias
+                        contentHeight: 'auto', // Ajusta o tamanho
+                        events: [], // Use essa propriedade para adicionar eventos, se necessário
+                        editable: false, // Desabilita a edição
+                        selectable: false // Desabilita seleção de datas
+                    });
+                    calendar.render();
+                });
+                </script>
+
+                <div id='calendar'></div>
+            </div>
 
             <!-- TAB SOBRE EQUIPE -->
             @elseif(request('tab') != null && request('tab') == 'equipe')
 
             <div class="px-3">
 
+                <!-- HEADER EQUIPE -->
                 <div class="d-flex justify-content-between py-3">
                     <div class="input-group w-50">
                         <input type="text" class="form-control" placeholder="Nome" aria-label="Nome"
@@ -342,8 +415,7 @@
                         </a>
                     </div>
                 </div>
-
-
+                <!-- FIM HEADER EQUIPE -->
 
                 <!-- TABLE EQUIPE -->
                 <table class="table border-top">

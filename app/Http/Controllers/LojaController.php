@@ -25,7 +25,7 @@ class LojaController extends Controller
         $lojas = [];
 
         foreach($userLojas as $userLoja){
-            $lojas[] = Loja::find($userLoja->loja_id)->first();
+            $lojas[] = Loja::find($userLoja->loja_id);
         }
 
         return view('loja.escolher', compact('lojas'));
@@ -59,12 +59,24 @@ class LojaController extends Controller
         $id = session('lojaConectado')['id'];
         $loja = Loja::where('id' , $id)->first();
 
+        //Iniciar variáveis como vazias
+        $horarios = null;
+        $equipe = null;
+
         //Controle para exibir conteúdo das views da Loja
         $tab = $request->get('tab') ?? 'sobre';
 
-        $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+        if($tab == 'horarios'){
+            $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+        }elseif($tab == 'equipe'){
+            $equipe = UserLoja::where('loja_id', $id)->get();
+        }elseif($tab == 'planos'){
+            //TODO
+        }elseif($tab == 'integracoes'){
+            //TODO
+        }
 
-        $equipe = UserLoja::where('loja_id', $id)->get();
+
         $dados = [
             'horarios' => $horarios,
             'equipe' => $equipe,
@@ -84,7 +96,7 @@ class LojaController extends Controller
 
         // Validação do formulário
         $validator = Validator::make($request->all(), [
-            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
+            'logo' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
             'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
             'nome' => 'required|string|max:100',
             'descricao' => 'required|string|max:255',
@@ -116,10 +128,11 @@ class LojaController extends Controller
         $loja->taxa_servico = $request->input('taxa_servico');
         $loja->is_taxa_entrega_free = true;
         $loja->cadastrado_usuario_id = $usuario_id;
-        if ($request->hasFile('imagem')) {
+
+        if ($request->hasFile('logo')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "logo";
-            $request->file('imagem')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            $request->file('logo')->storeAs('public/'.$loja->nome, $nomeArquivo);
             $loja->logo = $nomeArquivo;
         }
         if ($request->hasFile('banner')) {
