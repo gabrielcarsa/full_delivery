@@ -233,7 +233,7 @@ class LojaController extends Controller
             $loja->save();
 
         }elseif($tab == "horarios"){
-            
+
             //Horario Funcionamento
             $i = 0;
             for($i; $i < 7; $i++){
@@ -251,15 +251,18 @@ class LojaController extends Controller
     }
 
     //ALTERAR LOGO
-    public function update_logo(Request $request, $loja_id){
+    public function update_logo(Request $request){
+
+        $loja_id = $request->input('loja_id');
+
         if ($request->hasFile('banner')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "banner";
             $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
             //não estou salvando nome do arquino no BD pois só vai ter um banner
         }
-         // Validação do formulário
-         $validator = Validator::make($request->all(), [
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
             //TODO: fazer validações
             'logo' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
         ]);
@@ -270,13 +273,42 @@ class LojaController extends Controller
         }  
         
         //Alterar loja
-        $loja = Loja::find($loja_id)->first();
+        $loja = Loja::find($loja_id);
 
         if ($request->hasFile('logo')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "logo";
-            $request->file('logo')->storeAs('public/logo', $nomeArquivo);
+            $request->file('logo')->storeAs('public/'.$loja->nome, $nomeArquivo);
             $loja->logo = $nomeArquivo;
+        }
+
+        return redirect()->route('loja')->with('success', 'Logo alterada com sucesso');
+    }
+
+    //ALTERAR LOGO
+    public function update_banner(Request $request){
+
+        $loja_id = $request->input('loja_id');
+
+        // Validação do formulário
+        $validator = Validator::make($request->all(), [
+            //TODO: fazer validações
+            'banner' => 'required|image|mimes:jpeg,png,jpg|max:20480|dimensions:min_width=1280,min_height=720,ratio=16/9',
+        ]);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }  
+        
+        //Alterar loja
+        $loja = Loja::find($loja_id);
+
+        if ($request->hasFile('banner')) {
+            //Colocando nome único no arquivo
+            $nomeArquivo = "banner";
+            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            //não estou salvando nome do arquino no BD pois só vai ter um banner
         }
 
         return redirect()->route('loja')->with('success', 'Logo alterada com sucesso');

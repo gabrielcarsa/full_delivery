@@ -89,7 +89,8 @@ Route::middleware([
         Route::get('/loja', [LojaController::class, 'show'])->name('loja');
         Route::post('/loja/cadastrar', [LojaController::class, 'store'])->name('loja.store');
         Route::put('/loja/alterar', [LojaController::class, 'update'])->name('loja.update');
-        Route::put('/loja/alterar-logo/{loja_id}', [LojaController::class, 'update_logo']);
+        Route::put('/loja/alterar-logo', [LojaController::class, 'update_logo'])->name('loja.update_logo');
+        Route::put('/loja/alterar-banner', [LojaController::class, 'update_banner'])->name('loja.update_banner');
         Route::get('/loja/abrir-fechar', [LojaController::class, 'abrir_fechar'])->name('loja.abrir_fechar');
        
         //ENTREGAS LOJA

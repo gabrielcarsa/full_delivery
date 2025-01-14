@@ -100,7 +100,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="{{'/loja/alterar-logo/' . $loja->id}}" method="post"
+                                    <form action="{{route('loja.update_logo', ['loja_id' => $loja->id])}}" method="post"
                                         autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
@@ -153,18 +153,19 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+                                    <form action="{{route('loja.update_logo', ['loja_id' => $loja->id])}}" method="post" autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-body">
                                             <div class="input-group">
-                                                <label class="input-group-text" for="inputBanner">Alterar
-                                                    banner</label>
+                                                <label class="input-group-text" for="inputBanner">
+                                                    Alterar banner da loja
+                                                </label>
                                                 <input type="file"
                                                     class="form-control @error('banner') is-invalid @enderror"
                                                     name="banner" id="inputBanner">
                                             </div>
-                                            <p class="text-secondary ml-2">800 x 400 (px)</p>
+                                            <p class="text-secondary ml-2">1280px x 720px | 16/9</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
