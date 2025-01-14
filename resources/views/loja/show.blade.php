@@ -184,7 +184,8 @@
             <!-- FIM LINHA IMAGENS -->
 
             <!-- FORM -->
-            <form class="mt-3" action="" method="post" autocomplete="off" enctype="multipart/form-data">
+            <form class="mt-3" action="{{route('loja.update', ['loja_id' => $loja->id, 'tab' => request('tab')])}}" method="post" autocomplete="off">
+                @method('PUT')
                 @csrf
 
                 <!-- INPUTS INFORMAÇÕES GERAIS LOJA -->
@@ -198,7 +199,7 @@
                     <div class="col-md-6">
                         <label for="inputEmail" class="form-label fw-bold m-0">Email</label>
                         <input type="text" name="email" value="{{!empty($loja) ? $loja->email : old('email')}}"
-                            class="form-control @error('email') is-invalid @enderror" id="inputEmail" required>
+                            class="form-control @error('email') is-invalid @enderror" id="inputEmail">
                     </div>
 
                     <div class="col-12">

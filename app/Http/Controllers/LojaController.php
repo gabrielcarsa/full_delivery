@@ -87,9 +87,10 @@ class LojaController extends Controller
     }
 
     //CADASTRAR
-    public function store(Request $request, $usuario_id){
-          //Limpando o campo telefone
-          $request->merge([
+    public function store(Request $request){
+
+        //Limpando o campo telefone
+        $request->merge([
             'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
             'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
         ]);
@@ -169,79 +170,94 @@ class LojaController extends Controller
     }
 
     //ALTERAR
-    public function update(Request $request, $usuario_id, $loja_id){
-        //Limpando o campo telefone
-        $request->merge([
-            'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
-            'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
-        ]);
-        
-       // Validação do formulário
-       $validator = Validator::make($request->all(), [
-            'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
-            'nome' => 'required|string|max:100',
-            'descricao' => 'required|string|max:500',
-            'taxa_servico' => 'required|numeric',
-            'cep' => 'required|string|max:100',
-            'rua' => 'required|string|max:100',
-            'bairro' => 'required|string|max:500',
-            'numero' => 'required|string|max:100',
-            'cidade' => 'required|string|max:100',
-            'estado' => 'required|string|max:100',
-            'telefone1' => 'nullable|string|max:11',
-            'telefone2' => 'nullable|string|max:11',
-        ]);
+    public function update(Request $request){
 
-        // Se a validação falhar
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        //Tab para verificar seleção do conteúdo
+        $tab = $request->input('tab');
+
+        $loja_id = $request->input('loja_id');
+
+        //Salvando seção SOBRE
+        if($tab == "sobre" || $tab == null){
+
+            //Limpando o campo telefone
+            $request->merge([
+                'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
+                'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
+            ]);
+
+            // Validação do formulário
+            $validator = Validator::make($request->all(), [
+                //'logo' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
+                //'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
+                'nome' => 'required|string|max:100',
+                'descricao' => 'required|string|max:250',
+                'email' => 'nullable|email|max:100',
+                'taxa_servico' => 'required|numeric',
+                'cep' => 'required|string|max:20',
+                'rua' => 'required|string|max:100',
+                'bairro' => 'required|string|max:100',
+                'numero' => 'required|string|max:100',
+                'complemento' => 'required|string|max:100',
+                'cidade' => 'required|string|max:100',
+                'estado' => 'required|string|max:100',
+                'telefone1' => 'nullable|string|max:11',
+                'telefone2' => 'nullable|string|max:11',
+            ]);
+
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            //Alterar loja
+            $loja = Loja::where('id', $loja_id)->first();
+
+            //Informações Gerais
+            $loja->nome = $request->input('nome');
+            $loja->descricao = $request->input('descricao');
+            $loja->email = $request->input('email');
+            $loja->alterado_usuario_id = Auth::user()->id;
+            $loja->telefone1 = $request->input('telefone1');
+            $loja->telefone2 = $request->input('telefone2');
+            $loja->taxa_servico = $request->input('taxa_servico');
+
+            //Endereço
+            $loja->cep = $request->input('cep');
+            $loja->rua = $request->input('rua');
+            $loja->bairro = $request->input('bairro');
+            $loja->numero = $request->input('numero');
+            $loja->complemento = $request->input('complemento');
+            $loja->cidade = $request->input('cidade');
+            $loja->estado = $request->input('estado');
+            $loja->save();
+
+        }elseif($tab == "horarios"){
+            
+            //Horario Funcionamento
+            $i = 0;
+            for($i; $i < 7; $i++){
+                $horario_funcionamento = HorarioFuncionamento::where('loja_id', $loja_id)->where('dia_semana', $i)->first();
+                $horario_funcionamento->loja_id = $loja->id;
+                $horario_funcionamento->dia_semana = $i;
+                $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
+                $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
+                $horario_funcionamento->save();
+
+            }
         }
-
-        //Alterar loja
-        $loja = Loja::where('id', $loja_id)->first();
-
-        //Informações Gerais
-        $loja->nome = $request->input('nome');
-        $loja->descricao = $request->input('descricao');
-        $loja->cadastrado_usuario_id = $usuario_id;
-        $loja->telefone1 = $request->input('telefone1');
-        $loja->telefone2 = $request->input('telefone2');
-        $loja->taxa_servico = $request->input('taxa_servico');
-        if ($request->hasFile('banner')) {
-            //Colocando nome único no arquivo
-            $nomeArquivo = "banner";
-            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
-            //não estou salvando nome do arquino no BD pois só vai ter um banner
-        }
-
-        //Endereço
-        $loja->cep = $request->input('cep');
-        $loja->rua = $request->input('rua');
-        $loja->bairro = $request->input('bairro');
-        $loja->numero = $request->input('numero');
-        $loja->complemento = $request->input('complemento');
-        $loja->cidade = $request->input('cidade');
-        $loja->estado = $request->input('estado');
-        $loja->save();
-
-        //Horario Funcionamento
-        $i = 0;
-        for($i; $i < 7; $i++){
-            $horario_funcionamento = HorarioFuncionamento::where('loja_id', $loja_id)->where('dia_semana', $i)->first();
-            $horario_funcionamento->loja_id = $loja->id;
-            $horario_funcionamento->dia_semana = $i;
-            $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
-            $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
-            $horario_funcionamento->save();
-
-        }
-
 
         return redirect()->route('loja')->with('success', 'Alteração feita com sucesso');
     }
 
     //ALTERAR LOGO
     public function update_logo(Request $request, $loja_id){
+        if ($request->hasFile('banner')) {
+            //Colocando nome único no arquivo
+            $nomeArquivo = "banner";
+            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            //não estou salvando nome do arquino no BD pois só vai ter um banner
+        }
          // Validação do formulário
          $validator = Validator::make($request->all(), [
             //TODO: fazer validações
