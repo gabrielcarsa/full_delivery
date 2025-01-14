@@ -30,6 +30,9 @@
                         <a class="btn bg-light rounded d-flex align-items-center dropdown-toggle" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
 
+                            <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
+                            @if(!empty($lojas))
+
                             @foreach($lojas as $loja)
                             @if(session('lojaConectado') && $loja->id == session('lojaConectado')['id'])
                             <!-- LOJA CIRCULO STATUS -->
@@ -50,10 +53,23 @@
                             Selecione uma loja
                             @endif
                             @endforeach
+
+                            @else
+                            <span class="material-symbols-outlined mr-1">
+                                report
+                            </span>
+                            Nenhuma loja cadastrada ainda
+                            @endif
+                            <!-- FIM SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
+
                         </a>
 
                         <!-- DROPDOWN LOJAS -->
                         <ul class="dropdown-menu p-3 bg-light" style="width: 400px">
+
+                            <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
+                            @if(!empty($lojas))
+
                             <div class="mb-3">
                                 <button onClick="window.location.reload()"
                                     class="text-primary text-decoration-underline">
@@ -113,6 +129,13 @@
 
                             </li>
                             @endforeach
+
+                            @else
+                            Vamos começar gratuitamente? <a href="">
+                                Criar loja agora.
+                            </a>
+                            @endif
+                            <!-- FIM SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
 
                         </ul>
                         <!-- FIM DROPDOWN LOJAS -->
