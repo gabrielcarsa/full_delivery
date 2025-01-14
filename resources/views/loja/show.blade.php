@@ -305,7 +305,15 @@
                 </div>
                 <!-- FIM TAXA DE SERVIÇO -->
 
-                <div class="bg-white p-3 d-flex justify-content-end sticky-bottom">
+                <div class="bg-white p-3 d-flex justify-content-between sticky-bottom">
+                    <div class="text-secondary d-flex align-items-center fw-bold">
+                        <span class="material-symbols-outlined mr-1">
+                            info
+                        </span>
+                        <p class="m-0">
+                            Salve as alterações antes de sair.
+                        </p>
+                    </div>
                     <button type="submit" class="btn bg-padrao text-white px-5 fw-semibold">
                         Salvar
                     </button>
@@ -484,8 +492,8 @@
     </div>
     <!-- FIM CARD -->
 
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js" defer></script>
 
     <script>
     //Calendário Horarios funcionamento
@@ -506,7 +514,7 @@
         });
         calendar.render();
     });
-    
+
     // Função para buscar endereço pelo CEP
     async function buscarEndereco() {
         const cep = document.getElementById('inputCep').value.replace(/\D/g, '');

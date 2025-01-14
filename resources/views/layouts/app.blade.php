@@ -41,11 +41,6 @@
             <div class="d-flex">
                 <div class="border-end bg-white vh-100">
                     <ul class="m-0 p-0">
-                        <div class="mx-3 my-1 text-center">
-                            <p class="m-0 text-padrao fw-bold rounded fs-5">
-                                {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : ''}}
-                            </p>
-                        </div>
 
                         <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
                         <li class="d-flex align-items-center justify-content-center dropend">
