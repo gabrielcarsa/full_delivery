@@ -74,7 +74,7 @@
                         </a>
                         @endauth
                         @endif
-                        <a class="btn bg-padrao text-white px-2 fw-bold mx-1" href="#">
+                        <a class="btn bg-padrao text-white px-2 fw-bold mx-1" href="{{ route('register') }}">
                             Experimente gratuitamente
                         </a>
                     </li>

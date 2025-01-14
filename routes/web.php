@@ -33,6 +33,8 @@ use App\Http\Controllers\SaldoController;
 |
 */
 
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+
 Route::get('/', function(){return view('inicio');});
 Route::get('/cardapio', [CardapioController::class, 'index'])->name('cardapio');
 Route::get('/carrinho', [CardapioController::class, 'indexCarrinho'])->name('cardapio.carrinho');
@@ -79,9 +81,6 @@ Route::middleware([
 
         //RETORNAR DASHBOARD
         return view('dashboard');})->name('dashboard');
-
-        //APENAS REGISTRO DE USUÁRIO SE ESTIVER AUTENTICADO
-        Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
         
         //LOJA
         Route::get('/selecionar-lojas', [LojaController::class, 'index'])->name('loja.index');
