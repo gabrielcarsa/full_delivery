@@ -108,8 +108,8 @@
                                             <div class="input-group">
                                                 <label class="input-group-text" for="inputImagem">Logo</label>
                                                 <input type="file"
-                                                    class="form-control @error('logo') is-invalid @enderror"
-                                                    name="logo" id="inputImagem">
+                                                    class="form-control @error('logo') is-invalid @enderror" name="logo"
+                                                    id="inputImagem">
                                             </div>
                                             <p class="text-secondary ml-2">300 x 300 (px)</p>
                                         </div>
@@ -315,9 +315,6 @@
             <!-- TAB SOBRE HORARIOS -->
             @elseif(request('tab') != null && request('tab') == 'horarios')
 
-            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js"></script>
-
             <div class="px-3">
                 <div class="d-flex justify-content-end my-3">
                     <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
@@ -350,12 +347,14 @@
                                                 id="inputCep" required>
                                         </div>
                                         <div class="col-3">
-                                            <label for="inputHoraAbertura" class="form-label fw-bold m-0">Começa em</label>
+                                            <label for="inputHoraAbertura" class="form-label fw-bold m-0">Começa
+                                                em</label>
                                             <input type="time" name="hora_fechamento" class="form-control"
                                                 id="inputHoraAbertura" required>
                                         </div>
                                         <div class="col-3">
-                                            <label for="inputHoraFechamento" class="form-label fw-bold m-0">Começa em</label>
+                                            <label for="inputHoraFechamento" class="form-label fw-bold m-0">Começa
+                                                em</label>
                                             <input type="time" name="hora_abertura" class="form-control"
                                                 id="inputHoraFechamento" required>
                                         </div>
@@ -373,26 +372,6 @@
                     </div>
                 </div>
                 <!-- FIM MODAL -->
-
-                <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var calendarEl = document.getElementById('calendar');
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                        locale: 'pt-br',
-                        initialView: 'dayGridWeek', // Exibe os dias da semana
-                        headerToolbar: false, // Oculta o cabeçalho padrão
-                        footerToolbar: false, // Remove o rodapé
-                        dayHeaderFormat: {
-                            weekday: 'long'
-                        }, // Exibe apenas os nomes dos dias
-                        contentHeight: 'auto', // Ajusta o tamanho
-                        events: [], // Use essa propriedade para adicionar eventos, se necessário
-                        editable: false, // Desabilita a edição
-                        selectable: false // Desabilita seleção de datas
-                    });
-                    calendar.render();
-                });
-                </script>
 
                 <div id='calendar'></div>
             </div>
@@ -418,6 +397,7 @@
                 <!-- FIM HEADER EQUIPE -->
 
                 <!-- TABLE EQUIPE -->
+                @if($dados['equipe'] != null)
                 <table class="table border-top">
                     <thead class="fs-5">
                         <tr>
@@ -467,6 +447,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                @endif
                 <!-- FIM TABLE EQUIPE -->
 
                 <nav aria-label="Page navigation example">
@@ -501,6 +482,9 @@
 
     </div>
     <!-- FIM CARD -->
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js"></script>
 
     <script>
     // Função para buscar endereço pelo CEP
@@ -553,5 +537,24 @@
     // Aplicar a máscara para os campos de telefone 1 e telefone 2
     aplicarMascaraTelefone('inputTelefone1');
     aplicarMascaraTelefone('inputTelefone2');
+
+    //Calendário Horarios funcionamento
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'pt-br',
+            initialView: 'dayGridWeek', // Exibe os dias da semana
+            headerToolbar: false, // Oculta o cabeçalho padrão
+            footerToolbar: false, // Remove o rodapé
+            dayHeaderFormat: {
+                weekday: 'long'
+            }, // Exibe apenas os nomes dos dias
+            contentHeight: 'auto', // Ajusta o tamanho
+            events: [], // Use essa propriedade para adicionar eventos, se necessário
+            editable: false, // Desabilita a edição
+            selectable: false // Desabilita seleção de datas
+        });
+        calendar.render();
+    });
     </script>
 </x-app-layout>
