@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\LojaController;
@@ -77,15 +78,15 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-
-        //RETORNAR DASHBOARD
-        return view('dashboard');})->name('dashboard');
+    
+        //DASHBOARD
+        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         
         //LOJA
         Route::get('/selecionar-lojas', [LojaController::class, 'index'])->name('loja.index');
         Route::post('/selecionar-loja', [LojaController::class, 'choose'])->name('loja.choose');
         Route::get('/loja', [LojaController::class, 'show'])->name('loja');
+        Route::get('/loja/novo', [LojaController::class, 'create'])->name('loja.create');
         Route::post('/loja/cadastrar', [LojaController::class, 'store'])->name('loja.store');
         Route::put('/loja/alterar', [LojaController::class, 'update'])->name('loja.update');
         Route::put('/loja/alterar-logo', [LojaController::class, 'update_logo'])->name('loja.update_logo');
