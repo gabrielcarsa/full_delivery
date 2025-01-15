@@ -94,79 +94,53 @@ class LojaController extends Controller
     //CADASTRAR
     public function store(Request $request){
 
-        //Limpando o campo telefone
-        $request->merge([
-            'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
-            'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
-        ]);
+        //Step
+        $step = $request->get('step') ?? 1;
 
-        // Validação do formulário
-        $validator = Validator::make($request->all(), [
-            'logo' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
-            'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
-            'nome' => 'required|string|max:100',
-            'descricao' => 'required|string|max:255',
-            'taxa_servico' => 'required|numeric',
-            'cep' => 'required|string|max:100',
-            'rua' => 'required|string|max:100',
-            'bairro' => 'required|string|max:100',
-            'numero' => 'required|string|max:100',
-            'cidade' => 'required|string|max:100',
-            'estado' => 'required|string|max:100',
-            'telefone1' => 'nullable|string|max:11',
-            'telefone2' => 'nullable|string|max:11',
-        ]);
+        if($step == 1){
 
-        // Se a validação falhar
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+            // Validação do formulário
+            $validator = Validator::make($request->all(), [
+                'nome' => 'required|string|max:100',
+                'descricao' => 'nullable|string|max:250',
+                'documento' => 'required',
+                'cnpj' => $request->input('documento') == 'cnpj' ? 'required|string|max:12' : 'nullable',
+                'cpf' => $request->input('documento') == 'cpf' ? 'required|string|max:11' : 'nullable',
+                'tipo' => 'required|not_in:- Selecione uma opção -',
+                'faturamento_mensal' => 'required|not_in:- Selecione uma opção -',
+            ]/*,[
+                'faturamento_mensal.required' => 'Por favor, selecione uma opção.',
+                'faturamento_mensal.not_in' => 'A opção selecionada é inválida.',
+            ]*/);
 
-        //Cadastro de loja
-        $loja = new Loja();
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
 
-        //Informações Gerais
-        $loja->nome = $request->input('nome');
-        $loja->descricao = $request->input('descricao');
-        $loja->telefone1 = $request->input('telefone1');
-        $loja->telefone2 = $request->input('telefone2');
-        $loja->area_entrega_metros = 5000; // valor padrão
-        $loja->taxa_servico = $request->input('taxa_servico');
-        $loja->is_taxa_entrega_free = true;
-        $loja->cadastrado_usuario_id = $usuario_id;
+            //Cadastro de loja
+            $loja = new Loja();
 
-        if ($request->hasFile('logo')) {
-            //Colocando nome único no arquivo
-            $nomeArquivo = "logo";
-            $request->file('logo')->storeAs('public/'.$loja->nome, $nomeArquivo);
-            $loja->logo = $nomeArquivo;
-        }
-        if ($request->hasFile('banner')) {
-            //Colocando nome único no arquivo
-            $nomeArquivo = "banner";
-            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
-            //não estou salvando nome do arquino no BD pois só vai ter um banner
-        }
+            //Informações Gerais
+            $loja->nome = $request->input('nome');
+            $loja->descricao = $request->input('descricao');
+            $loja->area_entrega_metros = 5000; // valor padrão
+            $loja->cadastrado_usuario_id = Auth::user()->id;
+            $loja->tipo = $request->input('tipo');
+            $loja->faturamento_mensal = $request->input('faturamento_mensal');
+            $loja->save();
 
-        //Endereço
-        $loja->cep = $request->input('cep');
-        $loja->rua = $request->input('rua');
-        $loja->bairro = $request->input('bairro');
-        $loja->numero = $request->input('numero');
-        $loja->complemento = $request->input('complemento');
-        $loja->cidade = $request->input('cidade');
-        $loja->estado = $request->input('estado');
-        $loja->save();
+            $step = 2;
 
-        //Horario Funcionamento
-        $i = 0;
-        for($i; $i < 7; $i++){
-            $horario_funcionamento = new HorarioFuncionamento();
-            $horario_funcionamento->loja_id = $loja->id;
-            $horario_funcionamento->dia_semana = $i;
-            $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
-            $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
-            $horario_funcionamento->save();
+            return view('loja.create', compact('step'));
+
+        }elseif($step == 2){
+
+            //Limpando o campo telefone
+            $request->merge([
+                'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
+                'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
+            ]);
 
         }
 
