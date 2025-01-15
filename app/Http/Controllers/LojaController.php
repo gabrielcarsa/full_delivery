@@ -88,7 +88,17 @@ class LojaController extends Controller
 
     //VIEW PARA CADASTRAR LOJA
     public function create(Request $request){
-        return view('loja.create');
+
+        $step = $request->get('step');
+        $loja_id = $request->get('loja_id');
+
+        $loja = null;
+        
+        //Verificando se Step é maior que 1
+        if($step != null && $step > 1){
+            $loja = Loja::find($loja_id);
+        }
+        return view('loja.create', compact('loja'));
     }
 
     //CADASTRAR
@@ -130,9 +140,18 @@ class LojaController extends Controller
             $loja->faturamento_mensal = $request->input('faturamento_mensal');
             $loja->save();
 
+            //Vinculando usuário a loja
+            UserLoja::create([
+                'user_id' => Auth::user()->id,
+                'loja_id' => $loja->id,
+                'nivel_acesso' => 'ADMIN',
+                'cargo' => 'DONO',
+                'cadastrado_usuario_id' => Auth::user()->id,
+            ]);
+
             $step = 2;
 
-            return view('loja.create', compact('step'));
+            return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
 
         }elseif($step == 2){
 

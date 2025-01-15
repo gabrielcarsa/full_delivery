@@ -9,6 +9,7 @@ class UserLoja extends Model
 {
     use HasFactory;
     protected $table = 'user_loja';
+    protected $guarded = [];
 
     public function loja()
     {
