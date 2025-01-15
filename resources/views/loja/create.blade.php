@@ -1,23 +1,17 @@
 <x-app-layout>
     <!-- MENSAGENS -->
     @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+    <x-toasts-message type="success" message="{{ session('success') }}" />
     @endif
-    @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
+
+    @if(session('error'))
+    <x-toasts-message type="danger" message="{{ session('error') }}" />
     @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+
+    @if($errors->any())
+    @foreach ($errors->all() as $error)
+    <x-toasts-message type="danger" message="{{ $error }}" />
+    @endforeach
     @endif
     <!-- FIM MENSAGENS -->
 
@@ -124,9 +118,8 @@
                     <div class="col-12 my-2">
                         <label for="inputDescricao" class="form-label fw-semibold m-0">Descrição</label>
                         <textarea rows="2" name="descricao" placeholder="Ex.: Fique a vontade... Mas nem tanto."
-                            class="form-control @error('descricao') is-invalid @enderror" id="inputDescricao">
-                            {{!empty($loja) ? $loja->descricao : old('descricao')}}
-                        </textarea>
+                            class="form-control @error('descricao') is-invalid @enderror"
+                            id="inputDescricao">{{!empty($loja) ? $loja->descricao : old('descricao')}}</textarea>
                         <p class="m-0 text-secondary fw-light">
                             Máximo 200 caracteres
                         </p>
