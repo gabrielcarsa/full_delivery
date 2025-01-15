@@ -155,12 +155,36 @@ class LojaController extends Controller
 
         }elseif($step == 2){
 
+            $loja_id = $request->input('loja_id');
+
             //Limpando o campo telefone
             $request->merge([
                 'telefone1' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone1')),
                 'telefone2' => str_replace(['(', '-', ')', ' '], '', $request->input('telefone2')),
             ]);
 
+            // Validação do formulário
+            $validator = Validator::make($request->all(), [
+                'telefone1' => 'nullable|string|max:11',
+                'telefone2' => 'nullable|string|max:11',
+                'email' => 'nullable|string|max:100',
+            ]);
+
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $loja = Loja::find($loja_id);
+            $loja->email = $request->input('email');
+            $loja->alterado_usuario_id = Auth::user()->id;
+            $loja->telefone1 = $request->input('telefone1');
+            $loja->telefone2 = $request->input('telefone2');
+            $loja->save();
+
+            $step = 3;
+
+            return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
         }
 
 
