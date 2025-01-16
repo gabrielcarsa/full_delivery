@@ -303,7 +303,7 @@ class LojaController extends Controller
                 'rua' => 'required|string|max:100',
                 'bairro' => 'required|string|max:100',
                 'numero' => 'required|string|max:100',
-                'complemento' => 'required|string|max:100',
+                'complemento' => 'nullable|string|max:100',
                 'cidade' => 'required|string|max:100',
                 'estado' => 'required|string|max:100',
                 'telefone1' => 'nullable|string|max:11',

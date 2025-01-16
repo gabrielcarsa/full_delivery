@@ -1,21 +1,22 @@
 <x-app-layout>
 
-    <div class="px-5 py-3">
-        <!-- MENSAGENS -->
-        @if(session('success'))
-        <x-toasts-message type="success" message="{{ session('success') }}" />
-        @endif
+    <!-- MENSAGENS -->
+    @if(session('success'))
+    <x-toasts-message type="success" message="{{ session('success') }}" />
+    @endif
 
-        @if(session('error'))
-        <x-toasts-message type="danger" message="{{ session('error') }}" />
-        @endif
+    @if(session('error'))
+    <x-toasts-message type="danger" message="{{ session('error') }}" />
+    @endif
 
-        @if($errors->any())
-        @foreach ($errors->all() as $error)
-        <x-toasts-message type="danger" message="{{ $error }}" />
-        @endforeach
-        @endif
-        <!-- FIM MENSAGENS -->
+    @if($errors->any())
+    @foreach ($errors->all() as $error)
+    <x-toasts-message type="danger" message="{{ $error }}" />
+    @endforeach
+    @endif
+    <!-- FIM MENSAGENS -->
+
+    <div class="container-padrao">
 
         <!-- LINHA -->
         <div class="row">

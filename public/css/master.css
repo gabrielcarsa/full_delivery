@@ -3,7 +3,9 @@
 * {
     font-family: "Nunito Sans", sans-serif;
 }
-
+.container-padrao{
+    margin: 15px 60px;
+}
 .bg-padrao{
     background-color: #FD0146 !important;
 }

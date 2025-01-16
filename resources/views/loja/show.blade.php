@@ -1,29 +1,29 @@
 <x-app-layout>
 
+    <!-- MENSAGENS -->
+    @if(session('success'))
+    <x-toasts-message type="success" message="{{ session('success') }}" />
+    @endif
+
+    @if(session('error'))
+    <x-toasts-message type="danger" message="{{ session('error') }}" />
+    @endif
+
+    @if($errors->any())
+    @foreach ($errors->all() as $error)
+    <x-toasts-message type="danger" message="{{ $error }}" />
+    @endforeach
+    @endif
+    <!-- FIM MENSAGENS -->
+
     <!-- CARD -->
-    <div class="container">
+    <div class="container-padrao">
 
         <!-- HEADER -->
         <h2 class="my-3 fw-bolder fs-1">
             Loja
         </h2>
         <!-- FIM HEADER -->
-
-        <!-- MENSAGENS -->
-        @if(session('success'))
-        <x-toasts-message type="success" message="{{ session('success') }}" />
-        @endif
-
-        @if(session('error'))
-        <x-toasts-message type="danger" message="{{ session('error') }}" />
-        @endif
-
-        @if($errors->any())
-        @foreach ($errors->all() as $error)
-        <x-toasts-message type="danger" message="{{ $error }}" />
-        @endforeach
-        @endif
-        <!-- FIM MENSAGENS -->
 
         <!-- CARD GERAL -->
         <ul class="nav nav-pills fs-5">
@@ -66,6 +66,20 @@
             <!-- TAB SOBRE LOJA -->
             @if(request('tab') == null || request('tab') == 'sobre')
 
+            <!-- CARDÁPIO DIGITAL -->
+            <div class="d-flex align-items-center p-3">
+                <div class="border rounded p-3">
+                    <span class="material-symbols-outlined text-padrao" style="font-size: 60px">
+                        qr_code_scanner
+                    </span>
+                </div>
+                <p class="fs-5 mx-3 my-0">
+                    Link para cardápio digital: <a href="{{route('cardapio', ['loja_id' => $loja->id])}}" class="fw-bold">{{route('cardapio')}}</a>
+                </p>
+                
+            </div>
+            <!-- FIM LINK CARDÁPIO DIGITAL -->
+
             <!-- LINHA IMAGENS -->
             <div class="row px-3 pt-3">
                 <div class="col-sm-6">
@@ -79,7 +93,7 @@
                             </a>
                         </p>
 
-                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150" alt="Logo {{$loja->nome}}"
+                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150"
                             class="shadow-sm rounded-circle">
 
                         <!-- MODAL EDITAR LOGO-->
@@ -131,7 +145,7 @@
                             </a>
                         </p>
                         <img src='{{asset("storage/$loja->nome/banner")}}' class="rounded border p-0"
-                            style="width: 300px">
+                            style="width: 150px">
 
                         <!-- MODAL -->
                         <div class="modal fade" id="modalEditarBanner" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -145,7 +159,8 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="{{route('loja.update_banner', ['loja_id' => $loja->id])}}" method="post" autocomplete="off" enctype="multipart/form-data">
+                                    <form action="{{route('loja.update_banner', ['loja_id' => $loja->id])}}"
+                                        method="post" autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-body">
@@ -236,48 +251,54 @@
                 </p>
 
                 <div class="row px-3 g-3">
-                    <div class="col-5">
-                        <label for="inputCep" class="form-label fw-bold m-0">CEP</label>
-                        <input type="text" name="cep" value="{{!empty($loja) ? $loja->cep : old('cep')}}"
-                            class="form-control" id="inputCep" required>
+                    <div class="col-md-6 my-2">
+                        <x-label for="cep" value="CEP" />
+                        <x-input placeholder="Ex.: 79000-000" id="cep" type="text" name="cep"
+                            :value="!empty($loja) ? $loja->cep : old('cep')" autocomplete="off" />
+
                     </div>
-                    <div class="col-7 d-flex align-item-end">
+                    <div class="col-md-6 my-2 d-flex align-items-end">
                         <button type="button" class="btn border-padrao text-padrao" onclick="buscarEndereco()">
                             Buscar
                         </button>
                     </div>
 
-                    <div class="col-md-5">
-                        <label for="inputRua" class="form-label fw-bold m-0">Rua</label>
-                        <input type="text" name="rua" value="{{!empty($loja) ? $loja->rua : old('rua')}}"
-                            class="form-control" id="inputRua" required>
+                    <div class="col-md-6 my-2">
+                        <x-label for="rua" value="Rua" />
+                        <x-input placeholder="" readonly id="rua" type="text" name="rua"
+                            :value="!empty($loja) ? $loja->rua : old('rua')" autocomplete="off" class="bg-light" />
                     </div>
-                    <div class="col-md-5">
-                        <label for="inputBairro" class="form-label fw-bold m-0">Bairro</label>
-                        <input type="text" name="bairro" value="{{!empty($loja) ? $loja->bairro : old('bairro')}}"
-                            class="form-control" id="inputBairro" required>
+                    <div class="col-md-6 my-2">
+                        <x-label for="bairro" value="Bairro" />
+                        <x-input placeholder="" readonly id="bairro" type="text" name="bairro"
+                            :value="!empty($loja) ? $loja->bairro : old('bairro')" autocomplete="off"
+                            class="bg-light" />
                     </div>
-                    <div class="col-md-2">
-                        <label for="inputNumero" class="form-label fw-bold m-0">Número</label>
-                        <input type="text" name="numero" value="{{!empty($loja) ? $loja->numero : old('numero')}}"
-                            class="form-control" id="inputNumero" required>
+
+                    <div class="col-md-6 my-2">
+                        <x-label for="cidade" value="Cidade" />
+                        <x-input placeholder="" readonly id="cidade" type="text" name="cidade"
+                            :value="!empty($loja) ? $loja->cidade : old('cidade')" autocomplete="off"
+                            class="bg-light" />
                     </div>
-                    <div class="col-md-5">
-                        <label for="inputComplemento" class="form-label fw-bold m-0">Complemento</label>
-                        <input type="text" name="complemento"
-                            value="{{!empty($loja) ? $loja->complemento : old('complemento')}}" class="form-control"
-                            id="inputComplemento">
+                    <div class="col-md-6 my-2">
+                        <x-label for="estado" value="Estado" />
+                        <x-input placeholder="" readonly id="estado" type="text" name="estado"
+                            :value="!empty($loja) ? $loja->estado : old('estado')" autocomplete="off"
+                            class="bg-light" />
                     </div>
-                    <div class="col-md-5">
-                        <label for="inputCidade" class="form-label fw-bold m-0">Cidade</label>
-                        <input type="text" name="cidade" value="{{!empty($loja) ? $loja->cidade : old('cidade')}}"
-                            class="form-control" id="inputCidade" required>
+
+                    <div class="col-md-6 my-2">
+                        <x-label for="numero" value="Número" />
+                        <x-input placeholder="" id="numero" type="text" name="numero"
+                            :value="!empty($loja) ? $loja->numero : old('numero')" autocomplete="off" />
                     </div>
-                    <div class="col-md-2">
-                        <label for="inputEstado" class="form-label fw-bold m-0">Estado</label>
-                        <input type="text" name="estado" value="{{!empty($loja) ? $loja->estado : old('estado')}}"
-                            class="form-control" id="inputEstado" required>
+                    <div class="col-md-6 my-2">
+                        <x-label for="complemento" value="Complemento" />
+                        <x-input placeholder="" id="complemento" type="text" name="complemento"
+                            :value="!empty($loja) ? $loja->complemento : old('complemento')" autocomplete="off" />
                     </div>
+
                 </div>
                 <!-- FIM ENDEREÇO -->
 
