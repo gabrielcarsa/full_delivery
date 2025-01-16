@@ -193,6 +193,46 @@ class LojaController extends Controller
             $step = 3;
 
             return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
+
+        }elseif($step == 3){
+
+            $loja_id = $request->input('loja_id');
+
+            //Limpando o campo telefone
+            $request->merge([
+                'cep' => str_replace(['-', ' '], '', $request->input('cep')),
+            ]);
+
+            // Validação do formulário
+            $validator = Validator::make($request->all(), [
+                'cep' => 'required|string|max:8',
+                'rua' => 'required|string|max:100',
+                'bairro' => 'required|string|max:100',
+                'cidade' => 'required|string|max:100',
+                'estado' => 'required|string|max:100',
+                'numero' => 'required|string|max:20',
+                'complemento' => 'nullable|string|max:100',
+            ]);
+
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $loja = Loja::find($loja_id);
+            $loja->cep = $request->input('cep');
+            $loja->rua = $request->input('rua');
+            $loja->bairro = $request->input('bairro');
+            $loja->cidade = $request->input('cidade');
+            $loja->estado = $request->input('estado');
+            $loja->numero = $request->input('numero');
+            $loja->complemento = $request->input('complemento');
+            $loja->alterado_usuario_id = Auth::user()->id;
+            $loja->save();
+
+            $step = 4;
+
+            return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
         }
 
 

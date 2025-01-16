@@ -333,24 +333,24 @@
 
                         <div class="col-md-6 my-2">
                             <x-label for="rua" value="Rua" />
-                            <x-input placeholder="" readonly disabled id="rua" type="text" name="rua"
-                                :value="old('rua')" autocomplete="off" />
+                            <x-input placeholder="" readonly id="rua" type="text" name="rua"
+                                :value="old('rua')" autocomplete="off" class="bg-light" />
                         </div>
                         <div class="col-md-6 my-2">
                             <x-label for="bairro" value="Bairro" />
-                            <x-input placeholder="" readonly disabled id="bairro" type="text" name="bairro"
-                                :value="old('bairro')" autocomplete="off" />
+                            <x-input placeholder="" readonly id="bairro" type="text" name="bairro"
+                                :value="old('bairro')" autocomplete="off" class="bg-light" />
                         </div>
 
                         <div class="col-md-6 my-2">
                             <x-label for="cidade" value="Cidade" />
-                            <x-input placeholder="" readonly disabled id="cidade" type="text" name="cidade"
-                                :value="old('cidade')" autocomplete="off" />
+                            <x-input placeholder="" readonly id="cidade" type="text" name="cidade"
+                                :value="old('cidade')" autocomplete="off" class="bg-light" />
                         </div>
                         <div class="col-md-6 my-2">
                             <x-label for="estado" value="Estado" />
-                            <x-input placeholder="" readonly disabled id="estado" type="text" name="estado"
-                                :value="old('estado')" autocomplete="off" />
+                            <x-input placeholder="" readonly id="estado" type="text" name="estado"
+                                :value="old('estado')" autocomplete="off" class="bg-light" />
                         </div>
 
                         <div class="col-md-6 my-2">
