@@ -3,6 +3,22 @@
     <!-- CONTEUDO -->
     <div class="container">
 
+        <!-- MENSAGENS -->
+        @if(session('success'))
+        <x-toasts-message type="success" message="{{ session('success') }}" />
+        @endif
+
+        @if(session('error'))
+        <x-toasts-message type="danger" message="{{ session('error') }}" />
+        @endif
+
+        @if($errors->any())
+        @foreach ($errors->all() as $error)
+        <x-toasts-message type="danger" message="{{ $error }}" />
+        @endforeach
+        @endif
+        <!-- FIM MENSAGENS -->
+
         <!-- HEADER -->
         <h2 class="my-3 fw-bold fs-1">Taxas de Entrega</h2>
         <!-- FIM HEADER -->

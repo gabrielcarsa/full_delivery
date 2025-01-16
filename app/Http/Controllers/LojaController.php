@@ -264,6 +264,9 @@ class LojaController extends Controller
             $loja->alterado_usuario_id = Auth::user()->id;
             $loja->save();
 
+            //Definindo variavel de sessão de loja
+            session(['lojaConectado' => ['id'=> $loja->id, 'nome'=> $loja->nome]]);
+
             return redirect()->route('loja')->with('success', 'Cadastro da loja concluído com sucesso');
 
         }else{

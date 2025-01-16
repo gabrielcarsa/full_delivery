@@ -11,27 +11,19 @@
 
         <!-- MENSAGENS -->
         @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+        <x-toasts-message type="success" message="{{ session('success') }}" />
         @endif
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
+
+        @if(session('error'))
+        <x-toasts-message type="danger" message="{{ session('error') }}" />
         @endif
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+
+        @if($errors->any())
+        @foreach ($errors->all() as $error)
+        <x-toasts-message type="danger" message="{{ $error }}" />
+        @endforeach
         @endif
         <!-- FIM MENSAGENS -->
-
-
 
         <!-- CARD GERAL -->
         <ul class="nav nav-pills fs-5">
