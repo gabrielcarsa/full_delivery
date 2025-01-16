@@ -198,7 +198,7 @@ class LojaController extends Controller
 
             $loja_id = $request->input('loja_id');
 
-            //Limpando o campo telefone
+            //Limpando os campos
             $request->merge([
                 'cep' => str_replace(['-', ' '], '', $request->input('cep')),
             ]);
@@ -233,10 +233,42 @@ class LojaController extends Controller
             $step = 4;
 
             return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
+
+        }elseif($step == 4){
+
+            $loja_id = $request->input('loja_id');
+
+            $request->merge([
+                'taxa_por_km_entrega' => str_replace(['.', ','], ['', '.'], $request->input('taxa_por_km_entrega')),
+                'taxa_entrega_fixa' => str_replace(['.', ','], ['', '.'], $request->input('taxa_entrega_fixa')),
+            ]);
+
+            // Validação do formulário
+            $validator = Validator::make($request->all(), [
+                'taxa_entrega' => 'required',
+                'taxa_entrega_fixa' => $request->input('taxa_entrega') == "FIXA" ? 'required|numeric' : 'nullable',
+                'taxa_por_km_entrega' => $request->input('taxa_entrega') == "KM" ? 'required|numeric' : 'nullable',
+                'taxa_servico' => 'required',
+            ]);
+
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $loja = Loja::find($loja_id);
+            $loja->taxa_entrega_fixa = $request->input('taxa_entrega') == "FIXA" ? $request->input('taxa_entrega_fixa') : NULL;
+            $loja->taxa_por_km_entrega = $request->input('taxa_entrega') == "KM" ? $request->input('taxa_por_km_entrega') : NULL;
+            $loja->is_taxa_entrega_free = $request->input('taxa_entrega') == "GRATUITA" ? true : NULL;
+            $loja->taxa_servico = $request->input('taxa_servico');
+            $loja->alterado_usuario_id = Auth::user()->id;
+            $loja->save();
+
+            return redirect()->route('loja')->with('success', 'Cadastro da loja concluído com sucesso');
+
+        }else{
+            return redirect()->back()->with('error', 'Não autorizado');
         }
-
-
-        return redirect()->route('loja')->with('success', 'Cadastro feito com sucesso');
     }
 
     //ALTERAR
@@ -503,8 +535,8 @@ class LojaController extends Controller
         }
     }
 
-     //DEFINIR AREA DE ENTREGA POR METROS
-     public function area_entrega_metros(Request $request){
+    //DEFINIR AREA DE ENTREGA POR METROS
+    public function area_entrega_metros(Request $request){
         $id = $request->input('id');
             
         // Validação do formulário

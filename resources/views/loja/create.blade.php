@@ -303,7 +303,6 @@
                 <!-- STEP 3 -->
                 @elseif(request('step') && request('step') == 3 && $loja != null)
 
-
                 <p class="fs-4 fw-bold m-0">
                     Precisamos saber onde você está
                 </p>
@@ -333,8 +332,8 @@
 
                         <div class="col-md-6 my-2">
                             <x-label for="rua" value="Rua" />
-                            <x-input placeholder="" readonly id="rua" type="text" name="rua"
-                                :value="old('rua')" autocomplete="off" class="bg-light" />
+                            <x-input placeholder="" readonly id="rua" type="text" name="rua" :value="old('rua')"
+                                autocomplete="off" class="bg-light" />
                         </div>
                         <div class="col-md-6 my-2">
                             <x-label for="bairro" value="Bairro" />
@@ -360,8 +359,8 @@
                         </div>
                         <div class="col-md-6 my-2">
                             <x-label for="complemento" value="Complemento" />
-                            <x-input placeholder="" id="complemento" type="text" name="complemento" :value="old('complemento')"
-                                autocomplete="off" />
+                            <x-input placeholder="" id="complemento" type="text" name="complemento"
+                                :value="old('complemento')" autocomplete="off" />
                         </div>
 
                         <div class="col-md-6 my-3">
@@ -375,9 +374,118 @@
                     </div>
 
                 </form>
+                <!-- FIM FORM -->
 
                 <!-- STEP 4 -->
                 @elseif(request('step') && request('step') == 4 && $loja != null)
+
+                <p class="fs-4 fw-bold m-0">
+                    Ufa, quase lá!
+                </p>
+                <p class="text-secondary m-0 fs-5">
+                    Vamos definir as taxas de serviço e entrega que você deseja cobrar:
+                </p>
+
+                <!-- FORM -->
+                <form class="my-3"
+                    action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}"
+                    method="post">
+                    @csrf
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <x-label for="taxa_servico" value="Taxa de serviço (%)" />
+                            <x-input placeholder="Ex.: 10" id="taxa_servico" type="text" name="taxa_servico"
+                                :value="old('taxa_servico')" autofocus autocomplete="off" />
+                        </div>
+                        <div class="col-md-6 text-secondary">
+                            <div class="bg-white d-flex align-items-center border rounded p-3">
+                                <span class="material-symbols-outlined mr-2">
+                                    info
+                                </span>
+                                <p class="fw-regular m-0">
+                                    Todos os dados poderão ser alterados posteriomente
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="bg-white p-3 rounded border h-100">
+                                <div class="form-check m-0 p-0">
+                                    <input class="form-check-input m-0 @error('taxa_entrega') is-invalid @enderror"
+                                        type="radio" name="taxa_entrega" id="taxa_entrega" value="GRATUITA"
+                                        style="width: 24px; height: 24px;"
+                                        {{old('taxa_entrega') == "GRATUITA" ? 'checked' : ''}}><br>
+                                    <label class="form-check-label mt-3 fw-semibold" for="taxa_entrega">
+                                        Taxa de entrega gratuita
+                                    </label>
+                                    <p class="text-secondary fw-light">
+                                        A taxa de entrega será gratuita para todas localidades.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="bg-white p-3 rounded border h-100">
+                                <div class="form-check m-0 p-0">
+                                    <input class="form-check-input m-0 @error('taxa_entrega') is-invalid @enderror"
+                                        type="radio" name="taxa_entrega" id="taxa_entrega" value="KM"
+                                        style="width: 24px; height: 24px;"
+                                        {{old('taxa_entrega') == "KM" ? 'checked' : ''}}><br>
+                                    <label class="form-check-label mt-3 fw-semibold" for="taxa_entrega">
+                                        Taxa de entrega por KM
+                                    </label>
+                                    <p class="text-secondary fw-light">
+                                        O valor da entrega será calculado por <br>
+                                        <span class="fw-semibold fst-italic">distância</span> x <span
+                                            class="fw-semibold fst-italic">preço km</span>.
+                                    </p>
+                                    <div class="my-3">
+                                        <x-label for="taxa_por_km_entrega" value="Valor KM (R$)" />
+                                        <x-input placeholder="Ex.: 2,00" id="taxa_por_km_entrega" type="text"
+                                            name="taxa_por_km_entrega" :value="old('taxa_por_km_entrega')"
+                                            autocomplete="off" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="bg-white p-3 rounded border h-100">
+                                <div class="form-check m-0 p-0">
+                                    <input class="form-check-input m-0 @error('taxa_entrega') is-invalid @enderror"
+                                        type="radio" name="taxa_entrega" id="taxa_entrega" value="FIXA"
+                                        style="width: 24px; height: 24px;"
+                                        {{old('taxa_entrega') == "FIXA" ? 'checked' : ''}}><br>
+                                    <label class="form-check-label mt-3 fw-semibold" for="taxa_entrega">
+                                        Taxa fixa
+                                    </label>
+                                    <p class="text-secondary fw-light">
+                                        Taxa de entrega fixa para todas localidades, independente da distância.
+                                    </p>
+                                    <div class="my-3">
+                                        <x-label for="taxa_entrega_fixa" value="Valor de entrega fixa (R$)" />
+                                        <x-input placeholder="Ex.: 6,00" id="taxa_entrega_fixa" type="text"
+                                            name="taxa_entrega_fixa" :value="old('taxa_entrega_fixa')"
+                                            autocomplete="off" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 my-3">
+                        </div>
+                        <div class="col-md-6 my-3">
+                            <x-button class="">
+                                Finalizar
+                            </x-button>
+                        </div>
+
+                    </div>
+
+                </form>
+                <!-- FIM FORM -->
+
 
                 @endif
                 <!-- FIM STEP -->
@@ -396,6 +504,7 @@
         <!-- FIM LINHA -->
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
     // FUNÇÃO PARA EXIBIR CAMPOS DE CPF OU CNPJ
@@ -542,5 +651,32 @@
         }
 
     }
+
+    const dinheirosInputs = ['taxa_entrega_fixa', 'taxa_por_km_entrega'];
+
+    // FUNÇÃO MASCARA DINHEIRO
+    function mask(value) {
+        // Converte o valor para número
+        var numberValue = parseFloat(value) / 100;
+
+        // Formata o número com vírgula como separador decimal e duas casas decimais
+        return numberValue.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2
+        });
+    }
+
+    //FORMATAR CAMPOS DE DINHEIRO
+    dinheirosInputs.forEach(id => {
+        const dinheirosInput = document.getElementById(id);
+        if (dinheirosInput) {
+            dinheirosInput.addEventListener('input', function() {
+                // Remover os caracteres não numéricos
+                var unmaskedValue = dinheirosInput.value.replace(/\D/g, '');
+
+                // Atualiza o valor do input com a máscara
+                dinheirosInput.value = mask(unmaskedValue);
+            });
+        }
+    });
     </script>
 </x-app-layout>

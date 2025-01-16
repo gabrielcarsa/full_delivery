@@ -1,3 +1,10 @@
-@props(['disabled' => false])
+@props(['disabled' => false, 'name' => ''])
 
-<input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => $errors->has('nome') ? 'form-control is-invalid' : 'form-control']) !!}>
+<input {{ $disabled ? 'disabled' : '' }} name="{{ $name }}" id="{{ $name }}" {!! $attributes->merge(['class' =>
+$errors->has($name) ? 'form-control is-invalid' : 'form-control']) !!}>
+
+@if ($errors->has($name))
+<div class="invalid-feedback">
+    {{ $errors->first($name) }}
+</div>
+@endif
