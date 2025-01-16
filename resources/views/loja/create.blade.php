@@ -118,7 +118,7 @@
 
                         <div class="col-12" id="cnpj-field" style="display: none;">
                             <x-label for="cnpj" value="CNPJ" />
-                            <x-input placeholder="Ex.: 00.00.0000.000-1" id="cnpj" type="text" name="cnpj"
+                            <x-input placeholder="Ex.: 00.000.000/0001-00" id="cnpj" type="text" name="cnpj"
                                 :value="old('cnpj')" autocomplete="off" />
                         </div>
 
@@ -240,9 +240,13 @@
                         </div>
                     </div>
 
-                    <x-button class="my-3">
-                        Avançar
-                    </x-button>
+                    <div class="col-md-6 my-3">
+                    </div>
+                    <div class="col-md-6 my-3">
+                        <x-button class="">
+                            Avançar
+                        </x-button>
+                    </div>
 
                 </form>
                 <!-- FIM FORM -->
@@ -258,33 +262,40 @@
                 </p>
 
                 <!-- FORM -->
-                <form class="my-3" action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}" method="post">
+                <form class="my-3"
+                    action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}"
+                    method="post">
                     @csrf
 
                     <div class="row">
 
-                        <div class="col-sm-6 my-2">
+                        <div class="col-md-6 my-2">
                             <x-label for="telefone1" value="Telefone 1" />
                             <x-input placeholder="Ex.: (DD) 99999-9999" id="telefone1" type="text" name="telefone1"
                                 :value="old('telefone1')" autofocus autocomplete="off" />
                         </div>
-                        <div class="col-sm-6 my-2">
+                        <div class="col-md-6 my-2">
                             <x-label for="telefone2" value="Telefone 2" />
                             <x-input placeholder="Ex.: (DD) 99999-9999" id="telefone2" type="text" name="telefone2"
-                                :value="old('telefone2')" autofocus autocomplete="off" />
+                                :value="old('telefone2')" autocomplete="off" />
                         </div>
 
-                        <div class="col-sm-6 my-2">
+                        <div class="col-md-12 my-2">
                             <x-label for="email" value="Email da loja" />
-                            <x-input placeholder="Ex.: (DD) 99999-9999" id="email" type="email" name="email"
-                                :value="old('email')" autofocus autocomplete="off" />
+                            <x-input placeholder="Ex.: teste@dominio.com" id="email" type="email" name="email"
+                                :value="old('email')" autocomplete="off" />
+                        </div>
+
+                        <div class="col-md-6 my-3">
+                        </div>
+                        <div class="col-md-6 my-3">
+                            <x-button class="">
+                                Avançar
+                            </x-button>
                         </div>
 
                     </div>
 
-                    <x-button class="my-3">
-                        Avançar
-                    </x-button>
 
                 </form>
                 <!-- FIM FORM -->
@@ -297,37 +308,71 @@
                     Precisamos saber onde você está
                 </p>
                 <p class="text-secondary m-0 fs-5">
-                    Preencha o campo de CEP abaixo e irá completar automáticamente os outros campos, fora número e complemento
+                    Preencha o campo de CEP abaixo e irá completar automáticamente os outros campos, fora número e
+                    complemento
                 </p>
 
                 <!-- FORM -->
-                <form class="my-3" action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}" method="post">
+                <form class="my-3"
+                    action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}"
+                    method="post">
                     @csrf
 
                     <div class="row">
 
-                        <div class="col-sm-6 my-2">
-                            <x-label for="telefone1" value="Telefone 1" />
-                            <x-input placeholder="Ex.: (DD) 99999-9999" id="telefone1" type="text" name="telefone1"
-                                :value="old('telefone1')" autofocus autocomplete="off" />
+                        <div class="col-md-6 my-2">
+                            <x-label for="cep" value="CEP" />
+                            <x-input placeholder="Ex.: 79000-000" id="cep" type="text" name="cep" :value="old('cep')"
+                                autofocus autocomplete="off" />
                         </div>
-                        <div class="col-sm-6 my-2">
-                            <x-label for="telefone2" value="Telefone 2" />
-                            <x-input placeholder="Ex.: (DD) 99999-9999" id="telefone2" type="text" name="telefone2"
-                                :value="old('telefone2')" autofocus autocomplete="off" />
+                        <div class="col-md-6 my-2 d-flex align-items-end">
+                            <button type="button" class="btn border-padrao text-padrao" onclick="buscarEndereco()">
+                                Buscar
+                            </button>
                         </div>
 
-                        <div class="col-sm-6 my-2">
-                            <x-label for="email" value="Email da loja" />
-                            <x-input placeholder="Ex.: (DD) 99999-9999" id="email" type="email" name="email"
-                                :value="old('email')" autofocus autocomplete="off" />
+                        <div class="col-md-6 my-2">
+                            <x-label for="rua" value="Rua" />
+                            <x-input placeholder="" readonly disabled id="rua" type="text" name="rua"
+                                :value="old('rua')" autocomplete="off" />
+                        </div>
+                        <div class="col-md-6 my-2">
+                            <x-label for="bairro" value="Bairro" />
+                            <x-input placeholder="" readonly disabled id="bairro" type="text" name="bairro"
+                                :value="old('bairro')" autocomplete="off" />
+                        </div>
+
+                        <div class="col-md-6 my-2">
+                            <x-label for="cidade" value="Cidade" />
+                            <x-input placeholder="" readonly disabled id="cidade" type="text" name="cidade"
+                                :value="old('cidade')" autocomplete="off" />
+                        </div>
+                        <div class="col-md-6 my-2">
+                            <x-label for="estado" value="Estado" />
+                            <x-input placeholder="" readonly disabled id="estado" type="text" name="estado"
+                                :value="old('estado')" autocomplete="off" />
+                        </div>
+
+                        <div class="col-md-6 my-2">
+                            <x-label for="numero" value="Número" />
+                            <x-input placeholder="" id="numero" type="text" name="numero" :value="old('numero')"
+                                autocomplete="off" />
+                        </div>
+                        <div class="col-md-6 my-2">
+                            <x-label for="complemento" value="Complemento" />
+                            <x-input placeholder="" id="complemento" type="text" name="complemento" :value="old('complemento')"
+                                autocomplete="off" />
+                        </div>
+
+                        <div class="col-md-6 my-3">
+                        </div>
+                        <div class="col-md-6 my-3">
+                            <x-button class="">
+                                Avançar
+                            </x-button>
                         </div>
 
                     </div>
-
-                    <x-button class="my-3">
-                        Avançar
-                    </x-button>
 
                 </form>
 
@@ -353,30 +398,149 @@
 
 
     <script>
+    // FUNÇÃO PARA EXIBIR CAMPOS DE CPF OU CNPJ
     document.addEventListener('DOMContentLoaded', () => {
         const radioCNPJ = document.getElementById('radioCNPJ');
         const radioCPF = document.getElementById('radioCPF');
         const cnpjField = document.getElementById('cnpj-field');
         const cpfField = document.getElementById('cpf-field');
 
-        // Função para alternar visibilidade
-        function toggleFields() {
-            if (radioCNPJ.checked) {
-                cnpjField.style.display = 'block';
-                cpfField.style.display = 'none';
-            } else if (radioCPF.checked) {
-                cpfField.style.display = 'block';
-                cnpjField.style.display = 'none';
+        if (radioCNPJ && radioCPF && cnpjField && cpfField) {
+            // Função para alternar visibilidade
+            function toggleFields() {
+                if (radioCNPJ.checked) {
+                    cnpjField.style.display = 'block';
+                    cpfField.style.display = 'none';
+                } else if (radioCPF.checked) {
+                    cpfField.style.display = 'block';
+                    cnpjField.style.display = 'none';
+                }
+            }
+
+            // Chamar a função ao carregar a página para restaurar o estado inicial
+            toggleFields();
+
+            // Adicionar evento de clique aos rádios
+            radioCNPJ.addEventListener('change', toggleFields);
+            radioCPF.addEventListener('change', toggleFields);
+        }
+    });
+
+    // MÁSCARA PARA CAMPO CPF
+    const cpfInput = document.getElementById('cpf');
+    if (cpfInput) {
+        cpfInput.addEventListener('input', function(e) {
+            let input = e.target;
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue = value.slice(0, 3);
+
+                if (value.length > 3) {
+                    formattedValue += '.' + value.slice(3, 6);
+                }
+
+                if (value.length > 6) {
+                    formattedValue += '.' + value.slice(6, 9);
+                }
+
+                if (value.length > 9) {
+                    formattedValue += '-' + value.slice(9, 11);
+                }
+            }
+
+            input.value = formattedValue;
+        });
+    }
+
+    // MÁSCARA PARA CAMPO CNPJ
+    const cnpjInput = document.getElementById('cnpj');
+    if (cnpjInput) {
+        cnpjInput.addEventListener('input', function(e) {
+            let input = e.target;
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue = value.slice(0, 2);
+
+                if (value.length > 2) {
+                    formattedValue += '.' + value.slice(2, 5);
+                }
+
+                if (value.length > 5) {
+                    formattedValue += '.' + value.slice(5, 8);
+                }
+
+                if (value.length > 8) {
+                    formattedValue += '/' + value.slice(8, 12);
+                }
+
+                if (value.length > 12) {
+                    formattedValue += '-' + value.slice(12, 14);
+                }
+            }
+
+            input.value = formattedValue;
+        });
+    }
+
+    // IDs dos campos de telefone
+    const telefoneInputs = ['telefone1', 'telefone2'];
+
+    // FUNÇÃO PARA APLICAR MÁSCARA DE TELEFONE
+    telefoneInputs.forEach(id => {
+        const telefoneInput = document.getElementById(id);
+        if (telefoneInput) {
+            telefoneInput.addEventListener('input', function(e) {
+                let input = e.target;
+                let value = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                let formattedValue = '';
+
+                if (value.length > 0) {
+                    formattedValue = '(' + value.slice(0, 2); // Adiciona o DDD
+
+                    if (value.length > 2) {
+                        formattedValue += ') ' + value.slice(2, 7); // Parte inicial do número
+                    }
+
+                    if (value.length > 7) {
+                        formattedValue += '-' + value.slice(7, 11); // Parte final do número
+                    }
+                }
+
+                input.value = formattedValue; // Atualiza o valor do campo
+            });
+        }
+    });
+
+    // BUSCAR CEP
+    async function buscarEndereco() {
+        const cep = document.getElementById('cep').value.replace(/\D/g, '');
+
+        if (cep) {
+            if (cep.length !== 8) {
+                alert('CEP inválido!');
+                return;
+            }
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                if (!data.erro) {
+                    document.getElementById('rua').value = data.logradouro;
+                    document.getElementById('bairro').value = data.bairro;
+                    document.getElementById('cidade').value = data.localidade;
+                    document.getElementById('estado').value = data.uf;
+                    document.getElementById('complemento').value = data.complemento;
+                } else {
+                    alert('CEP não encontrado!');
+                }
+            } catch (error) {
+                alert('Erro ao buscar o CEP!');
             }
         }
 
-        // Chamar a função ao carregar a página para restaurar o estado inicial
-        toggleFields();
-
-        // Adicionar evento de clique aos rádios
-        radioCNPJ.addEventListener('change', toggleFields);
-        radioCPF.addEventListener('change', toggleFields);
-    });
+    }
     </script>
-
 </x-app-layout>

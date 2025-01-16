@@ -109,12 +109,18 @@ class LojaController extends Controller
 
         if($step == 1){
 
+             //Limpando o campo telefone
+             $request->merge([
+                'cpf' => str_replace(['.', '-', ' '], '', $request->input('cpf')),
+                'cnpj' => str_replace(['.', '-', '/', ' '], '', $request->input('cnpj')),
+            ]);
+
             // Validação do formulário
             $validator = Validator::make($request->all(), [
                 'nome' => 'required|string|max:100',
                 'descricao' => 'nullable|string|max:250',
                 'documento' => 'required',
-                'cnpj' => $request->input('documento') == 'cnpj' ? 'required|string|max:12' : 'nullable',
+                'cnpj' => $request->input('documento') == 'cnpj' ? 'required|string|max:14' : 'nullable',
                 'cpf' => $request->input('documento') == 'cpf' ? 'required|string|max:11' : 'nullable',
                 'tipo' => 'required|not_in:- Selecione uma opção -',
                 'faturamento_mensal' => 'required|not_in:- Selecione uma opção -',
@@ -138,6 +144,8 @@ class LojaController extends Controller
             $loja->cadastrado_usuario_id = Auth::user()->id;
             $loja->tipo = $request->input('tipo');
             $loja->faturamento_mensal = $request->input('faturamento_mensal');
+            $loja->cpf = $request->input('documento') == 'cpf' ? $request->input('cpf') : NULL;
+            $loja->cnpj = $request->input('documento') == 'cnpj' ? $request->input('cnpj') : NULL;
             $loja->save();
 
             //Vinculando usuário a loja
