@@ -19,12 +19,6 @@
     <!-- CARD -->
     <div class="container-padrao">
 
-        <!-- HEADER -->
-        <h2 class="my-3 fw-bolder fs-1">
-            Loja
-        </h2>
-        <!-- FIM HEADER -->
-
         <!-- CARD GERAL -->
         <ul class="nav nav-pills fs-5">
             <li class="nav-item">
@@ -94,7 +88,8 @@
                             </a>
                         </p>
 
-                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150" class="rounded-circle border">
+                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150"
+                            class="rounded-circle border">
 
                         <!-- MODAL EDITAR LOGO-->
                         <div class="modal fade" id="modalEditarLogo" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -494,24 +489,373 @@
             <!-- TAB PLANOS -->
             @elseif(request('tab') != null && request('tab') == 'planos')
 
-            <div class="row">
+            <!-- LINHA -->
+            <div class="row g-3 m-3">
+
+                <!-- COLUNA -->
                 <div class="col-lg-3">
-                    <div class="card">
+
+                    <!-- CARD PLANO GRATUITO-->
+                    <div class="card h-100">
                         <div class="border-bottom text-center">
-                            <p class="m-0">
+                            <p class="m-0 fw-bold fs-5">
                                 Gratuito
                             </p>
                         </div>
-                        <div class="d-flex justify-content-center align-items-end">
+                        <div class="d-flex justify-content-center align-items-end mt-4">
                             <p class="text-dark fw-bold fs-1 m-0 mx-1">
-                                <span class="text-secondary fs-6 fw-medium">R$</span>
-                                0,00
+                                R$ 0,00
                                 <span class="text-secondary fs-6 m-0 fw-medium">/mês</span>
                             </p>
                         </div>
+                        <p class="text-secondary fw-normal px-3 text-center" style="font-size: 14px">
+                            *Use o plano gratuito por tempo ilimitado sem precisar cadastrar formas de pagamento.
+                        </p>
+                        <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
+                            Escolher
+                        </a>
+                        <hr class="mx-3">
+                        <ul class="mx-3">
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Suporte via email.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Receba até 50 pedidos por mês.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Cardápio digital completo, somente para delivery.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Integração completa com iFood.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Gestor de pedidos e gestor de mesas.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Tela de preparo (KDS).
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Impressão automáticas de pedidos.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Mapa para controle de mesas.
+                                </p>
+                            </li>
+                        </ul>
                     </div>
+                    <!-- FIM CARD PLANO GRATUITO -->
+
                 </div>
+                <!-- FIM COLUNA -->
+
+                <!-- COLUNA -->
+                <div class="col-lg-3">
+
+                    <!-- CARD PLANO STANDART -->
+                    <div class="card h-100">
+                        <div class="border-bottom text-center">
+                            <p class="m-0 fw-bold fs-5">
+                                Standart
+                            </p>
+                        </div>
+                        <p class="mt-3 mb-0 mx-3 text-secondary text-decoration-line-through fw-semibold fs-5">
+                            R$ 99,90
+                        </p>
+                        <div class="mx-3">
+                            <p class="text-dark fw-bold fs-1 m-0 mx-1">
+                                <span class="text-secondary fs-6 m-0 fw-medium">12x</span>
+                                R$ 64,90
+                                <span class="text-secondary fs-6 m-0 p-0 fw-medium">/mês</span>
+                            </p>
+                        </div>
+                        <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
+                            *Economize 35% no plano anual.
+                        </p>
+                        <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
+                            Escolher
+                        </a>
+                        <hr class="mx-3">
+                        <ul class="mx-3">
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    stars
+                                </span>
+                                <p class="m-0 fw-bold">
+                                    Todos benefícios do plano Gratuito e mais:
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Suporte via WhatsApp e email.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Pedidos ilimitados.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Cardápio digital completo: delivery, retirada e no local.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Integração completa com iFood.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Gestor de pedidos e gestor de mesas.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Emissão de notas fiscais.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Tela de preparo (KDS).
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Financeiro completo.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Sistema de frente de caixa (PDV).
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- FIM CARD PLANO STANDART -->
+
+                </div>
+                <!-- FIM COLUNA -->
+
+                <!-- COLUNA -->
+                <div class="col-lg-3 relative">
+
+                    <!-- CARD PLANO BUSINESS -->
+                    <div class="card h-100">
+                        <div class="border-bottom text-center">
+                            <p class="m-0 fs-5 fw-bold">
+                                Business
+                            </p>
+                        </div>
+                        <p class="mt-3 mb-0 mx-3 text-secondary text-decoration-line-through fw-semibold fs-5">
+                            R$ 199,90
+                        </p>
+                        <div class="mx-3">
+                            <p class="text-dark fw-bold fs-1 m-0 mx-1">
+                                <span class="text-secondary fs-6 m-0 fw-medium">12x</span>
+                                R$ 149,90
+                                <span class="text-secondary fs-6 m-0 p-0 fw-medium">/mês</span>
+                            </p>
+                        </div>
+                        <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
+                            *Economize 25% no plano anual.
+                        </p>
+                        <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
+                            Escolher
+                        </a>
+                        <hr class="mx-3">
+                        <ul class="mx-3">
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    stars
+                                </span>
+                                <p class="m-0 fw-bold">
+                                    Todos benefícios do plano Stantard e mais:
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Suporte prioritário via WhatsApp e email.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Aplicativo para garçons (IOS e Android).
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Gestor de estoque.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Relatórios, gráficos e estatísticas de dados financeiros, vendas e pedidos.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- FIM CARD PLANO BUSINESS -->
+
+                </div>
+                <!-- FIM COLUNA -->
+
+                <!-- COLUNA -->
+                <div class="col-lg-3">
+
+                    <!-- CARD PLANO BUSINESS -->
+                    <div class="card bg-dark text-white h-100">
+                        <div class="border-bottom text-center">
+                            <p class="m-0 fs-5 fw-bold">
+                                Ultra
+                            </p>
+                        </div>
+                        <p class="mt-3 mb-0 mx-3 text-white-50 text-decoration-line-through fw-semibold fs-5">
+                            R$ 489,90
+                        </p>
+                        <div class="mx-3">
+                            <p class="text-white fw-bold fs-1 m-0 mx-1">
+                                <span class="text-white-50 fs-6 m-0 fw-medium">12x</span>
+                                R$ 399,90
+                                <span class="text-white-50 fs-6 m-0 p-0 fw-medium">/mês</span>
+                            </p>
+                        </div>
+                        <p class="text-white-50 fw-normal mx-3" style="font-size: 14px">
+                            *Economize 18% no plano anual.
+                        </p>
+                        <a href="" class="btn btn-light text-padrao fw-semibold mx-3 my-3">
+                            Escolher
+                        </a>
+                        <hr class="mx-3">
+                        <ul class="mx-3">
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    stars
+                                </span>
+                                <p class="m-0 fw-bold">
+                                    Todos benefícios do plano Business e mais:
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Suporte exclusivo via WhatsApp, email e chamadas de vídeo.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal text-warning">
+                                    Aplicativo personalizado para sua loja com sua marca.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Aplicativo para garçons (IOS e Android) com recursos exclusivos de gestão para
+                                    administradores.
+                                </p>
+                            </li>
+                            <li class="d-flex align-items-center my-3">
+                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                    check
+                                </span>
+                                <p class="m-0 fw-normal">
+                                    Gestor de estoque com avisos no painel e mensagem WhatsApp sobre reposição de
+                                    insumos.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- FIM CARD PLANO BUSINESS -->
+
+                </div>
+                <!-- FIM COLUNA -->
+
             </div>
+            <!-- FIM LINHA -->
 
             <!-- TAB SOBRE INTEGRACOES -->
             @elseif(request('tab') != null && request('tab') == 'integracoes')
