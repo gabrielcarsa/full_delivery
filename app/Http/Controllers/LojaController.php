@@ -57,32 +57,38 @@ class LojaController extends Controller
 
         //Info Loja
         $id = session('lojaConectado')['id'];
-        $loja = Loja::where('id' , $id)->first();
+        $loja = Loja::find($id);
 
-        //Iniciar variáveis como vazias
-        $horarios = null;
-        $equipe = null;
+        if($loja != null){
+            //Iniciar variáveis como vazias
+            $horarios = null;
+            $equipe = null;
 
-        //Controle para exibir conteúdo das views da Loja
-        $tab = $request->get('tab') ?? 'sobre';
+            //Controle para exibir conteúdo das views da Loja
+            $tab = $request->get('tab') ?? 'sobre';
 
-        if($tab == 'horarios'){
-            $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
-        }elseif($tab == 'equipe'){
-            $equipe = UserLoja::where('loja_id', $id)->get();
-        }elseif($tab == 'planos'){
-            //TODO
-        }elseif($tab == 'integracoes'){
-            //TODO
+            if($tab == 'horarios'){
+                $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+            }elseif($tab == 'equipe'){
+                $equipe = UserLoja::where('loja_id', $id)->get();
+            }elseif($tab == 'planos'){
+                //TODO
+            }elseif($tab == 'integracoes'){
+                //TODO
+            }
+
+            $dados = [
+                'horarios' => $horarios,
+                'equipe' => $equipe,
+            ];
+        
+            return view('loja.show', compact('dados', 'loja'));
         }
 
+        // Esquecer sessão da Loja Conectada
+        session()->forget('lojaConectado');
 
-        $dados = [
-            'horarios' => $horarios,
-            'equipe' => $equipe,
-        ];
-       
-        return view('loja.show', compact('dados', 'loja'));
+        return redirect()->route('loja.create')->with('error', 'Nenhuma loja encontrada cadastre uma loja primeiramente.');
 
     }
 
@@ -267,7 +273,7 @@ class LojaController extends Controller
             //Definindo variavel de sessão de loja
             session(['lojaConectado' => ['id'=> $loja->id, 'nome'=> $loja->nome]]);
 
-            return redirect()->route('loja')->with('success', 'Cadastro da loja concluído com sucesso');
+            return redirect()->route('loja',['tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');

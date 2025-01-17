@@ -703,7 +703,7 @@
                 <!-- FIM COLUNA -->
 
                 <!-- COLUNA -->
-                <div class="col-lg-3 relative">
+                <div class="col-lg-3">
 
                     <!-- CARD PLANO BUSINESS -->
                     <div class="card h-100">

@@ -35,26 +35,29 @@ class LojaHelper
         if(session('lojaConectado')){
             
             //Obtendo Loja
-            $loja = Loja::where('id', session('lojaConectado')['id'])->first();
+            $loja = Loja::find(session('lojaConectado')['id']);
 
-            //Se houver integração com iFood e se Token estiver ativo
-            if($loja->ifood_merchant_id != null && $loja->ifood_token->sortByDesc('expires_at')->first()->expires_at->isFuture()){
+            if($loja != null){
+                
+                //Se houver integração com iFood e se Token estiver ativo
+                if($loja->ifood_merchant_id != null && $loja->ifood_token->sortByDesc('expires_at')->first()->expires_at->isFuture()){
 
-                $merchant = $ifoodService->getMerchantStatus($loja->ifood_merchant_id);
+                    $merchant = $ifoodService->getMerchantStatus($loja->ifood_merchant_id);
 
-                //Verificando se está aberto no iFood
-                if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
+                    //Verificando se está aberto no iFood
+                    if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
 
-                    $loja->state = $merchant[0]['state'];
-                    $loja->save();
+                        $loja->state = $merchant[0]['state'];
+                        $loja->save();
 
-                }else{
+                    }else{
 
-                    $loja->state = $merchant[0]['state'];
-                    $loja->save();
+                        $loja->state = $merchant[0]['state'];
+                        $loja->save();
+
+                    }
 
                 }
-
             }
         }
     }
