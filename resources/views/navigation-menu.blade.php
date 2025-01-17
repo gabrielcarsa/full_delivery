@@ -65,7 +65,7 @@
                         </a>
 
                         <!-- DROPDOWN LOJAS -->
-                        <ul class="dropdown-menu p-3 bg-light" style="width: 400px">
+                        <ul class="dropdown-menu p-3 bg-light dropdown-menu-end" style="width: 400px">
 
                             <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
                             @if(!empty($lojas))
@@ -148,7 +148,7 @@
                             {{ Auth::user()->name }}
                         </a>
 
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item" href="{{ route('profile.show') }}">
                                     Perfil

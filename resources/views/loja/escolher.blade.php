@@ -1,21 +1,24 @@
 <x-app-layout>
+    <!-- MENSAGENS -->
+    @if(session('success'))
+    <x-toasts-message type="success" message="{{ session('success') }}" />
+    @endif
 
-    <div class="container">
-        <!-- MENSAGENS -->
-        @if(session('success'))
-        <x-toasts-message type="success" message="{{ session('success') }}" />
-        @endif
+    @if(session('error'))
+    <x-toasts-message type="danger" message="{{ session('error') }}" />
+    @endif
 
-        @if(session('error'))
-        <x-toasts-message type="danger" message="{{ session('error') }}" />
-        @endif
+    @if($errors->any())
+    @foreach ($errors->all() as $error)
+    <x-toasts-message type="danger" message="{{ $error }}" />
+    @endforeach
+    @endif
+    <!-- FIM MENSAGENS -->
 
-        @if($errors->any())
-        @foreach ($errors->all() as $error)
-        <x-toasts-message type="danger" message="{{ $error }}" />
-        @endforeach
-        @endif
-        <!-- FIM MENSAGENS -->
+    <div class="container-padrao">
+
+        <!-- LOJAS -->
+        @if($lojas)
 
         <!-- HEADER -->
         <div class="row">
@@ -37,10 +40,6 @@
             </div>
         </div>
         <!-- FIM HEADER -->
-
-
-        <!-- LOJAS -->
-        @if($lojas)
 
         @foreach($lojas as $loja)
 
@@ -119,11 +118,24 @@
 
         <!-- SE NÃO HOUVER LOJAS -->
         @else
-        <div class="container-fluid mt-5 mb-5 d-flex flex-column align-items-center">
-            <img src="{{asset("storage/images/logo.png")}}" width="150px" alt="Foomy"></a>
-            <h3 class="fw-semibold fs-4 mt-4">Bem vindo! Vamos começar essa jornada com o Foomy?</h3>
-            <p>Comece configurando as informações do seu loja!</p>
-            <a href="" class="btn btn-primary px-5">Iniciar</a>
+        <div class="d-flex align-items-center justify-content-center">
+            <div>
+                <p class="m-0 fs-1 my-3 fw-regular">
+                    Olá, <span class="fw-semibold">{{Auth::user()->name}}</span>
+                </p>
+
+                <p class="m-0 fs-3 my-3 fw-medium">
+                    Vamos dar os primeiros passos e criar sua loja aqui?<br>
+                    É bem rápido, menos de 5 minutos.
+                </p>
+                <div class="d-flex justify-content-center my-5">
+                    <img src="{{asset("storage/images/criar-loja.svg")}}" width="300px" alt="Foomy">
+                </div>
+                <a href="{{ route('loja.create') }}" class="btn bg-padrao text-white fw-semibold w-100">
+                    Criar loja
+                </a>
+            </div>
+
         </div>
         <!-- FIM SE NÃO HOUVER LOJAS -->
 
