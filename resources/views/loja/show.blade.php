@@ -74,9 +74,10 @@
                     </span>
                 </div>
                 <p class="fs-5 mx-3 my-0">
-                    Link para cardápio digital: <a href="{{route('cardapio', ['loja_id' => $loja->id])}}" class="fw-bold">{{route('cardapio')}}</a>
+                    Link para cardápio digital: <a href="{{route('cardapio', ['loja_id' => $loja->id])}}"
+                        class="fw-bold">{{route('cardapio')}}?loja_id={{$loja->id}}</a>
                 </p>
-                
+
             </div>
             <!-- FIM LINK CARDÁPIO DIGITAL -->
 
@@ -93,8 +94,7 @@
                             </a>
                         </p>
 
-                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150"
-                            class="shadow-sm rounded-circle">
+                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150" class="rounded-circle border">
 
                         <!-- MODAL EDITAR LOGO-->
                         <div class="modal fade" id="modalEditarLogo" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -144,8 +144,7 @@
                                 Alterar
                             </a>
                         </p>
-                        <img src='{{asset("storage/$loja->nome/banner")}}' class="rounded border p-0"
-                            style="width: 150px">
+                        <img src='{{asset("storage/$loja->nome/banner")}}' class="rounded border" style="width: 150px">
 
                         <!-- MODAL -->
                         <div class="modal fade" id="modalEditarBanner" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -336,8 +335,9 @@
             </form>
             <!-- FORM -->
 
-            <!-- TAB SOBRE HORARIOS -->
+            <!-- TAB HORARIOS -->
             @elseif(request('tab') != null && request('tab') == 'horarios')
+
             <div class="px-3">
                 <div class="d-flex justify-content-end my-3">
                     <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
@@ -399,7 +399,7 @@
                 <div id='calendar'></div>
             </div>
 
-            <!-- TAB SOBRE EQUIPE -->
+            <!-- TAB EQUIPE -->
             @elseif(request('tab') != null && request('tab') == 'equipe')
 
             <div class="px-3">
@@ -491,8 +491,27 @@
 
             </div>
 
-            <!-- TAB SOBRE PLANOS -->
+            <!-- TAB PLANOS -->
             @elseif(request('tab') != null && request('tab') == 'planos')
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="border-bottom text-center">
+                            <p class="m-0">
+                                Gratuito
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-end">
+                            <p class="text-dark fw-bold fs-1 m-0 mx-1">
+                                <span class="text-secondary fs-6 fw-medium">R$</span>
+                                0,00
+                                <span class="text-secondary fs-6 m-0 fw-medium">/mês</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- TAB SOBRE INTEGRACOES -->
             @elseif(request('tab') != null && request('tab') == 'integracoes')

@@ -49,8 +49,11 @@
             class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('lojaConectado') && session('lojaConectado')['id'] == $loja->id ? 'border-padrao' : '' }}">
 
             <!-- LOGO LOJA -->
-            <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250" alt="Logo {{$loja->nome}}"
-                class="rounded-circle">
+            @if($loja->logo != null)
+            <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="250px" class="rounded-circle">
+            @else
+            <img src='{{asset("storage/images/logo-black.png")}}' width="250px" class="rounded-circle">
+            @endif
             <!-- FIM LOGO LOJA -->
 
             <!-- INFO LOJA -->
@@ -99,6 +102,10 @@
                         Escolher loja
                     </button>
                 </form>
+                @else
+                <a href="{{route('loja')}}" class="btn bg-padrao fw-semibold text-white">
+                    Ir para loja
+                </a>
                 @endif
 
             </div>
