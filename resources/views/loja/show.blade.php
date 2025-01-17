@@ -594,7 +594,7 @@
                     <div class="card h-100">
                         <div class="border-bottom text-center">
                             <p class="m-0 fw-bold fs-5">
-                                Standart
+                                Standard
                             </p>
                         </div>
                         <p class="mt-3 mb-0 mx-3 text-secondary text-decoration-line-through fw-semibold fs-5">
@@ -735,7 +735,7 @@
                                     stars
                                 </span>
                                 <p class="m-0 fw-bold">
-                                    Todos benefícios do plano Stantard e mais:
+                                    Todos benefícios do plano Standard e mais:
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
