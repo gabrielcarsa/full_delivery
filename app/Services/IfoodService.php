@@ -53,8 +53,8 @@ class IfoodService
         return $this->refreshAccessToken();
     }
 
-    //Atualizar AccessToken
-    public function refreshAccessToken()
+    //AccessToken
+    public function postAccessToken($authorization_code, $authorization_code_verifier)
     {
         //Obter Loja ID
         $loja_id = $this->getIdlojaConectada();
@@ -80,9 +80,8 @@ class IfoodService
                     'grantType' => 'authorization_code',
                     'clientId' => env('IFOOD_CLIENT_ID'),
                     'clientSecret' => env('IFOOD_CLIENT_SECRET'),
-                    'authorizationCode' => 'FKSD-ZFML',
-                    'authorizationCodeVerifier' => 'kaui9ii32ve1qd5uogrglzecypsu1796h2e3umgcouv70ofkrc0to20yankl4ypgv0mi7w8nxfcdwa1y568x2tho5y4k5zh3xrk',
-                    //'refreshToken' => 'eyJraWQiOiJlZGI4NWY2Mi00ZWY5LTExZTktODY0Ny1kNjYzYmQ4NzNkOTMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJzdWIiOiIxNzllYjE5MC1iYjA1LTQzMmMtYTc1ZS1kNDQ2N2UzMjhiYmEiLCJpc3MiOiJpRm9vZCIsImV4cCI6MTcyOTAwMDE5NiwiaWF0IjoxNzI4Mzk1Mzk2LCJjbGllbnRfaWQiOiIyMWI3YTEwZi1mZDAwLTQ4MWUtOTU0My05NjRmN2UwYzUzNDEifQ.ai9wRmy1oL_SM4XwOM8EI9OtY9Rsd-DTGDMa3y-KMC6sgKRKtMhUy5bKXnxyGpVktdNGCITR1OfguhXAyS7nFgvX0eswWHVbkgxCURpyHga-AHX77KNJTI5UyCkPcCM45hQdxy4W3gsWvP0X3snQvBLk49oxn0ij1IIiHRjG228',
+                    'authorizationCode' => $authorization_code,
+                    'authorizationCodeVerifier' => $authorization_code_verifier,
                 ]
             ]);
         }        
@@ -98,6 +97,35 @@ class IfoodService
         ]);
 
         return $data['accessToken'];
+    }
+
+    //Obter UserCode
+    public function getUserCode(){
+        
+        try {
+            // Exemplo de requisição à API do iFood com form-urlencoded
+            $response = $this->client->post('https://merchant-api.ifood.com.br/authentication/v1.0/oauth/userCode', [
+                'headers' => [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'Accept'       => 'application/json',
+                ],
+                'form_params' => [
+                    'clientId' => '21b7a10f-fd00-481e-9543-964f7e0c5341',
+                ],
+            ]);
+    
+            $data = json_decode($response->getBody()->getContents(), true);
+    
+            return $data;
+        } catch (\Exception $e) {
+            return [
+                'error' => $e->getMessage(),
+            ];
+        }
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data;
     }
 
     //Obter Merchants

@@ -23,6 +23,7 @@
 
             <!-- COLUNA -->
             <div class="col-6">
+                
                 <!-- WIZARD -->
                 <div class="d-flex justify-content-between d-flex align-items-center" style="margin: 30px 5%">
 

@@ -860,6 +860,82 @@
             <!-- TAB SOBRE INTEGRACOES -->
             @elseif(request('tab') != null && request('tab') == 'integracoes')
 
+            <!-- LINHA -->
+            <div class="row p-3">
+
+                <!-- COLUNA -->
+                <div class="col-sm-6 my-auto">
+
+                    <div class="card p-3 w-75 mx-auto">
+                        <p class="fs-3 fw-bold m-0">
+                            Vamos começar a integração com iFood?
+                        </p>
+                        <p class="text-secondary">
+                            É bem simples, não leva 5 minutos e vai facilitar muitoooo sua vida.
+                        </p>
+                        <a href="{{route('loja.create_integration_ifood')}}" class="btn bg-padrao text-white fw-semibold w-100">
+                            Iniciar
+                        </a>
+                    </div>
+
+                </div>
+                <!-- FIM COLUNA -->
+
+                <!-- COLUNA -->
+                <div class="col-sm-6">
+
+                    <div class="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/IFood_logo.svg/2560px-IFood_logo.svg.png"
+                            alt="logo iFood" width="150px" class="mx-auto">
+                    </div>
+
+                    <ul class="mx-3">
+                        <li class="d-flex align-items-center my-3">
+                            <p class="m-0 fw-semibold">
+                                Vantagens:
+                            </p>
+                        </li>
+                        <li class="d-flex align-items-center my-3">
+                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                check
+                            </span>
+                            <p class="m-0 fw-normal">
+                                Receba pedidos e gerencie vindos do iFood.
+                            </p>
+                        </li>
+                        <li class="d-flex align-items-center my-3">
+                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                check
+                            </span>
+                            <p class="m-0 fw-normal">
+                                Solicite entregador para seus pedidos.
+                            </p>
+                        </li>
+                        <li class="d-flex align-items-center my-3">
+                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                check
+                            </span>
+                            <p class="m-0 fw-normal">
+                                Importe o seu cardápio e horários direito do iFood.
+                            </p>
+                        </li>
+                        <li class="d-flex align-items-center my-3">
+                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                check
+                            </span>
+                            <p class="m-0 fw-normal">
+                                Ao usar o Gestor de Pedidos do Foomy, automáticamente, você mantêm a sua Loja do iFood
+                                aberta para receber pedidos.
+                            </p>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- FIM COLUNA -->
+
+            </div>
+            <!-- FIM LINHA -->
+
             @endif
             <!-- FIM VERIFICACAO SEÇOES TAB DA LOJA -->
 

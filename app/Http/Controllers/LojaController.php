@@ -10,9 +10,18 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use App\Services\IfoodService;
 
 class LojaController extends Controller
 {
+    protected $ifoodService;
+
+    public function __construct()
+    {
+        //instanciando
+        $this->ifoodService = new IfoodService();
+    }
+
     //ESCOLHER RESTAURANTE GET
     public function index(){
 
@@ -564,6 +573,79 @@ class LojaController extends Controller
         $loja->save();
 
         return redirect()->back()->with('success', 'Definido área em metros');
+    }
+
+
+    //RETORNA VIEW PARA INTEGRAR COM IFOOD
+    public function create_integration_ifood(Request $request){
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+        }
+
+        //Info Loja
+        $id = session('lojaConectado')['id'];
+        $loja = Loja::find($id);
+
+        $userCode = null;
+        $step = $request->get('step') ?? 1;
+
+
+        if($loja != null){
+
+            if($step == 1){
+
+                //Obter UserCode
+                $userCode = $this->ifoodService->getUserCode();
+
+            }
+            return view('loja.integration_ifood', compact('userCode'));
+        }
+    }
+
+    //SALVAR INTEGRAÇÃO IFOOD
+    public function store_integration_ifood(Request $request){
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+        }
+
+        //Step
+        $step = $request->get('step') ?? 1;
+
+        if($step == 1){
+
+            $step = 2;
+            $authorization_code_verifier = $request->input('authorization_code_verifier');
+
+            return redirect()->route('loja.create_integration_ifood', ['step' => $step, 'authorization_code_verifier' => $authorization_code_verifier]);
+
+        }elseif($step == 2){
+
+            // Validação do formulário
+            $validator = Validator::make($request->all(), [
+                'authorization_code' => 'required|max:9',
+            ]);
+
+            // Se a validação falhar
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            //Variáveis necessárias para obter access token
+            $authorization_code = $request->input('authorization_code');
+            $authorization_code_verifier = $request->input('authorization_code_verifier');
+
+            //Requisitando AccessToken
+            $this->ifoodService->postAccessToken($authorization_code, $authorization_code_verifier);
+
+            return redirect()->route('loja',['tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
+
+        }else{
+            return redirect()->back()->with('error', 'Não autorizado');
+        }
     }
 
 }
