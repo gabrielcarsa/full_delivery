@@ -860,6 +860,15 @@
             <!-- TAB SOBRE INTEGRACOES -->
             @elseif(request('tab') != null && request('tab') == 'integracoes')
 
+            @if($loja->ifood_merchant_id != null)
+            <div class="m-auto">
+                <p>
+                    Integrado com iFood {{$loja->ifood_merchant_id}}
+                </p>
+            </div>
+
+            @else
+
             <!-- LINHA -->
             <div class="row p-3">
 
@@ -873,7 +882,8 @@
                         <p class="text-secondary">
                             É bem simples, não leva 5 minutos e vai facilitar muitoooo sua vida.
                         </p>
-                        <a href="{{route('loja.create_integration_ifood')}}" class="btn bg-padrao text-white fw-semibold w-100">
+                        <a href="{{route('loja.create_integration_ifood')}}"
+                            class="btn bg-padrao text-white fw-semibold w-100">
                             Iniciar
                         </a>
                     </div>
@@ -935,6 +945,7 @@
 
             </div>
             <!-- FIM LINHA -->
+            @endif
 
             @endif
             <!-- FIM VERIFICACAO SEÇOES TAB DA LOJA -->

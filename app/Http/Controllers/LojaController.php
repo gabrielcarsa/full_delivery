@@ -641,6 +641,15 @@ class LojaController extends Controller
             //Requisitando AccessToken
             $this->ifoodService->postAccessToken($authorization_code, $authorization_code_verifier);
 
+            //Obtendo ID do Merchant do Ifood
+            $merchantIfood = $this->ifoodService->getMerchants();
+
+            //Salvar na Loja
+            $id = session('lojaConectado')['id'];
+            $loja = Loja::find($id);
+            $loja->ifood_merchant_id = $merchantIfood[0]['id'];
+            $loja->save();
+
             return redirect()->route('loja',['tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
 
         }else{
