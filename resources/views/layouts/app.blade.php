@@ -43,11 +43,11 @@
                     <ul class="m-0 p-0">
 
                         <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center dropend">
+                        <li class="d-flex align-items-center justify-content-center dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="material-symbols-outlined fs-3">
+                                <span class="material-symbols-outlined fs-4">
                                     receipt_long
                                 </span>
                                 <p class="m-0 p-0">Pedidos</p>
@@ -66,21 +66,11 @@
                             </ul>
                         </li>
 
-                        <li class="d-flex align-items-center justify-content-center border-top p-2">
-                            <a class="text-decoration-none text-center {{ request()->routeIs('register') ? 'fw-bold text-padrao' : 'text-secondary'}}"
-                                href="{{ route('register') }}">
-                                <span class="material-symbols-outlined">
-                                    person_add
-                                </span>
-                                <p class="m-0 p-0">Usuário</p>
-                            </a>
-                        </li>
-
                         <!-- Nav Item - CLIENTES DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined fs-4">
                                     groups
                                 </span>
                                 <p class="m-0 p-0">
@@ -122,11 +112,11 @@
                         </li>
 
                         <!-- Nav Item - LOJAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined fs-4">
                                     storefront
                                 </span>
                                 <p class="m-0 p-0">
@@ -135,8 +125,28 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja') }}">
-                                        Minhas Lojas
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Sua loja
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'sobre']) }}">
+                                        Sobre
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'horarios']) }}">
+                                        Horários de funcionamento
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'equipe']) }}">
+                                        Equipe
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'planos']) }}">
+                                        Planos
                                     </a>
                                 </li>
                                 <li>
@@ -148,11 +158,11 @@
                         </li>
 
                         <!-- Nav Item - ENTREGAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined fs-4">
                                     sports_motorsports
                                 </span>
                                 <p class="m-0 p-0">Entregas</p>
@@ -173,11 +183,11 @@
 
 
                         <!-- Nav Item - CARDAPIO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined fs-4">
                                     restaurant_menu
                                 </span>
                                 <p class="m-0 p-0">Cardápio</p>
@@ -195,11 +205,11 @@
                         </li>
 
                         <!-- Nav Item - FINANCEIRO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined fs-4">
                                     payments
                                 </span>
                                 <p class="m-0 p-0">Financeiro</p>
@@ -250,11 +260,11 @@
                         </li>
 
                         <!-- Nav Item - FINANCEIRO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend">
+                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
                             <a class="btn text-decoration-none text-center text-secondary" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined fs-4">
                                     settings
                                 </span>
                                 <p class="m-0 p-0">

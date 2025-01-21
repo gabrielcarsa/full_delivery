@@ -49,3 +49,8 @@
     color: #EDEDED !important;
     font-weight: 300 !important;
 }
+
+.hover:hover {
+    background-color: #EDEDED !important;
+    transition: all 0.3s ease; /* Suaviza a transição */
+}
