@@ -237,13 +237,13 @@ class CategoriaProdutoController extends Controller
                         //Cadastro de produto
                         $produto = new Produto();
                         $produto->nome = $toppings['name'];
-                        $produto->descricao = $toppings['description'];
+                        $produto->descricao = isset($toppings['description']) ? $toppings['description'] : null;
                         $produto->disponibilidade = $toppings['status'] == 'AVAILABLE' ? true : false;
                         $produto->tempo_preparo_min_minutos = 5; //Valor padrão
                         $produto->tempo_preparo_max_minutos = 10; //Valor padrão
                         $produto->categoria_produto_id = $categoria->id;
                         $produto->cadastrado_usuario_id = $usuario_id;
-                        $produto->externalCodeIfood = $toppings['externalCode'];
+                        $produto->externalCodeIfood = isset($toppings['externalCode']) ? $toppings['externalCode'] : null;
                         $produto->productIdIfood = $toppings['id'];
                         $produto->imagemIfood = $toppings['image'];
                         $produto->save();
@@ -268,7 +268,7 @@ class CategoriaProdutoController extends Controller
                                 $opcional->nome = $sizes['name'];
                                 $opcional->categoria_opcional_id = $categoria_opcional_tamanho->id;
                                 $opcional->cadastrado_usuario_id = $usuario_id;
-                                $opcional->externalCodeIfood = $sizes['externalCode'];
+                                $opcional->externalCodeIfood = isset($sizes['externalCode']) ? $sizes['externalCode'] : null;
                                 $opcional->productIdIfood = $sizes['id'];
 
                                 //Preços toppings
@@ -304,7 +304,7 @@ class CategoriaProdutoController extends Controller
                                 $opcional->categoria_opcional_id = $categoria_opcional_tamanho->id;
                                 $opcional->cadastrado_usuario_id = $usuario_id;
                                 $opcional->preco = $crusts['price']['value'];
-                                $opcional->externalCodeIfood = $sizes['externalCode'];
+                                $opcional->externalCodeIfood = isset($sizes['externalCode']) ? $sizes['externalCode'] : null;
                                 $opcional->productIdIfood = $sizes['id'];
                                 $opcional->save();
                             }
