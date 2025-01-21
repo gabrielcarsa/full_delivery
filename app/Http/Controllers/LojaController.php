@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Services\IfoodService;
+use App\Models\IfoodToken;
 
 class LojaController extends Controller
 {
@@ -72,6 +73,7 @@ class LojaController extends Controller
             //Iniciar variáveis como vazias
             $horarios = null;
             $equipe = null;
+            $token = null;
 
             //Controle para exibir conteúdo das views da Loja
             $tab = $request->get('tab') ?? 'sobre';
@@ -83,12 +85,15 @@ class LojaController extends Controller
             }elseif($tab == 'planos'){
                 //TODO
             }elseif($tab == 'integracoes'){
-                //TODO
+
+                // Obtém token mais recente
+                $token = IfoodToken::where('loja_id', $id)->latest()->first();
             }
 
             $dados = [
                 'horarios' => $horarios,
                 'equipe' => $equipe,
+                'token' => $token,
             ];
         
             return view('loja.show', compact('dados', 'loja'));

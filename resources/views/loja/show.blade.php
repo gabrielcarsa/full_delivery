@@ -21,31 +21,31 @@
 
         <!-- CARD GERAL -->
         <ul class="nav nav-pills fs-5">
-            <li class="nav-item">
+            <li class="nav-item hover">
                 <a class="nav-link rounded-0 rounded-top {{request('tab') == null || request('tab') == 'sobre' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
                     aria-current="page" href="?tab=sobre">
                     Sobre a loja
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item hover">
                 <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'horarios' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
                     href="?tab=horarios">
                     Horários
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item hover">
                 <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'equipe' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
                     href="?tab=equipe">
                     Equipe
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item hover">
                 <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'planos' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
                     href="?tab=planos">
                     Planos
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item hover">
                 <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'integracoes' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
                     href="?tab=integracoes">
                     Integrações
@@ -905,13 +905,17 @@
                                         {{$loja->ifood_merchant_id}}
                                     </td>
                                     <td>
-
+                                        @if($dados['token'] != null)
+                                        {{\Carbon\Carbon::parse($dados['token']->created_at)->format('d/m/Y')}}
+                                        @endif
                                     </td>
                                     <td>
-
+                                        @if($dados['token'] != null)
+                                        {{\Carbon\Carbon::parse($dados['token']->created_at)->addDays(7)->format('d/m/Y')}}
+                                        @endif
                                     </td>
                                     <td>
-
+                                        On
                                     </td>
                                 </tr>
                             </tbody>
