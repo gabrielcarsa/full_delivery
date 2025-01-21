@@ -19,22 +19,6 @@
     <!-- CARD -->
     <div class="container-padrao">
 
-        <!-- PROGRESS -->
-        <p class="m-0 fw-bold fs-5">
-            Progresso
-        </p>
-        <div class="progress mb-3" role="progressbar" aria-label="Basic example" aria-valuenow="75" aria-valuemin="0"
-            aria-valuemax="100">
-            @if(!request('step'))
-            <div class="progress-bar w-25 bg-padrao"></div>
-            @elseif(request('step') == 2)
-            <div class="progress-bar w-50 bg-padrao"></div>
-            @elseif(request('step') == 3)
-            <div class="progress-bar w-75 bg-padrao"></div>
-            @endif
-        </div>
-        <!-- FIM PROGRESS -->
-
         <!-- STEP 1 -->
         @if(!request('step'))
 
@@ -45,6 +29,10 @@
             <div class="col-md-6">
 
                 <div class="card my-auto p-3">
+
+                    <p class="fw-bold text-secondary fs-4">
+                        Etapa 1 de 2
+                    </p>
 
                     <p class="fw-bold m-0 fs-4">
                         1. Clique <a target="blanck" href="{{$userCode['verificationUrlComplete']}}">aqui</a> para
@@ -109,19 +97,31 @@
 
                 <div class="card my-auto p-3">
 
+                    <p class="fw-bold text-secondary fs-4">
+                        Etapa 2 de 2
+                    </p>
+
                     <!-- FORM -->
-                    <form class="my-3"
+                    <form class="row my-3"
                         action="{{route('loja.store_integration_ifood', ['step' => 2, 'authorization_code_verifier' => request('authorization_code_verifier')])}}"
                         method="post">
                         @csrf
 
-                        <div class="col-sm-6 my-2">
+                        <div class="col-12">
                             <x-label for="authorization_code" value="Código de autorização" />
                             <x-input placeholder="Ex.: AAAA-AAAA" id="authorization_code" type="text"
                                 name="authorization_code" :value="old('authorization_code')" autofocus
                                 autocomplete="off" />
                         </div>
-                        <div class="my-3">
+                        <p class="text-secondary">
+                            Cole aqui o código copiado do portal do parceiro.
+                        </p>
+                        <div class="col-sm-6 my-3">
+                            <a class="btn btn-secondary w-100" href="{{route('loja.create_integration_ifood')}}">
+                                Voltar
+                            </a>
+                        </div>
+                        <div class="col-sm-6 my-3">
                             <x-button class="">
                                 Finalizar
                             </x-button>
@@ -137,7 +137,7 @@
             <!-- COLUNA -->
             <div class="col-md-6">
 
-                <img src='{{asset("storage/images/portal-parceiro-ifood.png")}}' class="w-100 mx-auto rounded">
+                <img src='{{asset("storage/images/codigo-autorizacao-ifood.png")}}' class="w-100 mx-auto rounded">
 
             </div>
             <!-- FIM COLUNA -->

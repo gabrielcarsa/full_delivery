@@ -638,8 +638,14 @@ class LojaController extends Controller
             $authorization_code = $request->input('authorization_code');
             $authorization_code_verifier = $request->input('authorization_code_verifier');
 
-            //Requisitando AccessToken
-            $this->ifoodService->postAccessToken($authorization_code, $authorization_code_verifier);
+            try{
+
+                //Requisitando AccessToken
+                $this->ifoodService->postAccessToken($authorization_code, $authorization_code_verifier);
+
+            }catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Código inválido ou tempo expirado. Tente novamente!');
+            }
 
             //Obtendo ID do Merchant do Ifood
             $merchantIfood = $this->ifoodService->getMerchants();
