@@ -20,6 +20,10 @@
     background-color: #a8a8a8;
 }
 
+.fill-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
 .table-padrao th, .table-padrao td {
     background-color: #F3F4F6 !important;
 }

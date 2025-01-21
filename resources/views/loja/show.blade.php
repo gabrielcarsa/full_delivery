@@ -861,11 +861,68 @@
             @elseif(request('tab') != null && request('tab') == 'integracoes')
 
             @if($loja->ifood_merchant_id != null)
-            <div class="m-auto">
-                <p>
-                    Integrado com iFood {{$loja->ifood_merchant_id}}
-                </p>
+
+            <!-- LINHA -->
+            <div class="row p-3">
+
+                <!-- COLUNA -->
+                <div class="col-sm-6 my-auto">
+
+                    <div class="my-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/IFood_logo.svg/2560px-IFood_logo.svg.png"
+                            alt="logo iFood" width="150px" class="mx-auto">
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center my-3">
+                        <span class="material-symbols-outlined fill-icon mr-2 text-success">
+                            check_circle
+                        </span>
+                        <p class="m-0 fw-bold fs-5">
+                            Integração iFood realizada.
+                        </p>
+                    </div>
+
+
+                </div>
+                <!-- FIM COLUNA -->
+
+                <!-- COLUNA -->
+                <div class="col-sm-6 my-auto">
+
+                    <div class="card p-3">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Merchant ID</th>
+                                    <th scope="col">Criação token</th>
+                                    <th scope="col">Expiração token</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{$loja->ifood_merchant_id}}
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- FIM COLUNA -->
+
             </div>
+            <!-- FIM LINHA -->
 
             @else
 
@@ -945,6 +1002,7 @@
 
             </div>
             <!-- FIM LINHA -->
+
             @endif
 
             @endif
