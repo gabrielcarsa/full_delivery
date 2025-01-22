@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class FormaPagamentoLoja extends Model
 {
     use HasFactory;
+    protected $table = 'forma_pagamento_loja';
+    public $timestamps = false;
+    protected $guarded = [];
 
     public function pedido()
     {

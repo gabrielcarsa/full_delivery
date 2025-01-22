@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\FormaPagamento;
+use App\Models\FormaPagamentoLoja;
 use App\Models\ContaCorrente;
 
 use Illuminate\Http\Request;
@@ -19,8 +20,11 @@ class FormaPagamentoController extends Controller
         //Dados do loja
         $loja_id  = session('lojaConectado')['id'];
 
+        //Formas de Pagamentos 
+        $formas_pagamento = FormaPagamento::all();
+
         //Formas de pagamento da Loja
-        $formas_pagamento = FormaPagamento::where('loja_id', $loja_id)->get();
+        $formas_pagamento_loja = FormaPagamentoLoja::where('loja_id', $loja_id)->get();
 
         //Contas Corrente
         $contas_corrente = ContaCorrente::where('loja_id', $loja_id)->get();
@@ -28,6 +32,7 @@ class FormaPagamentoController extends Controller
         $dados = [
             'formas_pagamento' => $formas_pagamento,
             'contas_corrente' => $contas_corrente,
+            'formas_pagamento_loja' => $formas_pagamento_loja,
         ];
 
         return view('forma_pagamento/listar', compact('dados'));
@@ -42,28 +47,26 @@ class FormaPagamentoController extends Controller
         }
 
         //Dados do loja
-        $id_loja  = session('lojaConectado')['id'];
+        $loja_id  = session('lojaConectado')['id'];
 
-        // IDs das formas de pagamento selecionadas
-        $formas_pagamento_selecionadas = $request->input('formas_pagamento', []);
+        // ID das formas de pagamento selecionadas
+        $forma_pagamento_id = $request->input('forma_pagamento_id');
+
+        // Recuperar forma de pagamento para a loja
+        $forma_pagamento_loja = FormaPagamentoLoja::where('loja_id', $loja_id)->where('forma_pagamento_id', $forma_pagamento_id)->first(); 
         
-        // Recuperar todas as formas de pagamento para a loja
-        $formas_pagamento = FormaPagamento::where('loja_id', $id_loja)->get();
+        //Se não houver aquela forma de pagamento da Loja
+        if($forma_pagamento_loja == null){
 
-        foreach ($formas_pagamento as $forma_pagamento) {
-            // Verifica se a forma de pagamento foi selecionada
-            if (in_array($forma_pagamento->id, $formas_pagamento_selecionadas)) {
-                $forma_pagamento->is_ativo = true; // Ativar se foi selecionada
-            } else {
-                $forma_pagamento->is_ativo = false; // Desativar se não foi selecionada
-            }
-
-            // Salvar a atualização no banco de dados
-            $forma_pagamento->save();
+            FormaPagamentoLoja::create([
+                'loja_id' => $loja_id,
+                'forma_pagamento_id' => $forma_pagamento_id,
+            ]);
+        }else{
+            $forma_pagamento_loja->delete();
         }
         
-        
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Operação realizada com sucesso');
     }
 
     //VINCULAR FORMA COM CONTA CORRENTE
