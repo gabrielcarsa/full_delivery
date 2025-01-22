@@ -1,99 +1,69 @@
 <x-app-layout>
 
-    <div class="container">
-        <!-- MENSAGENS -->
-        <div class="toast-container position-fixed top-0 end-0">
-            @if(session('success'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('success') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('error') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        @foreach ($errors->all() as $error)
-                        <p class="fs-5 m-0">
-                            {{ $error }}
-                        </p>
-                        @endforeach
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-        </div>
-        <!-- FIM MENSAGENS -->
+    <!-- MENSAGENS -->
+    @if(session('success'))
+    <x-toasts-message type="success" message="{{ session('success') }}" />
+    @endif
 
+    @if(session('error'))
+    <x-toasts-message type="danger" message="{{ session('error') }}" />
+    @endif
+
+    @if($errors->any())
+    @foreach ($errors->all() as $error)
+    <x-toasts-message type="danger" message="{{ $error }}" />
+    @endforeach
+    @endif
+    <!-- FIM MENSAGENS -->
+
+
+    <!-- CONTAINER PADRAO -->
+    <div class="container-padrao">
 
         <!-- HEADER -->
-        <div class="d-flex align-items-center p-2 m-0">
+        <div class="d-flex align-items-center justify-content-between p-2 m-0">
             <h2 class="m-0 fw-bolder fs-2 text-black">
                 Gestor de Pedidos
             </h2>
 
-            <a href="" class="border-padrao">
-                <span class="material-symbols-outlined">
-                    print
-                </span>
-                Configurar
-            </a>
+            <div class="d-flex">
+                <a href="" class="btn border-padrao d-flex align-items-center text-padrao rounded-pill mx-1">
+                    <span class="material-symbols-outlined mr-1">
+                        print
+                    </span>
+                    Configurar
+                </a>
 
+                <a href="" class="btn btn-outline-secondary d-flex align-items-center rounded-pill mx-1">
+                    <span class="material-symbols-outlined mr-1">
+                        block
+                    </span>
+                    Cancelados
+                </a>
 
-            <!-- TITULO -->
-            <div class="row mt-3">
-                <div class="col">
-
-                </div>
-
-                <div class="col d-flex align-items-center justify-content-end p-0">
-                    <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
-                        href="">
-                        <span class="material-symbols-outlined mr-1">
-                            add
-                        </span>
-                        Novo
-                    </a>
-                </div>
+                <a class="btn bg-padrao text-white fw-bold d-flex align-items-center rounded-pill mx-1" href="">
+                    <span class="material-symbols-outlined fill-icon mr-1">
+                        add_circle
+                    </span>
+                    Novo pedido
+                </a>
             </div>
-            <!-- FIM TITULO -->
 
+            <!-- FORM -->
+            <form class="row g-1" action="" method="post">
+                @csrf
+                <div class="col-auto">
+                    <x-input placeholder="ID pedido" id="pedido_id" type="text" name="pedido_id"
+                        :value="old('pedido_id')" autofocus autocomplete="off" />
+                </div>
 
-
+                <div class="col-auto">
+                    <x-button class="">
+                        Pesquisar
+                    </x-button>
+                </div>
+            </form>
+            <!-- FIM FORM -->
         </div>
         <!-- FIM HEADER -->
 
@@ -181,65 +151,176 @@
         </div>
         <!-- FIM FILTROS -->
 
-        <!-- PEDIDOS GRID -->
-        <div class="row g-1" id="pedidos-grid">
+        <!-- ACCORDION PEDIDOS NOVOS -->
+        <div class="accordion" id="accordionExample">
 
-            <!-- PEDIDOS -->
-            @if(isset($data['pedidos']))
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fs-4 text-dark" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePedidosNovos" aria-expanded="true"
+                        aria-controls="collapsePedidosNovos">
+                        Novos pedidos ()
+                    </button>
+                </h2>
+                <div id="collapsePedidosNovos" class="accordion-collapse collapse show"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
 
-            @foreach($data['pedidos'] as $pedido)
+                        <!-- PEDIDOS GRID -->
+                        <div class="row g-1" id="pedidos-grid">
 
-            <!-- MODAL DETALHES PEDIDO -->
-            <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header d-flex justify-content-between">
-                            @if(isset($data['pedido']))
-                            <p class="fw-bold fs-5 m-0" id="modalDetalhesLabel">
-                                #0{{$data['pedido']->id}}0
-                            </p>
-                            <p class="m-0 text-secondary">
-                                Recebido {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->diffForHumans() }}
-                            </p>
+                            <!-- PEDIDOS -->
+                            @if(isset($data['pedidos']))
+
+                            @foreach($data['pedidos'] as $pedido)
+
+                            <!-- MODAL DETALHES PEDIDO -->
+                            <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDetalhesLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-between">
+                                            @if(isset($data['pedido']))
+                                            <p class="fw-bold fs-5 m-0" id="modalDetalhesLabel">
+                                                #0{{$data['pedido']->id}}0
+                                            </p>
+                                            <p class="m-0 text-secondary">
+                                                Recebido
+                                                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->diffForHumans() }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- PEDIDO DETALHE -->
+                                            @if(isset($data['pedido']))
+                                            <x-show-pedido :pedido="$data['pedido']" />
+                                            @endif
+                                            <!-- FIM PEDIDO DETALHE -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ route('pedido.gestor') }}"
+                                                class="btn border-padrao text-padrao">
+                                                Fechar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIM MODAL DETALHES PEDIDO -->
+
+                            <!-- Verificar se o modal deve ser aberto -->
+                            @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
+                            <script>
+                            // Espera o DOM ser completamente carregado
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var myModal = new bootstrap.Modal(document.getElementById('modalDetalhes'));
+                                myModal.show();
+                            });
+                            </script>
                             @endif
-                        </div>
-                        <div class="modal-body">
-                            <!-- PEDIDO DETALHE -->
-                            @if(isset($data['pedido']))
-                            <x-show-pedido :pedido="$data['pedido']" />
+
+
+                            @endforeach
+
                             @endif
-                            <!-- FIM PEDIDO DETALHE -->
+                            <!-- FIM PEDIDOS -->
+
                         </div>
-                        <div class="modal-footer">
-                            <a href="{{ route('pedido.gestor') }}" class="btn border-padrao text-padrao">
-                                Fechar
-                            </a>
-                        </div>
+                        <!-- FIM PEDIDOS GRID -->
                     </div>
                 </div>
             </div>
-            <!-- FIM MODAL DETALHES PEDIDO -->
-
-            <!-- Verificar se o modal deve ser aberto -->
-            @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
-            <script>
-            // Espera o DOM ser completamente carregado
-            document.addEventListener('DOMContentLoaded', function() {
-                var myModal = new bootstrap.Modal(document.getElementById('modalDetalhes'));
-                myModal.show();
-            });
-            </script>
-            @endif
-
-
-            @endforeach
-            @endif
-            <!-- FIM PEDIDOS -->
 
         </div>
-        <!-- FIM PEDIDOS GRID -->
+        <!-- FIM ACCORDION PEDIDOS NOVOS -->
+
+        <!-- ACCORDION PEDIDOS TODOS -->
+        <div class="accordion" id="accordionExample">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fs-4 text-dark" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePedidosTodos" aria-expanded="true"
+                        aria-controls="collapsePedidosTodos">
+                        Todos pedidos ()
+                    </button>
+                </h2>
+                <div id="collapsePedidosTodos" class="accordion-collapse collapse show"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        <!-- PEDIDOS GRID -->
+                        <div class="row g-1" id="pedidos-grid">
+
+                            <!-- PEDIDOS -->
+                            @if(isset($data['pedidos']))
+
+                            @foreach($data['pedidos'] as $pedido)
+
+                            <!-- MODAL DETALHES PEDIDO -->
+                            <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDetalhesLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header d-flex justify-content-between">
+                                            @if(isset($data['pedido']))
+                                            <p class="fw-bold fs-5 m-0" id="modalDetalhesLabel">
+                                                #0{{$data['pedido']->id}}0
+                                            </p>
+                                            <p class="m-0 text-secondary">
+                                                Recebido
+                                                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->diffForHumans() }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- PEDIDO DETALHE -->
+                                            @if(isset($data['pedido']))
+                                            <x-show-pedido :pedido="$data['pedido']" />
+                                            @endif
+                                            <!-- FIM PEDIDO DETALHE -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ route('pedido.gestor') }}"
+                                                class="btn border-padrao text-padrao">
+                                                Fechar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIM MODAL DETALHES PEDIDO -->
+
+                            <!-- Verificar se o modal deve ser aberto -->
+                            @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
+                            <script>
+                            // Espera o DOM ser completamente carregado
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var myModal = new bootstrap.Modal(document.getElementById('modalDetalhes'));
+                                myModal.show();
+                            });
+                            </script>
+                            @endif
+
+
+                            @endforeach
+
+                            @endif
+                            <!-- FIM PEDIDOS -->
+
+                        </div>
+                        <!-- FIM PEDIDOS GRID -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- FIM ACCORDION PEDIDOS TODOS -->
+
     </div>
+    <!-- CONTAINER PADRAO -->
 
     <!-- BOTÃO DE AJUDA -->
     <div class="dropup fixed-bottom d-flex justify-content-end m-3">
