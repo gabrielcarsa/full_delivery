@@ -20,12 +20,12 @@ class ContaCorrente extends Model
       return $this->belongsTo(Loja::class);
    }
 
-   public function usuarioCadastrador()
+   public function usuario_cadastrador()
    {
       return $this->belongsTo(User::class, 'cadastrado_usuario_id');
    }
 
-   public function usuarioAlterador()
+   public function usuario_alterador()
    {
       return $this->belongsTo(User::class, 'alterado_usuario_id');
    }
@@ -34,7 +34,7 @@ class ContaCorrente extends Model
       return $this->hasMany(Saldo::class);
    }
 
-   public function formaPagamento(){
-      return $this->hasMany(FormaPagamento::class);
+   public function forma_pagamento_loja(){
+      return $this->hasMany(FormaPagamentoLoja::class);
    }
 }

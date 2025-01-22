@@ -11,13 +11,8 @@ class FormaPagamento extends Model
     protected $table = 'forma_pagamento';
     public $timestamps = false;
 
-    public function pedido()
+    public function forma_pagamento_loja()
     {
-        return $this->hasMany(Pedido::class);
-    }
-
-    public function conta_corrente()
-    {
-        return $this->belongsTo(ContaCorrente::class);
+        return $this->hasMany(FormaPagamentoLoja::class);
     }
 }

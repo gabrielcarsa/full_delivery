@@ -21,9 +21,9 @@ class Pedido extends Model
         return $this->belongsTo(Loja::class);
     }
 
-    public function forma_pagamento()
+    public function forma_pagamento_loja()
     {
-        return $this->belongsTo(FormaPagamento::class);
+        return $this->belongsTo(FormaPagamentoLoja::class);
     }
 
     public function entrega()

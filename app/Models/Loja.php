@@ -61,12 +61,20 @@ class Loja extends Model
    {
       return $this->hasMany(Movimentacao::class);
    }
+   
    public function ifood_token()
    {
       return $this->HasMany(IfoodToken::class);
    }
+   
    public function user_loja()
    {
       return $this->HasMany(UserLoja::class);
    }
+
+   public function forma_pagamento_loja()
+   {
+      return $this->hasMany(FormaPagamentoLoja::class);
+   }
+
 }
