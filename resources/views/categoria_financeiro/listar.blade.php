@@ -88,10 +88,10 @@
                 <table class="table align-middle">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cadastrado por</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col" class="col-md-1">ID</th>
+                            <th scope="col" class="col-md-6">Nome</th>
+                            <th scope="col" class="col-md-3">Cadastrado por</th>
+                            <th scope="col" class="col-md-2">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,9 +103,12 @@
                                 <p class="m-0 fw-semibold text-">
                                     {{$categoria->nome}}
                                 </p>
+                                @if($categoria->is_order == true)
                                 <p class="m-0 text-secondary">
-                                    Esta categoria é criada automáticamente para ser vinculada a todos pedidos recebidos.
+                                    Esta categoria é criada automáticamente para ser vinculada a todos pedidos
+                                    recebidos.
                                 </p>
+                                @endif
                             </td>
                             <td class="text-truncate" style="max-width: 30px">
                                 {{$categoria->usuario_cadastrador->name}}
@@ -217,17 +220,17 @@
                 <table class="table align-middle">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cadastrado por</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col" class="col-md-1">ID</th>
+                            <th scope="col" class="col-md-6">Nome</th>
+                            <th scope="col" class="col-md-3">Cadastrado por</th>
+                            <th scope="col" class="col-md-2">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- categorias -->
                         @foreach ($categorias['categorias_pagar'] as $categoria)
                         <tr>
-                            <th scope="row">{{$categoria->id}}</th>
+                            <td>{{$categoria->id}}</td>
                             <td class="text-uppercase">{{$categoria->nome}}</td>
                             <td class="text-truncate" style="max-width: 30px">
                                 {{$categoria->usuario_cadastrador->name}}
