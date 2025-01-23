@@ -6,7 +6,7 @@
         <!-- HEADER -->
         <div class="d-flex align-items-center justify-content-between p-2 m-0">
             <h2 class="m-0 fw-bolder fs-2 text-black">
-                Gestor de Pedidos
+                Painel de Pedidos
             </h2>
 
             <div class="d-flex">
@@ -98,7 +98,7 @@
                                             <!-- FIM PEDIDO DETALHE -->
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="{{ route('pedido.gestor') }}"
+                                            <a href="{{ route('pedido.painel') }}"
                                                 class="btn border-padrao text-padrao">
                                                 Fechar
                                             </a>
@@ -156,7 +156,7 @@
                                 $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
                                 @endphp
                                 @if(isset($filtro) && is_numeric($filtro))
-                                <a href="{{ route('pedido.gestor') }}"
+                                <a href="{{ route('pedido.painel') }}"
                                     class="mx-1 px-2 rounded-pill text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
                                     style="min-width: 180px; background-color: #FD0146 !important">
                                     @if($filtro == 1)
@@ -177,7 +177,7 @@
                                 @endif
 
                                 @if($filtro != 1)
-                                <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
+                                <a href="{{ route('pedido.painel', ['filtro' => 1]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Em preparo
@@ -185,7 +185,7 @@
                                 @endif
 
                                 @if($filtro != 2)
-                                <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
+                                <a href="{{ route('pedido.painel', ['filtro' => 2]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Pronto p/ retirar
@@ -193,7 +193,7 @@
                                 @endif
 
                                 @if($filtro != 3)
-                                <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
+                                <a href="{{ route('pedido.painel', ['filtro' => 3]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     A caminho
@@ -201,7 +201,7 @@
                                 @endif
 
                                 @if($filtro != 4)
-                                <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
+                                <a href="{{ route('pedido.painel', ['filtro' => 4]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Concluídos
@@ -245,7 +245,7 @@
                                             <!-- FIM PEDIDO DETALHE -->
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="{{ route('pedido.gestor') }}"
+                                            <a href="{{ route('pedido.painel') }}"
                                                 class="btn border-padrao text-padrao">
                                                 Fechar
                                             </a>

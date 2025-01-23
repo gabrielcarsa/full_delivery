@@ -40,7 +40,7 @@ class PedidoController extends Controller
     //-------------------------
 
     //EXIBIR PEDIDOS
-    public function gestor(Request $request){
+    public function painel(Request $request){
 
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
@@ -112,7 +112,7 @@ class PedidoController extends Controller
             'pedidos_pendentes' => $pedidos_pendentes,
         ];
 
-        return view('pedido/interno/gestor', compact('data'));    
+        return view('pedido/interno/painel', compact('data'));    
     }
 
     

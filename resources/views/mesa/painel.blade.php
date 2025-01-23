@@ -2,7 +2,7 @@
 
     <div class="container py-3">
 
-        <!-- GRID GESTOR PEDIDOS-->
+        <!-- GRID GESTOR-->
         <div class="row">
 
             <!-- COLUNA MESAS -->
@@ -134,7 +134,7 @@
                             Clique sobre uma mesa para visualizar detalhes.
                         </p>
                         <p class="fw-bold m-0 pt-3">
-                            Sobre o gestor de mesas:
+                            Sobre o painel de mesas:
                         </p>
                         <p class="m-0">
                             - Veja todos pedidos da mesa.

@@ -75,7 +75,7 @@
                                     </p>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('pedido.gestor') }}">
+                                    <a class="dropdown-item" href="{{ route('pedido.painel') }}">
                                         Painel de Pedidos
                                     </a>
                                 </li>
@@ -86,7 +86,7 @@
                                     </p>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('mesa.gestor') }}">
+                                    <a class="dropdown-item" href="{{ route('mesa.painel') }}">
                                         Painel de Mesas
                                     </a>
                                 </li>

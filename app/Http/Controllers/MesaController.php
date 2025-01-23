@@ -63,7 +63,7 @@ class MesaController extends Controller
     }
 
     // GESTOR DE MESAS
-    public function gestor(){
+    public function painel(){
 
         //Verificar se há loja selecionado
         if(!session('lojaConectado')){
@@ -79,7 +79,7 @@ class MesaController extends Controller
         $data = [
             'mesas' => $mesas,
         ];
-        return view('mesa/gestor', compact('data'));
+        return view('mesa/painel', compact('data'));
     }
 
     //EXIBIR MESA DETALHES - GESTOR MESAS
@@ -116,7 +116,7 @@ class MesaController extends Controller
             'pedidos' => $pedidos,
         ];
 
-        return view('mesa/gestor', compact('data'));       
+        return view('mesa/painel', compact('data'));       
     }
 
     // Mudar de mesa

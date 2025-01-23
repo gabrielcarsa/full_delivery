@@ -149,7 +149,7 @@ Route::middleware([
         Route::delete('/cliente/apagar/{id}', [ClienteController::class, 'destroy'])->name('cliente.excluir');
 
         //PEDIDO
-        Route::get('/gestor-pedidos', [PedidoController::class, 'gestor'])->name('pedido.gestor');
+        Route::get('/painel-pedidos', [PedidoController::class, 'painel'])->name('pedido.painel');
         Route::get('/pedido/update-status', [PedidoController::class, 'update_status'])->name('pedido.update_status');
         Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar'])->name('pedido.cancelar');
         Route::post('/pedido/pagamento-mesa', [PedidoController::class, 'pagamento_mesa'])->name('pedido.pagamento');
@@ -183,8 +183,8 @@ Route::middleware([
         Route::delete('/mesa/apagar/{id}', [MesaController::class, 'destroy'])->name('mesa.excluir');
         Route::put('/mesa/mudar-mesa', [MesaController::class, 'mudar_mesa'])->name('mesa.mudar_mesa');
 
-        Route::get('/gestor-mesas', [MesaController::class, 'gestor'])->name('mesa.gestor');
-        Route::get('/gestor-mesas/detalhes', [MesaController::class, 'show'])->name('mesa.show');
+        Route::get('/painel-mesas', [MesaController::class, 'painel'])->name('mesa.painel');
+        Route::get('/painel-mesas/detalhes', [MesaController::class, 'show'])->name('mesa.show');
         
         //LANÇAMENTO
         Route::get('/contas-receber', [LancamentoController::class, 'indexContasReceber'])->name('contas_receber.index');
