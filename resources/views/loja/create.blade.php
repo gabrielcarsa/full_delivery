@@ -1,21 +1,5 @@
 <x-app-layout>
 
-    <!-- MENSAGENS -->
-    @if(session('success'))
-    <x-toasts-message type="success" message="{{ session('success') }}" />
-    @endif
-
-    @if(session('error'))
-    <x-toasts-message type="danger" message="{{ session('error') }}" />
-    @endif
-
-    @if($errors->any())
-    @foreach ($errors->all() as $error)
-    <x-toasts-message type="danger" message="{{ $error }}" />
-    @endforeach
-    @endif
-    <!-- FIM MENSAGENS -->
-
     <div class="container-padrao">
 
         <div class="bg-white p-3 shadow-md rounded">
