@@ -27,6 +27,11 @@ class Loja extends Model
       return $this->hasMany(CategoriaProduto::class);
    }
 
+   public function categoria_financeiro()
+   {
+      return $this->hasMany(CategoriaFinanceiro::class);
+   }
+
    public function pedidos()
    {
       return $this->hasMany(Pedido::class);

@@ -15,6 +15,11 @@ class CategoriaFinanceiro extends Model
         return $this->hasMany(Lancamento::class);
     }
 
+    public function loja()
+    {
+       return $this->belongsTo(Loja::class);
+    }
+
     public function usuario_cadastrador()
     {
        return $this->belongsTo(User::class, 'cadastrado_usuario_id');
