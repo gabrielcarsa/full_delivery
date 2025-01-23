@@ -1,23 +1,19 @@
 <!-- PEDIDOS -->
 @foreach($pedidos as $pedido)
+
 <!-- PEDIDO -->
-<div class="col mx-1 shadow-md p-2 rounded {{$id_selecionado == $pedido->id ? 'bg-light border-end-0 border-top-0 border-start-0 border-danger border-5' : 'bg-white' }}"
+<div class="col card {{$id_selecionado == $pedido->id ? 'bg-light border-end-0 border-top-0 border-start-0 border-danger border-5' : 'bg-white' }}"
     style="min-width: 300px !important; max-width: 300px !important">
 
     <!-- HEADER PEDIDO -->
-    <div class="row px-2">
-        <div class="col-md-8">
+    <div class="d-flex justify-content-between align-items-center py-2 px-3 border-bottom">
+        <div class="">
             <p class="text-secondary fs-6 m-0">
-                # 0{{$pedido->id}}0
+                # 0{{$pedido->id}}0 -
+                <span class="fw-bold text-padrao">
+                    {{$pedido->via_ifood == true ? 'via iFood' : 'via Foomy'}}
+                </span>
             </p>
-
-            <h4 class="fw-bold fs-5 text-dark text-uppercase text-wrapper">
-                @if($pedido->cliente_id != null)
-                {{$pedido->cliente->nome}}
-                @else
-                {{$pedido->nome_cliente}}
-                @endif
-            </h4>
         </div>
 
         <!-- MODAL CANCELAR PEDIDO -->
@@ -64,20 +60,20 @@
             <!-- DROPDOWN -->
             <div class="dropdown">
                 @if($pedido->status == 0)
-                <button class="btn btn-warning dropdown-toggle rounded-pill" type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-warning dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     Pendente
                 </button>
 
                 @elseif($pedido->status == 1)
-                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     Em preparo
                 </button>
 
                 @elseif($pedido->status == 2)
-                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                <button class="btn btn-outline-dark dropdown-toggle rounded-pill" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     Pronto p/ retirar
                 </button>
 
@@ -240,82 +236,87 @@
     </div>
     <!-- FIM HEADER PEDIDO -->
 
-    <a href="{{route('pedido.gestor', ['id' => $pedido->id])}}" class="text-decoration-none text-black">
 
-        <!-- CORPO PEDIDO -->
-        <div class="fw-medium px-3 py-2 text-secondary">
-            <p class="m-0 d-flex align-items-center">
-                <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
-                    schedule
-                </span>
-                Recebido {{ \Carbon\Carbon::parse($pedido->feito_em)->diffForHumans() }}
+    <!-- INFO CLIENTE -->
+    <div class="d-flex align-items-center px-3 mt-3">
+        <span class="material-symbols-outlined mr-2 fill-icon text-secondary">
+            account_circle
+        </span>
+        <div>
+            <h4 class="fw-bold fs-6 text-dark text-uppercase text-truncate m-0" style="max-width: 205px;">
+                @if($pedido->cliente_id != null)
+                {{$pedido->cliente->nome}}
+                @else
+                {{$pedido->nome_cliente}}
+                @endif
+            </h4>
+            <p class="m-0 text-secondary text-truncate" style="max-width: 205px;">
+                1 pedido na loja
             </p>
-
-            <!-- CONSUMO -->
-            @if($pedido->tipo == "DINE_IN")
-            <p class="m-0 d-flex align-items-center">
-                <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
-                    table_restaurant
-                </span>
-                Mesa {{$pedido->mesa->nome}}
-            </p>
-
-            @elseif($pedido->tipo == "TAKEOUT")
-            <p class="m-0 d-flex align-items-center">
-                <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
-                    shopping_bag
-                </span>
-                Para viagem
-            </p>
-
-            @elseif($pedido->tipo == "DELIVERY")
-            <p class="m-0 d-flex align-items-center">
-                <span class="material-symbols-outlined mr-1 fs-5" style="font-variation-settings: 'FILL' 1;">
-                    two_wheeler
-                </span>
-                Entrega
-            </p>
-            <!-- FIM CONSUMO -->
-
-            <!-- FORMA PAGAMENTO -->
-            @if($pedido->tipo == "DELIVERY")
-
-            <div class="d-flex align-items-center">
-                <img src="{{ asset('storage/icones-forma-pagamento/' .$pedido->forma_pagamento->imagem . '.svg') }}"
-                    alt="" width="20px">
-                <p class="p-0 ml-1 my-0">
-                    @if($pedido->is_pagamento_entrega == 0)
-                    Pago R$ {{number_format($pedido->total, 2, ',', '.')}} online.
-                    @else
-                    Cobrar R$ {{number_format($pedido->total, 2, ',', '.')}} na entrega.
-                    @endif
-                </p>
-            </div>
-
-            @endif
-            <!-- FIM FORMA PAGAMENTO -->
-
-            @if($pedido->via_ifood == false)
-            <p class="m-0 d-flex align-items-center">
-                <span class="material-symbols-outlined mr-1 fs-5 text-secondary"
-                    style="font-variation-settings: 'FILL' 1;">
-                    calendar_clock
-                </span>
-                {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_min)->format('H:i') }}
-                -
-                {{ \Carbon\Carbon::parse($pedido->feito_em)->addMinutes($pedido->entrega->tempo_max)->format('H:i') }}
-            </p>
-            @else
-            <p class="text-padrao fw-semibold mb-0">
-                via iFood
-            </p>
-            @endif
-            @endif
-
         </div>
-        <!-- FIM CORPO PEDIDO -->
+    </div>
+    <!-- FIM INFO CLIENTE -->
 
-    </a>
+    <!-- CONSUMO -->
+    <div class="d-flex align-items-center px-3 my-1">
+        <span class="material-symbols-outlined mr-2 fill-icon text-secondary">
+            @if($pedido->tipo == "DINE_IN")
+            table_restaurant
+            @elseif($pedido->tipo == "TAKEOUT")
+            shopping_bag
+            @elseif($pedido->tipo == "DELIVERY")
+            location_on
+            @endif
+        </span>
+        <div>
+            <p class="fw-bold fs-6 text-dark text-uppercase text-truncate m-0" style="max-width: 205px;">
+                @if($pedido->tipo == "DINE_IN")
+                Mesa {{$pedido->mesa->nome}}
+                @elseif($pedido->tipo == "TAKEOUT")
+                Para retirada no local
+                @elseif($pedido->tipo == "DELIVERY")
+                {{$pedido->entrega->rua}} {{$pedido->entrega->numero}},
+                {{$pedido->entrega->bairro}}, {{$pedido->entrega->cidade}}/{{$pedido->entrega->estado}}.
+                {{$pedido->entrega->complemento}}
+                @endif
+            </p>
+            <p class="m-0 text-secondary text-truncate" style="max-width: 205px;">
+                1 pedido na loja
+            </p>
+        </div>
+    </div>
+    <!-- FIM CONSUMO -->
+
+    <!-- FORMA PAGAMENTO -->
+    <div class="d-flex align-items-center px-3 my-1">
+        <span class="material-symbols-outlined mr-2 fill-icon text-secondary">
+            paid
+        </span>
+        <div>
+            <p class="fw-bold fs-6 text-dark text-uppercase text-truncate m-0" style="max-width: 205px;">
+                @if($pedido->is_pagamento_entrega == 0)
+                Pago R$ {{number_format($pedido->total, 2, ',', '.')}} online.
+                @else
+                Cobrar R$ {{number_format($pedido->total, 2, ',', '.')}} na entrega.
+                @endif
+            </p>
+            <p class="m-0 text-secondary text-truncate" style="max-width: 205px;">
+                {{$pedido->forma_pagamento->nome}}
+            </p>
+        </div>
+    </div>
+    <!-- FIM FORMA PAGAMENTO -->
+
+    <div class="d-flex align-items-center justify-content-between p-3">
+        <p class="m-0 text-secondary" style="font-size: 14px">
+            {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
+            {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
+        </p>
+        <a href="{{route('pedido.gestor', ['id' => $pedido->id])}}" class="btn bg-padrao text-white fw-semibold">
+            Ver perdido
+        </a>
+    </div>
+
 </div>
 @endforeach
 <!-- FIM PEDIDO -->

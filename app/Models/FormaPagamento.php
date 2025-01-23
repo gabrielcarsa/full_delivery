@@ -15,4 +15,9 @@ class FormaPagamento extends Model
     {
         return $this->hasMany(FormaPagamentoLoja::class);
     }
+
+    public function pedido()
+    {
+        return $this->hasMany(Pedido::class);
+    }
 }

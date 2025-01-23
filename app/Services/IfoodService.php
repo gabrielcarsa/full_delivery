@@ -50,7 +50,7 @@ class IfoodService
             return $token->access_token;
         }
 
-        return $this->refreshAccessToken();
+        return $this->postAccessToken(null, null);
     }
 
     //AccessToken

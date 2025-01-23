@@ -167,7 +167,7 @@
                     <div class="accordion-body">
 
                         <!-- PEDIDOS GRID -->
-                        <div class="row g-1" id="pedidos-grid">
+                        <div class="row g-1" class="pedidos-grid">
 
                             <!-- PEDIDOS -->
                             @if(isset($data['pedidos']))
@@ -236,7 +236,7 @@
         <!-- FIM ACCORDION PEDIDOS NOVOS -->
 
         <!-- ACCORDION PEDIDOS TODOS -->
-        <div class="accordion" id="accordionExample">
+        <div class="accordion mt-3" id="accordionExample">
 
             <div class="accordion-item">
                 <h2 class="accordion-header">
