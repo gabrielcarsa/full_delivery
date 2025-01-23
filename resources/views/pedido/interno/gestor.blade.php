@@ -1,22 +1,5 @@
 <x-app-layout>
 
-    <!-- MENSAGENS -->
-    @if(session('success'))
-    <x-toasts-message type="success" message="{{ session('success') }}" />
-    @endif
-
-    @if(session('error'))
-    <x-toasts-message type="danger" message="{{ session('error') }}" />
-    @endif
-
-    @if($errors->any())
-    @foreach ($errors->all() as $error)
-    <x-toasts-message type="danger" message="{{ $error }}" />
-    @endforeach
-    @endif
-    <!-- FIM MENSAGENS -->
-
-
     <!-- CONTAINER PADRAO -->
     <div class="container-padrao">
 
@@ -67,107 +50,23 @@
         </div>
         <!-- FIM HEADER -->
 
-        <!-- FILTROS -->
-        <div class="overflow-x-scroll w100 m-0">
-            <div class="d-flex py-3">
-                @php
-                $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
-                @endphp
-                @if(isset($filtro) && is_numeric($filtro))
-                <a href="{{ route('pedido.gestor') }}"
-                    class="mx-1 p-0 rounded text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
-                    style="min-width: 180px; background-color: #FD0146 !important">
-                    @if($filtro == 0)
-                    Pendentes
-                    @elseif($filtro == 1)
-                    Em preparo
-                    @elseif($filtro == 2)
-                    Pronto p/ retirar
-                    @elseif($filtro == 3)
-                    A caminho
-                    @elseif($filtro == 4)
-                    Concluídos
-                    @elseif($filtro == 5)
-                    Cancelados
-                    @endif
-                    <span class="badge text-bg-light mx-1">
-                        {{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}}
-                    </span>
-                    <span class="material-symbols-outlined ml-1 text-light">
-                        close
-                    </span>
-                </a>
-                @endif
-
-                @if($filtro == null || $filtro != 0)
-                <a href="{{ route('pedido.gestor', ['filtro' => 0]) }}"
-                    class="p-2 mr-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                    style="min-width: 110px;">
-                    Pendentes
-                </a>
-                @endif
-
-                @if($filtro != 1)
-                <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
-                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                    style="min-width: 110px;">
-                    Em preparo
-                </a>
-                @endif
-
-                @if($filtro != 2)
-                <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
-                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                    style="min-width: 110px;">
-                    Pronto p/ retirar
-                </a>
-                @endif
-
-                @if($filtro != 3)
-                <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
-                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                    style="min-width: 110px;">
-                    A caminho
-                </a>
-                @endif
-
-                @if($filtro != 4)
-                <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
-                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                    style="min-width: 110px;">
-                    Concluídos
-                </a>
-                @endif
-
-                @if($filtro != 5)
-                <a href="{{ route('pedido.gestor', ['filtro' => 5]) }}"
-                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                    style="min-width: 110px;">
-                    Cancelados
-                </a>
-                @endif
-
-            </div>
-        </div>
-        <!-- FIM FILTROS -->
-
         <!-- ACCORDION PEDIDOS NOVOS -->
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="accordionPedidoNovos">
 
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button fs-4 text-dark" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button fs-4 fw-bold text-black" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsePedidosNovos" aria-expanded="true"
                         aria-controls="collapsePedidosNovos">
-                        Novos pedidos ()
+                        Novos pedidos <span class="text-secondary ml-1">({{$data['pedidos_pendentes']}})</span>
                     </button>
                 </h2>
                 <div id="collapsePedidosNovos" class="accordion-collapse collapse show"
-                    data-bs-parent="#accordionExample">
+                    data-bs-parent="#accordionPedidoNovos">
                     <div class="accordion-body">
 
                         <!-- PEDIDOS GRID -->
-                        <div class="row g-1" class="pedidos-grid">
+                        <div class="row g-1" id="novos-pedidos-grid">
 
                             <!-- PEDIDOS -->
                             @if(isset($data['pedidos']))
@@ -236,22 +135,96 @@
         <!-- FIM ACCORDION PEDIDOS NOVOS -->
 
         <!-- ACCORDION PEDIDOS TODOS -->
-        <div class="accordion mt-3" id="accordionExample">
+        <div class="accordion mt-3" id="accordionPedidos">
 
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button fs-4 text-dark" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button fs-4 fw-bold text-black" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsePedidosTodos" aria-expanded="true"
                         aria-controls="collapsePedidosTodos">
-                        Todos pedidos ()
+                        Todos pedidos <span class="text-secondary ml-1">({{$data['todos_pedidos']}})</span>
                     </button>
+
                 </h2>
                 <div id="collapsePedidosTodos" class="accordion-collapse collapse show"
-                    data-bs-parent="#accordionExample">
+                    data-bs-parent="#accordionPedidos">
                     <div class="accordion-body">
+                        <!-- FILTROS -->
+                        <div class="overflow-x-scroll w100 m-0">
+                            <div class="d-flex py-3">
+                                @php
+                                $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
+                                @endphp
+                                @if(isset($filtro) && is_numeric($filtro))
+                                <a href="{{ route('pedido.gestor') }}"
+                                    class="mx-1 p-0 rounded text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
+                                    style="min-width: 180px; background-color: #FD0146 !important">
+                                    @if($filtro == 1)
+                                    Em preparo
+                                    @elseif($filtro == 2)
+                                    Pronto p/ retirar
+                                    @elseif($filtro == 3)
+                                    A caminho
+                                    @elseif($filtro == 4)
+                                    Concluídos
+                                    @elseif($filtro == 5)
+                                    Cancelados
+                                    @endif
+                                    <span class="badge text-bg-light mx-1">
+                                        {{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}}
+                                    </span>
+                                    <span class="material-symbols-outlined ml-1 text-light">
+                                        close
+                                    </span>
+                                </a>
+                                @endif
+
+                                @if($filtro != 1)
+                                <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
+                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    style="min-width: 110px;">
+                                    Em preparo
+                                </a>
+                                @endif
+
+                                @if($filtro != 2)
+                                <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
+                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    style="min-width: 110px;">
+                                    Pronto p/ retirar
+                                </a>
+                                @endif
+
+                                @if($filtro != 3)
+                                <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
+                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    style="min-width: 110px;">
+                                    A caminho
+                                </a>
+                                @endif
+
+                                @if($filtro != 4)
+                                <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
+                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    style="min-width: 110px;">
+                                    Concluídos
+                                </a>
+                                @endif
+
+                                @if($filtro != 5)
+                                <a href="{{ route('pedido.gestor', ['filtro' => 5]) }}"
+                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    style="min-width: 110px;">
+                                    Cancelados
+                                </a>
+                                @endif
+
+                            </div>
+                        </div>
+                        <!-- FIM FILTROS -->
 
                         <!-- PEDIDOS GRID -->
-                        <div class="row g-1" id="pedidos-grid">
+                        <div class="row g-3" id="pedidos-grid">
 
                             <!-- PEDIDOS -->
                             @if(isset($data['pedidos']))
@@ -303,7 +276,6 @@
                             });
                             </script>
                             @endif
-
 
                             @endforeach
 
@@ -368,24 +340,46 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script type="text/javascript">
+    // ATUALIZAR PEDIDOS A CADA 30s
     $(document).ready(function() {
+        // ATUALIZANDO TODOS OS PEDIDOS
         function atualizarPedidos() {
             $.ajax({
                 url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null, 'filtro' => request()->get('filtro') ] ) }}",
                 type: 'GET',
                 success: function(data) {
-                    $('#pedidos-grid').html(data); // Insere o HTML retornado
+                    $('#pedidos-grid').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erro ao atualizar pedidos: ", error);
+                }
+            });
+        }
+        // ATUALIZANDO TODOS OS PEDIDOS NOVOS
+        function atualizarPedidosNovos() {
+            $.ajax({
+                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null, 'novos_pedidos'=> 'true' ] ) }}",
+                type: 'GET',
+                success: function(data) {
+                    $('#novos-pedidos-grid').html(data); // Insere o HTML retornado
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erro ao atualizar pedidos: ", error);
                 }
             });
         }
 
         // Atualiza os pedidos a cada 30 segundos
         setInterval(atualizarPedidos, 30000);
+        setInterval(atualizarPedidosNovos, 30000);
 
         // Primeira chamada ao carregar a página
         atualizarPedidos();
+        atualizarPedidosNovos();
+
     });
 
+    //POLLING API IFOOD A CADA 30s
     $(document).ready(function() {
 
         function pollingAPI() {

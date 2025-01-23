@@ -88,18 +88,34 @@ class PedidoController extends Controller
         $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
 
         $polling_eventos = PollingEvento::where('loja_id', $loja_id)->limit(3)->orderBy('created_at','DESC')->get();
-        
+
+        //Variáveis de contagem
+        $todos_pedidos = 0;
+        $pedidos_pendentes = 0;
+
+        //Calcular
+        foreach($pedidos as $p){
+            if($p->status == 0){
+                $pedidos_pendentes++;
+            }elseif($p->status != 0 && $p->status != 5){
+                $todos_pedidos++;
+            }
+        }        
+
         $data = [
             'loja' => $loja,
             'pedido' => $pedido,
             'pedidos' => $pedidos,
             'token' => $token,
             'polling_eventos' => $polling_eventos,
+            'todos_pedidos' => $todos_pedidos,
+            'pedidos_pendentes' => $pedidos_pendentes,
         ];
 
         return view('pedido/interno/gestor', compact('data'));    
     }
 
+    
     //ATUALIZAR DADOS DO PEDIDO NOS CARDS
     public function refresh_pedidos(Request $request){
 
@@ -115,7 +131,14 @@ class PedidoController extends Controller
         //Query pedidos da loja
         $pedidos = Pedido::where('loja_id', $loja_id)
         ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
+        ->where('status', '!=', 5)
         ->orderBy('feito_em', 'DESC');
+
+        if ($request->has('novos_pedidos') && $request->novos_pedidos === 'true') {
+            $pedidos->where('status', 0);
+        }else{
+            $pedidos->where('status', '!=', 0);
+        }
 
         //Filtros
         $filtro = $request->input('filtro');
