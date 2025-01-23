@@ -119,7 +119,6 @@
                             </script>
                             @endif
 
-
                             @endforeach
 
                             @endif
@@ -334,7 +333,7 @@
         // ATUALIZANDO TODOS OS PEDIDOS
         function atualizarPedidos() {
             $.ajax({
-                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null, 'filtro' => request()->get('filtro') ] ) }}",
+                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) && $data['pedido']->status != 0 ? $data['pedido']->id : null, 'filtro' => request()->get('filtro') ] ) }}",
                 type: 'GET',
                 success: function(data) {
                     $('#pedidos-grid').html(data);
@@ -347,7 +346,7 @@
         // ATUALIZANDO TODOS OS PEDIDOS NOVOS
         function atualizarPedidosNovos() {
             $.ajax({
-                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) ? $data['pedido']->id : null, 'novos_pedidos'=> 'true' ] ) }}",
+                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) && $data['pedido']->status == 0 ? $data['pedido']->id : null, 'novos_pedidos'=> 'true' ] ) }}",
                 type: 'GET',
                 success: function(data) {
                     $('#novos-pedidos-grid').html(data); // Insere o HTML retornado

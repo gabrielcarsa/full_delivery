@@ -316,7 +316,7 @@
                 {{\Carbon\Carbon::parse($pedido->feito_em)->format('d/m/Y')}} -
                 {{\Carbon\Carbon::parse($pedido->feito_em)->format('H:i')}}
             </p>
-            <a href="{{route('pedido.gestor', ['id' => $pedido->id])}}" class="btn bg-padrao text-white fw-semibold">
+            <a href="{{route('pedido.painel', ['id' => $pedido->id])}}" class="btn bg-padrao text-white fw-semibold">
                 Ver perdido
             </a>
         </div>
