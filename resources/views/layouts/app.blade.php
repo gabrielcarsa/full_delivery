@@ -46,7 +46,7 @@
     @endforeach
     @endif
     <!-- FIM MENSAGENS -->
-     
+
     <x-banner />
 
     <div class="min-h-screen bg-gray-100">
@@ -60,7 +60,7 @@
 
                         <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
                         <li class="d-flex align-items-center justify-content-center dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
@@ -70,13 +70,24 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownCardapio">
                                 <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Pedidos
+                                    </p>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('pedido.gestor') }}">
-                                        Gestor de Pedidos
+                                        Painel de Pedidos
                                     </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Mesas
+                                    </p>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('mesa.gestor') }}">
-                                        Gestor de Mesas
+                                        Painel de Mesas
                                     </a>
                                 </li>
                             </ul>
@@ -84,7 +95,7 @@
 
                         <!-- Nav Item - CLIENTES DROPEND -->
                         <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
                                     groups
@@ -129,7 +140,7 @@
 
                         <!-- Nav Item - LOJAS DROPEND -->
                         <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
@@ -142,7 +153,7 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
                                     <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Sua loja
+                                        {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : 'Sua loja' }}
                                     </p>
                                 </li>
                                 <li>
@@ -166,6 +177,17 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'integracoes']) }}">
+                                        Integrações
+                                    </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Mesas
+                                    </p>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('mesa') }}">
                                         Cadastro de Mesas
                                     </a>
@@ -175,23 +197,44 @@
 
                         <!-- Nav Item - ENTREGAS DROPEND -->
                         <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
                                     sports_motorsports
                                 </span>
-                                <p class="m-0 p-0">Entregas</p>
+                                <p class="m-0 p-0">Delivery</p>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Operação delivery
+                                    </p>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('loja.entrega_taxas') }}">
-                                        Taxas
+                                        Taxas de entrega
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('loja.entrega_areas') }}">
-                                        Áreas
+                                        Áreas para entrega
+                                    </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Aplicativo personalizado
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="">
+                                        Configurações gerais
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="">
+                                        Notificações e marketing
                                     </a>
                                 </li>
                             </ul>
@@ -200,7 +243,7 @@
 
                         <!-- Nav Item - CARDAPIO DROPEND -->
                         <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
@@ -210,11 +253,18 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
-                                    <a class="dropdown-item" href="#">Visual</a>
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Cardápio
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Layout
+                                    </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('categoria_produto') }}">
-                                        Categorias e produtos
+                                        Categoria e produtos
                                     </a>
                                 </li>
                             </ul>
@@ -222,7 +272,7 @@
 
                         <!-- Nav Item - FINANCEIRO DROPEND -->
                         <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
@@ -251,6 +301,11 @@
                                         Movimentações
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
+                                        Categoria Financeiro
+                                    </a>
+                                </li>
                                 <hr>
                                 <li>
                                     <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
@@ -277,23 +332,32 @@
 
                         <!-- Nav Item - FINANCEIRO DROPEND -->
                         <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary" href="#"
+                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
                                 data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <span class="material-symbols-outlined fs-4">
-                                    settings
+                                    package_2
                                 </span>
                                 <p class="m-0 p-0">
-                                    Ajustes
+                                    Estoque
                                 </p>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
-                                        Categoria Financeiro
+                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
+                                        Controle Estoque
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="">
+                                        Painel
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a class="dropdown-item" href="">
+                                        Insumos
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
