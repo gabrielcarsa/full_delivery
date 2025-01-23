@@ -157,7 +157,7 @@
                                 @endphp
                                 @if(isset($filtro) && is_numeric($filtro))
                                 <a href="{{ route('pedido.gestor') }}"
-                                    class="mx-1 p-0 rounded text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
+                                    class="mx-1 px-2 rounded-pill text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
                                     style="min-width: 180px; background-color: #FD0146 !important">
                                     @if($filtro == 1)
                                     Em preparo
@@ -170,9 +170,6 @@
                                     @elseif($filtro == 5)
                                     Cancelados
                                     @endif
-                                    <span class="badge text-bg-light mx-1">
-                                        {{isset($data['pedidos']) ? $data['pedidos']->count() : '0'}}
-                                    </span>
                                     <span class="material-symbols-outlined ml-1 text-light">
                                         close
                                     </span>
@@ -181,7 +178,7 @@
 
                                 @if($filtro != 1)
                                 <a href="{{ route('pedido.gestor', ['filtro' => 1]) }}"
-                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Em preparo
                                 </a>
@@ -189,7 +186,7 @@
 
                                 @if($filtro != 2)
                                 <a href="{{ route('pedido.gestor', ['filtro' => 2]) }}"
-                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Pronto p/ retirar
                                 </a>
@@ -197,7 +194,7 @@
 
                                 @if($filtro != 3)
                                 <a href="{{ route('pedido.gestor', ['filtro' => 3]) }}"
-                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     A caminho
                                 </a>
@@ -205,17 +202,9 @@
 
                                 @if($filtro != 4)
                                 <a href="{{ route('pedido.gestor', ['filtro' => 4]) }}"
-                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
+                                    class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Concluídos
-                                </a>
-                                @endif
-
-                                @if($filtro != 5)
-                                <a href="{{ route('pedido.gestor', ['filtro' => 5]) }}"
-                                    class="p-2 mx-1 border rounded bg-white text-decoration-none text-secondary text-center shadow-sm"
-                                    style="min-width: 110px;">
-                                    Cancelados
                                 </a>
                                 @endif
 
