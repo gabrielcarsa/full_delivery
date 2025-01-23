@@ -9,6 +9,8 @@ use App\Models\OpcionalProduto;
 use App\Models\Pedido;
 use App\Models\ItemPedido;
 use App\Models\OpcionalItem;
+use App\Models\Cliente;
+use App\Models\CategoriaFinanceiro;
 use App\Models\CustomizacaoOpcional;
 use App\Models\CustomizacaoOpcionalItem;
 use App\Models\Lancamento;
@@ -247,13 +249,17 @@ class PollingIfoodService
         CADASTRANDO FINANCEIRO
         ----------------------------*/
 
+        //Obtendo cadastro padrão de categoria para pedido e cliente
+        $cliente_sem_cadastro = Cliente::where('is_client_default', 1)->first();
+        $categoria_financeiro_pedido = CategoriaFinanceiro::where('is_order', 1)->first();
+
         //Cadastrando lancamento
         $lancamento = Lancamento::create([
             'loja_id' => $loja_id,
             'tipo' => 1,
-            'cliente_id' => 1, //cliente genérico
+            'cliente_id' => $cliente_sem_cadastro->id, //cliente genérico
             'fornecedor_id' => null,
-            'categoria_financeiro_id' => 1, //categoria de Pedido
+            'categoria_financeiro_id' => $categoria_financeiro_pedido->id, //categoria de Pedido
             'quantidade_parcela' => 1,
             'data_vencimento' => $pedido->feito_em,
             'valor_parcela' => $pedido->total,
