@@ -12,11 +12,23 @@ class CategoriaFinanceiroController extends Controller
     //INDEX
     public function index(){
 
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+        }
+
+        //Info Loja
+        $loja_id = session('lojaConectado')['id'];
+
         //Obtendo todas categorias a receber
-        $categorias_pagar = CategoriaFinanceiro::where('tipo', 0)->get();
+        $categorias_pagar = CategoriaFinanceiro::where('tipo', 0)
+        ->where('loja_id', $loja_id)
+        ->get();
 
         //Obtendo todas categorias a pagar
-        $categorias_receber = CategoriaFinanceiro::where('tipo', 1)->get();
+        $categorias_receber = CategoriaFinanceiro::where('tipo', 1)
+        ->where('loja_id', $loja_id)
+        ->get();
 
         $categorias = [
             'categorias_receber' => $categorias_receber,
@@ -28,6 +40,14 @@ class CategoriaFinanceiroController extends Controller
 
     //STORE
     public function store(Request $request){
+
+        //Verificar se há loja selecionado
+        if(!session('lojaConectado')){
+            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+        }
+
+        //Info Loja
+        $loja_id = session('lojaConectado')['id'];
 
         // Validação do formulário
         $validator = Validator::make($request->all(), [
@@ -48,6 +68,7 @@ class CategoriaFinanceiroController extends Controller
             'tipo' => $tipo,
             'nome' => $request->input('nome'),
             'cadastrado_usuario_id' => Auth::guard()->user()->id,
+            'loja_id' => $loja_id,
         ]);
 
         return redirect()->back()->with('success', 'Cadastrado com sucesso');

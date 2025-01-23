@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Loja;
 use App\Models\UserLoja;
 use App\Models\HorarioFuncionamento;
+use App\Models\CategoriaFinanceiro;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -175,6 +177,25 @@ class LojaController extends Controller
                 'nivel_acesso' => 'ADMIN',
                 'cargo' => 'DONO',
                 'cadastrado_usuario_id' => Auth::user()->id,
+            ]);
+
+            //Criando categoria do financeiro de entrada de pedido
+            CategoriaFinanceiro::create([
+                'tipo' => 1,
+                'nome' => 'PEDIDOS',
+                'cadastrado_usuario_id' => Auth::guard()->user()->id,
+                'loja_id' => $loja->id,
+                'is_order' => true,
+            ]);
+
+            //Criando cliente para receber pedidos quando cliente não é cadastrado
+            Cliente::create([
+                'nome' => 'CLIENTE SEM CADASTRO',
+                'cpf' => '00000000000',
+                'email' => 'sem_cadastro@foomy.com',
+                'telefone' => '67999999999',
+                'loja_id' => $loja->id,
+                'is_client_default' => true,
             ]);
 
             $step = 2;

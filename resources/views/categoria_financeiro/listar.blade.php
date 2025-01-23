@@ -1,64 +1,6 @@
 <x-app-layout>
 
-    <div class="container">
-
-        <!-- MENSAGENS -->
-        <div class="toast-container position-fixed top-0 end-0">
-            @if(session('success'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-success" style="font-variation-settings:'FILL' 1;">
-                        check_circle
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('success') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if (session('error'))
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        <p class="fs-5 m-0">
-                            {{ session('error') }}
-                        </p>
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-            @if ($errors->any())
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true"
-                data-bs-autohide="true">
-                <div class="d-flex align-items-center p-3">
-                    <span class="material-symbols-outlined fs-1 text-padrao" style="font-variation-settings:'FILL' 1;">
-                        error
-                    </span>
-                    <div class="toast-body">
-                        @foreach ($errors->all() as $error)
-                        <p class="fs-5 m-0">
-                            {{ $error }}
-                        </p>
-                        @endforeach
-                    </div>
-                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-            @endif
-        </div>
-        <!-- FIM MENSAGENS -->
+    <div class="container-padrao">
 
         <!-- HEADER -->
         <h2 class="my-3 fw-bolder fs-1">
@@ -143,7 +85,7 @@
                 </p>
 
                 <!-- TABLE -->
-                <table class="table table-padrao border-top table align-middle">
+                <table class="table align-middle">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -156,8 +98,15 @@
                         <!-- categorias -->
                         @foreach ($categorias['categorias_receber'] as $categoria)
                         <tr>
-                            <th scope="row">{{$categoria->id}}</th>
-                            <td class="text-uppercase">{{$categoria->nome}}</td>
+                            <td>{{$categoria->id}}</td>
+                            <td class="">
+                                <p class="m-0 fw-semibold text-">
+                                    {{$categoria->nome}}
+                                </p>
+                                <p class="m-0 text-secondary">
+                                    Esta categoria é criada automáticamente para ser vinculada a todos pedidos recebidos.
+                                </p>
+                            </td>
                             <td class="text-truncate" style="max-width: 30px">
                                 {{$categoria->usuario_cadastrador->name}}
                             </td>
@@ -194,7 +143,9 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Não</button>
-                                            <form action="{{ route('categoria_financeiro.excluir', ['id' => $categoria->id]) }}" method="POST">
+                                            <form
+                                                action="{{ route('categoria_financeiro.excluir', ['id' => $categoria->id]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">
@@ -263,7 +214,7 @@
                 </p>
 
                 <!-- TABLE -->
-                <table class="table table-padrao border-top table align-middle">
+                <table class="table align-middle">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -314,7 +265,9 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Não</button>
-                                            <form action="{{ route('categoria_financeiro.excluir', ['id' => $categoria->id]) }}" method="POST">
+                                            <form
+                                                action="{{ route('categoria_financeiro.excluir', ['id' => $categoria->id]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">
