@@ -18,27 +18,23 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class);
     }
 
-    // Relação muitos para um com Cliente que cadastrou
-    public function cadastradoPor()
+    public function created_by_user()
     {
-        return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 
-    // Relação muitos para um com Cliente que alterou
-    public function alteradoPor()
+   public function updated_by_user()
     {
-        return $this->belongsTo(User::class, 'alterado_usuario_id');
+        return $this->belongsTo(User::class, 'updated_by_user_id');
     }
 
-    // Relação um para muitos com Itens de Pedido
+    public function product_options_category()
+    {
+        return $this->hasMany(ProductOptionsCategory::class);
+    }
+  
     public function itensPedido()
     {
         return $this->hasMany(ItemPedido::class, 'produto_id');
-    }
-
-    // Relação um para muitos com Opcionais de Produto
-    public function categoria_opcional()
-    {
-        return $this->hasMany(CategoriaOpcional::class, 'produto_id');
     }
 }

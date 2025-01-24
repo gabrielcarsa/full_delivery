@@ -31,10 +31,9 @@ class Store extends Model
       return $this->HasMany(IfoodToken::class);
    }
    
-
-   public function categorias()
+   public function product_category()
    {
-      return $this->hasMany(CategoriaProduto::class);
+      return $this->hasMany(ProductCategory::class);
    }
 
    public function categoria_financeiro()
