@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductOptions extends Model
 {
     use HasFactory;
-    protected $table = 'product';
+    protected $table = 'product_options';
     protected $guarded = [];
 
     //RELACIONAMENTOS
 
-    public function product_category()
+    public function product_options_category()
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductOptions::class);
     }
 
     public function created_by_user()
@@ -28,13 +28,13 @@ class Product extends Model
         return $this->belongsTo(User::class, 'updated_by_user_id');
     }
 
-    public function product_options_category()
+    public function opcional_item()
     {
-        return $this->hasMany(ProductOptionsCategory::class);
+        return $this->hasMany(OpcionalItem::class, 'opcional_produto_id');
     }
-  
-    public function itensPedido()
+
+    public function customizacao_opcional()
     {
-        return $this->hasMany(ItemPedido::class, 'produto_id');
+        return $this->hasMany(customizacaoOpcional::class);
     }
 }
