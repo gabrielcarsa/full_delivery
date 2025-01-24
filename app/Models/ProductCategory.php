@@ -9,24 +9,23 @@ class CategoriaProduto extends Model
 {
     use HasFactory;
     protected $table = 'categoria_produto';
-
     protected $guarded = [];
 
     //RELACIONAMENTOS
     
-    public function loja()
+    public function store()
     {
-        return $this->belongsTo(Loja::class);
+        return $this->belongsTo(Store::class);
     }
 
-    public function usuarioCadastrador()
+    public function created_by_user()
     {
-        return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+       return $this->belongsTo(User::class, 'created_by_user_id');
     }
-
-    public function usuarioAlterador()
+ 
+    public function updated_by_user()
     {
-        return $this->belongsTo(User::class, 'alterado_usuario_id');
+       return $this->belongsTo(User::class, 'updated_by_user_id');
     }
     
     public function produto()
