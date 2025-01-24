@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class IfoodToken extends Model
 {
     use HasFactory;
-    protected $table = 'ifood_tokens';
+    protected $table = 'ifood_token';
 
     protected $fillable = ['access_token', 'expires_at', 'refresh_token', 'loja_id'];
     protected $casts = [
         'expires_at' => 'datetime',
     ];
 
-    public function loja()
+    public function store()
     {
-        return $this->belogsTo(Loja::class);
+        return $this->belogsTo(Store::class);
     }
 }

@@ -8,19 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 class Loja extends Model
 {
    use HasFactory;
-   protected $table = 'loja';
+   protected $table = 'store';
 
    //RELACIONAMENTOS 
-
-   public function usuarioCadastrador()
+   public function created_by_user()
    {
-      return $this->belongsTo(User::class, 'cadastrado_usuario_id');
+      return $this->belongsTo(User::class, 'created_by_user_id');
    }
 
-   public function usuarioAlterador()
+   public function updated_by_user()
    {
-      return $this->belongsTo(User::class, 'alterado_usuario_id');
+      return $this->belongsTo(User::class, 'updated_by_user_id');
    }
+   
+   public function store_delivery()
+   {
+      return $this->hasOne(StoreDelivery::class);
+   }
+
+   public function ifood_token()
+   {
+      return $this->HasMany(IfoodToken::class);
+   }
+   
 
    public function categorias()
    {
@@ -66,12 +76,7 @@ class Loja extends Model
    {
       return $this->hasMany(Movimentacao::class);
    }
-   
-   public function ifood_token()
-   {
-      return $this->HasMany(IfoodToken::class);
-   }
-   
+
    public function user_loja()
    {
       return $this->HasMany(UserLoja::class);
