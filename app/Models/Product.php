@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Produto extends Model
+class Product extends Model
 {
     use HasFactory;
-    protected $table = 'produto';
-
+    protected $table = 'product';
     protected $guarded = [];
 
     //RELACIONAMENTOS
-    
-    // Relação muitos para um com Categoria de Produto
-    public function categoria()
+
+    public function product_category()
     {
-        return $this->belongsTo(CategoriaProduto::class, 'categoria_id');
+        return $this->belongsTo(ProductCategory::class);
     }
 
     // Relação muitos para um com Cliente que cadastrou

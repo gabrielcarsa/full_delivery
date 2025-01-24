@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CategoriaProduto extends Model
+class ProductCategory extends Model
 {
     use HasFactory;
-    protected $table = 'categoria_produto';
+    protected $table = 'product_category';
     protected $guarded = [];
 
     //RELACIONAMENTOS
@@ -28,8 +28,8 @@ class CategoriaProduto extends Model
        return $this->belongsTo(User::class, 'updated_by_user_id');
     }
     
-    public function produto()
+    public function product()
     {
-        return $this->hasMany(Produto::class);
+        return $this->hasMany(Product::class);
     }
 }
