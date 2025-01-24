@@ -28,13 +28,14 @@ class ProductOptions extends Model
         return $this->belongsTo(User::class, 'updated_by_user_id');
     }
 
+    public function product_options_customizations()
+    {
+        return $this->hasMany(ProductOptionsCustomizations::class);
+    }
+
     public function opcional_item()
     {
         return $this->hasMany(OpcionalItem::class, 'opcional_produto_id');
     }
 
-    public function customizacao_opcional()
-    {
-        return $this->hasMany(customizacaoOpcional::class);
-    }
 }
