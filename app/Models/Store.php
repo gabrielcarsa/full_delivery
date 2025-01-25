@@ -36,6 +36,11 @@ class Store extends Model
       return $this->hasMany(ProductCategory::class);
    }
 
+   public function store_opening_hours()
+   {
+      return $this->hasMany(StoreOpeningHours::class);
+   }
+
    public function categoria_financeiro()
    {
       return $this->hasMany(CategoriaFinanceiro::class);
@@ -44,11 +49,6 @@ class Store extends Model
    public function pedidos()
    {
       return $this->hasMany(Pedido::class);
-   }
-
-   public function horarios()
-   {
-      return $this->hasMany(HorarioFuncionamento::class);
    }
 
    public function cupons()
