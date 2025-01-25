@@ -10,7 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Users extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
@@ -57,8 +57,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function user_loja()
+    public function store_users()
     {
-        return $this->HasMany(UserLoja::class);
+        return $this->HasMany(StoreUsers::class);
     }
 }
