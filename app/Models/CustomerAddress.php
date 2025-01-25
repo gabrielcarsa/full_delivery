@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClienteEndereco extends Model
+class CustomerAddress extends Model
 {
     use HasFactory;
-    protected $table = 'cliente_endereco';
+    protected $table = 'customer_address';
 
-    public function cliente()
+    public function customer()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Customer::class);
     }
 }

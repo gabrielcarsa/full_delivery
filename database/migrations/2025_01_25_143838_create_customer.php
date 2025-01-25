@@ -20,14 +20,6 @@ return new class extends Migration
             $table->string('phone', 50); // Telefone
             $table->string('email', 100)->unique()->nullable(); // Email (opcional, mas único)
             $table->string('password', 255); // Senha
-            $table->string('street', 100)->nullable(); // Rua
-            $table->string('neighborhood', 100)->nullable(); // Bairro
-            $table->string('number', 20)->nullable(); // Número
-            $table->string('complement', 100)->nullable(); // Complemento
-            $table->string('city', 100)->nullable(); // Cidade
-            $table->string('state', 100)->nullable(); // Estado
-            $table->string('country', 100)->nullable(); // País
-            $table->string('zip_code', 20)->nullable(); // CEP
             $table->timestamps(); // Campos created_at e updated_at
         });
     }

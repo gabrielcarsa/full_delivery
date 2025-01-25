@@ -48,6 +48,11 @@ class Customer extends Authenticatable
         return $this->belongsTo(Store::class);
     }
 
+    public function customer_address()
+    {
+        return $this->hasMany(CustomerAddress::class);
+    }
+    
     public function pedido()
     {
         return $this->hasMany(Pedido::class);
@@ -56,11 +61,6 @@ class Customer extends Authenticatable
     public function uso_cupom()
     {
         return $this->belongsToMany(UsoCupom::class);
-    }
-
-    public function cliente_endereco()
-    {
-        return $this->hasMany(ClienteEndereco::class);
     }
 
     public function lancamento(){
