@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Customer extends Authenticatable
+class Customers extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $table = 'customer';
+    protected $table = 'customers';
 
     /**
      * The attributes that are mass assignable.
@@ -45,7 +45,7 @@ class Customer extends Authenticatable
 
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Stores::class);
     }
 
     public function customer_address()
@@ -53,18 +53,18 @@ class Customer extends Authenticatable
         return $this->hasMany(CustomerAddress::class);
     }
     
-    public function pedido()
+    public function orders()
     {
-        return $this->hasMany(Pedido::class);
+        return $this->hasMany(Orders::class);
     }
 
-    public function uso_cupom()
+    public function store_coupon_uses()
     {
-        return $this->belongsToMany(UsoCupom::class);
+        return $this->belongsToMany(StoreCouponUses::class);
     }
 
-    public function lancamento(){
-        return $this->hasMany(Lancamento::class);
+    public function financial_transactions(){
+        return $this->hasMany(FinancialTransactions::class);
     }
 
 }

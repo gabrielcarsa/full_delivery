@@ -25,7 +25,7 @@ class StoreCoupons extends Model
       return $this->belongsTo(Stores::class);
    }
 
-   public function store_coupon_use()
+   public function store_coupon_uses()
    {
       return $this->hasMany(StoreCouponUses::class);
    }

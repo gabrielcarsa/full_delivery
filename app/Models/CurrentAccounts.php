@@ -15,7 +15,7 @@ class CurrentAccounts extends Model
       return $this->hasMany(FinancialMovements::class);
    }
 
-   public function stores()
+   public function store()
    {
       return $this->belongsTo(Stores::class);
    }

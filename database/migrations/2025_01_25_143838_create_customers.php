@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_customer_default')->default(false); // Cliente padrão ou não
             $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Relacionamento com store
