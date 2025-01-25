@@ -41,6 +41,11 @@ class Store extends Model
       return $this->hasMany(StoreOpeningHours::class);
    }
 
+   public function client()
+   {
+      return $this->hasMany(Client::class);
+   }
+
    public function categoria_financeiro()
    {
       return $this->hasMany(CategoriaFinanceiro::class);

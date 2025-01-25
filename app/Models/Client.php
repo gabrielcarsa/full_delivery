@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Cliente extends Authenticatable
+class Client extends Authenticatable
 {
     use HasFactory, Notifiable;
-    protected $table = 'cliente';
+    protected $table = 'client';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,7 @@ class Cliente extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nome', 'email', 'senha', 'telefone',
+        'name', 'email', 'password', 'phone',
     ];
 
     /**
@@ -27,7 +27,7 @@ class Cliente extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'senha',
+        'password',
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
@@ -41,6 +41,11 @@ class Cliente extends Authenticatable
     public function getAuthPassword()
     {
         return $this->senha;
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
     }
 
     public function pedido()
