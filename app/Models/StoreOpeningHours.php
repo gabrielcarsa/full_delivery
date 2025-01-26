@@ -13,7 +13,7 @@ class StoreOpeningHours extends Model
     //RELACIONAMENTOS
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Stores::class);
     }
 
     public function created_by_user()

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductOptionsCustomizations extends Model
+class ProductOptionCustomizations extends Model
 {
     use HasFactory;
-    protected $table = 'product_options_customizations';
+    protected $table = 'product_option_customizations';
     protected $guarded = [];
 
     //RELACIONAMENTOS
@@ -18,8 +18,8 @@ class ProductOptionsCustomizations extends Model
         return $this->belongsTo(ProductOptions::class);
     }
 
-    public function customizacao_opcional_item()
+    public function order_product_option_customizations()
     {
-        return $this->hasMany(CustomizacaoOpcionalItem::class);
+        return $this->hasMany(OrderProductOptionCustomizations::class);
     }
 }

@@ -58,9 +58,9 @@ class Customers extends Authenticatable
         return $this->hasMany(Orders::class);
     }
 
-    public function store_coupon_uses()
+    public function store_coupon_usage()
     {
-        return $this->belongsToMany(StoreCouponUses::class);
+        return $this->belongsToMany(StoreCouponUsages::class);
     }
 
     public function financial_transactions(){

@@ -13,9 +13,9 @@ class ProductOptions extends Model
 
     //RELACIONAMENTOS
 
-    public function product_options_category()
+    public function product_option_category()
     {
-        return $this->belongsTo(ProductOptions::class);
+        return $this->belongsTo(ProductOptionCategories::class);
     }
 
     public function created_by_user()
@@ -28,14 +28,14 @@ class ProductOptions extends Model
         return $this->belongsTo(User::class, 'updated_by_user_id');
     }
 
-    public function product_options_customizations()
+    public function product_option_customizations()
     {
-        return $this->hasMany(ProductOptionsCustomizations::class);
+        return $this->hasMany(ProductOptionCustomizations::class);
     }
 
-    public function opcional_item()
+    public function order_product_options()
     {
-        return $this->hasMany(OpcionalItem::class, 'opcional_produto_id');
+        return $this->hasMany(OrderProductOptions::class);
     }
 
 }

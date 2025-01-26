@@ -15,9 +15,9 @@ class FinancialCategories extends Model
       return $this->hasMany(FinancialTransactions::class);
    }
 
-   public function stores()
+   public function store()
    {
-      return $this->belongsTo(Loja::class);
+      return $this->belongsTo(Stores::class);
    }
 
    public function created_by_user()

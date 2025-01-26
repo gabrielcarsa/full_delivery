@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Saldo extends Model
+class CheckingAccountBalances extends Model
 {
     use HasFactory;
-    protected $table = 'saldo';
+    protected $table = 'checking_account_balances';
     protected $guarded = [];
 
-    public function conta_corrente()
+    public function checking_account()
     {
-        return $this->belongsTo(ContaCorrente::class);
+        return $this->belongsTo(CheckingAccount::class);
     }
 }

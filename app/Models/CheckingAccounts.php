@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CurrentAccounts extends Model
+class CheckingAccounts extends Model
 {
    use HasFactory;
-   protected $table = 'current_accounts';
+   protected $table = 'checking_accounts';
    protected $guarded = [];
 
    public function financial_movements(){
@@ -30,8 +30,8 @@ class CurrentAccounts extends Model
       return $this->belongsTo(Users::class, 'updated_by_user_id');
    }
 
-   public function current_account_balances(){
-      return $this->hasMany(CurrentAccountBalances::class);
+   public function checking_account_balances(){
+      return $this->hasMany(CheckingAccountBalances::class);
    }
 
    public function store_payment_methods(){

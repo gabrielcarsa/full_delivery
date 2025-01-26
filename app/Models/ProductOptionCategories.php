@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductOptionsCategory extends Model
+class ProductOptionCategories extends Model
 {
     use HasFactory;
-    protected $table = 'product_options_category';
+    protected $table = 'product_option_categories';
     protected $guarded = [];
 
 
     public function product()
     {
-        return $this->belongsTo(Produto::class);
+        return $this->belongsTo(Products::class);
     }
     
     public function created_by_user()

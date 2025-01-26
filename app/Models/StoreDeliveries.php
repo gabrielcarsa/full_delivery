@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StoreDelivery extends Model
+class StoreDeliveries extends Model
 {
     use HasFactory;
-    protected $table = 'store_delivery';
+    protected $table = 'store_deliveries';
 
     public function store()
     {
-       return $this->belongsTo(Store::class);
+       return $this->belongsTo(Stores::class);
     }
  
 }

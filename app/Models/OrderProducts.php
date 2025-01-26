@@ -23,8 +23,8 @@ class OrderProducts extends Model
         return $this->belongsTo(Products::class);
     }
 
-    public function order_optionals()
+    public function order_product_options()
     {
-        return $this->hasMany(OpcionalItem::class);
+        return $this->hasMany(OrderProductOptions::class);
     }
 }

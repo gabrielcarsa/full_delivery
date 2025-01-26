@@ -14,7 +14,7 @@ class OrderProductOptions extends Model
 
     public function order_product()
     {
-        return $this->belongsTo(OrderProduct::class);
+        return $this->belongsTo(OrderProducts::class);
     }
 
     public function product_option()

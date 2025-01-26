@@ -21,9 +21,9 @@ class Stores extends Model
       return $this->belongsTo(Users::class, 'updated_by_user_id');
    }
    
-   public function store_delivery()
+   public function store_deliveries()
    {
-      return $this->hasOne(StoreDelivery::class);
+      return $this->hasOne(StoreDeliveries::class);
    }
 
    public function ifood_tokens()
@@ -71,9 +71,9 @@ class Stores extends Model
       return $this->hasMany(FinancialTransactions::class);
    }
 
-   public function current_accounts()
+   public function checking_accounts()
    {
-      return $this->hasMany(CurrentAccounts::class);
+      return $this->hasMany(CheckingAccounts::class);
    }
 
    public function financial_movements()

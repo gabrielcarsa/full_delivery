@@ -12,14 +12,12 @@ class OrderProductOptionCustomizations extends Model
     protected $guarded = [];
     public $timestamps = false;
 
-    //RELACIONAMENTOS
-
     public function product_option_customization()
     {
         return $this->belongsTo(ProductOptionCustomizations::class);
     }
 
-    public function order_product_options()
+    public function order_product_option()
     {
         return $this->belongsTo(OrderProductOptions::class);
     }

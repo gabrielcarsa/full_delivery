@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fornecedor extends Model
+class StorePollingEvents extends Model
 {
     use HasFactory;
-    protected $table = 'fornecedor';
+    protected $table = 'store_polling_events';
     protected $guarded = [];
 
-    public function lancamento(){
-        return $this->hasMany(Lancamento::class);
-    }
 }
