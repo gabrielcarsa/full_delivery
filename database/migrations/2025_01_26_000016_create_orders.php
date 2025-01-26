@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('type', 50);
             $table->string('observations', 200)->nullable();
             $table->string('cancellation_rejection_message', 200)->nullable();
-            $table->timestamp('created_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->boolean('is_simulation')->default(false);
             $table->string('client_name', 100);

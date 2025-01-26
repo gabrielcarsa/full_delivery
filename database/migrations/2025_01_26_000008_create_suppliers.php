@@ -28,8 +28,8 @@ return new class extends Migration
             $table->string('country', 100)->nullable();
             $table->string('zip_code', 20)->nullable();
             $table->timestamps(); // Adiciona created_at e updated_at
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('set null');
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 
