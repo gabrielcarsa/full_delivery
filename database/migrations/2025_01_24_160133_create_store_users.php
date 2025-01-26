@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('store_user', function (Blueprint $table) {
+        Schema::create('store_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Chave estrangeira para users
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Chave estrangeira para store
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Chave estrangeira para store
             $table->string('access_level', 50); // Nível de acesso
             $table->string('position', 100); // Posição do usuário na loja
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('store_user');
+        Schema::dropIfExists('store_users');
     }
 };

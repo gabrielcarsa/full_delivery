@@ -19,24 +19,24 @@ return new class extends Migration
             $table->string('email', 100);
             $table->string('type', 100);
             $table->string('description', 200)->nullable();
-            $table->string('monthly_billing', 100)->nullable();
+            $table->string('monthly_billing', 100);
             $table->string('logo', 255)->nullable();
-            $table->string('street', 100)->nullable();
-            $table->string('neighborhood', 100)->nullable();
-            $table->string('number', 20)->nullable();
+            $table->string('street', 100);
+            $table->string('neighborhood', 100);
+            $table->string('number', 20);
             $table->string('complement', 100)->nullable();
-            $table->string('city', 100)->nullable();
-            $table->string('state', 100)->nullable();
+            $table->string('city', 100);
+            $table->string('state', 100);
             $table->string('country', 100)->nullable();
-            $table->string('zip_code', 20)->nullable();
+            $table->string('zip_code', 20);
             $table->string('phone1', 11)->nullable();
             $table->string('phone2', 11)->nullable();
-            $table->string('status', 50);
+            $table->string('status', 50)->nullable();
             $table->string('ifood_merchant_id', 255)->nullable();
             $table->decimal('service_fee', 10, 2);
             $table->timestamps();
-            $table->foreignId('created_by_user_id')->constrained('users');
-            $table->foreignId('updated_by_user_id')->constrained('users');
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 
@@ -45,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('store');
+        Schema::dropIfExists('stores');
     }
 };

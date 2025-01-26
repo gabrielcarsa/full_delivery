@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_options_category_id')->constrained('product_options_category')->onDelete('cascade'); // Chave estrangeira para product_options_category
+            $table->foreignId('product_option_category_id')->constrained('product_option_categories')->onDelete('cascade'); // Chave estrangeira para product_options_category
             $table->string('name', 100); // Nome da opção do produto
             $table->string('description', 100)->nullable(); // Descrição da opção do produto
             $table->decimal('price', 10, 2); // Preço da opção

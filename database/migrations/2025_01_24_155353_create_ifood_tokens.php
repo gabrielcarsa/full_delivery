@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ifood_token', function (Blueprint $table) {
+        Schema::create('ifood_tokens', function (Blueprint $table) {
             $table->id();
             $table->text('access_token');
             $table->timestamp('expires_at')->nullable(); // A data de expiração do token
             $table->text('refresh_token')->nullable(); // O token de refresh
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Chave estrangeira para a tabela store
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Chave estrangeira para a tabela store
             $table->timestamps(); // Criação dos campos 'created_at' e 'updated_at'
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ifood_token');
+        Schema::dropIfExists('ifood_tokens');
     }
 };

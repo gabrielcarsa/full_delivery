@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_address', function (Blueprint $table) {
+        Schema::create('customer_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('client')->onDelete('cascade'); // Chave estrangeira para clientes
+            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade'); // Chave estrangeira para clientes
             $table->string('address_name', 50); // Nome do endereço (ex: "Casa", "Trabalho")
             $table->string('street', 100); // Rua
             $table->string('neighborhood', 100); // Bairro
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_address');
+        Schema::dropIfExists('customer_addresses');
     }
 };

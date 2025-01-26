@@ -21,7 +21,7 @@ return new class extends Migration
             // Chaves estrangeiras
             $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por usuário
             $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por usuário
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Relacionamento com a tabela 'store'
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Relacionamento com a tabela 'store'
         });
     }
 

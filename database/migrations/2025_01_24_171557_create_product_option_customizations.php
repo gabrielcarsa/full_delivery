@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_options_customizations', function (Blueprint $table) {
+        Schema::create('product_option_customizations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_options_id')->constrained('product_options')->onDelete('cascade'); // Chave estrangeira para product_options
+            $table->foreignId('product_option_id')->constrained('product_options')->onDelete('cascade'); // Chave estrangeira para product_options
             $table->string('name', 100); // Nome da customização da opção
             $table->string('description', 100)->nullable(); // Descrição da customização
             $table->decimal('price', 10, 2); // Preço da customização
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_options_customizations');
+        Schema::dropIfExists('product_option_customizations');
     }
 };

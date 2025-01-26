@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
 
             // Chaves estrangeiras e relacionamentos
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Referência à tabela 'store'
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Referência à tabela 'store'
             $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por
             $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por
         });

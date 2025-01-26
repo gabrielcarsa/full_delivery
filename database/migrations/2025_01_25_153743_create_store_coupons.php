@@ -13,19 +13,20 @@ return new class extends Migration
     {
         Schema::create('store_coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 50)->unique(); // Código do cupom (único)
-            $table->string('type'); // Tipo de cupom
-            $table->decimal('discount_value', 10, 2); // Valor do desconto (pode ser percentual ou valor fixo)
-            $table->decimal('minimum_order_value', 10, 2); // Valor mínimo do pedido para o cupom ser aplicado
-            $table->date('valid_from'); // Data de início de validade
-            $table->date('valid_until'); // Data de fim de validade
-            $table->boolean('is_active'); // Se o cupom está ativo
-            $table->timestamps(); // Campos created_at e updated_at
-
-            // Chaves estrangeiras
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por usuário
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por usuário
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Relacionamento com a tabela store
+            $table->string('code', 50)->unique(); // Unique coupon code
+            $table->string('type', 30);
+            $table->string('description', 100)->nullable();
+            $table->decimal('discount_value', 10, 2); // Percentage or fixed amount
+            $table->decimal('minimum_order_value', 10, 2)->nullable(); // Minimum order value for coupon to be applied
+            $table->date('valid_from')->nullable();
+            $table->date('valid_until')->nullable();
+            $table->integer('usage_limit')->nullable();
+            $table->integer('usage_count')->default(0);
+            $table->boolean('is_active')->default(true); // Whether the coupon is active or not
+            $table->timestamps();
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
         });
     }
 

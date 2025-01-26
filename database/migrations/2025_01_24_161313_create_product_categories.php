@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_options_category', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50); // Nome da categoria de opções
-            $table->integer('limit_quantity')->nullable(); // Quantidade limite de opções
-            $table->boolean('is_required')->default(false); // Se é obrigatório
+            $table->string('name', 100); // Nome da categoria
+            $table->string('description', 500)->nullable(); // Descrição da categoria
+            $table->integer('order'); // Ordem de exibição
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
             $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por
             $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por
-            $table->foreignId('product_id')->constrained('product')->onDelete('cascade'); // Chave estrangeira para produto
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Loja associada à categoria
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_options_category');
+        Schema::dropIfExists('product_categories');
     }
 };

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_customer_default')->default(false); // Cliente padrão ou não
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Relacionamento com store
+            $table->boolean('is_default_customer')->default(false); // Cliente padrão ou não
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Relacionamento com store
             $table->string('name', 100); // Nome
             $table->string('cpf', 11)->nullable(); // CPF (opcional)
             $table->string('phone', 50); // Telefone
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('client');
+        Schema::dropIfExists('customers');
     }
 };

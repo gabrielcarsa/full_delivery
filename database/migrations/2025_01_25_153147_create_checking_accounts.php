@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('current_accounts', function (Blueprint $table) {
+        Schema::create('checking_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100); // Nome da conta corrente
-            $table->foreignId('store_id')->constrained('store')->onDelete('cascade'); // Relacionamento com a loja
+            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Relacionamento com a loja
             $table->string('bank', 50); // Banco
-            $table->decimal('saldo_inicial', 10, 2); // Saldo inicial
-            $table->string('bank_branch', 50); // Agência bancária
+            $table->decimal('initial_balance', 10, 2); // Saldo inicial
+            $table->string('agency', 50); // Agência bancária
             $table->string('account_number', 50); // Número da conta
             $table->timestamps(); // Campos created_at e updated_at
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('current_accounts');
+        Schema::dropIfExists('checking_accounts');
     }
 };
