@@ -23,8 +23,8 @@ return new class extends Migration
             $table->decimal('paid_amount', 10, 2)->nullable(); // Valor pago (opcional)
             $table->timestamp('settlement_date')->nullable(); // Data de liquidação (opcional)
             $table->timestamps(); // created_at e updated_at
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->unsignedBigInteger('marked_down_by_user_id')->nullable();
             $table->foreign('marked_down_by_user_id', 'marked_user_fk')->references('id')->on('users')->onDelete('set null');
         });

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('access_level', 50); // Nível de acesso
             $table->string('position', 100); // Posição do usuário na loja
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Chave estrangeira para 'created_by'
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Chave estrangeira para 'updated_by'
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Chave estrangeira para 'created_by'
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Chave estrangeira para 'updated_by'
         });
     }
 

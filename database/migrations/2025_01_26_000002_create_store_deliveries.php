@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('store_deliveries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
-            $table->boolean('is_free_delivery');
+            $table->boolean('is_free_delivery')->nullable();
             $table->decimal('delivery_fee_per_km', 10, 2)->nullable();
             $table->decimal('delivery_fee', 10, 2)->nullable();
             $table->float('delivery_area_meters')->nullable();

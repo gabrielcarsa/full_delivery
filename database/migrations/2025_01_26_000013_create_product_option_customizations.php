@@ -19,8 +19,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2); // Preço da customização
             $table->decimal('price_discount', 10, 2)->nullable(); // Preço com desconto da customização
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Criado por
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Atualizado por
             $table->string('externalCodeIfood', 100)->nullable(); // Código externo da customização no iFood
             $table->string('productIdIfood', 100)->nullable(); // ID do produto no iFood
         });

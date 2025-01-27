@@ -9,6 +9,8 @@ class StoreDeliveries extends Model
 {
     use HasFactory;
     protected $table = 'store_deliveries';
+    protected $guarded = [];
+    public $timestamps = false;
 
     public function store()
     {

@@ -20,8 +20,8 @@ return new class extends Migration
 
             // Chaves estrangeiras e relacionamentos
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Referência à tabela 'store'
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Criado por
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Atualizado por
         });
     }
 

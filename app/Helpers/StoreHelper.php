@@ -20,22 +20,22 @@ class StoreHelper
         $stores = [];
 
         foreach($storeUsers as $storeUser){
-            $stores[] = Loja::find($storeUser->store_id);
+            $stores[] = Stores::find($storeUser->store_id);
         }
         return $stores;
     }
 
     //Mudar status da store conectada
-    public static function MudarStatusLoja(){
+    public static function updateStoreStatus(){
 
         //instancindo IfoodService
         $ifoodService = new IfoodService();
 
         //Se houver uma store conectada
-        if(session('storeConectado')){
+        if(session('selected_store')){
             
             //Obtendo Loja
-            $store = Loja::find(session('storeConectado')['id']);
+            $store = Loja::find(session('selected_store')['id']);
 
             if($store != null){
                 
@@ -47,12 +47,12 @@ class StoreHelper
                     //Verificando se está aberto no iFood
                     if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
 
-                        $store->state = $merchant[0]['state'];
+                        $store->status = $merchant[0]['state'];
                         $store->save();
 
                     }else{
 
-                        $store->state = $merchant[0]['state'];
+                        $store->status = $merchant[0]['state'];
                         $store->save();
 
                     }

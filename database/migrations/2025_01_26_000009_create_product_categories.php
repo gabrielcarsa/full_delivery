@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('description', 500)->nullable(); // Descrição da categoria
             $table->integer('order'); // Ordem de exibição
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Criado por
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Atualizado por
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Loja associada à categoria
         });
     }

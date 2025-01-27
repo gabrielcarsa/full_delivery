@@ -76,7 +76,7 @@
                     </p>
 
                     <!-- FORM -->
-                    <form class="my-3" action="{{ route('loja.store') }}" method="post">
+                    <form class="my-3" action="{{ route('store.store') }}" method="post">
                         @csrf
 
                         <div class="row">
@@ -257,10 +257,10 @@
                     <!-- FIM FORM -->
 
                     <!-- STEP 2 -->
-                    @elseif(request('step') && request('step') == 2 && $loja != null)
+                    @elseif(request('step') && request('step') == 2 && $store != null)
 
                     <p class="fs-4 fw-bold m-0">
-                        Muito bom <span class="text-padrao">{{$loja->nome}}</span>,
+                        Muito bom <span class="text-padrao">{{$store->name}}</span>,
                     </p>
                     <p class="text-secondary m-0 fs-5">
                         Agora vamos ajudar seus clientes a entrarem em contato com sua loja, preencha os campos abaixo:
@@ -268,7 +268,7 @@
 
                     <!-- FORM -->
                     <form class="my-3"
-                        action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}"
+                        action="{{ route('store.store', ['step' => request('step'), 'store_id' => $store->id]) }}"
                         method="post">
                         @csrf
 
@@ -306,7 +306,7 @@
                     <!-- FIM FORM -->
 
                     <!-- STEP 3 -->
-                    @elseif(request('step') && request('step') == 3 && $loja != null)
+                    @elseif(request('step') && request('step') == 3 && $store != null)
 
                     <p class="fs-4 fw-bold m-0">
                         Precisamos saber onde você está
@@ -318,7 +318,7 @@
 
                     <!-- FORM -->
                     <form class="my-3"
-                        action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}"
+                        action="{{ route('store.store', ['step' => request('step'), 'store_id' => $store->id]) }}"
                         method="post">
                         @csrf
 
@@ -382,7 +382,7 @@
                     <!-- FIM FORM -->
 
                     <!-- STEP 4 -->
-                    @elseif(request('step') && request('step') == 4 && $loja != null)
+                    @elseif(request('step') && request('step') == 4 && $store != null)
 
                     <p class="fs-4 fw-bold m-0">
                         Ufa, quase lá!
@@ -393,7 +393,7 @@
 
                     <!-- FORM -->
                     <form class="my-3"
-                        action="{{ route('loja.store', ['step' => request('step'), 'loja_id' => $loja->id]) }}"
+                        action="{{ route('store.store', ['step' => request('step'), 'store_id' => $store->id]) }}"
                         method="post">
                         @csrf
 

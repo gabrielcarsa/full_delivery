@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('limit_quantity')->nullable(); // Quantidade limite de opções
             $table->boolean('is_required')->default(false); // Se é obrigatório
             $table->timestamps(); // Campos 'created_at' e 'updated_at'
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade'); // Criado por
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade'); // Atualizado por
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Criado por
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade'); // Atualizado por
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade'); // Chave estrangeira para produto
         });
     }

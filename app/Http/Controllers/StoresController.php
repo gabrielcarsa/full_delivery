@@ -8,6 +8,7 @@ use App\Models\StoreUsers;
 use App\Models\StoreOpeningHours;
 use App\Models\FinancialCategories;
 use App\Models\Customers;
+use App\Models\StoreDeliveries;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -31,7 +32,7 @@ class StoresController extends Controller
         //Usuario
         $user_id = Auth::user()->id;
 
-        //Obter IDs de Lojas relacionadas ao usuário
+        //Obter IDs de Storess relacionadas ao usuário
         $storeUsers = StoreUsers::where('user_id', $user_id)->get();
 
         $stores = [];
@@ -40,7 +41,7 @@ class StoresController extends Controller
             $stores[] = Stores::find($storeUser->store_id);
         }
 
-        return view('loja.index', compact('stores'));
+        return view('store.index', compact('stores'));
         
     }
 
@@ -49,11 +50,11 @@ class StoresController extends Controller
 
         $id = $request->input('id');
 
-        //Buscando loja
-        $loja = Loja::where('id', $id)->get();
+        //Buscando store
+        $store = Stores::where('id', $id)->get();
 
-        //Definindo variavel de sessão de loja
-        session(['selected_store' => ['id'=> $id, 'nome'=> $loja[0]->nome]]);
+        //Definindo variavel de sessão de store
+        session(['selected_store' => ['id'=> $id, 'nome'=> $store[0]->nome]]);
 
         return redirect()->back()->with('success', 'Conectado como '.session('selected_store')['name']);
 
@@ -62,34 +63,34 @@ class StoresController extends Controller
     //EXIBIR
     public function show(Request $request){
 
-        //Verificar se há loja selecionado
+        //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+            return redirect()->route('store.index')->with('error', 'Selecione uma store primeiro');
         }
 
-        //Info Loja
+        //Info Stores
         $id = session('selected_store')['id'];
-        $loja = Loja::find($id);
+        $store = Stores::find($id);
 
-        if($loja != null){
+        if($store != null){
             //Iniciar variáveis como vazias
             $horarios = null;
             $equipe = null;
             $token = null;
 
-            //Controle para exibir conteúdo das views da Loja
+            //Controle para exibir conteúdo das views da Stores
             $tab = $request->get('tab') ?? 'sobre';
 
             if($tab == 'horarios'){
-                $horarios = HorarioFuncionamento::where('loja_id' , $id)->get();
+                $horarios = HorarioFuncionamento::where('store_id' , $id)->get();
             }elseif($tab == 'equipe'){
-                $equipe = UserLoja::where('loja_id', $id)->get();
+                $equipe = UserStores::where('store_id', $id)->get();
             }elseif($tab == 'planos'){
                 //TODO
             }elseif($tab == 'integracoes'){
 
                 // Obtém token mais recente
-                $token = IfoodToken::where('loja_id', $id)->latest()->first();
+                $token = IfoodToken::where('store_id', $id)->latest()->first();
             }
 
             $dados = [
@@ -98,13 +99,13 @@ class StoresController extends Controller
                 'token' => $token,
             ];
         
-            return view('loja.show', compact('dados', 'loja'));
+            return view('store.show', compact('dados', 'store'));
         }
 
-        // Esquecer sessão da Loja Conectada
+        // Esquecer sessão da Stores Conectada
         session()->forget('selected_store');
 
-        return redirect()->route('loja.create')->with('error', 'Nenhuma loja encontrada cadastre uma loja primeiramente.');
+        return redirect()->route('store.create')->with('error', 'Nenhuma store encontrada cadastre uma store primeiramente.');
 
     }
 
@@ -112,15 +113,15 @@ class StoresController extends Controller
     public function create(Request $request){
 
         $step = $request->get('step');
-        $loja_id = $request->get('loja_id');
+        $store_id = $request->get('store_id');
 
-        $loja = null;
+        $store = null;
         
         //Verificando se Step é maior que 1
         if($step != null && $step > 1){
-            $loja = Loja::find($loja_id);
+            $store = Stores::find($store_id);
         }
-        return view('loja.create', compact('loja'));
+        return view('store.create', compact('store'));
     }
 
     //CADASTRAR
@@ -156,55 +157,54 @@ class StoresController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            //Cadastro de loja
-            $loja = new Loja();
+            //Cadastro de store
+            $store = new Stores();
 
             //Informações Gerais
-            $loja->nome = $request->input('nome');
-            $loja->descricao = $request->input('descricao');
-            $loja->area_entrega_metros = 5000; // valor padrão
-            $loja->cadastrado_usuario_id = Auth::user()->id;
-            $loja->tipo = $request->input('tipo');
-            $loja->faturamento_mensal = $request->input('faturamento_mensal');
-            $loja->cpf = $request->input('documento') == 'cpf' ? $request->input('cpf') : NULL;
-            $loja->cnpj = $request->input('documento') == 'cnpj' ? $request->input('cnpj') : NULL;
-            $loja->save();
+            $store->name = $request->input('nome');
+            $store->description = $request->input('descricao');
+            $store->created_by_user_id = Auth::user()->id;
+            $store->type = $request->input('tipo');
+            $store->monthly_billing = $request->input('faturamento_mensal');
+            $store->cpf = $request->input('documento') == 'cpf' ? $request->input('cpf') : NULL;
+            $store->cnpj = $request->input('documento') == 'cnpj' ? $request->input('cnpj') : NULL;
+            $store->save();
 
-            //Vinculando usuário a loja
-            UserLoja::create([
+            //Vinculando usuário a store
+            StoreUsers::create([
                 'user_id' => Auth::user()->id,
-                'loja_id' => $loja->id,
-                'nivel_acesso' => 'ADMIN',
-                'cargo' => 'DONO',
-                'cadastrado_usuario_id' => Auth::user()->id,
+                'store_id' => $store->id,
+                'access_level' => 'ADMIN',
+                'position' => 'DONO',
+                'created_by_user_id' => Auth::user()->id,
             ]);
 
             //Criando categoria do financeiro de entrada de pedido
-            CategoriaFinanceiro::create([
-                'tipo' => 1,
-                'nome' => 'PEDIDOS',
-                'cadastrado_usuario_id' => Auth::guard()->user()->id,
-                'loja_id' => $loja->id,
-                'is_order' => true,
+            FinancialCategories::create([
+                'type' => 1,
+                'name' => 'PEDIDOS',
+                'created_by_user_id' => Auth::guard()->user()->id,
+                'store_id' => $store->id,
+                'is_default' => true,
             ]);
 
             //Criando cliente para receber pedidos quando cliente não é cadastrado
-            Cliente::create([
-                'nome' => 'CLIENTE SEM CADASTRO',
+            Customers::create([
+                'name' => 'CLIENTE SEM CADASTRO',
                 'cpf' => '00000000000',
                 'email' => 'sem_cadastro@foomy.com',
-                'telefone' => '67999999999',
-                'loja_id' => $loja->id,
-                'is_client_default' => true,
+                'phone' => '67999999999',
+                'store_id' => $store->id,
+                'is_default_customer' => true,
             ]);
 
             $step = 2;
 
-            return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
+            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 2){
 
-            $loja_id = $request->input('loja_id');
+            $store_id = $request->input('store_id');
 
             //Limpando o campo telefone
             $request->merge([
@@ -224,20 +224,20 @@ class StoresController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $loja = Loja::find($loja_id);
-            $loja->email = $request->input('email');
-            $loja->alterado_usuario_id = Auth::user()->id;
-            $loja->telefone1 = $request->input('telefone1');
-            $loja->telefone2 = $request->input('telefone2');
-            $loja->save();
+            $store = Stores::find($store_id);
+            $store->email = $request->input('email');
+            $store->updated_by_user_id = Auth::user()->id;
+            $store->phone1 = $request->input('telefone1');
+            $store->phone2 = $request->input('telefone2');
+            $store->save();
 
             $step = 3;
 
-            return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
+            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 3){
 
-            $loja_id = $request->input('loja_id');
+            $store_id = $request->input('store_id');
 
             //Limpando os campos
             $request->merge([
@@ -260,24 +260,24 @@ class StoresController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $loja = Loja::find($loja_id);
-            $loja->cep = $request->input('cep');
-            $loja->rua = $request->input('rua');
-            $loja->bairro = $request->input('bairro');
-            $loja->cidade = $request->input('cidade');
-            $loja->estado = $request->input('estado');
-            $loja->numero = $request->input('numero');
-            $loja->complemento = $request->input('complemento');
-            $loja->alterado_usuario_id = Auth::user()->id;
-            $loja->save();
+            $store = Stores::find($store_id);
+            $store->zip_code = $request->input('cep');
+            $store->street = $request->input('rua');
+            $store->neighborhood = $request->input('bairro');
+            $store->city = $request->input('cidade');
+            $store->state = $request->input('estado');
+            $store->number = $request->input('numero');
+            $store->complement = $request->input('complemento');
+            $store->updated_by_user_id = Auth::user()->id;
+            $store->save();
 
             $step = 4;
 
-            return redirect()->route('loja.create', ['step' => $step, 'loja_id' => $loja->id]);
+            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 4){
 
-            $loja_id = $request->input('loja_id');
+            $store_id = $request->input('store_id');
 
             $request->merge([
                 'taxa_por_km_entrega' => str_replace(['.', ','], ['', '.'], $request->input('taxa_por_km_entrega')),
@@ -297,18 +297,22 @@ class StoresController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $loja = Loja::find($loja_id);
-            $loja->taxa_entrega_fixa = $request->input('taxa_entrega') == "FIXA" ? $request->input('taxa_entrega_fixa') : NULL;
-            $loja->taxa_por_km_entrega = $request->input('taxa_entrega') == "KM" ? $request->input('taxa_por_km_entrega') : NULL;
-            $loja->is_taxa_entrega_free = $request->input('taxa_entrega') == "GRATUITA" ? true : NULL;
-            $loja->taxa_servico = $request->input('taxa_servico');
-            $loja->alterado_usuario_id = Auth::user()->id;
-            $loja->save();
+            StoreDeliveries::create([
+                'store_id' => $store_id,
+                'is_free_delivery' => $request->input('taxa_entrega') == "GRATUITA" ? true : NULL,
+                'delivery_fee_per_km' => $request->input('taxa_entrega') == "KM" ? $request->input('taxa_por_km_entrega') : NULL,
+                'delivery_fee' => $request->input('taxa_entrega') == "FIXA" ? $request->input('taxa_entrega_fixa') : NULL,
+            ]);
 
-            //Definindo variavel de sessão de loja
-            session(['selected_store' => ['id'=> $loja->id, 'name'=> $loja->nome]]);
+            $store = Stores::find($store_id);
+            $store->service_fee = $request->input('taxa_servico');
+            $store->updated_by_user_id = Auth::user()->id;
+            $store->save();
 
-            return redirect()->route('loja',['tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
+            //Definindo variavel de sessão de store
+            session(['selected_store' => ['id'=> $store->id, 'name'=> $store->nome]]);
+
+            return redirect()->route('store.show',['store' => $store->id,'tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');
@@ -321,7 +325,7 @@ class StoresController extends Controller
         //Tab para verificar seleção do conteúdo
         $tab = $request->input('tab');
 
-        $loja_id = $request->input('loja_id');
+        $store_id = $request->input('store_id');
 
         //Salvando seção SOBRE
         if($tab == "sobre" || $tab == null){
@@ -356,35 +360,35 @@ class StoresController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            //Alterar loja
-            $loja = Loja::where('id', $loja_id)->first();
+            //Alterar store
+            $store = Stores::where('id', $store_id)->first();
 
             //Informações Gerais
-            $loja->nome = $request->input('nome');
-            $loja->descricao = $request->input('descricao');
-            $loja->email = $request->input('email');
-            $loja->alterado_usuario_id = Auth::user()->id;
-            $loja->telefone1 = $request->input('telefone1');
-            $loja->telefone2 = $request->input('telefone2');
-            $loja->taxa_servico = $request->input('taxa_servico');
+            $store->nome = $request->input('nome');
+            $store->descricao = $request->input('descricao');
+            $store->email = $request->input('email');
+            $store->alterado_usuario_id = Auth::user()->id;
+            $store->telefone1 = $request->input('telefone1');
+            $store->telefone2 = $request->input('telefone2');
+            $store->taxa_servico = $request->input('taxa_servico');
 
             //Endereço
-            $loja->cep = $request->input('cep');
-            $loja->rua = $request->input('rua');
-            $loja->bairro = $request->input('bairro');
-            $loja->numero = $request->input('numero');
-            $loja->complemento = $request->input('complemento');
-            $loja->cidade = $request->input('cidade');
-            $loja->estado = $request->input('estado');
-            $loja->save();
+            $store->cep = $request->input('cep');
+            $store->rua = $request->input('rua');
+            $store->bairro = $request->input('bairro');
+            $store->numero = $request->input('numero');
+            $store->complemento = $request->input('complemento');
+            $store->cidade = $request->input('cidade');
+            $store->estado = $request->input('estado');
+            $store->save();
 
         }elseif($tab == "horarios"){
 
             //Horario Funcionamento
             $i = 0;
             for($i; $i < 7; $i++){
-                $horario_funcionamento = HorarioFuncionamento::where('loja_id', $loja_id)->where('dia_semana', $i)->first();
-                $horario_funcionamento->loja_id = $loja->id;
+                $horario_funcionamento = HorarioFuncionamento::where('store_id', $store_id)->where('dia_semana', $i)->first();
+                $horario_funcionamento->store_id = $store->id;
                 $horario_funcionamento->dia_semana = $i;
                 $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
                 $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
@@ -393,18 +397,18 @@ class StoresController extends Controller
             }
         }
 
-        return redirect()->route('loja')->with('success', 'Alteração feita com sucesso');
+        return redirect()->route('store')->with('success', 'Alteração feita com sucesso');
     }
 
     //ALTERAR LOGO
     public function update_logo(Request $request){
 
-        $loja_id = $request->input('loja_id');
+        $store_id = $request->input('store_id');
 
         if ($request->hasFile('banner')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "banner";
-            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            $request->file('banner')->storeAs('public/'.$store->nome, $nomeArquivo);
             //não estou salvando nome do arquino no BD pois só vai ter um banner
         }
         // Validação do formulário
@@ -418,23 +422,23 @@ class StoresController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }  
         
-        //Alterar loja
-        $loja = Loja::find($loja_id);
+        //Alterar store
+        $store = Stores::find($store_id);
 
         if ($request->hasFile('logo')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "logo";
-            $request->file('logo')->storeAs('public/'.$loja->nome, $nomeArquivo);
-            $loja->logo = $nomeArquivo;
+            $request->file('logo')->storeAs('public/'.$store->nome, $nomeArquivo);
+            $store->logo = $nomeArquivo;
         }
 
-        return redirect()->route('loja')->with('success', 'Logo alterada com sucesso');
+        return redirect()->route('store')->with('success', 'Logo alterada com sucesso');
     }
 
     //ALTERAR LOGO
     public function update_banner(Request $request){
 
-        $loja_id = $request->input('loja_id');
+        $store_id = $request->input('store_id');
 
         // Validação do formulário
         $validator = Validator::make($request->all(), [
@@ -447,32 +451,32 @@ class StoresController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }  
         
-        //Alterar loja
-        $loja = Loja::find($loja_id);
+        //Alterar store
+        $store = Stores::find($store_id);
 
         if ($request->hasFile('banner')) {
             //Colocando nome único no arquivo
             $nomeArquivo = "banner";
-            $request->file('banner')->storeAs('public/'.$loja->nome, $nomeArquivo);
+            $request->file('banner')->storeAs('public/'.$store->nome, $nomeArquivo);
             //não estou salvando nome do arquino no BD pois só vai ter um banner
         }
 
-        return redirect()->route('loja')->with('success', 'Logo alterada com sucesso');
+        return redirect()->route('store')->with('success', 'Logo alterada com sucesso');
 
     }
 
     //LISTAGEM ENTREGAS TAXAS
     public function show_entrega_taxas(){
-        //Verificar se há loja selecionado
+        //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect('loja.index')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+            return redirect('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
         }
 
-        //Dados do loja
+        //Dados do store
         $id = session('selected_store')['id'];
-        $loja = Loja::where('id', $id)->first();
+        $store = Stores::where('id', $id)->first();
 
-        return view('loja/entrega_taxas', compact('loja'));    
+        return view('store/entrega_taxas', compact('store'));    
     }
 
     //DEFINIR TAXA DE ENTREGA FREE  
@@ -480,11 +484,11 @@ class StoresController extends Controller
         $id = $request->input('id');
 
         //Alterando
-        $loja = Loja::find($id);
-        $loja->taxa_por_km_entrega = null; 
-        $loja->is_taxa_entrega_free = true; 
-        $loja->taxa_entrega_fixa = null; 
-        $loja->save();
+        $store = Stores::find($id);
+        $store->taxa_por_km_entrega = null; 
+        $store->is_taxa_entrega_free = true; 
+        $store->taxa_entrega_fixa = null; 
+        $store->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega gratuita');
     }
@@ -509,11 +513,11 @@ class StoresController extends Controller
         }
 
         //Alterando
-        $loja = Loja::find($id);
-        $loja->taxa_por_km_entrega = (double) $request->input('taxa_por_km_entrega'); 
-        $loja->is_taxa_entrega_free = false; 
-        $loja->taxa_entrega_fixa = null; 
-        $loja->save();
+        $store = Stores::find($id);
+        $store->taxa_por_km_entrega = (double) $request->input('taxa_por_km_entrega'); 
+        $store->is_taxa_entrega_free = false; 
+        $store->taxa_entrega_fixa = null; 
+        $store->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega por km');
     }
@@ -537,29 +541,29 @@ class StoresController extends Controller
         }
 
         //Alterando
-        $loja = Loja::find($id);
-        $loja->taxa_por_km_entrega = null; 
-        $loja->is_taxa_entrega_free = false; 
-        $loja->taxa_entrega_fixa = (double) $request->input('taxa_entrega_fixa'); 
-        $loja->save();
+        $store = Stores::find($id);
+        $store->taxa_por_km_entrega = null; 
+        $store->is_taxa_entrega_free = false; 
+        $store->taxa_entrega_fixa = (double) $request->input('taxa_entrega_fixa'); 
+        $store->save();
 
         return redirect()->back()->with('success', 'Definido taxa de entrega fixa');
     }
 
      //LISTAGEM ENTREGAS AREAS
      public function show_entrega_areas(){
-        //Verificar se há loja selecionado
+        //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect('loja.index')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+            return redirect('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
         }
 
-        //Dados do loja
+        //Dados do store
         $id = session('selected_store')['id'];
-        $loja = Loja::where('id', $id)->first();
+        $store = Stores::where('id', $id)->first();
 
         //API KEY
         $apiKey = 'AIzaSyCrR7RmCs0UkChkfbOJSoOUQ7kf9i-gcsk';
-        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$loja->cep}&key={$apiKey}");
+        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json?address={$store->cep}&key={$apiKey}");
         $data = $response->json();
 
         if ($data['status'] == 'OK') {
@@ -570,10 +574,10 @@ class StoresController extends Controller
             $data_maps = [
                 'latitude' => $latitude,
                 'longitude' => $longitude,
-                'cep' => $loja->cep,
+                'cep' => $store->cep,
             ];
 
-            return view('loja/entrega_areas', compact('loja', 'data_maps'));
+            return view('store/entrega_areas', compact('store', 'data_maps'));
         } else {
             return "CEP não encontrado.";
         }
@@ -594,9 +598,9 @@ class StoresController extends Controller
         }
 
         //Alterando
-        $loja = Loja::find($id);
-        $loja->area_entrega_metros = $request->input('area_entrega_metros'); 
-        $loja->save();
+        $store = Stores::find($id);
+        $store->area_entrega_metros = $request->input('area_entrega_metros'); 
+        $store->save();
 
         return redirect()->back()->with('success', 'Definido área em metros');
     }
@@ -605,20 +609,20 @@ class StoresController extends Controller
     //RETORNA VIEW PARA INTEGRAR COM IFOOD
     public function create_integration_ifood(Request $request){
 
-        //Verificar se há loja selecionado
+        //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+            return redirect()->route('store.index')->with('error', 'Selecione uma store primeiro');
         }
 
-        //Info Loja
+        //Info Stores
         $id = session('selected_store')['id'];
-        $loja = Loja::find($id);
+        $store = Stores::find($id);
 
         $userCode = null;
         $step = $request->get('step') ?? 1;
 
 
-        if($loja != null){
+        if($store != null){
 
             if($step == 1){
 
@@ -626,16 +630,16 @@ class StoresController extends Controller
                 $userCode = $this->ifoodService->getUserCode();
 
             }
-            return view('loja.integration_ifood', compact('userCode'));
+            return view('store.integration_ifood', compact('userCode'));
         }
     }
 
     //SALVAR INTEGRAÇÃO IFOOD
     public function store_integration_ifood(Request $request){
 
-        //Verificar se há loja selecionado
+        //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+            return redirect()->route('store.index')->with('error', 'Selecione uma store primeiro');
         }
 
         //Step
@@ -646,7 +650,7 @@ class StoresController extends Controller
             $step = 2;
             $authorization_code_verifier = $request->input('authorization_code_verifier');
 
-            return redirect()->route('loja.create_integration_ifood', ['step' => $step, 'authorization_code_verifier' => $authorization_code_verifier]);
+            return redirect()->route('store.create_integration_ifood', ['step' => $step, 'authorization_code_verifier' => $authorization_code_verifier]);
 
         }elseif($step == 2){
 
@@ -676,13 +680,13 @@ class StoresController extends Controller
             //Obtendo ID do Merchant do Ifood
             $merchantIfood = $this->ifoodService->getMerchants();
 
-            //Salvar na Loja
+            //Salvar na Stores
             $id = session('selected_store')['id'];
-            $loja = Loja::find($id);
-            $loja->ifood_merchant_id = $merchantIfood[0]['id'];
-            $loja->save();
+            $store = Stores::find($id);
+            $store->ifood_merchant_id = $merchantIfood[0]['id'];
+            $store->save();
 
-            return redirect()->route('loja',['tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
+            return redirect()->route('store',['tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');

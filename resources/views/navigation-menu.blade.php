@@ -23,7 +23,7 @@
                         $stores = \App\Helpers\StoreHelper::getStoreUsers();
 
                         //Mudar status da Loja Selecionada
-                        \App\Helpers\StoreHelper::MudarStatusLoja();
+                        \App\Helpers\StoreHelper::updateStoreStatus();
                         @endphp
                         <!-- FIM LOJAS -->
 
@@ -34,7 +34,7 @@
                             @if(!empty($stores))
 
                             @foreach($stores as $store)
-                            @if(session('storeConectado') && $store->id == session('storeConectado')['id'])
+                            @if(session('selected_store') && $store->id == session('selected_store')['id'])
                             <!-- LOJA CIRCULO STATUS -->
                             @if($store->state == "OK" || $store->state == "WARNING")
                             <span class="material-symbols-outlined mr-2 text-success"
@@ -48,7 +48,7 @@
                             </span>
                             @endif
                             <!-- FIM LOJA CIRCULO STATUS -->
-                            {{session('storeConectado')['nome']}}
+                            {{session('selected_store')['nome']}}
                             @else
                             Selecione uma loja
                             @endif
@@ -79,7 +79,7 @@
 
                             @foreach($stores as $store)
                             <li
-                                class="d-flex align-items-center justify-content-between rounded {{session('storeConectado') && session('storeConectado')['id'] == $store->id ? 'border-3 border-padrao' : 'bg-white'}} p-3">
+                                class="d-flex align-items-center justify-content-between rounded {{session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-3 border-padrao' : 'bg-white'}} p-3">
 
                                 <div class="d-flex align-items-center">
                                     <!-- LOJA CIRCULO STATUS -->
@@ -99,9 +99,9 @@
                                     <!-- LOJA DETALHES -->
                                     <div>
                                         <p class="fw-bold m-0">
-                                            {{$store->nome}}
+                                            {{$store->name}}
                                         </p>
-                                        @if(!session('storeConectado') || session('storeConectado')['id'] == $store->id)
+                                        @if(!session('selected_store') || session('selected_store')['id'] == $store->id)
                                         <p class="m-0 text-secondary">
                                             @if($store->state == "OK" || $store->state == "WARNING")
                                             Loja aberta
@@ -116,8 +116,8 @@
                                 </div>
 
                                 <!-- BTN ESCOLHER LOJA -->
-                                @if(!session('storeConectado') || session('storeConectado')['id'] != $store->id)
-                                <form action="{{route('store.choose', ['id' => $store->id])}}" method="post">
+                                @if(!session('selected_store') || session('selected_store')['id'] != $store->id)
+                                <form action="{{route('store.select', ['id' => $store->id])}}" method="post">
                                     @csrf
                                     <button type="submit"
                                         class="mx-2 p-2 text-white fw-semibold rounded w-100 bg-padrao">

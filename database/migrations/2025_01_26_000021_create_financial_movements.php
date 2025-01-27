@@ -20,8 +20,8 @@ return new class extends Migration
             $table->decimal('amount', 10, 2); // Valor do movimento
             $table->date('movement_date'); // Data do movimento
             $table->timestamps(); // created_at e updated_at
-            $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('created_by_user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->onDelete('cascade');
         });
     }
 

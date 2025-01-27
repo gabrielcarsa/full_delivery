@@ -12,7 +12,7 @@ class DashboardController extends Controller
 
         //Verificar se há loja selecionada
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione uma loja primeiro');
+            return redirect()->route('store.index');
         }
 
         //Obter lojas do usuário
