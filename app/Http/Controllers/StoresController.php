@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Loja;
-use App\Models\UserLoja;
-use App\Models\HorarioFuncionamento;
-use App\Models\CategoriaFinanceiro;
-use App\Models\Cliente;
+use App\Models\Stores;
+use App\Models\StoreUsers;
+use App\Models\StoreOpeningHours;
+use App\Models\FinancialCategories;
+use App\Models\Customers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Services\IfoodService;
-use App\Models\IfoodToken;
+use App\Models\IfoodTokens;
 
-class LojaController extends Controller
+class StoresController extends Controller
 {
     protected $ifoodService;
 
@@ -25,27 +25,27 @@ class LojaController extends Controller
         $this->ifoodService = new IfoodService();
     }
 
-    //ESCOLHER RESTAURANTE GET
+    //ESCOLHER RESTAURANTE
     public function index(){
 
         //Usuario
         $user_id = Auth::user()->id;
 
         //Obter IDs de Lojas relacionadas ao usuário
-        $userLojas = UserLoja::where('user_id', $user_id)->get();
+        $storeUsers = StoreUsers::where('user_id', $user_id)->get();
 
-        $lojas = [];
+        $stores = [];
 
-        foreach($userLojas as $userLoja){
-            $lojas[] = Loja::find($userLoja->loja_id);
+        foreach($storeUsers as $storeUser){
+            $stores[] = Stores::find($storeUser->store_id);
         }
 
-        return view('loja.escolher', compact('lojas'));
+        return view('loja.index', compact('stores'));
         
     }
 
     //ESCOLHER RESTAURANTE POST
-    public function choose(Request $request){
+    public function select(Request $request){
 
         $id = $request->input('id');
 
@@ -53,9 +53,9 @@ class LojaController extends Controller
         $loja = Loja::where('id', $id)->get();
 
         //Definindo variavel de sessão de loja
-        session(['lojaConectado' => ['id'=> $id, 'nome'=> $loja[0]->nome]]);
+        session(['selected_store' => ['id'=> $id, 'nome'=> $loja[0]->nome]]);
 
-        return redirect()->back()->with('success', 'Conectado como '.session('lojaConectado')['nome']);
+        return redirect()->back()->with('success', 'Conectado como '.session('selected_store')['name']);
 
     }
 
@@ -63,12 +63,12 @@ class LojaController extends Controller
     public function show(Request $request){
 
         //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
+        if(!session('selected_store')){
             return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
 
         //Info Loja
-        $id = session('lojaConectado')['id'];
+        $id = session('selected_store')['id'];
         $loja = Loja::find($id);
 
         if($loja != null){
@@ -102,7 +102,7 @@ class LojaController extends Controller
         }
 
         // Esquecer sessão da Loja Conectada
-        session()->forget('lojaConectado');
+        session()->forget('selected_store');
 
         return redirect()->route('loja.create')->with('error', 'Nenhuma loja encontrada cadastre uma loja primeiramente.');
 
@@ -306,7 +306,7 @@ class LojaController extends Controller
             $loja->save();
 
             //Definindo variavel de sessão de loja
-            session(['lojaConectado' => ['id'=> $loja->id, 'nome'=> $loja->nome]]);
+            session(['selected_store' => ['id'=> $loja->id, 'name'=> $loja->nome]]);
 
             return redirect()->route('loja',['tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
 
@@ -464,12 +464,12 @@ class LojaController extends Controller
     //LISTAGEM ENTREGAS TAXAS
     public function show_entrega_taxas(){
         //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
+        if(!session('selected_store')){
             return redirect('loja.index')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do loja
-        $id = session('lojaConectado')['id'];
+        $id = session('selected_store')['id'];
         $loja = Loja::where('id', $id)->first();
 
         return view('loja/entrega_taxas', compact('loja'));    
@@ -549,12 +549,12 @@ class LojaController extends Controller
      //LISTAGEM ENTREGAS AREAS
      public function show_entrega_areas(){
         //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
+        if(!session('selected_store')){
             return redirect('loja.index')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do loja
-        $id = session('lojaConectado')['id'];
+        $id = session('selected_store')['id'];
         $loja = Loja::where('id', $id)->first();
 
         //API KEY
@@ -606,12 +606,12 @@ class LojaController extends Controller
     public function create_integration_ifood(Request $request){
 
         //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
+        if(!session('selected_store')){
             return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
 
         //Info Loja
-        $id = session('lojaConectado')['id'];
+        $id = session('selected_store')['id'];
         $loja = Loja::find($id);
 
         $userCode = null;
@@ -634,7 +634,7 @@ class LojaController extends Controller
     public function store_integration_ifood(Request $request){
 
         //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
+        if(!session('selected_store')){
             return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
         }
 
@@ -677,7 +677,7 @@ class LojaController extends Controller
             $merchantIfood = $this->ifoodService->getMerchants();
 
             //Salvar na Loja
-            $id = session('lojaConectado')['id'];
+            $id = session('selected_store')['id'];
             $loja = Loja::find($id);
             $loja->ifood_merchant_id = $merchantIfood[0]['id'];
             $loja->save();

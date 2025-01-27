@@ -55,6 +55,8 @@
         <!-- Page Content -->
         <main>
             <div class="d-flex">
+
+                @if(session('selected_store'))
                 <div class="border-end bg-white vh-100">
                     <ul class="m-0 p-0">
 
@@ -153,31 +155,36 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
                                 <li>
                                     <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        {{session('lojaConectado') != null ? session('lojaConectado')['nome'] : 'Sua loja' }}
+                                        {{session('selected_store') != null ? session('selected_store')['nome'] : 'Sua loja' }}
                                     </p>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'sobre']) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'sobre']) }}">
                                         Sobre
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'horarios']) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'horarios']) }}">
                                         Horários de funcionamento
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'equipe']) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'equipe']) }}">
                                         Equipe
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'planos']) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'planos']) }}">
                                         Planos
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja', ['tab' => 'integracoes']) }}">
+                                    <a class="dropdown-item"
+                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'integracoes']) }}">
                                         Integrações
                                     </a>
                                 </li>
@@ -212,12 +219,12 @@
                                     </p>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja.entrega_taxas') }}">
+                                    <a class="dropdown-item" href="{{ route('store.entrega_taxas') }}">
                                         Taxas de entrega
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('loja.entrega_areas') }}">
+                                    <a class="dropdown-item" href="{{ route('store.entrega_areas') }}">
                                         Áreas para entrega
                                     </a>
                                 </li>
@@ -363,6 +370,7 @@
 
                     </ul>
                 </div>
+                @endif
 
                 <!-- CONTEÚDO -->
                 <div class="container-fluid m-0 p-0">

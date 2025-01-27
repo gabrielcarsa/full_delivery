@@ -5,7 +5,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\LojaController;
+use App\Http\Controllers\StoresController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
@@ -83,16 +83,12 @@ Route::middleware([
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         
         //LOJA
-        Route::get('/selecionar-lojas', [LojaController::class, 'index'])->name('loja.index');
-        Route::post('/selecionar-loja', [LojaController::class, 'choose'])->name('loja.choose');
-        Route::get('/loja', [LojaController::class, 'show'])->name('loja');
-        Route::get('/loja/novo', [LojaController::class, 'create'])->name('loja.create');
-        Route::post('/loja/cadastrar', [LojaController::class, 'store'])->name('loja.store');
-        Route::put('/loja/alterar', [LojaController::class, 'update'])->name('loja.update');
-        Route::put('/loja/alterar-logo', [LojaController::class, 'update_logo'])->name('loja.update_logo');
-        Route::put('/loja/alterar-banner', [LojaController::class, 'update_banner'])->name('loja.update_banner');
-        Route::get('/loja/integracao-ifood', [LojaController::class, 'create_integration_ifood'])->name('loja.create_integration_ifood');
-        Route::post('/loja/integracao-ifood', [LojaController::class, 'store_integration_ifood'])->name('loja.store_integration_ifood');
+        Route::resource('store', StoresController::class);
+        Route::post('/selecionar-loja', [LojaController::class, 'select'])->name('store.select');
+        Route::put('/store/alterar-logo', [LojaController::class, 'update_logo'])->name('store.update_logo');
+        Route::put('/store/alterar-banner', [LojaController::class, 'update_banner'])->name('store.update_banner');
+        Route::get('/store/integracao-ifood', [LojaController::class, 'create_integration_ifood'])->name('store.create_integration_ifood');
+        Route::post('/store/integracao-ifood', [LojaController::class, 'store_integration_ifood'])->name('store.store_integration_ifood');
 
        
         //ENTREGAS LOJA

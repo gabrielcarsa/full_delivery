@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Helpers\LojaHelper;
+use App\Helpers\StoreHelper;
 
 class DashboardController extends Controller
 {
     //
     public function dashboard(){
 
-        //Obter lojas do usuário
-        $lojas = LojaHelper::getUserLoja();
+        //Verificar se há loja selecionada
+        if(!session('selected_store')){
+            return redirect()->route('store.index')->with('error', 'Selecione uma loja primeiro');
+        }
 
-        $dados = [
-            'lojas' => $lojas,
+        //Obter lojas do usuário
+        $stores = StoreHelper::getStoreUsers();
+
+        $data = [
+            'stores' => $stores,
         ];
 
-        return view('dashboard', compact('dados'));
+        return view('dashboard', compact('data'));
     }
 }

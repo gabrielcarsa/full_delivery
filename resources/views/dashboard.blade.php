@@ -25,7 +25,7 @@
                 <div class="d-flex justify-content-center my-5">
                     <img src="{{asset("storage/images/criar-loja.svg")}}" width="300px" alt="Foomy">
                 </div>
-                <a href="{{ route('loja.create') }}" class="btn bg-padrao text-white fw-semibold w-100">
+                <a href="{{ route('store.create') }}" class="btn bg-padrao text-white fw-semibold w-100">
                     Criar loja
                 </a>
             </div>

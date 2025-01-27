@@ -20,10 +20,10 @@
                     <div class="dropdown">
                         <!-- LOJAS -->
                         @php
-                        $lojas = \App\Helpers\LojaHelper::getUserLoja();
+                        $stores = \App\Helpers\StoreHelper::getStoreUsers();
 
                         //Mudar status da Loja Selecionada
-                        \App\Helpers\LojaHelper::MudarStatusLoja();
+                        \App\Helpers\StoreHelper::MudarStatusLoja();
                         @endphp
                         <!-- FIM LOJAS -->
 
@@ -31,12 +31,12 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
 
                             <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
-                            @if(!empty($lojas))
+                            @if(!empty($stores))
 
-                            @foreach($lojas as $loja)
-                            @if(session('lojaConectado') && $loja->id == session('lojaConectado')['id'])
+                            @foreach($stores as $store)
+                            @if(session('storeConectado') && $store->id == session('storeConectado')['id'])
                             <!-- LOJA CIRCULO STATUS -->
-                            @if($loja->state == "OK" || $loja->state == "WARNING")
+                            @if($store->state == "OK" || $store->state == "WARNING")
                             <span class="material-symbols-outlined mr-2 text-success"
                                 style="font-variation-settings: 'FILL' 1;">
                                 check_circle
@@ -48,7 +48,7 @@
                             </span>
                             @endif
                             <!-- FIM LOJA CIRCULO STATUS -->
-                            {{session('lojaConectado')['nome']}}
+                            {{session('storeConectado')['nome']}}
                             @else
                             Selecione uma loja
                             @endif
@@ -68,7 +68,7 @@
                         <ul class="dropdown-menu p-3 bg-light dropdown-menu-end" style="width: 400px">
 
                             <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
-                            @if(!empty($lojas))
+                            @if(!empty($stores))
 
                             <div class="mb-3">
                                 <button onClick="window.location.reload()"
@@ -77,13 +77,13 @@
                                 </button>
                             </div>
 
-                            @foreach($lojas as $loja)
+                            @foreach($stores as $store)
                             <li
-                                class="d-flex align-items-center justify-content-between rounded {{session('lojaConectado') && session('lojaConectado')['id'] == $loja->id ? 'border-3 border-padrao' : 'bg-white'}} p-3">
+                                class="d-flex align-items-center justify-content-between rounded {{session('storeConectado') && session('storeConectado')['id'] == $store->id ? 'border-3 border-padrao' : 'bg-white'}} p-3">
 
                                 <div class="d-flex align-items-center">
                                     <!-- LOJA CIRCULO STATUS -->
-                                    @if($loja->state == "OK" || $loja->state == "WARNING")
+                                    @if($store->state == "OK" || $store->state == "WARNING")
                                     <span class="material-symbols-outlined mr-2 text-success"
                                         style="font-variation-settings: 'FILL' 1;">
                                         check_circle
@@ -99,11 +99,11 @@
                                     <!-- LOJA DETALHES -->
                                     <div>
                                         <p class="fw-bold m-0">
-                                            {{$loja->nome}}
+                                            {{$store->nome}}
                                         </p>
-                                        @if(!session('lojaConectado') || session('lojaConectado')['id'] == $loja->id)
+                                        @if(!session('storeConectado') || session('storeConectado')['id'] == $store->id)
                                         <p class="m-0 text-secondary">
-                                            @if($loja->state == "OK" || $loja->state == "WARNING")
+                                            @if($store->state == "OK" || $store->state == "WARNING")
                                             Loja aberta
                                             @else
                                             Loja fechada
@@ -116,8 +116,8 @@
                                 </div>
 
                                 <!-- BTN ESCOLHER LOJA -->
-                                @if(!session('lojaConectado') || session('lojaConectado')['id'] != $loja->id)
-                                <form action="{{route('loja.choose', ['id' => $loja->id])}}" method="post">
+                                @if(!session('storeConectado') || session('storeConectado')['id'] != $store->id)
+                                <form action="{{route('store.choose', ['id' => $store->id])}}" method="post">
                                     @csrf
                                     <button type="submit"
                                         class="mx-2 p-2 text-white fw-semibold rounded w-100 bg-padrao">

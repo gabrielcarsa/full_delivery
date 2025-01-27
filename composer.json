@@ -32,7 +32,7 @@
         "files": [
             "app/Helpers/DistanciaEntregaHelper.php",
             "app/Helpers/MascaraTelefone.php",
-            "app/Helpers/LojaHelper.php"
+            "app/Helpers/StoreHelper.php"
         ]
     },
     "autoload-dev": {
