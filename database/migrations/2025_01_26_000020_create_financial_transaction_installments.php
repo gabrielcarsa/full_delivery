@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('financial_transaction_installments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('financial_transaction_id')->constrained('financial_transactions')->onDelete('cascade');
+            $table->unsignedBigInteger('financial_transaction_id');
+            $table->foreign('financial_transaction_id', 'financial_transaction_fk')->references('id')->on('financial_transactions')->onDelete('cascade');
             $table->integer('installment_number'); // Número da parcela
             $table->decimal('amount', 10, 2); // Valor da parcela
             $table->date('due_date'); // Data de vencimento da parcela
@@ -24,7 +25,8 @@ return new class extends Migration
             $table->timestamps(); // created_at e updated_at
             $table->foreignId('created_by_user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('updated_by_user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('marked_down_by_user_id')->nullable()->constrained('users')->onDelete('set null'); // Usuário que processou o pagamento
+            $table->unsignedBigInteger('marked_down_by_user_id')->nullable();
+            $table->foreign('marked_down_by_user_id', 'marked_user_fk')->references('id')->on('users')->onDelete('set null');
         });
     }
 

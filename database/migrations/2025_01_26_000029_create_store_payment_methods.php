@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('payment_method_id')->constrained('payment_methods')->onDelete('cascade');
             $table->boolean('is_active')->default(true);
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade');
-            $table->foreignId('current_account_id')->constrained('current_accounts')->onDelete('cascade');
+            $table->foreignId('checking_account_id')->constrained('checking_accounts')->onDelete('cascade');
             $table->timestamps(); // created_at e updated_at
         });
     }
