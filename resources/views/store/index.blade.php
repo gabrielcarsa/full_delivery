@@ -1,6 +1,6 @@
 <x-app-layout>
 
-<div class="container-padrao">
+    <div class="container-padrao">
 
         <!-- LOJAS -->
         @if($stores)
@@ -25,6 +25,7 @@
             </div>
         </div>
         <!-- FIM HEADER -->
+
 
         @foreach($stores as $store)
 
@@ -103,29 +104,71 @@
 
         <!-- SE NÃO HOUVER LOJAS -->
         @else
-        <div class="d-flex align-items-center justify-content-center">
-            <div>
-                <p class="m-0 fs-1 my-3 fw-regular">
-                    Olá, <span class="fw-semibold">{{Auth::user()->name}}</span>
+        <div class="row g-3 my-auto">
+
+            <div class="col-md-4 my-auto">
+
+                <p class="m-0 fs-1 m-0 fw-bold">
+                    Olá, <span class="text-padrao">{{Auth::user()->name}}</span>
                 </p>
 
-                <p class="m-0 fs-3 my-3 fw-medium">
-                    Vamos dar os primeiros passos e criar sua loja aqui?<br>
-                    É bem rápido, menos de 5 minutos.
+                <p class="m-0 fw-medium">
+                    Vamos dar os primeiros passos e criar sua loja aqui? É bem simples, vamos preencher as informações
+                    abaixo:
                 </p>
-                <div class="d-flex justify-content-center my-5">
-                    <img src="{{asset("storage/images/criar-loja.svg")}}" width="300px" alt="Foomy">
-                </div>
-                <a href="{{ route('store.create') }}" class="btn bg-padrao text-white fw-semibold w-100">
+                <ul class="my-3">
+                    <li class="d-flex my-1">
+                        <span class="rounded-circle px-2 mr-2 bg-clear text-white fw-bold">
+                            1
+                        </span>
+                        <p class="m-0 fw-light">
+                            Informações básicas
+                        </p>
+                    </li>
+                    <li class="d-flex my-1">
+                        <span class="rounded-circle px-2 mr-2 bg-clear text-white fw-bold">
+                            2
+                        </span>
+                        <p class="m-0 fw-light">
+                            Contato
+                        </p>
+                    </li>
+                    <li class="d-flex my-1">
+                        <span class="rounded-circle px-2 mr-2 bg-clear text-white fw-bold">
+                            3
+                        </span>
+                        <p class="m-0 fw-light">
+                            Localização
+                        </p>
+                    </li>
+                    <li class="d-flex my-1">
+                        <span class="rounded-circle px-2 mr-2 bg-clear text-white fw-bold">
+                            4
+                        </span>
+                        <p class="m-0 fw-light">
+                            Taxas
+                        </p>
+                    </li>
+                </ul>
+                <p class="m-0 fw-medium">
+                    Não vai levar 5 minutos!
+                </p>
+                <a href="{{ route('store.create') }}" class="btn bg-padrao text-white fw-semibold w-100 my-3 shadow">
                     Criar loja
                 </a>
             </div>
+            <div class="col-md-8 px-5">
+                <img src="https://img.freepik.com/fotos-gratis/vista-lateral-homem-sentado-na-mesa_23-2149930931.jpg?t=st=1738087488~exp=1738091088~hmac=a4efcdf1cd98c817d0b06928409f1de7531e577b89a214aa7cf662071981c6a3&w=740"
+                    alt="" class="w-100 rounded-5 shadow">
+            </div>
+
 
         </div>
         <!-- FIM SE NÃO HOUVER LOJAS -->
 
         @endif
 
-
     </div>
+
+
 </x-app-layout>

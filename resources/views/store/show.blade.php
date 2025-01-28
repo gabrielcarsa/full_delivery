@@ -85,8 +85,8 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="{{route('store.update_logo', ['store_id' => $store->id])}}" method="post"
-                                        autocomplete="off" enctype="multipart/form-data">
+                                    <form action="{{route('store.update_logo', ['store_id' => $store->id])}}"
+                                        method="post" autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-body">
@@ -170,7 +170,7 @@
             <!-- FIM LINHA IMAGENS -->
 
             <!-- FORM -->
-            <form class="mt-3" action="{{route('store.update', ['store_id' => $store->id, 'tab' => request('tab')])}}"
+            <form class="mt-3" action="{{route('store.update', ['store' => $store->id, 'tab' => request('tab')])}}"
                 method="post" autocomplete="off">
                 @method('PUT')
                 @csrf
@@ -345,8 +345,8 @@
                                         <div class="col-6">
                                             <label for="inputCep" class="form-label fw-bold m-0">CEP</label>
                                             <input type="text" name="cep"
-                                                value="{{!empty($store) ? $store->zip_code : old('cep')}}" class="form-control"
-                                                id="inputCep" required>
+                                                value="{{!empty($store) ? $store->zip_code : old('cep')}}"
+                                                class="form-control" id="inputCep" required>
                                         </div>
                                         <div class="col-3">
                                             <label for="inputHoraAbertura" class="form-label fw-bold m-0">Começa
@@ -425,10 +425,10 @@
                                 </p>
                             </td>
                             <td>
-                                {{$colaborador->cargo}}
+                                {{$colaborador->position}}
                             </td>
                             <td>
-                                {{$colaborador->nivel_acesso}}
+                                {{$colaborador->access_level}}
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -486,14 +486,16 @@
                                 Gratuito
                             </p>
                         </div>
-                        <div class="d-flex justify-content-center align-items-end mt-4">
+                        <p class="mt-3 mb-0 mx-3 text-secondary fw-semibold fs-5">
+                            Use por tempo ilimitado!
+                        </p>
+                        <div class="mx-3">
                             <p class="text-dark fw-bold fs-1 m-0 mx-1">
                                 R$ 0,00
-                                <span class="text-secondary fs-6 m-0 fw-medium">/mês</span>
                             </p>
                         </div>
-                        <p class="text-secondary fw-normal px-3 text-center" style="font-size: 14px">
-                            *Use o plano gratuito por tempo ilimitado sem precisar cadastrar formas de pagamento.
+                        <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
+                            Sem precisar cadastrar cartões.
                         </p>
                         <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
                             Escolher
@@ -588,7 +590,6 @@
                             <p class="text-dark fw-bold fs-1 m-0 mx-1">
                                 <span class="text-secondary fs-6 m-0 fw-medium">12x</span>
                                 R$ 64,90
-                                <span class="text-secondary fs-6 m-0 p-0 fw-medium">/mês</span>
                             </p>
                         </div>
                         <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
@@ -703,7 +704,6 @@
                             <p class="text-dark fw-bold fs-1 m-0 mx-1">
                                 <span class="text-secondary fs-6 m-0 fw-medium">12x</span>
                                 R$ 149,90
-                                <span class="text-secondary fs-6 m-0 p-0 fw-medium">/mês</span>
                             </p>
                         </div>
                         <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
@@ -778,7 +778,6 @@
                             <p class="text-white fw-bold fs-1 m-0 mx-1">
                                 <span class="text-white-50 fs-6 m-0 fw-medium">12x</span>
                                 R$ 399,90
-                                <span class="text-white-50 fs-6 m-0 p-0 fw-medium">/mês</span>
                             </p>
                         </div>
                         <p class="text-white-50 fw-normal mx-3" style="font-size: 14px">

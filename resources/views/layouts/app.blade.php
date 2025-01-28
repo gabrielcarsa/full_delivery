@@ -49,7 +49,7 @@
 
     <x-banner />
 
-    <div class="min-h-screen bg-gray-100">
+    <div class="bg-gray-100 h-100">
 
         <!-- Page Content -->
         <main>
@@ -61,7 +61,7 @@
                 <div class="">
 
                     <!-- SIDEBAR -->
-                    <div class="collapse collapse-horizontal show" id="collapseSidebar">
+                    <div class="collapse collapse-horizontal show sticky-top" id="collapseSidebar">
 
                         <div class="m-0 border-end bg-white vh-100 py-3">
 
