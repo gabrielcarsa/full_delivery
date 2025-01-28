@@ -84,20 +84,20 @@ Route::middleware([
         
         //LOJA
         Route::resource('store', StoresController::class);
-        Route::post('/selecionar-loja', [LojaController::class, 'select'])->name('store.select');
-        Route::put('/store/alterar-logo', [LojaController::class, 'update_logo'])->name('store.update_logo');
-        Route::put('/store/alterar-banner', [LojaController::class, 'update_banner'])->name('store.update_banner');
-        Route::get('/store/integracao-ifood', [LojaController::class, 'create_integration_ifood'])->name('store.create_integration_ifood');
-        Route::post('/store/integracao-ifood', [LojaController::class, 'store_integration_ifood'])->name('store.store_integration_ifood');
+        Route::post('/selecionar-loja', [StoresController::class, 'select'])->name('store.select');
+        Route::put('/store/alterar-logo', [StoresController::class, 'update_logo'])->name('store.update_logo');
+        Route::put('/store/alterar-banner', [StoresController::class, 'update_banner'])->name('store.update_banner');
+        Route::get('/store/integracao-ifood', [StoresController::class, 'create_integration_ifood'])->name('store.create_integration_ifood');
+        Route::post('/store/integracao-ifood', [StoresController::class, 'store_integration_ifood'])->name('store.store_integration_ifood');
 
        
         //ENTREGAS LOJA
-        Route::get('/entregas-taxas', [LojaController::class, 'show_entrega_taxas'])->name('loja.entrega_taxas');
-        Route::get('/entregas-areas', [LojaController::class, 'show_entrega_areas'])->name('loja.entrega_areas');
-        Route::post('/entregas/gratuita', [LojaController::class, 'taxa_entrega_free'])->name('loja.taxa_entrega_free');
-        Route::post('/entregas/por-km', [LojaController::class, 'taxa_por_km_entrega'])->name('loja.taxa_por_km_entrega');
-        Route::post('/entregas/fixa', [LojaController::class, 'taxa_entrega_fixa'])->name('loja.taxa_entrega_fixa');
-        Route::post('/entregas/areas-metros', [LojaController::class, 'area_entrega_metros'])->name('loja.area_entrega_metros');
+        Route::get('/entregas-taxas', [StoresController::class, 'show_entrega_taxas'])->name('store.entrega_taxas');
+        Route::get('/entregas-areas', [StoresController::class, 'show_entrega_areas'])->name('store.entrega_areas');
+        Route::post('/entregas/gratuita', [StoresController::class, 'taxa_entrega_free'])->name('store.taxa_entrega_free');
+        Route::post('/entregas/por-km', [StoresController::class, 'taxa_por_km_entrega'])->name('store.taxa_por_km_entrega');
+        Route::post('/entregas/fixa', [StoresController::class, 'taxa_entrega_fixa'])->name('store.taxa_entrega_fixa');
+        Route::post('/entregas/areas-metros', [StoresController::class, 'area_entrega_metros'])->name('store.area_entrega_metros');
 
 
         //CATEGORIA PRODUTO

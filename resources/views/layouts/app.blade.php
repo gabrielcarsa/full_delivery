@@ -50,332 +50,520 @@
     <x-banner />
 
     <div class="min-h-screen bg-gray-100">
-        @livewire('navigation-menu')
 
         <!-- Page Content -->
         <main>
-            <div class="d-flex">
+            <div class="d-flex w-100">
 
                 @if(session('selected_store'))
-                <div class="border-end bg-white vh-100">
-                    <ul class="m-0 p-0">
 
-                        <!-- Nav Item - GESTOR DE PEDIDOS E MESAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    receipt_long
-                                </span>
-                                <p class="m-0 p-0">Pedidos</p>
+                <!-- COLUNA SIDEBAR -->
+                <div class="">
+
+                    <!-- SIDEBAR -->
+                    <div class="collapse collapse-horizontal show" id="collapseSidebar">
+
+                        <div class="m-0 border-end bg-white vh-100 py-3">
+
+                            <!-- LOGO -->
+                            <a href="{{ route('dashboard') }}">
+                                <img src="{{asset("storage/images/logo-black.png")}}" width="150px" alt="Foomy"
+                                    class="mx-auto my-2">
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownCardapio">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Pedidos
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('pedido.painel') }}">
-                                        Painel de Pedidos
-                                    </a>
-                                </li>
-                                <hr>
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Mesas
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('mesa.painel') }}">
-                                        Painel de Mesas
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                            <!-- FIM LOGO -->
 
-                        <!-- Nav Item - CLIENTES DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    groups
-                                </span>
-                                <p class="m-0 p-0">
-                                    Clientes
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Cadastro geral
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('cliente') }}">
-                                        Clientes
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('cliente') }}">
-                                        Fornecedores
-                                    </a>
-                                </li>
-                                <hr>
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Vantagens
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Cashback</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="">Assinaturas</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('cupom') }}">Cupons</a>
-                                </li>
-                            </ul>
-                        </li>
+                            <div class="dropdown mx-3 border bg-light rounded">
 
-                        <!-- Nav Item - LOJAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    storefront
-                                </span>
-                                <p class="m-0 p-0">
-                                    Loja
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        {{session('selected_store') != null ? session('selected_store')['nome'] : 'Sua loja' }}
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'sobre']) }}">
-                                        Sobre
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'horarios']) }}">
-                                        Horários de funcionamento
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'equipe']) }}">
-                                        Equipe
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'planos']) }}">
-                                        Planos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item"
-                                        href="{{ route('store.show', ['store' => session('selected_store') ? session('selected_store')['id'] : null, 'tab' => 'integracoes']) }}">
-                                        Integrações
-                                    </a>
-                                </li>
-                                <hr>
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Mesas
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('mesa') }}">
-                                        Cadastro de Mesas
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                <!-- LOJAS -->
+                                @php
+                                $stores = \App\Helpers\StoreHelper::getStoreUsers();
 
-                        <!-- Nav Item - ENTREGAS DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    sports_motorsports
-                                </span>
-                                <p class="m-0 p-0">Delivery</p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Operação delivery
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('store.entrega_taxas') }}">
-                                        Taxas de entrega
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('store.entrega_areas') }}">
-                                        Áreas para entrega
-                                    </a>
-                                </li>
-                                <hr>
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Aplicativo personalizado
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="">
-                                        Configurações gerais
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="">
-                                        Notificações e marketing
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                //Mudar status da Loja Selecionada
+                                \App\Helpers\StoreHelper::updateStoreStatus();
+                                @endphp
+                                <!-- FIM LOJAS -->
 
+                                <a class="btn d-flex align-items-center justify-content-between dropdown-toggle" href="#"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                        <!-- Nav Item - CARDAPIO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    restaurant_menu
-                                </span>
-                                <p class="m-0 p-0">Cardápio</p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Cardápio
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Layout
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('categoria_produto') }}">
-                                        Categoria e produtos
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
+                                    @if(!empty($stores))
 
-                        <!-- Nav Item - FINANCEIRO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    payments
-                                </span>
-                                <p class="m-0 p-0">Financeiro</p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Financeiro
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('contas_receber.index') }}">
-                                        Contas a receber
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('contas_pagar.index') }}">
-                                        Contas a pagar
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('movimentacao.showFormConsulta') }}">
-                                        Movimentações
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('categoria_financeiro.listar') }}">
-                                        Categoria Financeiro
-                                    </a>
-                                </li>
-                                <hr>
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Vendas
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Relatórios
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('forma_pagamento') }}">
-                                        Formas de pagamento
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('conta_corrente.listar') }}">
-                                        Conta Corrente
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    @foreach($stores as $store)
+                                    @if(session('selected_store') && $store->id == session('selected_store')['id'])
+                                    <!-- LOJA CIRCULO STATUS -->
+                                    @if($store->state == "OK" || $store->state == "WARNING")
+                                    <span class="material-symbols-outlined mr-2 text-success"
+                                        style="font-variation-settings: 'FILL' 1;">
+                                        check_circle
+                                    </span>
+                                    @else
+                                    <span class="material-symbols-outlined mr-2 text-danger"
+                                        style="font-variation-settings: 'FILL' 1;">
+                                        error
+                                    </span>
+                                    @endif
+                                    <!-- FIM LOJA CIRCULO STATUS -->
+                                    {{session('selected_store')['name']}}
+                                    @else
+                                    Selecione uma loja
+                                    @endif
+                                    @endforeach
 
-                        <!-- Nav Item - FINANCEIRO DROPEND -->
-                        <li class="d-flex align-items-center justify-content-center border-top dropend hover">
-                            <a class="btn text-decoration-none text-center text-secondary w-100" href="#"
-                                data-toggle="collapse" id="dropdownCardapio" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <span class="material-symbols-outlined fs-4">
-                                    package_2
-                                </span>
-                                <p class="m-0 p-0">
-                                    Estoque
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCardapio">
-                                <li>
-                                    <p class="text-secondary mb-1 ms-3" style="font-size: 13px">
-                                        Controle Estoque
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="">
-                                        Painel
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="">
-                                        Insumos
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    @else
+                                    <span class="material-symbols-outlined mr-1">
+                                        report
+                                    </span>
+                                    Nenhuma loja cadastrada ainda
+                                    @endif
+                                    <!-- FIM SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
 
-                    </ul>
+                                </a>
+
+                                <!-- DROPDOWN LOJAS -->
+                                <ul class="dropdown-menu p-3 bg-light dropdown-menu-end" style="width: 400px">
+
+                                    <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
+                                    @if(!empty($stores))
+
+                                    <div class="mb-3">
+                                        <button onClick="window.location.reload()"
+                                            class="text-primary text-decoration-underline">
+                                            Atualizar
+                                        </button>
+                                    </div>
+
+                                    @foreach($stores as $store)
+                                    <li
+                                        class="d-flex align-items-center justify-content-between rounded {{session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-3 border-padrao' : 'bg-white'}} p-3">
+
+                                        <div class="d-flex align-items-center">
+                                            <!-- LOJA CIRCULO STATUS -->
+                                            @if($store->state == "OK" || $store->state == "WARNING")
+                                            <span class="material-symbols-outlined mr-2 text-success"
+                                                style="font-variation-settings: 'FILL' 1;">
+                                                check_circle
+                                            </span>
+                                            @else
+                                            <span class="material-symbols-outlined mr-2 text-danger"
+                                                style="font-variation-settings: 'FILL' 1;">
+                                                error
+                                            </span>
+                                            @endif
+                                            <!-- FIM LOJA CIRCULO STATUS -->
+
+                                            <!-- LOJA DETALHES -->
+                                            <div>
+                                                <p class="fw-bold m-0">
+                                                    {{$store->name}}
+                                                </p>
+                                                @if(!session('selected_store') || session('selected_store')['id'] ==
+                                                $store->id)
+                                                <p class="m-0 text-secondary">
+                                                    @if($store->state == "OK" || $store->state == "WARNING")
+                                                    Loja aberta
+                                                    @else
+                                                    Loja fechada
+                                                    @endif
+                                                </p>
+                                                @endif
+                                            </div>
+                                            <!-- FIM LOJA DETALHES -->
+
+                                        </div>
+
+                                        <!-- BTN ESCOLHER LOJA -->
+                                        @if(!session('selected_store') || session('selected_store')['id'] != $store->id)
+                                        <form action="{{route('store.select', ['id' => $store->id])}}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                class="mx-2 p-2 text-white fw-semibold rounded w-100 bg-padrao">
+                                                Selecionar loja
+                                            </button>
+                                        </form>
+                                        @endif
+                                        <!-- FIM BTN ESCOLHER LOJA -->
+
+                                    </li>
+                                    @endforeach
+
+                                    @else
+                                    Vamos começar gratuitamente? <a href="">
+                                        Criar loja agora.
+                                    </a>
+                                    @endif
+                                    <!-- FIM SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
+
+                                </ul>
+                                <!-- FIM DROPDOWN LOJAS -->
+                            </div>
+
+                            <hr>
+
+                            <!-- ACCORDION -->
+                            <div class="accordion accordion-flush" id="accordionSidebar">
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-orders"
+                                            aria-controls="collapse-orders">
+                                            <span class="material-symbols-outlined mr-2">
+                                                receipt_long
+                                            </span>
+                                            Pedidos
+                                        </a>
+                                    </div>
+                                    <div id="collapse-orders" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('pedido.painel') }}">
+                                                        Painel de Pedidos
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('mesa.painel') }}">
+                                                        Painel de Mesas
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-customers"
+                                            aria-controls="collapse-customers">
+                                            <span class="material-symbols-outlined mr-2">
+                                                groups
+                                            </span>
+                                            Clientes e Fornecedores
+                                        </a>
+                                    </div>
+                                    <div id="collapse-customers" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('cliente') }}">
+                                                        Clientes
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary" href="">
+                                                        Cashback
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary" href="">
+                                                        Assinaturas
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary" href="">
+                                                        Cupons
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('cupom') }}">
+                                                        Fornecedores
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-stores"
+                                            aria-controls="collapse-stores">
+                                            <span class="material-symbols-outlined mr-2">
+                                                storefront
+                                            </span>
+                                            Lojas
+                                        </a>
+                                    </div>
+                                    <div id="collapse-stores" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'sobre']) }}">
+                                                        Sobre
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'horarios']) }}">
+                                                        Horários de funcionamento
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'equipe']) }}">
+                                                        Equipe
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'planos']) }}">
+                                                        Planos
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'integracoes']) }}">
+                                                        Integrações
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'mesas']) }}">
+                                                        Mesas e comandas
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-deliveries"
+                                            aria-controls="collapse-deliveries">
+                                            <span class="material-symbols-outlined mr-2">
+                                                sports_motorsports
+                                            </span>
+                                            Delivery
+                                        </a>
+                                    </div>
+                                    <div id="collapse-deliveries" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.entrega_taxas') }}">
+                                                        Taxas de entrega
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.entrega_areas') }}">
+                                                        Áreas de entrega
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary" href="">
+                                                        Aplicativo personalizado
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('store.show', ['store' => session('selected_store')['id'], 'tab' => 'planos']) }}">
+                                                        Notificações e marketing
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-menus"
+                                            aria-controls="collapse-menus">
+                                            <span class="material-symbols-outlined mr-2">
+                                                restaurant_menu
+                                            </span>
+                                            Cardápio
+                                        </a>
+                                    </div>
+                                    <div id="collapse-menus" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('categoria_produto') }}">
+                                                        Categorias e produtos
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary" href="">
+                                                        Visual do cardápio
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-payments"
+                                            aria-controls="collapse-payments">
+                                            <span class="material-symbols-outlined mr-2">
+                                                payments
+                                            </span>
+                                            Financeiro
+                                        </a>
+                                    </div>
+                                    <div id="collapse-payments" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('contas_receber.index') }}">
+                                                        Contas a receber
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('contas_pagar.index') }}">
+                                                        Contas a pagar
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('movimentacao.showFormConsulta') }}">
+                                                        Movimentações
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('categoria_financeiro.listar') }}">
+                                                        Categorias
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('forma_pagamento') }}">
+                                                        Formas de pagamento
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('conta_corrente.listar') }}">
+                                                        Conta corrente
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                                <!-- ACCORDION ITEM -->
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <a class="accordion-button fw-medium collapsed text-decoration-none" href=""
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-stock"
+                                            aria-controls="collapse-stock">
+                                            <span class="material-symbols-outlined mr-2">
+                                                package_2
+                                            </span>
+                                            Estoque
+                                        </a>
+                                    </div>
+                                    <div id="collapse-stock" class="accordion-collapse collapse"
+                                        data-bs-parent="#accordionSidebar">
+                                        <div class="m-0 py-1">
+                                            <ul class="fw-medium border-start border-secondary mx-2 ps-2"
+                                                style="border-left-width: 4px !important;">
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('contas_receber.index') }}">
+                                                        Contas a receber
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('contas_pagar.index') }}">
+                                                        Contas a pagar
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('movimentacao.showFormConsulta') }}">
+                                                        Movimentações
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('categoria_financeiro.listar') }}">
+                                                        Categorias
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('forma_pagamento') }}">
+                                                        Formas de pagamento
+                                                    </a>
+                                                </li>
+                                                <li class="my-2">
+                                                    <a class="text-decoration-none text-secondary"
+                                                        href="{{ route('conta_corrente.listar') }}">
+                                                        Conta corrente
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- FIM ACCORDION ITEM -->
+
+                            </div>
+                            <!-- FIM ACCORDION -->
+
+                        </div>
+                    </div>
+                    <!-- FIM SIDEBAR -->
+
                 </div>
                 @endif
+                <!-- FIM COLUNA SIDEBAR -->
 
-                <!-- CONTEÚDO -->
+                <!-- COLUNA CONTEÚDO -->
                 <div class="container-fluid m-0 p-0">
+                    @livewire('navigation-menu')
+
                     {{ $slot }}
                 </div>
+                <!-- FIM COLUNA CONTEÚDO -->
+
             </div>
 
         </main>

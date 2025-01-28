@@ -30,7 +30,7 @@
 
         <!-- CARD LOJA -->
         <div
-            class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('selected_store') && session('selected_store')['id'] == $loja->id ? 'border-padrao' : '' }}">
+            class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-padrao' : '' }}">
 
             <!-- LOGO LOJA -->
             @if($store->logo != null)
@@ -67,27 +67,27 @@
                 <!-- FIM LOJA CIRCULO STATUS -->
 
                 <h2 class="fs-2 fw-bold m-0">
-                    {{$store->nome}}
+                    {{$store->name}}
                 </h2>
 
                 <p class="text-secondary">
-                    {{$store->descricao}}
+                    {{$store->description}}
                 </p>
                 <p>
-                    {{$store->rua}}, {{$store->numero}} -
-                    {{$store->bairro}}, {{$store->cidade}} {{$store->estado}}.
-                    {{$store->cep}}
+                    {{$store->street}}, {{$store->number}} -
+                    {{$store->neghborhood}}, {{$store->city}} {{$store->state}}.
+                    {{$store->zip_code}}
                 </p>
 
                 @if(!session('selected_store') || session('selected_store')['id'] != $store->id)
-                <form action="{{route('store.choose', ['id' => $store->id])}}" method="post">
+                <form action="{{route('store.select', ['id' => $store->id])}}" method="post">
                     @csrf
                     <button type="submit" class="p-2 text-white fw-semibold rounded w-100 bg-padrao">
                         Escolher loja
                     </button>
                 </form>
                 @else
-                <a href="{{route('store.show')}}" class="btn bg-padrao fw-semibold text-white">
+                <a href="{{route('store.show', ['store' => $store->id])}}" class="btn bg-padrao fw-semibold text-white">
                     Ir para loja
                 </a>
                 @endif

@@ -35,7 +35,7 @@ class StoreHelper
         if(session('selected_store')){
             
             //Obtendo Loja
-            $store = Loja::find(session('selected_store')['id']);
+            $store = Stores::find(session('selected_store')['id']);
 
             if($store != null){
                 

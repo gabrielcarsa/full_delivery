@@ -54,7 +54,7 @@ class StoresController extends Controller
         $store = Stores::where('id', $id)->get();
 
         //Definindo variavel de sessão de store
-        session(['selected_store' => ['id'=> $id, 'nome'=> $store[0]->nome]]);
+        session(['selected_store' => ['id'=> $id, 'name'=> $store[0]->name]]);
 
         return redirect()->back()->with('success', 'Conectado como '.session('selected_store')['name']);
 
@@ -82,15 +82,15 @@ class StoresController extends Controller
             $tab = $request->get('tab') ?? 'sobre';
 
             if($tab == 'horarios'){
-                $horarios = HorarioFuncionamento::where('store_id' , $id)->get();
+                $horarios = StoreOpeningHours::where('store_id' , $id)->get();
             }elseif($tab == 'equipe'){
-                $equipe = UserStores::where('store_id', $id)->get();
+                $equipe = StoreUsers::where('store_id', $id)->get();
             }elseif($tab == 'planos'){
                 //TODO
             }elseif($tab == 'integracoes'){
 
                 // Obtém token mais recente
-                $token = IfoodToken::where('store_id', $id)->latest()->first();
+                $token = IfoodTokens::where('store_id', $id)->latest()->first();
             }
 
             $dados = [
@@ -310,7 +310,7 @@ class StoresController extends Controller
             $store->save();
 
             //Definindo variavel de sessão de store
-            session(['selected_store' => ['id'=> $store->id, 'name'=> $store->nome]]);
+            session(['selected_store' => ['id'=> $store->id, 'name'=> $store->name]]);
 
             return redirect()->route('store.show',['store' => $store->id,'tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
 

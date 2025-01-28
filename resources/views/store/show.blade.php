@@ -52,8 +52,8 @@
                     </span>
                 </div>
                 <p class="fs-5 mx-3 my-0">
-                    Link para cardápio digital: <a href="{{route('cardapio', ['loja_id' => $loja->id])}}"
-                        class="fw-bold">{{route('cardapio')}}?loja_id={{$loja->id}}</a>
+                    Link para cardápio digital: <a href="{{route('cardapio', ['store_id' => $store->id])}}"
+                        class="fw-bold">{{route('cardapio')}}?store_id={{$store->id}}</a>
                 </p>
 
             </div>
@@ -72,7 +72,7 @@
                             </a>
                         </p>
 
-                        <img src='{{asset("storage/$loja->nome/$loja->logo")}}' width="150"
+                        <img src='{{asset("storage/$store->name/$store->logo")}}' width="150"
                             class="rounded-circle border">
 
                         <!-- MODAL EDITAR LOGO-->
@@ -85,7 +85,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="{{route('loja.update_logo', ['loja_id' => $loja->id])}}" method="post"
+                                    <form action="{{route('store.update_logo', ['store_id' => $store->id])}}" method="post"
                                         autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
@@ -123,7 +123,7 @@
                                 Alterar
                             </a>
                         </p>
-                        <img src='{{asset("storage/$loja->nome/banner")}}' class="rounded border" style="width: 150px">
+                        <img src='{{asset("storage/$store->name/banner")}}' class="rounded border" style="width: 150px">
 
                         <!-- MODAL -->
                         <div class="modal fade" id="modalEditarBanner" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -137,7 +137,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <form action="{{route('loja.update_banner', ['loja_id' => $loja->id])}}"
+                                    <form action="{{route('store.update_banner', ['store_id' => $store->id])}}"
                                         method="post" autocomplete="off" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
@@ -170,7 +170,7 @@
             <!-- FIM LINHA IMAGENS -->
 
             <!-- FORM -->
-            <form class="mt-3" action="{{route('loja.update', ['loja_id' => $loja->id, 'tab' => request('tab')])}}"
+            <form class="mt-3" action="{{route('store.update', ['store_id' => $store->id, 'tab' => request('tab')])}}"
                 method="post" autocomplete="off">
                 @method('PUT')
                 @csrf
@@ -180,12 +180,12 @@
 
                     <div class="col-md-6">
                         <label for="inputNome" class="form-label fw-bold m-0">Nome da loja</label>
-                        <input type="text" name="nome" value="{{!empty($loja) ? $loja->nome : old('nome')}}"
+                        <input type="text" name="nome" value="{{!empty($store) ? $store->name : old('nome')}}"
                             class="form-control @error('nome') is-invalid @enderror" id="inputNome" required>
                     </div>
                     <div class="col-md-6">
                         <label for="inputEmail" class="form-label fw-bold m-0">Email</label>
-                        <input type="text" name="email" value="{{!empty($loja) ? $loja->email : old('email')}}"
+                        <input type="text" name="email" value="{{!empty($store) ? $store->email : old('email')}}"
                             class="form-control @error('email') is-invalid @enderror" id="inputEmail">
                     </div>
 
@@ -193,7 +193,7 @@
                         <label for="inputDescricao" class="form-label fw-bold m-0">Descrição</label>
                         <textarea rows="2" name="descricao"
                             class="form-control @error('descricao') is-invalid @enderror" id="inputDescricao"
-                            required>{{!empty($loja) ? $loja->descricao : old('descricao')}}</textarea>
+                            required>{{!empty($store) ? $store->description : old('descricao')}}</textarea>
                         <p class="m-0 text-secondary fw-light">
                             Máximo 200 caracteres
                         </p>
@@ -204,7 +204,7 @@
                             Telefone 1
                         </label>
                         <input type="text" name="telefone1"
-                            value="{{!empty($loja) ? $loja->telefone1 : old('telefone1')}}"
+                            value="{{!empty($store) ? $store->phone1 : old('telefone1')}}"
                             class="form-control @error('telefone1') is-invalid @enderror" id="inputTelefone1">
                     </div>
                     <div class="col-md-6">
@@ -212,7 +212,7 @@
                             Telefone 2
                         </label>
                         <input type="text" name="telefone2"
-                            value="{{!empty($loja) ? $loja->telefone2 : old('telefone2')}}"
+                            value="{{!empty($store) ? $store->phone2 : old('telefone2')}}"
                             class="form-control @error('telefone2') is-invalid @enderror" id="inputTelefone2">
                     </div>
 
@@ -232,7 +232,7 @@
                     <div class="col-md-6 my-2">
                         <x-label for="cep" value="CEP" />
                         <x-input placeholder="Ex.: 79000-000" id="cep" type="text" name="cep"
-                            :value="!empty($loja) ? $loja->cep : old('cep')" autocomplete="off" />
+                            :value="!empty($store) ? $store->zip_code : old('cep')" autocomplete="off" />
 
                     </div>
                     <div class="col-md-6 my-2 d-flex align-items-end">
@@ -244,37 +244,37 @@
                     <div class="col-md-6 my-2">
                         <x-label for="rua" value="Rua" />
                         <x-input placeholder="" readonly id="rua" type="text" name="rua"
-                            :value="!empty($loja) ? $loja->rua : old('rua')" autocomplete="off" class="bg-light" />
+                            :value="!empty($store) ? $store->street : old('rua')" autocomplete="off" class="bg-light" />
                     </div>
                     <div class="col-md-6 my-2">
                         <x-label for="bairro" value="Bairro" />
                         <x-input placeholder="" readonly id="bairro" type="text" name="bairro"
-                            :value="!empty($loja) ? $loja->bairro : old('bairro')" autocomplete="off"
+                            :value="!empty($store) ? $store->neighborhood : old('bairro')" autocomplete="off"
                             class="bg-light" />
                     </div>
 
                     <div class="col-md-6 my-2">
                         <x-label for="cidade" value="Cidade" />
                         <x-input placeholder="" readonly id="cidade" type="text" name="cidade"
-                            :value="!empty($loja) ? $loja->cidade : old('cidade')" autocomplete="off"
+                            :value="!empty($store) ? $store->city : old('cidade')" autocomplete="off"
                             class="bg-light" />
                     </div>
                     <div class="col-md-6 my-2">
                         <x-label for="estado" value="Estado" />
                         <x-input placeholder="" readonly id="estado" type="text" name="estado"
-                            :value="!empty($loja) ? $loja->estado : old('estado')" autocomplete="off"
+                            :value="!empty($store) ? $store->state : old('estado')" autocomplete="off"
                             class="bg-light" />
                     </div>
 
                     <div class="col-md-6 my-2">
                         <x-label for="numero" value="Número" />
                         <x-input placeholder="" id="numero" type="text" name="numero"
-                            :value="!empty($loja) ? $loja->numero : old('numero')" autocomplete="off" />
+                            :value="!empty($store) ? $store->number : old('numero')" autocomplete="off" />
                     </div>
                     <div class="col-md-6 my-2">
                         <x-label for="complemento" value="Complemento" />
                         <x-input placeholder="" id="complemento" type="text" name="complemento"
-                            :value="!empty($loja) ? $loja->complemento : old('complemento')" autocomplete="off" />
+                            :value="!empty($store) ? $store->complement : old('complemento')" autocomplete="off" />
                     </div>
 
                 </div>
@@ -292,7 +292,7 @@
                         Valor taxa de serviço (%)
                     </label>
                     <input type="text" name="taxa_servico"
-                        value="{{!empty($loja) ? $loja->taxa_servico : old('taxa_servico')}}" class="form-control"
+                        value="{{!empty($store) ? $store->service_fee : old('taxa_servico')}}" class="form-control"
                         id="inputTaxaServico" required>
                 </div>
                 <!-- FIM TAXA DE SERVIÇO -->
@@ -345,7 +345,7 @@
                                         <div class="col-6">
                                             <label for="inputCep" class="form-label fw-bold m-0">CEP</label>
                                             <input type="text" name="cep"
-                                                value="{{!empty($loja) ? $loja->cep : old('cep')}}" class="form-control"
+                                                value="{{!empty($store) ? $store->zip_code : old('cep')}}" class="form-control"
                                                 id="inputCep" required>
                                         </div>
                                         <div class="col-3">
@@ -844,7 +844,7 @@
             <!-- TAB SOBRE INTEGRACOES -->
             @elseif(request('tab') != null && request('tab') == 'integracoes')
 
-            @if($loja->ifood_merchant_id != null)
+            @if($store->ifood_merchant_id != null)
 
             <!-- LINHA -->
             <div class="row p-3">
@@ -886,7 +886,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        {{$loja->ifood_merchant_id}}
+                                        {{$store->ifood_merchant_id}}
                                     </td>
                                     <td>
                                         @if($dados['token'] != null)
@@ -927,7 +927,7 @@
                         <p class="text-secondary">
                             É bem simples, não leva 5 minutos e vai facilitar muitoooo sua vida.
                         </p>
-                        <a href="{{route('loja.create_integration_ifood')}}"
+                        <a href="{{route('store.create_integration_ifood')}}"
                             class="btn bg-padrao text-white fw-semibold w-100">
                             Iniciar
                         </a>
