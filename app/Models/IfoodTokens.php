@@ -17,6 +17,6 @@ class IfoodTokens extends Model
 
     public function store()
     {
-        return $this->belogsTo(Stores::class);
+        return $this->belogsTo(Stores::class, 'store_id');
     }
 }

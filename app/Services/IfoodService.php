@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\IfoodToken;
+use App\Models\IfoodTokens;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use App\Models\Loja;
+use App\Models\Stores;
 
 class IfoodService
 {
@@ -16,26 +16,26 @@ class IfoodService
         $this->client = new Client();
     }
 
-    //Obter Loja Conectada
+    //Obter Stores Conectada
     private function getIdlojaConectada(){
 
         //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro');
+        if(!session('selected_store')){
+            return redirect('store.index')->with('error', 'Selecione um loja primeiro');
         }
         //ID loja
-        $loja_id  = session('lojaConectado')['id'];
+        $store_id  = session('selected_store')['id'];
 
-        return $loja_id;
+        return $store_id;
     }
 
     //Obter código do iFood Merchant
     public function getMerchantIdFoomy(){
         
-        $loja_id = $this->getIdlojaConectada();
+        $store_id = $this->getIdlojaConectada();
 
         //Obter código do MERCHANT
-        $loja = Loja::find($loja_id);
+        $loja = Stores::find($store_id);
 
         return $loja->ifood_merchant_id;
     }
@@ -44,7 +44,7 @@ class IfoodService
     public function getAccessToken()
     {
         // Obtém token mais recente
-        $token = IfoodToken::latest()->first();
+        $token = IfoodTokens::latest()->first();
 
         if ($token && $token->expires_at->isFuture()) {
             return $token->access_token;
@@ -56,11 +56,11 @@ class IfoodService
     //AccessToken
     public function postAccessToken($authorization_code, $authorization_code_verifier)
     {
-        //Obter Loja ID
-        $loja_id = $this->getIdlojaConectada();
+        //Obter Stores ID
+        $store_id = $this->getIdlojaConectada();
         
         // Obtém token mais recente
-        $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
+        $token = IfoodTokens::where('store_id', $store_id)->latest()->first();
 
         if($token != null){
             $response = $this->client->post('https://merchant-api.ifood.com.br/authentication/v1.0/oauth/token', [
@@ -89,11 +89,11 @@ class IfoodService
 
         $expiresAt = Carbon::now()->addSeconds($data['expiresIn']);
 
-        IfoodToken::create([
+        IfoodTokens::create([
             'access_token' => $data['accessToken'],
             'refresh_token' => $data['refreshToken'],
             'expires_at' => $expiresAt,
-            'loja_id' => $loja_id,
+            'store_id' => $store_id,
         ]);
 
         return $data['accessToken'];

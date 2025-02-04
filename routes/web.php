@@ -83,12 +83,12 @@ Route::middleware([
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         
         //LOJA
-        Route::resource('store', StoresController::class);
         Route::post('/selecionar-loja', [StoresController::class, 'select'])->name('store.select');
         Route::put('/store/alterar-logo', [StoresController::class, 'update_logo'])->name('store.update_logo');
         Route::put('/store/alterar-banner', [StoresController::class, 'update_banner'])->name('store.update_banner');
         Route::get('/store/integracao-ifood', [StoresController::class, 'create_integration_ifood'])->name('store.create_integration_ifood');
         Route::post('/store/integracao-ifood', [StoresController::class, 'store_integration_ifood'])->name('store.store_integration_ifood');
+        Route::resource('store', StoresController::class);
 
        
         //ENTREGAS LOJA

@@ -28,7 +28,7 @@ class Stores extends Model
 
    public function ifood_tokens()
    {
-      return $this->HasMany(IfoodTokens::class);
+      return $this->HasMany(IfoodTokens::class, 'store_id');
    }
    
    public function product_categories()

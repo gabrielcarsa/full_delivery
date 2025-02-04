@@ -14,7 +14,7 @@
 
                 <div class="card my-auto p-3">
 
-                    <p class="fw-bold text-secondary fs-4">
+                    <p class="text-secondary">
                         Etapa 1 de 2
                     </p>
 
@@ -42,7 +42,7 @@
 
                     <!-- FORM -->
                     <form class="my-3"
-                        action="{{route('loja.store_integration_ifood', ['authorization_code_verifier' => $userCode['authorizationCodeVerifier']])}}"
+                        action="{{route('store.store_integration_ifood', ['authorization_code_verifier' => $userCode['authorizationCodeVerifier']])}}"
                         method="post">
                         @csrf
                         <div class="my-3">
@@ -81,13 +81,13 @@
 
                 <div class="card my-auto p-3">
 
-                    <p class="fw-bold text-secondary fs-4">
+                    <p class="text-secondary">
                         Etapa 2 de 2
                     </p>
 
                     <!-- FORM -->
                     <form class="row my-3"
-                        action="{{route('loja.store_integration_ifood', ['step' => 2, 'authorization_code_verifier' => request('authorization_code_verifier')])}}"
+                        action="{{route('store.store_integration_ifood', ['step' => 2, 'authorization_code_verifier' => request('authorization_code_verifier')])}}"
                         method="post">
                         @csrf
 
@@ -101,7 +101,7 @@
                             Cole aqui o código copiado do portal do parceiro.
                         </p>
                         <div class="col-sm-6 my-3">
-                            <a class="btn btn-secondary w-100" href="{{route('loja.create_integration_ifood')}}">
+                            <a class="btn btn-secondary w-100" href="{{route('store.create_integration_ifood')}}">
                                 Voltar
                             </a>
                         </div>

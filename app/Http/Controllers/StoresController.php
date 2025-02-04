@@ -63,11 +63,6 @@ class StoresController extends Controller
     //EXIBIR
     public function show(Request $request){
 
-        //Verificar se há store selecionado
-        if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione uma store primeiro');
-        }
-
         //Info Stores
         $id = session('selected_store')['id'];
         $store = Stores::find($id);
@@ -639,7 +634,7 @@ class StoresController extends Controller
 
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione uma store primeiro');
+            return redirect()->route('store.index')->with('error', 'Selecione uma loja primeiro');
         }
 
         //Step
@@ -674,6 +669,7 @@ class StoresController extends Controller
                 $this->ifoodService->postAccessToken($authorization_code, $authorization_code_verifier);
 
             }catch (\Exception $e) {
+                //dd($e);
                 return redirect()->back()->with('error', 'Código inválido ou tempo expirado. Tente novamente!');
             }
 
@@ -686,7 +682,7 @@ class StoresController extends Controller
             $store->ifood_merchant_id = $merchantIfood[0]['id'];
             $store->save();
 
-            return redirect()->route('store',['tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
+            return redirect()->route('store.show',['store' => $store->id, 'tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');

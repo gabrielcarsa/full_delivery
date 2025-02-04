@@ -38,26 +38,32 @@ class StoreHelper
             $store = Stores::find(session('selected_store')['id']);
 
             if($store != null){
-                
+
                 //Se houver integração com iFood e se Token estiver ativo
-                if($store->ifood_merchant_id != null && $store->ifood_token->sortByDesc('expires_at')->first()->expires_at->isFuture()){
+                if($store->ifood_tokens->isNotEmpty()){
+                    
+                    $tokens = $store->ifood_tokens;
 
-                    $merchant = $ifoodService->getMerchantStatus($store->ifood_merchant_id);
+                    if($store->ifood_merchant_id != null && $tokens->sortByDesc('expires_at')->first()->expires_at->isFuture()){
 
-                    //Verificando se está aberto no iFood
-                    if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
-
-                        $store->status = $merchant[0]['state'];
-                        $store->save();
-
-                    }else{
-
-                        $store->status = $merchant[0]['state'];
-                        $store->save();
-
+                        $merchant = $ifoodService->getMerchantStatus($store->ifood_merchant_id);
+    
+                        //Verificando se está aberto no iFood
+                        if($merchant[0]['state'] == 'OK' || $merchant[0]['state'] == 'WARNING'){
+    
+                            $store->status = $merchant[0]['state'];
+                            $store->save();
+    
+                        }else{
+    
+                            $store->status = $merchant[0]['state'];
+                            $store->save();
+    
+                        }
+    
                     }
-
                 }
+                
             }
         }
     }

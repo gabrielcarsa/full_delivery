@@ -49,7 +49,7 @@
 
     <x-banner />
 
-    <div class="bg-gray-100 h-100">
+    <div class="bg-gray-100 min-h-screen">
 
         <!-- Page Content -->
         <main>
