@@ -315,12 +315,10 @@ class StoresController extends Controller
     }
 
     //ALTERAR
-    public function update(Request $request){
+    public function update(Request $request, Stores $store){
 
         //Tab para verificar seleção do conteúdo
         $tab = $request->input('tab');
-
-        $store_id = $request->input('store_id');
 
         //Salvando seção SOBRE
         if($tab == "sobre" || $tab == null){
@@ -336,7 +334,7 @@ class StoresController extends Controller
                 //'logo' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=300,min-height=300',
                 //'banner' => 'image|mimes:jpeg,png,jpg|max:20480|dimensions:min-width=800,min-height=400',
                 'nome' => 'required|string|max:100',
-                'descricao' => 'required|string|max:250',
+                'descricao' => 'nullable|string|max:250',
                 'email' => 'nullable|email|max:100',
                 'taxa_servico' => 'required|numeric',
                 'cep' => 'required|string|max:20',
@@ -355,26 +353,23 @@ class StoresController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            //Alterar store
-            $store = Stores::where('id', $store_id)->first();
-
             //Informações Gerais
-            $store->nome = $request->input('nome');
-            $store->descricao = $request->input('descricao');
+            $store->name = $request->input('nome');
+            $store->description = $request->input('descricao');
             $store->email = $request->input('email');
-            $store->alterado_usuario_id = Auth::user()->id;
-            $store->telefone1 = $request->input('telefone1');
-            $store->telefone2 = $request->input('telefone2');
-            $store->taxa_servico = $request->input('taxa_servico');
+            $store->updated_by_user_id = Auth::user()->id;
+            $store->phone1 = $request->input('telefone1');
+            $store->phone2 = $request->input('telefone2');
+            $store->service_fee = $request->input('taxa_servico');
 
             //Endereço
-            $store->cep = $request->input('cep');
-            $store->rua = $request->input('rua');
-            $store->bairro = $request->input('bairro');
-            $store->numero = $request->input('numero');
-            $store->complemento = $request->input('complemento');
-            $store->cidade = $request->input('cidade');
-            $store->estado = $request->input('estado');
+            $store->zip_code = $request->input('cep');
+            $store->street = $request->input('rua');
+            $store->neighborhood = $request->input('bairro');
+            $store->number = $request->input('numero');
+            $store->complement = $request->input('complemento');
+            $store->city = $request->input('cidade');
+            $store->state = $request->input('estado');
             $store->save();
 
         }elseif($tab == "horarios"){
@@ -392,7 +387,7 @@ class StoresController extends Controller
             }
         }
 
-        return redirect()->route('store')->with('success', 'Alteração feita com sucesso');
+        return redirect()->back()->with('success', 'Alteração feita com sucesso');
     }
 
     //ALTERAR LOGO

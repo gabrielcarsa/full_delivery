@@ -179,14 +179,14 @@
                 <div class="row my-3 px-3 g-3">
 
                     <div class="col-md-6">
-                        <label for="inputNome" class="form-label fw-bold m-0">Nome da loja</label>
-                        <input type="text" name="nome" value="{{!empty($store) ? $store->name : old('nome')}}"
-                            class="form-control @error('nome') is-invalid @enderror" id="inputNome" required>
+                        <x-label for="nome" value="Nome da loja" />
+                        <x-input id="nome" type="text" name="nome" required
+                            :value="!empty($store) ? $store->name : old('nome')" autocomplete="off" />
                     </div>
                     <div class="col-md-6">
-                        <label for="inputEmail" class="form-label fw-bold m-0">Email</label>
-                        <input type="text" name="email" value="{{!empty($store) ? $store->email : old('email')}}"
-                            class="form-control @error('email') is-invalid @enderror" id="inputEmail">
+                        <x-label for="email" value="Email" />
+                        <x-input type="text" name="email" value="{{!empty($store) ? $store->email : old('email')}}"
+                            id="email" />
                     </div>
 
                     <div class="col-12">
@@ -200,20 +200,14 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="inputTelefone1" class="form-label fw-bold m-0">
-                            Telefone 1
-                        </label>
-                        <input type="text" name="telefone1"
-                            value="{{!empty($store) ? $store->phone1 : old('telefone1')}}"
-                            class="form-control @error('telefone1') is-invalid @enderror" id="inputTelefone1">
+                        <x-label for="telefone1" value="Telefone 1" />
+                        <x-input type="text" name="telefone1"
+                            value="{{!empty($store) ? $store->phone1 : old('telefone1')}}" id="telefone1" />
                     </div>
                     <div class="col-md-6">
-                        <label for="inputTelefone2" class="form-label fw-bold m-0">
-                            Telefone 2
-                        </label>
-                        <input type="text" name="telefone2"
-                            value="{{!empty($store) ? $store->phone2 : old('telefone2')}}"
-                            class="form-control @error('telefone2') is-invalid @enderror" id="inputTelefone2">
+                        <x-label for="telefone2" value="Telefone 2" />
+                        <x-input type="text" name="telefone2"
+                            value="{{!empty($store) ? $store->phone2 : old('telefone2')}}" id="telefone2" />
                     </div>
 
                 </div>
@@ -288,12 +282,10 @@
                     Essa porcentagem será usada para calcular ao fechar um pedido.
                 </p>
                 <div class="px-3">
-                    <label for="inputTaxaServico" class="form-label fw-bold m-0">
-                        Valor taxa de serviço (%)
-                    </label>
-                    <input type="text" name="taxa_servico"
-                        value="{{!empty($store) ? $store->service_fee : old('taxa_servico')}}" class="form-control"
-                        id="inputTaxaServico" required>
+                    <x-label for="taxa_servico" value="Valor taxa de serviço (%)" />
+                    <x-input type="text" name="taxa_servico"
+                        value="{{!empty($store) ? $store->service_fee : old('taxa_servico')}}" id="taxa_servico"
+                        required />
                 </div>
                 <!-- FIM TAXA DE SERVIÇO -->
 
@@ -1072,7 +1064,7 @@
         });
     }
     // Aplicar a máscara para os campos de telefone 1 e telefone 2
-    aplicarMascaraTelefone('inputTelefone1');
-    aplicarMascaraTelefone('inputTelefone2');
+    aplicarMascaraTelefone('telefone1');
+    aplicarMascaraTelefone('telefone2');
     </script>
 </x-app-layout>
