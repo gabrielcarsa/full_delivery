@@ -44,24 +44,17 @@
             <!-- TAB SOBRE LOJA -->
             @if(request('tab') == null || request('tab') == 'sobre')
 
-            <!-- CARDÁPIO DIGITAL -->
-            <div class="d-flex align-items-center p-3">
-                <div class="border rounded p-3">
-                    <span class="material-symbols-outlined text-padrao" style="font-size: 60px">
-                        qr_code_scanner
-                    </span>
-                </div>
-                <p class="fs-5 mx-3 my-0">
-                    Link para cardápio digital: <a href="{{route('cardapio', ['store_id' => $store->id])}}"
-                        class="fw-bold">{{route('cardapio')}}?store_id={{$store->id}}</a>
-                </p>
-
-            </div>
-            <!-- FIM LINK CARDÁPIO DIGITAL -->
-
             <!-- LINHA IMAGENS -->
             <div class="row px-3 pt-3">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+                    <div class="border p-3 rounded h-100">
+                        <p class="fw-bold fs-5">
+                            QrCode para cardápio digital
+                        </p>
+                        <img src="{{ $dados['dataUri'] }}" alt="QR Code" width="150px">
+                    </div>
+                </div>
+                <div class="col-sm-4">
 
                     <!-- LOGO LOJA -->
                     <div class="border p-3 rounded h-100">
@@ -113,7 +106,7 @@
                     <!-- FIM LOGO LOJA -->
 
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
 
                     <!-- BANNER LOJA -->
                     <div class="border p-3 rounded">

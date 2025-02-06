@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Services\IfoodService;
 use App\Models\IfoodTokens;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Label\LabelAlignment;
+use Endroid\QrCode\Label\Font\OpenSans;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\Writer\PngWriter;
 
 class StoresController extends Controller
 {
@@ -72,11 +79,40 @@ class StoresController extends Controller
             $horarios = null;
             $equipe = null;
             $token = null;
+            $dataUri = null;
 
             //Controle para exibir conteúdo das views da Stores
             $tab = $request->get('tab') ?? 'sobre';
 
-            if($tab == 'horarios'){
+            if($tab == 'sobre'){
+
+                // Link para cardápio
+                $link = url('/');
+                
+                $builder = new Builder(
+                    writer: new PngWriter(),
+                    writerOptions: [],
+                    validateResult: false,
+                    data: $link.'?id='.$store->id,
+                    encoding: new Encoding('UTF-8'),
+                    errorCorrectionLevel: ErrorCorrectionLevel::High,
+                    size: 300,
+                    margin: 10,
+                    roundBlockSizeMode: RoundBlockSizeMode::Margin,
+                    logoResizeToWidth: 50,
+                    logoPunchoutBackground: true,
+                    labelText: $store->name,
+                    labelFont: new OpenSans(20),
+                    labelAlignment: LabelAlignment::Center
+                );
+
+                $result = $builder->build();
+                
+                // Gerando URL para exibir img
+                $dataUri = $result->getDataUri();
+
+
+            }elseif($tab == 'horarios'){
                 $horarios = StoreOpeningHours::where('store_id' , $id)->get();
             }elseif($tab == 'equipe'){
                 $equipe = StoreUsers::where('store_id', $id)->get();
@@ -92,6 +128,7 @@ class StoresController extends Controller
                 'horarios' => $horarios,
                 'equipe' => $equipe,
                 'token' => $token,
+                'dataUri' => $dataUri,
             ];
         
             return view('store.show', compact('dados', 'store'));
