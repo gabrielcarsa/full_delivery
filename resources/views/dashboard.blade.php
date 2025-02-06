@@ -3,7 +3,7 @@
     <div class="p-3">
 
         <!-- SE HOUVER LOJAS CADASTRADAS -->
-        @if(!empty($dados['lojas']))
+        @if($data['stores'] != null)
 
         <div class="row">
 

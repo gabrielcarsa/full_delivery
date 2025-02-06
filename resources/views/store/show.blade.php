@@ -109,8 +109,8 @@
                 <div class="col-sm-4">
 
                     <!-- BANNER LOJA -->
-                    <div class="border p-3 rounded">
-                        <p class="fw-bold fs-5 h-100">
+                    <div class="border p-3 rounded h-100">
+                        <p class="fw-bold fs-5">
                             Banner -
                             <a class="fs-6 fw-normal" data-bs-toggle="modal" data-bs-target="#modalEditarBanner">
                                 Alterar
