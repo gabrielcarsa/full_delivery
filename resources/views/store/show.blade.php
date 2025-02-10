@@ -303,6 +303,9 @@
             @elseif(request('tab') != null && request('tab') == 'horarios')
 
             <div class="px-3">
+                <p class="text-secondary">
+                    Para excluir um horário basta clicar sobre ele.
+                </p>
                 <div class="d-flex justify-content-end my-3">
                     <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
                         data-bs-target="#modalAdicionarHorario">
@@ -1075,25 +1078,25 @@
     function aplicarMascaraTelefone(inputId) {
         const input = document.getElementById(inputId);
 
-        if(input){
+        if (input) {
             input.addEventListener('input', function(e) {
-            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-            let formattedValue = '';
+                let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+                let formattedValue = '';
 
-            if (value.length > 0) {
-                formattedValue = '(' + value.slice(0, 2);
+                if (value.length > 0) {
+                    formattedValue = '(' + value.slice(0, 2);
 
-                if (value.length > 2) {
-                    formattedValue += ') ' + value.slice(2, 7);
+                    if (value.length > 2) {
+                        formattedValue += ') ' + value.slice(2, 7);
+                    }
+
+                    if (value.length > 7) {
+                        formattedValue += '-' + value.slice(7, 11);
+                    }
                 }
 
-                if (value.length > 7) {
-                    formattedValue += '-' + value.slice(7, 11);
-                }
-            }
-
-            input.value = formattedValue;
-        });
+                input.value = formattedValue;
+            });
         }
 
     }
