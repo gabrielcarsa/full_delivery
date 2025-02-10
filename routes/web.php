@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\StoresController;
+use App\Http\Controllers\StoreOpeningHoursController;
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\ProdutoController;
-use App\Http\Controllers\StoresController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\ParcelaLancamentoController;
 use App\Http\Controllers\ContaCorrenteController;
 use App\Http\Controllers\MovimentacaoController;
 use App\Http\Controllers\SaldoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -82,14 +85,16 @@ Route::middleware([
         //DASHBOARD
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         
-        //LOJA
+        //STORES
         Route::post('/selecionar-loja', [StoresController::class, 'select'])->name('store.select');
         Route::put('/store/alterar-logo', [StoresController::class, 'update_logo'])->name('store.update_logo');
         Route::put('/store/alterar-banner', [StoresController::class, 'update_banner'])->name('store.update_banner');
         Route::get('/store/integracao-ifood', [StoresController::class, 'create_integration_ifood'])->name('store.create_integration_ifood');
         Route::post('/store/integracao-ifood', [StoresController::class, 'store_integration_ifood'])->name('store.store_integration_ifood');
         Route::resource('store', StoresController::class);
-
+        
+        //STORE OPENING HOURS
+        Route::resource('store_opening_hours', StoreOpeningHoursController::class);
        
         //ENTREGAS LOJA
         Route::get('/entregas-taxas', [StoresController::class, 'show_entrega_taxas'])->name('store.entrega_taxas');

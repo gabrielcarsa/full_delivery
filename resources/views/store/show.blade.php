@@ -322,36 +322,41 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+                            <form action="{{route('store_opening_hours.store', ['store_id' => $store->id])}}"
+                                method="post" autocomplete="off">
                                 @csrf
                                 <div class="modal-body">
 
                                     <div class="row g-3">
                                         <div class="col-6">
-                                            <label for="inputCep" class="form-label fw-bold m-0">CEP</label>
-                                            <input type="text" name="cep"
-                                                value="{{!empty($store) ? $store->zip_code : old('cep')}}"
-                                                class="form-control" id="inputCep" required>
+                                            <label for="day_of_week" class="form-label fw-bold m-0">Dia da
+                                                semana</label>
+                                            <select class="form-select" aria-label="" id="day_of_week"
+                                                name="day_of_week">
+                                                <option selected>-- Selecione uma opção --</option>
+                                                <option value="MONDAY">Segunda-feira</option>
+                                                <option value="TUESDAY">Terça-feira</option>
+                                                <option value="WEDNESDAY">Quarta-feira</option>
+                                                <option value="THURSDAY">Quinta-feira</option>
+                                                <option value="FRIDAY">Sexta-feira</option>
+                                                <option value="SATURDAY">Sábado</option>
+                                                <option value="SUNDAY">Domingo</option>
+                                            </select>
                                         </div>
                                         <div class="col-3">
-                                            <label for="inputHoraAbertura" class="form-label fw-bold m-0">Começa
-                                                em</label>
-                                            <input type="time" name="hora_fechamento" class="form-control"
-                                                id="inputHoraAbertura" required>
+                                            <x-label for="opening_time" value="Começa em" />
+                                            <x-input type="time" name="opening_time" id="opening_time" required />
                                         </div>
                                         <div class="col-3">
-                                            <label for="inputHoraFechamento" class="form-label fw-bold m-0">Começa
-                                                em</label>
-                                            <input type="time" name="hora_abertura" class="form-control"
-                                                id="inputHoraFechamento" required>
+                                            <x-label for="opening_time" value="Começa em" />
+                                            <x-input type="time" name="closing_time" id="opening_time" required />
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Fechar</button>
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                    <x-button class="">
+                                        Cadastrar
+                                    </x-button>
                                 </div>
                             </form>
 
@@ -992,20 +997,29 @@
     <script>
     //Calendário Horarios funcionamento
     document.addEventListener('DOMContentLoaded', function() {
+
+        // Pegando os eventos do PHP convertidos para JSON
+        var events = <?php echo $dados['events']; ?>;
+
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             locale: 'pt-br',
-            initialView: 'dayGridWeek', // Exibe os dias da semana
-            headerToolbar: false, // Oculta o cabeçalho padrão
-            footerToolbar: false, // Remove o rodapé
+            initialView: 'timeGridWeek', // Exibe os horários ao longo da semana
             dayHeaderFormat: {
                 weekday: 'long'
-            }, // Exibe apenas os nomes dos dias
+            },
+            headerToolbar: false, // Oculta o cabeçalho padrão
+            footerToolbar: false, // Remove o rodapé
             contentHeight: 'auto', // Ajusta o tamanho
-            events: [], // Use essa propriedade para adicionar eventos, se necessário
-            editable: false, // Desabilita a edição
-            selectable: false // Desabilita seleção de datas
+            slotMinTime: "06:00:00", // Define o horário mínimo mostrado no calendário
+            slotMaxTime: "23:00:00", // Define o horário máximo mostrado no calendário
+            allDaySlot: false, // Remove a linha de eventos o dia todo
+            events: events, // Insere os eventos da loja
+            editable: false, // Impede edição dos eventos
+            selectable: false // Impede seleção de horários
+
         });
+
         calendar.render();
     });
 

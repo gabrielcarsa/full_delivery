@@ -6,6 +6,14 @@
 .container-padrao{
     margin: 15px 2rem;
 }
+.fc-col-header-cell-cushion{
+    color: #FD0146 !important;
+    text-decoration: none;
+}
+.fc-event-main{
+    font-size: 20px !important;
+    font-weight: 800;
+}
 .bg-padrao{
     background-color: #FD0146 !important;
 }

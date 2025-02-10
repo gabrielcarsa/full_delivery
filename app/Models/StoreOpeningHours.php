@@ -9,6 +9,7 @@ class StoreOpeningHours extends Model
 {
     use HasFactory;
     protected $table = 'store_opening_hours';
+    protected $guarded = [];
 
     //RELACIONAMENTOS
     public function store()

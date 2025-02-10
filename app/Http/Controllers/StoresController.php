@@ -70,6 +70,10 @@ class StoresController extends Controller
     //EXIBIR
     public function show(Request $request){
 
+        if(!session('selected_store')){
+            return redirect('store.index')->with('error', 'Selecione uma loja!');
+        }
+
         //Info Stores
         $id = session('selected_store')['id'];
         $store = Stores::find($id);
@@ -80,7 +84,9 @@ class StoresController extends Controller
             $equipe = null;
             $token = null;
             $dataUri = null;
-
+            $events = null;
+            $storeHours = null;
+            
             //Controle para exibir conteúdo das views da Stores
             $tab = $request->get('tab') ?? 'sobre';
 
@@ -113,7 +119,32 @@ class StoresController extends Controller
 
 
             }elseif($tab == 'horarios'){
-                $horarios = StoreOpeningHours::where('store_id' , $id)->get();
+
+                $storeHours = StoreOpeningHours::where('store_id' , $id)->get();
+
+                $dayMapping = [
+                    "SUNDAY" => 0,
+                    "MONDAY" => 1,
+                    "TUESDAY" => 2,
+                    "WEDNESDAY" => 3,
+                    "THURSDAY" => 4,
+                    "FRIDAY" => 5,
+                    "SATURDAY" => 6
+                ];
+
+                // Criando eventos recorrentes
+                $events = [];
+                foreach ($storeHours as $schedule) {
+                    $dayNumber = $dayMapping[$schedule["day_of_week"]] ?? null;
+                    if ($dayNumber !== null) {
+                        $events[] = [
+                            "daysOfWeek" => [$dayNumber], // Define o dia da semana
+                            "startTime" => $schedule["opening_time"], // Horário de abertura
+                            "endTime" => $schedule["closing_time"] // Horário de fechamento
+                        ];
+                    }
+                }
+                
             }elseif($tab == 'equipe'){
                 $equipe = StoreUsers::where('store_id', $id)->get();
             }elseif($tab == 'planos'){
@@ -125,10 +156,11 @@ class StoresController extends Controller
             }
 
             $dados = [
-                'horarios' => $horarios,
+                'storeHours' => $storeHours,
                 'equipe' => $equipe,
                 'token' => $token,
                 'dataUri' => $dataUri,
+                'events' => json_encode($events),
             ];
         
             return view('store.show', compact('dados', 'store'));
@@ -409,19 +441,6 @@ class StoresController extends Controller
             $store->state = $request->input('estado');
             $store->save();
 
-        }elseif($tab == "horarios"){
-
-            //Horario Funcionamento
-            $i = 0;
-            for($i; $i < 7; $i++){
-                $horario_funcionamento = HorarioFuncionamento::where('store_id', $store_id)->where('dia_semana', $i)->first();
-                $horario_funcionamento->store_id = $store->id;
-                $horario_funcionamento->dia_semana = $i;
-                $horario_funcionamento->hora_abertura = $request->input($i.'_abertura'); 
-                $horario_funcionamento->hora_fechamento = $request->input($i.'_fechamento'); 
-                $horario_funcionamento->save();
-
-            }
         }
 
         return redirect()->back()->with('success', 'Alteração feita com sucesso');
