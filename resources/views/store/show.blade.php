@@ -329,8 +329,9 @@
 
                                     <div class="row g-3">
                                         <div class="col-6">
-                                            <label for="day_of_week" class="form-label fw-bold m-0">Dia da
-                                                semana</label>
+                                            <label for="day_of_week" class="form-label fw-bold m-0">
+                                                Dia da semana
+                                            </label>
                                             <select class="form-select" aria-label="" id="day_of_week"
                                                 name="day_of_week">
                                                 <option selected>-- Selecione uma opção --</option>
@@ -348,7 +349,7 @@
                                             <x-input type="time" name="opening_time" id="opening_time" required />
                                         </div>
                                         <div class="col-3">
-                                            <x-label for="opening_time" value="Começa em" />
+                                            <x-label for="opening_time" value="Termina em" />
                                             <x-input type="time" name="closing_time" id="opening_time" required />
                                         </div>
                                     </div>
@@ -1016,7 +1017,30 @@
             allDaySlot: false, // Remove a linha de eventos o dia todo
             events: events, // Insere os eventos da loja
             editable: false, // Impede edição dos eventos
-            selectable: false // Impede seleção de horários
+            selectable: false, // Impede seleção de horários
+            eventClick: function(info) {
+                if (confirm("Tem certeza que deseja excluir este horário de funcionamento?")) {
+                    fetch('/store_opening_hours/' + info.event.id, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '<?php echo csrf_token(); ?>'
+                            } // Token CSRF do Laravel
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                info.event.remove(); // Remove visualmente do calendário
+                                alert("Horário excluído com sucesso!");
+                            } else {
+                                alert("Erro ao excluir o horário.");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erro:", error);
+                            alert("Erro na comunicação com o servidor.");
+                        });
+                }
+            }
 
         });
 
@@ -1051,7 +1075,8 @@
     function aplicarMascaraTelefone(inputId) {
         const input = document.getElementById(inputId);
 
-        input.addEventListener('input', function(e) {
+        if(input){
+            input.addEventListener('input', function(e) {
             let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
             let formattedValue = '';
 
@@ -1069,6 +1094,8 @@
 
             input.value = formattedValue;
         });
+        }
+
     }
     // Aplicar a máscara para os campos de telefone 1 e telefone 2
     aplicarMascaraTelefone('telefone1');

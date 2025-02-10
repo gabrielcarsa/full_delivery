@@ -86,7 +86,7 @@ class StoresController extends Controller
             $dataUri = null;
             $events = null;
             $storeHours = null;
-            
+
             //Controle para exibir conteúdo das views da Stores
             $tab = $request->get('tab') ?? 'sobre';
 
@@ -138,6 +138,7 @@ class StoresController extends Controller
                     $dayNumber = $dayMapping[$schedule["day_of_week"]] ?? null;
                     if ($dayNumber !== null) {
                         $events[] = [
+                            "id" => $schedule["id"],
                             "daysOfWeek" => [$dayNumber], // Define o dia da semana
                             "startTime" => $schedule["opening_time"], // Horário de abertura
                             "endTime" => $schedule["closing_time"] // Horário de fechamento

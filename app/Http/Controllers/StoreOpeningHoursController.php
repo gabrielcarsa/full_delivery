@@ -67,6 +67,14 @@ class StoreOpeningHoursController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $store = StoreOpeningHours::find($id);
+        
+        if ($store) {
+            $store->delete();
+            return response()->json(['success' => true]); // ✅ Retorna JSON válido
+        }
+    
+        return response()->json(['success' => false, 'message' => 'Registro não encontrado'], 404);
+
     }
 }
