@@ -352,8 +352,8 @@
                                             <x-input type="time" name="opening_time" id="opening_time" required />
                                         </div>
                                         <div class="col-3">
-                                            <x-label for="opening_time" value="Termina em" />
-                                            <x-input type="time" name="closing_time" id="opening_time" required />
+                                            <x-label for="closing_time" value="Termina em" />
+                                            <x-input type="time" name="closing_time" id="closing_time" required />
                                         </div>
                                     </div>
                                 </div>
