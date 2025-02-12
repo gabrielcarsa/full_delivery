@@ -95,6 +95,10 @@ Route::middleware([
         
         //STORE OPENING HOURS
         Route::resource('store_opening_hours', StoreOpeningHoursController::class)->only(['store', 'destroy']);
+
+        //STORE USERS
+        Route::resource('store_users', StoreUsersController::class)->only(['store', 'destroy']);
+
        
         //ENTREGAS LOJA
         Route::get('/entregas-taxas', [StoresController::class, 'show_entrega_taxas'])->name('store.entrega_taxas');

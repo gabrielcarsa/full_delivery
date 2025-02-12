@@ -385,10 +385,110 @@
                         <button class="btn btn-outline-dark" type="button" id="btn-procurar">Buscar</button>
                     </div>
                     <div class="">
-                        <a href="" class="btn bg-padrao text-white fw-bold">
-                            Adicionar usuário
+                        <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
+                            data-bs-target="#modalCreateStoreUser">
+                            Convidar usuário
                         </a>
                     </div>
+                    <!-- MODAL -->
+                    <div class="modal modal-lg fade" id="modalCreateStoreUser" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <p class="modal-title fs-5" id="exampleModalLabel">
+                                        Convidar usuário
+                                    </p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{route('store_users.store', ['store_id' => $store->id])}}" method="post"
+                                    autocomplete="off">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="card p-3 text-secondary">
+                                            <div class="d-flex align-items-center">
+                                                <span class="material-symbols-outlined mr-2 fw-light">
+                                                    info
+                                                </span>
+                                                <p class="m-0 fw-light">
+                                                    O convidado receberá um email com botão para aceitar o convite.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-12">
+                                                <x-label for="email" value="Email" />
+                                                <x-input type="email" name="email" id="email"
+                                                    placeholder="exemplo@ex.com" required />
+                                            </div>
+                                            <div class="col-12">
+                                                <x-label for="position" value="Cargo" />
+                                                <x-input type="text" name="position" id="position"
+                                                    placeholder="Cozinheiro" required />
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="m-0 fw-semibold">
+                                                    Nível de acesso
+                                                </p>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="access_level"
+                                                        id="ADMIN" value="ADMIN">
+                                                    <label class="form-check-label fw-semibold" for="ADMIN">
+                                                        Administrador -
+                                                        <span class="text-secondary fw-regular">
+                                                            Acesso total, incluindo alterações e exclusões
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="access_level"
+                                                        id="MANAGER" value="MANAGER">
+                                                    <label class="form-check-label fw-semibold" for="MANAGER">
+                                                        Gerente -
+                                                        <span class="text-secondary fw-regular">
+                                                            Acesso total, com restrições à seções do Financeiro e da
+                                                            Loja
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="access_level"
+                                                        id="FINANCE" value="FINANCE">
+                                                    <label class="form-check-label fw-semibold" for="FINANCE">
+                                                        Financeiro -
+                                                        <span class="text-secondary fw-regular">
+                                                            Acesso total a seção Financeiro, com restrições à exclusões
+                                                            do Financeiro e alterações da seção da Loja
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="access_level"
+                                                        id="USER" value="USER" checked>
+                                                    <label class="form-check-label fw-semibold" for="USER">
+                                                        Colaborador -
+                                                        <span class="text-secondary fw-regular">
+                                                            Acesso restrito as seções de Pedidos
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <x-button class="">
+                                            Enviar convite
+                                        </x-button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FIM MODAL -->
                 </div>
                 <!-- FIM HEADER EQUIPE -->
 
