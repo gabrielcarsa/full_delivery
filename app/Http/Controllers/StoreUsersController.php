@@ -1,26 +1,65 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
+use App\Models\StoreUsers;
+use App\Models\Stores;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\StoreUserInvitations;
+use Exception;
 
 class StoreUsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Send email to invite user
      */
-    public function index()
+    public function invite_user(Request $request)
     {
-        //
+        // form validation
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255',
+            'username' => 'required|string|max:100',
+            'position' => 'required|string|max:100',
+            'access_level' => 'required|string|max:50',
+        ]/*,[
+            'faturamento_mensal.required' => 'Por favor, selecione uma opção.',
+            'faturamento_mensal.not_in' => 'A opção selecionada é inválida.',
+        ]*/);
+
+        // if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // store ID
+        $store_id = $request->get('store_id');
+
+        // Store
+        $store = Stores::findOrFail($store_id);
+
+        $data = [
+            'store' => $store,
+            'email' => $request->input('email'),
+            'username' => $request->input('username'),
+            'position' => $request->input('position'),
+            'access_level' => $request->input('access_level'),
+
+        ];
+        
+        // try send email and return 
+        try {
+            Mail::to($data['email'])->send(new StoreUserInvitations($data));
+
+            return redirect()->back()->with('success', 'Convite enviado com sucesso para '.$data['email']);
+            
+        } catch (Exception $e) {
+            
+            return redirect()->back()->with('error', 'Erro ao enviar email: '.$e->getMessage());
+            
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.

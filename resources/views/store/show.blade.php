@@ -402,8 +402,8 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form action="{{route('store_users.store', ['store_id' => $store->id])}}" method="post"
-                                    autocomplete="off">
+                                <form action="{{route('store_users.invite_user', ['store_id' => $store->id])}}"
+                                    method="post" autocomplete="off">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="card p-3 text-secondary">
@@ -419,14 +419,19 @@
 
                                         <div class="row g-3 mt-2">
                                             <div class="col-12">
+                                                <x-label for="username" value="Nome" />
+                                                <x-input type="text" name="username" id="username"
+                                                    placeholder="Ex.: Gabriel" required />
+                                            </div>
+                                            <div class="col-12">
                                                 <x-label for="email" value="Email" />
                                                 <x-input type="email" name="email" id="email"
-                                                    placeholder="exemplo@ex.com" required />
+                                                    placeholder="Ex.: exemplo@ex.com" required />
                                             </div>
                                             <div class="col-12">
                                                 <x-label for="position" value="Cargo" />
                                                 <x-input type="text" name="position" id="position"
-                                                    placeholder="Cozinheiro" required />
+                                                    placeholder="Ex.: Cozinheiro" required />
                                             </div>
                                             <div class="col-12">
                                                 <p class="m-0 fw-semibold">

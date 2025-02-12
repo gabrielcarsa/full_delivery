@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\StoresController;
 use App\Http\Controllers\StoreOpeningHoursController;
+use App\Http\Controllers\StoreUsersController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriaProdutoController;
@@ -97,8 +98,8 @@ Route::middleware([
         Route::resource('store_opening_hours', StoreOpeningHoursController::class)->only(['store', 'destroy']);
 
         //STORE USERS
-        Route::resource('store_users', StoreUsersController::class)->only(['store', 'destroy']);
-
+        Route::post('/store_users/invite', [StoreusersController::class, 'invite_user'])->name('store_users.invite_user');
+        Route::resource('store_users', StoreusersController::class)->only(['store', 'update', 'destroy']);
        
         //ENTREGAS LOJA
         Route::get('/entregas-taxas', [StoresController::class, 'show_entrega_taxas'])->name('store.entrega_taxas');
