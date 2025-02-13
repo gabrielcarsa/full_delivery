@@ -147,7 +147,7 @@ class StoresController extends Controller
                 }
                 
             }elseif($tab == 'equipe'){
-                $equipe = StoreUsers::where('store_id', $id)->get();
+                $equipe = StoreUsers::where('store_id', $id)->paginate(10)->appends(['tab' => $tab]);
             }elseif($tab == 'planos'){
                 //TODO
             }elseif($tab == 'integracoes'){
