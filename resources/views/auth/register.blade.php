@@ -104,4 +104,31 @@
         </div>
     </div>
 
+    <script>
+    // Função para aplicar a máscara de telefone
+    function aplicarMascaraTelefone(inputId) {
+        const input = document.getElementById(inputId);
+
+        input.addEventListener('input', function(e) {
+            let value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+            let formattedValue = '';
+
+            if (value.length > 0) {
+                formattedValue = '(' + value.slice(0, 2);
+
+                if (value.length > 2) {
+                    formattedValue += ') ' + value.slice(2, 7);
+                }
+
+                if (value.length > 7) {
+                    formattedValue += '-' + value.slice(7, 11);
+                }
+            }
+
+            input.value = formattedValue;
+        });
+    }
+    // Aplicar a máscara para os campos de telefone
+    aplicarMascaraTelefone('phone');
+    </script>
 </x-guest-layout>

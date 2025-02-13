@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\StoreUsers;
 use App\Models\Stores;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\StoreUserInvitations;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class StoreUsersController extends Controller
@@ -35,29 +37,48 @@ class StoreUsersController extends Controller
         // store ID
         $store_id = $request->get('store_id');
 
-        // Store
-        $store = Stores::findOrFail($store_id);
+        $user = Users::where('email', $request->input('email'))->first();
 
-        $data = [
-            'store' => $store,
-            'email' => $request->input('email'),
-            'username' => $request->input('username'),
-            'position' => $request->input('position'),
-            'access_level' => $request->input('access_level'),
+        // if the user alredy exists
+        if($user != null){
+            
+            StoreUsers::create([
+                'user_id' => $user->id,
+                'store_id' => $store_id,
+                'access_level' => $request->input('access_level'),
+                'position' => $request->input('position'), 
+                'created_by_user_id' => Auth::user()->id,
+            ]);
+            
+            return redirect()->back()->with('success', 'Usuário adicionado com sucesso - '.$request->input('email'));
+            
+        }else{
+            
+            // Store
+            $store = Stores::findOrFail($store_id);
 
-        ];
-        
-        // try send email and return 
-        try {
-            Mail::to($data['email'])->send(new StoreUserInvitations($data));
+            $data = [
+                'store' => $store,
+                'email' => $request->input('email'),
+                'username' => $request->input('username'),
+                'position' => $request->input('position'),
+                'access_level' => $request->input('access_level'),
 
-            return redirect()->back()->with('success', 'Convite enviado com sucesso para '.$data['email']);
+            ];
             
-        } catch (Exception $e) {
-            
-            return redirect()->back()->with('error', 'Erro ao enviar email: '.$e->getMessage());
-            
+            // try send email and return 
+            try {
+                Mail::to($data['email'])->send(new StoreUserInvitations($data));
+
+                return redirect()->back()->with('success', 'Convite enviado com sucesso para '.$data['email']);
+                
+            } catch (Exception $e) {
+                
+                return redirect()->back()->with('error', 'Erro ao enviar email: '.$e->getMessage());
+                
+            }
         }
+
     }
 
 

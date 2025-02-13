@@ -71,7 +71,7 @@ class StoresController extends Controller
     public function show(Request $request){
 
         if(!session('selected_store')){
-            return redirect('store.index')->with('error', 'Selecione uma loja!');
+            return redirect()->route('store.index')->with('error', 'Selecione uma loja!');
         }
 
         //Info Stores
@@ -516,7 +516,7 @@ class StoresController extends Controller
     public function show_entrega_taxas(){
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
+            return redirect()->route('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do store
@@ -601,7 +601,7 @@ class StoresController extends Controller
      public function show_entrega_areas(){
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
+            return redirect()->route('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do store
