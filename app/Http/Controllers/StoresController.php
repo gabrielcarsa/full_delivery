@@ -147,7 +147,22 @@ class StoresController extends Controller
                 }
                 
             }elseif($tab == 'equipe'){
-                $equipe = StoreUsers::where('store_id', $id)->paginate(10)->appends(['tab' => $tab]);
+
+                $name_email_store_user = $request->input('name_email_store_user');
+                
+                // if request have filter
+                if($name_email_store_user == null){
+                    $equipe = StoreUsers::where('store_id', $id)->paginate(10)->appends(['tab' => $tab]); 
+                }else{
+                    $equipe = StoreUsers::where('store_id', $id)
+                    ->whereHas('user', function ($query) use ($name_email_store_user) {
+                        $query->where('name', 'like', "%$name_email_store_user%")
+                            ->orWhere('email', 'like', "%$name_email_store_user%");
+                    })
+                    ->paginate(10)
+                    ->appends(['tab' => $tab]);
+                }
+                
             }elseif($tab == 'planos'){
                 //TODO
             }elseif($tab == 'integracoes'){

@@ -380,9 +380,18 @@
                 <!-- HEADER EQUIPE -->
                 <div class="d-flex justify-content-between py-3">
                     <div class="input-group w-50">
-                        <input type="text" class="form-control" placeholder="Nome" aria-label="Nome"
-                            aria-describedby="btn-procurar">
-                        <button class="btn btn-outline-dark" type="button" id="btn-procurar">Buscar</button>
+
+                        <form action="{{ route('store.show', ['store' => $store]) }}" method="get">
+                            @csrf
+                            <div class="d-flex">
+                                <input type="hidden" name="tab" value="equipe">
+                                <x-input type="text" name="name_email_store_user" placeholder="Nome ou email"
+                                    aria-describedby="btn-procurar" autocomplete="off"
+                                    value="{{request('name_email_store_user')}}" />
+                                <button class="btn border" type="submit" id="btn-procurar">Buscar</button>
+                            </div>
+
+                        </form>
                     </div>
                     <div class="">
                         <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
