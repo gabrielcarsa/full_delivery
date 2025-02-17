@@ -80,38 +80,39 @@ class StoreUsersController extends Controller
         }
 
     }
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+    
+   
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(StoreUsers $store_user)
     {
-        //
+        return view('store_user.edit', compact('store_user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUsers $store_user, Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'position' => 'required|string|max:100',
+            'access_level' => 'required|string|max:50|in:ADMIN,MANAGER,FINANCE,USER',
+        ]/*,[
+            'faturamento_mensal.required' => 'Por favor, selecione uma opção.',
+            'faturamento_mensal.not_in' => 'A opção selecionada é inválida.',
+        ]*/);
+
+        // Se a validação falhar
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
+        $store_user-> access_level= $request->input('access_level');
+        $store_user->position = $request->input('position');
+        $store_user->save();
+
+        return redirect()->route('store.show', ['store' => $store_user->store, 'tab' => 'equipe'])->with('success', 'Alterações feitas com sucesso');
     }
 
     /**

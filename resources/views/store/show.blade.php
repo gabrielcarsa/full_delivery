@@ -547,9 +547,17 @@
                                         </span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="{{ route('store_users.edit', ['store_user' => $colaborador]) }}">
+                                                Editar
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">
+                                                Excluir
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </td>
@@ -572,7 +580,7 @@
             @elseif(request('tab') != null && request('tab') == 'planos')
 
             <!-- LINHA -->
-            <div class="row g-3 m-3">
+            <div class=" row g-3 m-3">
 
                 <!-- COLUNA -->
                 <div class="col-lg-3">
@@ -727,7 +735,8 @@
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Cardápio digital completo: delivery, retirada e no local.
+                                    Cardápio digital completo: delivery, retirada e no
+                                    local.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
@@ -849,7 +858,8 @@
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Relatórios, gráficos e estatísticas de dados financeiros, vendas e pedidos.
+                                    Relatórios, gráficos e estatísticas de dados
+                                    financeiros, vendas e pedidos.
                                 </p>
                             </li>
                         </ul>
@@ -899,7 +909,8 @@
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Suporte exclusivo via WhatsApp, email e chamadas de vídeo.
+                                    Suporte exclusivo via WhatsApp, email e chamadas de
+                                    vídeo.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
@@ -907,7 +918,8 @@
                                     check
                                 </span>
                                 <p class="m-0 fw-normal text-warning">
-                                    Aplicativo personalizado para sua loja com sua marca.
+                                    Aplicativo personalizado para sua loja com sua
+                                    marca.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
@@ -915,7 +927,8 @@
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Aplicativo para garçons (IOS e Android) com recursos exclusivos de gestão para
+                                    Aplicativo para garçons (IOS e Android) com recursos
+                                    exclusivos de gestão para
                                     administradores.
                                 </p>
                             </li>
@@ -924,7 +937,8 @@
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Gestor de estoque com avisos no painel e mensagem WhatsApp sobre reposição de
+                                    Gestor de estoque com avisos no painel e mensagem
+                                    WhatsApp sobre reposição de
                                     insumos.
                                 </p>
                             </li>
@@ -1076,7 +1090,8 @@
                                 check
                             </span>
                             <p class="m-0 fw-normal">
-                                Ao usar o Gestor de Pedidos do Foomy, automáticamente, você mantêm a sua Loja do iFood
+                                Ao usar o Gestor de Pedidos do Foomy, automáticamente, você mantêm a
+                                sua Loja do iFood
                                 aberta para receber pedidos.
                             </p>
                         </li>
