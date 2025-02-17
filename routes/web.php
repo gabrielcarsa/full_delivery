@@ -99,7 +99,8 @@ Route::middleware([
 
         //STORE USERS
         Route::post('/store_users/invite', [StoreUsersController::class, 'invite_user'])->name('store_users.invite_user');
-        Route::resource('store_users', StoreUsersController::class)->only(['edit', 'update', 'destroy']);
+        Route::put('/store_users/active_disable', [StoreUsersController::class, 'active_disable'])->name('store_users.active_disable');
+        Route::resource('store_users', StoreUsersController::class)->only(['edit', 'update']);
        
         //ENTREGAS LOJA
         Route::get('/entregas-taxas', [StoresController::class, 'show_entrega_taxas'])->name('store.entrega_taxas');

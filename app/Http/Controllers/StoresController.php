@@ -257,6 +257,7 @@ class StoresController extends Controller
                 'access_level' => 'ADMIN',
                 'position' => 'DONO',
                 'created_by_user_id' => Auth::user()->id,
+                'is_active' => true,
             ]);
 
             //Criando categoria do financeiro de entrada de pedido

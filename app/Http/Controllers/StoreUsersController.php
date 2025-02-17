@@ -48,6 +48,7 @@ class StoreUsersController extends Controller
                 'access_level' => $request->input('access_level'),
                 'position' => $request->input('position'), 
                 'created_by_user_id' => Auth::user()->id,
+                'is_active' => true,
             ]);
             
             return redirect()->back()->with('success', 'Usuário adicionado com sucesso - '.$request->input('email'));
@@ -118,8 +119,17 @@ class StoreUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function active_disable(Request $request)
     {
-        //
+        $id = $request->get('id');
+        
+        $store_user = StoreUsers::findOrFail($id);
+        $store_user->is_active = $store_user->is_active == true ? false : true;
+        $store_user->save();
+
+        $message = $store_user->is_active != true ? 'desativado' : 'ativado';
+        
+        return redirect()->back()->with('success', 'Usuário '.$message.' com sucesso');
+        
     }
 }

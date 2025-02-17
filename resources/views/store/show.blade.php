@@ -515,16 +515,17 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Cargo</th>
                             <th scope="col">Nível de acesso</th>
+                            <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($dados['equipe'] as $colaborador)
                         <tr>
-                            <td>
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
                                 #0{{$colaborador->id}}
                             </td>
-                            <td>
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
                                 <p class="m-0 fw-semibold">
                                     {{$colaborador->user->name}}
                                 </p>
@@ -532,13 +533,26 @@
                                     {{$colaborador->user->email}}
                                 </p>
                             </td>
-                            <td>
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
                                 {{$colaborador->position}}
                             </td>
-                            <td>
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
                                 {{$colaborador->access_level}}
                             </td>
-                            <td>
+                            @if($colaborador->is_active)
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
+                                <span class="material-symbols-outlined fill-icon text-success">
+                                    check_circle
+                                </span>
+                            </td>
+                            @else
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
+                                <span class="material-symbols-outlined fill-icon text-danger">
+                                    cancel
+                                </span>
+                            </td>
+                            @endif
+                            <td class="{{$colaborador->is_active == false ? 'bg-danger-subtle' : ''}}">
                                 <div class="dropdown">
                                     <button class="border rounded p-2 d-flex aling-items-center" type="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -554,11 +568,60 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item text-danger" href="#">
-                                                Excluir
+
+                                            <a href="" data-bs-toggle="modal"
+                                                class="dropdown-item {{$colaborador->is_active == false ? 'text-success' : 'text-danger'}}"
+                                                data-bs-target="#deleteStoreUserModal{{$colaborador->id}}">
+                                                {{$colaborador->is_active == false ? 'Ativar' : 'Desativar'}} usuário
                                             </a>
+
                                         </li>
                                     </ul>
+
+                                    <!-- MODAL DESATIVAR USUÁRIO -->
+                                    <div class="modal fade" id="deleteStoreUserModal{{$colaborador->id}}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">
+                                                        {{$colaborador->is_active == false ? 'Ativar' : 'Desativar'}}
+                                                        {{$colaborador->user->name}}
+                                                    </h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>
+                                                        @if($colaborador->is_active)
+                                                        Ao desativar usuário ele não terá mais acesso a sua
+                                                        loja.
+                                                        @else
+                                                        Ao ativar usuário ele voltará a ter acesso a sua loja
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn border"
+                                                        data-bs-dismiss="modal">Fechar</button>
+                                                    <form
+                                                        action="{{route('store_users.active_disable', ['id' => $colaborador])}}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
+                                                            class="btn {{$colaborador->is_active == false ? 'btn-success' : 'btn-danger'}}">
+                                                            {{$colaborador->is_active == false ? 'Ativar' : 'Desativar'}}
+                                                            usuário
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END MODAL DESATIVAR USUÁRIO -->
+
                                 </div>
                             </td>
                         </tr>
