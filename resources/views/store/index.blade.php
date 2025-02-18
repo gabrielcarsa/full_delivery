@@ -5,16 +5,11 @@
         <!-- LOJAS -->
         @if($stores)
 
-        <!-- HEADER -->
-        <div class="row">
-            <div class="col">
-                <h2 class="mt-3 fw-bolder fs-1">Selecione uma Loja</h2>
-                <p class="m-0 text-secondary">
-                    Para realizar as tarefas no sistema <span class="fw-bold">é necessário escolher uma loja para se
-                        conectar</span>, visto que é possível ter mais de 1 Loja cadastrada no Foomy.
-                </p>
-            </div>
-            <div class="col d-flex align-items-center justify-content-end p-0">
+        <!-- CARD -->
+        <div class="bg-white shadow-md p-3 mb-3 rounded">
+
+            <!-- HEADER -->
+            <div class="d-flex align-items-center justify-content-end">
                 <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
                     href="">
                     <span class="material-symbols-outlined mr-1">
@@ -23,81 +18,95 @@
                     Cadastrar Loja
                 </a>
             </div>
-        </div>
-        <!-- FIM HEADER -->
+            <!-- FIM HEADER -->
+
+            <p class="mx-3 my-0 fw-bold fs-5">
+                Olá {{ Auth::user()->name }},
+            </p>
+            <p class="mx-3">
+                Selecione uma loja para começar sua sessão.
+            </p>
 
 
-        @foreach($stores as $store)
+            @foreach($stores as $store)
 
-        <!-- CARD LOJA -->
-        <div
-            class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-padrao' : '' }}">
+            <!-- CARD LOJA -->
+            <div
+                class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-padrao' : '' }}">
 
-            <!-- LOGO LOJA -->
-            @if($store->logo != null)
-            <img src='{{asset("storage/$store->nome/$store->logo")}}' width="250px" class="rounded-circle">
-            @else
-            <img src='{{asset("storage/images/logo-black.png")}}' width="250px" class="rounded-circle">
-            @endif
-            <!-- FIM LOGO LOJA -->
-
-            <!-- INFO LOJA -->
-            <div class="mx-3 d-block">
-                <!-- LOJA CIRCULO STATUS -->
-                @if($store->state == "OK" || $store->state == "WARNING")
-                <div class="d-flex align-items-center my-2">
-                    <span class="material-symbols-outlined mr-1 text-success"
-                        style="font-variation-settings: 'FILL' 1;">
-                        check_circle
-                    </span>
-                    <p class="m-0 fw-semibold">
-                        Loja aberta
-                    </p>
-                </div>
-
+                <!-- LOGO LOJA -->
+                @if($store->logo != null)
+                <img src='{{asset("storage/$store->nome/$store->logo")}}' width="250px" class="rounded-circle">
                 @else
-                <div class="d-flex align-items-center my-2">
-                    <span class="material-symbols-outlined mr-1 text-danger" style="font-variation-settings: 'FILL' 1;">
-                        error
-                    </span>
-                    <p class="m-0 fw-semibold">
-                        Loja fechada
+                <img src='{{asset("storage/images/logo-black.png")}}' width="250px" class="rounded-circle">
+                @endif
+                <!-- FIM LOGO LOJA -->
+
+                <!-- INFO LOJA -->
+                <div class="mx-3 d-block">
+                    <!-- LOJA CIRCULO STATUS -->
+                    @if($store->state == "OK" || $store->state == "WARNING")
+                    <div class="d-flex align-items-center my-2">
+                        <span class="material-symbols-outlined mr-1 text-success"
+                            style="font-variation-settings: 'FILL' 1;">
+                            check_circle
+                        </span>
+                        <p class="m-0 fw-semibold">
+                            Loja aberta
+                        </p>
+                    </div>
+
+                    @else
+                    <div class="d-flex align-items-center my-2">
+                        <span class="material-symbols-outlined mr-1 text-danger"
+                            style="font-variation-settings: 'FILL' 1;">
+                            error
+                        </span>
+                        <p class="m-0 fw-semibold">
+                            Loja fechada
+                        </p>
+                    </div>
+                    @endif
+                    <!-- FIM LOJA CIRCULO STATUS -->
+
+                    <h2 class="fs-2 fw-bold m-0">
+                        {{$store->name}}
+                    </h2>
+
+                    <p class="text-secondary">
+                        {{$store->description}}
                     </p>
+                    <p>
+                        {{$store->street}}, {{$store->number}} -
+                        {{$store->neghborhood}}, {{$store->city}} {{$store->state}}.
+                        {{$store->zip_code}}
+                    </p>
+
+                    @if(!session('selected_store') || session('selected_store')['id'] != $store->id)
+                    <form action="{{route('store.select', ['id' => $store->id])}}" method="post">
+                        @csrf
+                        <button type="submit"
+                            class="d-flex align-items-center hover rounded border py-2 px-3 fw-bold shadow-sm">
+                            <span class="material-symbols-outlined mr-2">
+                                task_alt
+                            </span>
+                            Escolher loja
+                        </button>
+                    </form>
+                    @else
+                    <a href="{{route('store.show', ['store' => $store->id])}}"
+                        class="btn bg-padrao fw-semibold text-white">
+                        Ir para loja
+                    </a>
+                    @endif
+
                 </div>
-                @endif
-                <!-- FIM LOJA CIRCULO STATUS -->
-
-                <h2 class="fs-2 fw-bold m-0">
-                    {{$store->name}}
-                </h2>
-
-                <p class="text-secondary">
-                    {{$store->description}}
-                </p>
-                <p>
-                    {{$store->street}}, {{$store->number}} -
-                    {{$store->neghborhood}}, {{$store->city}} {{$store->state}}.
-                    {{$store->zip_code}}
-                </p>
-
-                @if(!session('selected_store') || session('selected_store')['id'] != $store->id)
-                <form action="{{route('store.select', ['id' => $store->id])}}" method="post">
-                    @csrf
-                    <button type="submit" class="p-2 text-white fw-semibold rounded w-100 bg-padrao">
-                        Escolher loja
-                    </button>
-                </form>
-                @else
-                <a href="{{route('store.show', ['store' => $store->id])}}" class="btn bg-padrao fw-semibold text-white">
-                    Ir para loja
-                </a>
-                @endif
+                <!-- FIM INFO LOJA -->
 
             </div>
-            <!-- FIM INFO LOJA -->
-
+            <!-- CARD LOJA -->
         </div>
-        <!-- CARD LOJA -->
+        <!-- FIM CARD -->
 
         @endforeach
         <!-- FIM LOJAS -->
@@ -113,7 +122,8 @@
                 </p>
 
                 <p class="m-0 fw-medium">
-                    Vamos dar os primeiros passos e criar sua loja aqui? É bem simples, vamos preencher as informações
+                    Vamos dar os primeiros passos e criar sua loja aqui? É bem simples, vamos preencher as
+                    informações
                     abaixo:
                 </p>
                 <ul class="my-3">

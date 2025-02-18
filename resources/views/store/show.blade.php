@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <!-- CARD -->
+    <!-- CONTAINER -->
     <div class="container-padrao">
 
         <!-- CARD GERAL -->
@@ -1175,7 +1175,7 @@
         <!-- FIM CARD GERAL -->
 
     </div>
-    <!-- FIM CARD -->
+    <!-- FIM CONTAINER -->
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js" defer></script>
