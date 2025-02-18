@@ -412,7 +412,7 @@
                                                 style="border-left-width: 4px !important;">
                                                 <li class="my-2">
                                                     <a class="text-decoration-none text-secondary"
-                                                        href="{{ route('categoria_produto') }}">
+                                                        href="{{ route('product_categories.index') }}">
                                                         Categorias e produtos
                                                     </a>
                                                 </li>

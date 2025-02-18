@@ -6,17 +6,17 @@ use App\Http\Controllers\StoresController;
 use App\Http\Controllers\StoreOpeningHoursController;
 use App\Http\Controllers\StoreUsersController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\ProductCategoriesController;
+use App\Http\Controllers\ProductOptionCategoriesController;
+use App\Http\Controllers\ProductOptionsController;
+use App\Http\Controllers\ProductsController;
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\CategoriaProdutoController;
-use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CardapioController;
-use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CupomController;
 use App\Http\Controllers\ClienteAuthController;
 use App\Http\Controllers\ClienteEnderecoController;
-use App\Http\Controllers\CategoriaOpcionalController;
 use App\Http\Controllers\FormaPagamentoController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\LancamentoController;
@@ -111,41 +111,22 @@ Route::middleware([
         Route::post('/entregas/areas-metros', [StoresController::class, 'area_entrega_metros'])->name('store.area_entrega_metros');
 
 
-        //CATEGORIA PRODUTO
-        Route::get('/categoria_produto', [CategoriaProdutoController::class, 'index'])->name('categoria_produto');
-        Route::get('/categoria_produto/novo', [CategoriaProdutoController::class, 'create'])->name('categoria_produto.novo');
-        Route::post('/categoria_produto/cadastrar/{usuario_id}', [CategoriaProdutoController::class, 'store'])->name('categoria_produto.cadastrar');
-        Route::get('/categoria_produto/editar', [CategoriaProdutoController::class, 'edit'])->name('categoria_produto.editar');
-        Route::put('/categoria_produto/alterar/{usuario_id}/{categoria_id}', [CategoriaProdutoController::class, 'update']);
-        Route::delete('/categoria_produto/apagar/{id}', [CategoriaProdutoController::class, 'destroy'])->name('categoria_produto.excluir');
-        Route::get('/categoria_produto/JSON', [CategoriaProdutoController::class, 'indexJSON'])->name('categoria_produto.JSON');
-        Route::get('/categoria_produto/importar-ifood', [CategoriaProdutoController::class, 'importarCardapioIfood'])->name('categoria_produto.importarCardapioIfood');
+        //PRODUCT CATEGORIES
+        Route::get('/categoria_produto/JSON', [ProductCategoriesController::class, 'indexJSON'])->name('product_categories.JSON');
+        Route::get('/categoria_produto/importar-ifood', [ProductCategoriesController::class, 'importarCardapioIfood'])->name('product_categories.importarCardapioIfood');
+        Route::resource('product_categories', ProductCategoriesController::class);
 
-        //PRODUTO
-        Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos');
-        Route::get('/produtos/pesquisar', [ProdutoController::class, 'search']);
-        Route::get('/produto/novo', [ProdutoController::class, 'create'])->name('produto.novo');
-        Route::post('/produto/cadastrar/{categoria_id}/{usuario_id}', [ProdutoController::class, 'store']);
-        Route::get('/produto/editar', [ProdutoController::class, 'edit'])->name('produto.editar');
-        Route::put('/produto/alterar/{usuario_id}/{produto_id}', [ProdutoController::class, 'update']);
-        Route::delete('/produto/apagar/{id}', [ProdutoController::class, 'destroy'])->name('produto.excluir');
-        Route::get('/produto/promocao', [ProdutoController::class, 'edit_promocao'])->name('produto.promocao');
-        Route::post('/produto/promocao/{produto_id}', [ProdutoController::class, 'update_promocao']);
-        Route::post('/produto/destacar', [ProdutoController::class, 'destacar'])->name('produto.destacar');
+        //PRODUCTS
+        Route::get('/produto/promocao', [ProductController::class, 'edit_promocao'])->name('products.promocao');
+        Route::post('/produto/promocao/{produto_id}', [ProductController::class, 'update_promocao']);
+        Route::post('/produto/destacar', [ProductController::class, 'destacar'])->name('products.destacar');
+        Route::resource('products', ProductCategoriesController::class);
         
-        //CATEGORIA OPCIONAL
-        Route::get('/categoria_opcional', [CategoriaOpcionalController::class, 'index'])->name('categoria_opcional');
-        Route::get('/categoria_opcional/novo', [CategoriaOpcionalController::class, 'create'])->name('categoria_opcional.novo');
-        Route::post('/categoria_opcional/cadastrar/{produto_id}/{usuario_id}', [CategoriaOpcionalController::class, 'store']);
-        Route::delete('/categoria_opcional/apagar/{id}', [CategoriaOpcionalController::class, 'destroy'])->name('categoria_opcional.excluir');
+        //PRODUCT OPTION CATEGORIES
+        Route::resource('product_option_categories', ProductOptionCategoriesController::class);
 
         //OPCIONAL PRODUTO
-        Route::get('/opcional_produto/novo', [OpcionalProdutoController::class, 'create'])->name('opcional_produto.novo');
-        Route::post('/opcional_produto/cadastrar/{produto_id}/{usuario_id}', [OpcionalProdutoController::class, 'store']);
-        Route::delete('/opcional_produto/apagar/{id}', [OpcionalProdutoController::class, 'destroy'])->name('opcional_produto.excluir');
-        Route::get('/opcional_produto/editar', [OpcionalProdutoController::class, 'edit'])->name('opcional_produto.editar');
-        Route::put('/opcional_produto/alterar/{usuario_id}/{produto_id}', [OpcionalProdutoController::class, 'update']);
-        Route::get('/opcional_produto/listar/{produto_id}', [OpcionalProdutoController::class, 'opcionais']);
+        Route::resource('product_options', ProductOptionsController::class);
  
         //CLIENTE
         Route::get('/cliente', [ClienteController::class, 'index'])->name('cliente');

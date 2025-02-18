@@ -6,40 +6,40 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\CategoriaProduto;
-use App\Models\Loja;
+use App\Models\ProductCategories;
+use App\Models\Stores;
 use App\Services\IfoodService;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Produto;
-use App\Models\CategoriaOpcional;
-use App\Models\OpcionalProduto;
+use App\Models\Products;
+use App\Models\ProductOptionCategories;
+use App\Models\ProductOptions;
 
-class CategoriaProdutoController extends Controller
+class ProductCategoriesController extends Controller
 {
-    //LISTAGEM
+    // INDEX
     public function index(){
 
-        if(!session('lojaConectado')){
-            return redirect('loja')->with('error', 'Selecione um loja primeiro para visualizar as categorias e produtos');
+        if(!session('selected_store')){
+            return redirect()->route('stores.index')->with('error', 'Selecione uma loja!');
         }
 
-        //Sessão do loja que está conectado
-        $lojaIdConectado = session('lojaConectado')['id'];
+        // Selected store
+        $store_id = session('selected_store')['id'];
 
-        $categorias = CategoriaProduto::where('loja_id', $lojaIdConectado)
-        ->with('loja', 'produto')
-        ->orderBy('ordem')
+        $categories = ProductCategories::where('store_id', $store_id)
+        ->with('store', 'product')
+        ->orderBy('order')
         ->get();
 
-        return view('categoria_produto/listar', compact('categorias'));
+        return view('product_categories.index', compact('categories'));
     }
 
     //RETORNAR VIEW PARA CADASTRO
     public function create(Request $request){
 
-        $lojas = Loja::all();
+        $stores = Stores::all();
 
-        return view('categoria_produto/novo', compact('lojas'));
+        return view('product_categories.create', compact('stores'));
     }
 
     //CADASTRAR
