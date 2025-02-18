@@ -48,7 +48,7 @@ class StoresController extends Controller
             $stores[] = Stores::find($storeUser->store_id);
         }
 
-        return view('store.index', compact('stores'));
+        return view('stores.index', compact('stores'));
         
     }
 
@@ -71,7 +71,7 @@ class StoresController extends Controller
     public function show(Request $request){
 
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione uma loja!');
+            return redirect()->route('stores.index')->with('error', 'Selecione uma loja!');
         }
 
         //Info Stores
@@ -179,13 +179,13 @@ class StoresController extends Controller
                 'events' => json_encode($events),
             ];
         
-            return view('store.show', compact('dados', 'store'));
+            return view('stores.show', compact('dados', 'store'));
         }
 
         // Esquecer sessão da Stores Conectada
         session()->forget('selected_store');
 
-        return redirect()->route('store.create')->with('error', 'Nenhuma store encontrada cadastre uma store primeiramente.');
+        return redirect()->route('stores.create')->with('error', 'Nenhuma store encontrada cadastre uma store primeiramente.');
 
     }
 
@@ -201,7 +201,7 @@ class StoresController extends Controller
         if($step != null && $step > 1){
             $store = Stores::find($store_id);
         }
-        return view('store.create', compact('store'));
+        return view('stores.create', compact('store'));
     }
 
     //CADASTRAR
@@ -281,7 +281,7 @@ class StoresController extends Controller
 
             $step = 2;
 
-            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
+            return redirect()->route('stores.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 2){
 
@@ -314,7 +314,7 @@ class StoresController extends Controller
 
             $step = 3;
 
-            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
+            return redirect()->route('stores.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 3){
 
@@ -354,7 +354,7 @@ class StoresController extends Controller
 
             $step = 4;
 
-            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
+            return redirect()->route('stores.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 4){
 
@@ -393,7 +393,7 @@ class StoresController extends Controller
             //Definindo variavel de sessão de store
             session(['selected_store' => ['id'=> $store->id, 'name'=> $store->name]]);
 
-            return redirect()->route('store.show',['store' => $store->id,'tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
+            return redirect()->route('stores.show',['store' => $store->id,'tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');
@@ -532,7 +532,7 @@ class StoresController extends Controller
     public function show_entrega_taxas(){
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
+            return redirect()->route('stores.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do store
@@ -617,7 +617,7 @@ class StoresController extends Controller
      public function show_entrega_areas(){
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
+            return redirect()->route('stores.index')->with('error', 'Selecione um store primeiro para visualizar as categorias e produtos');
         }
 
         //Dados do store
@@ -674,7 +674,7 @@ class StoresController extends Controller
 
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione uma store primeiro');
+            return redirect()->route('stores.index')->with('error', 'Selecione uma store primeiro');
         }
 
         //Info Stores
@@ -693,7 +693,7 @@ class StoresController extends Controller
                 $userCode = $this->ifoodService->getUserCode();
 
             }
-            return view('store.integration_ifood', compact('userCode'));
+            return view('stores.integration_ifood', compact('userCode'));
         }
     }
 
@@ -702,7 +702,7 @@ class StoresController extends Controller
 
         //Verificar se há store selecionado
         if(!session('selected_store')){
-            return redirect()->route('store.index')->with('error', 'Selecione uma loja primeiro');
+            return redirect()->route('stores.index')->with('error', 'Selecione uma loja primeiro');
         }
 
         //Step
@@ -713,7 +713,7 @@ class StoresController extends Controller
             $step = 2;
             $authorization_code_verifier = $request->input('authorization_code_verifier');
 
-            return redirect()->route('store.create_integration_ifood', ['step' => $step, 'authorization_code_verifier' => $authorization_code_verifier]);
+            return redirect()->route('stores.create_integration_ifood', ['step' => $step, 'authorization_code_verifier' => $authorization_code_verifier]);
 
         }elseif($step == 2){
 
@@ -750,7 +750,7 @@ class StoresController extends Controller
             $store->ifood_merchant_id = $merchantIfood[0]['id'];
             $store->save();
 
-            return redirect()->route('store.show',['store' => $store->id, 'tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
+            return redirect()->route('stores.show',['store' => $store->id, 'tab' => 'integracoes'])->with('success', 'Integração feita com sucesso!');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');

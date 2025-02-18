@@ -58,7 +58,7 @@
                     <button class="accordion-button fs-4 fw-bold text-black" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsePedidosNovos" aria-expanded="true"
                         aria-controls="collapsePedidosNovos">
-                        Novos pedidos <span class="text-secondary ml-1">({{$data['pedidos_pendentes']}})</span>
+                        Novos pedidos <span class="text-secondary ml-1">({{$data['pending_orders']}})</span>
                     </button>
                 </h2>
                 <div id="collapsePedidosNovos" class="accordion-collapse collapse show"
@@ -69,9 +69,9 @@
                         <div class="row g-1" id="novos-pedidos-grid">
 
                             <!-- PEDIDOS -->
-                            @if(isset($data['pedidos']))
+                            @if(isset($data['orders']))
 
-                            @foreach($data['pedidos'] as $pedido)
+                            @foreach($data['orders'] as $order)
 
                             <!-- MODAL DETALHES PEDIDO -->
                             <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static"
@@ -80,26 +80,25 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header d-flex justify-content-between">
-                                            @if(isset($data['pedido']))
+                                            @if(isset($data['order']))
                                             <p class="fw-bold fs-5 m-0" id="modalDetalhesLabel">
-                                                #0{{$data['pedido']->id}}0
+                                                #0{{$data['order']->id}}0
                                             </p>
                                             <p class="m-0 text-secondary">
                                                 Recebido
-                                                {{ \Carbon\Carbon::parse($data['pedido']->feito_em)->diffForHumans() }}
+                                                {{ \Carbon\Carbon::parse($data['order']->created_at)->diffForHumans() }}
                                             </p>
                                             @endif
                                         </div>
                                         <div class="modal-body">
                                             <!-- PEDIDO DETALHE -->
-                                            @if(isset($data['pedido']))
-                                            <x-show-pedido :pedido="$data['pedido']" />
+                                            @if(isset($data['order']))
+                                            <x-show-order :order="$data['order']" />
                                             @endif
                                             <!-- FIM PEDIDO DETALHE -->
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="{{ route('pedido.painel') }}"
-                                                class="btn border-padrao text-padrao">
+                                            <a href="{{ route('orders.index') }}" class="btn border-padrao text-padrao">
                                                 Fechar
                                             </a>
                                         </div>
@@ -109,7 +108,7 @@
                             <!-- FIM MODAL DETALHES PEDIDO -->
 
                             <!-- Verificar se o modal deve ser aberto -->
-                            @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
+                            @if(isset($data['order']) && $data['order']->id == $order->id)
                             <script>
                             // Espera o DOM ser completamente carregado
                             document.addEventListener('DOMContentLoaded', function() {
@@ -141,7 +140,7 @@
                     <button class="accordion-button fs-4 fw-bold text-black" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapsePedidosTodos" aria-expanded="true"
                         aria-controls="collapsePedidosTodos">
-                        Todos pedidos <span class="text-secondary ml-1">({{$data['todos_pedidos']}})</span>
+                        Todos pedidos <span class="text-secondary ml-1">({{$data['orders_total']}})</span>
                     </button>
 
                 </h2>
@@ -152,21 +151,21 @@
                         <div class="overflow-x-scroll w100 m-0">
                             <div class="d-flex py-3">
                                 @php
-                                $filtro = request()->input('filtro'); // Obtendo o valor do filtro da URL
+                                $filters = request()->input('filters'); // Obtendo o valor do filters da URL
                                 @endphp
-                                @if(isset($filtro) && is_numeric($filtro))
-                                <a href="{{ route('pedido.painel') }}"
+                                @if(isset($filters) && is_numeric($filters))
+                                <a href="{{ route('orders.index') }}"
                                     class="mx-1 px-2 rounded-pill text-decoration-none fw-semibold text-white d-flex align-items-center justify-content-center"
                                     style="min-width: 180px; background-color: #FD0146 !important">
-                                    @if($filtro == 1)
+                                    @if($filters == 1)
                                     Em preparo
-                                    @elseif($filtro == 2)
+                                    @elseif($filters == 2)
                                     Pronto p/ retirar
-                                    @elseif($filtro == 3)
+                                    @elseif($filters == 3)
                                     A caminho
-                                    @elseif($filtro == 4)
+                                    @elseif($filters == 4)
                                     Concluídos
-                                    @elseif($filtro == 5)
+                                    @elseif($filters == 5)
                                     Cancelados
                                     @endif
                                     <span class="material-symbols-outlined ml-1 text-light">
@@ -175,32 +174,32 @@
                                 </a>
                                 @endif
 
-                                @if($filtro != 1)
-                                <a href="{{ route('pedido.painel', ['filtro' => 1]) }}"
+                                @if($filters != 1)
+                                <a href="{{ route('orders.index', ['filters' => 1]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Em preparo
                                 </a>
                                 @endif
 
-                                @if($filtro != 2)
-                                <a href="{{ route('pedido.painel', ['filtro' => 2]) }}"
+                                @if($filters != 2)
+                                <a href="{{ route('orders.index', ['filters' => 2]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Pronto p/ retirar
                                 </a>
                                 @endif
 
-                                @if($filtro != 3)
-                                <a href="{{ route('pedido.painel', ['filtro' => 3]) }}"
+                                @if($filters != 3)
+                                <a href="{{ route('orders.index', ['filters' => 3]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     A caminho
                                 </a>
                                 @endif
 
-                                @if($filtro != 4)
-                                <a href="{{ route('pedido.painel', ['filtro' => 4]) }}"
+                                @if($filters != 4)
+                                <a href="{{ route('orders.index', ['filters' => 4]) }}"
                                     class="p-2 mx-1 border rounded-pill bg-white text-decoration-none text-secondary text-center"
                                     style="min-width: 110px;">
                                     Concluídos
@@ -215,9 +214,9 @@
                         <div class="row g-3" id="pedidos-grid">
 
                             <!-- PEDIDOS -->
-                            @if(isset($data['pedidos']))
+                            @if(isset($data['orders']))
 
-                            @foreach($data['pedidos'] as $pedido)
+                            @foreach($data['orders'] as $order)
 
                             <!-- MODAL DETALHES PEDIDO -->
                             <div class="modal fade modal-lg" id="modalDetalhes" data-bs-backdrop="static"
@@ -239,13 +238,12 @@
                                         <div class="modal-body">
                                             <!-- PEDIDO DETALHE -->
                                             @if(isset($data['pedido']))
-                                            <x-show-pedido :pedido="$data['pedido']" />
+                                            <x-show-order :order="$data['order']" />
                                             @endif
                                             <!-- FIM PEDIDO DETALHE -->
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="{{ route('pedido.painel') }}"
-                                                class="btn border-padrao text-padrao">
+                                            <a href="{{ route('orders.index') }}" class="btn border-padrao text-padrao">
                                                 Fechar
                                             </a>
                                         </div>
@@ -255,7 +253,7 @@
                             <!-- FIM MODAL DETALHES PEDIDO -->
 
                             <!-- Verificar se o modal deve ser aberto -->
-                            @if(isset($data['pedido']) && $data['pedido']->id == $pedido->id)
+                            @if(isset($data['pedido']) && $data['pedido']->id == $order->id)
                             <script>
                             // Espera o DOM ser completamente carregado
                             document.addEventListener('DOMContentLoaded', function() {
@@ -309,11 +307,11 @@
             </p>
             <div class="bg-gray-100">
                 <ul class="m-0 p-3">
-                    @foreach($data['polling_eventos'] as $evento)
+                    @foreach($data['store_polling_events'] as $event)
                     <li class="m-0 p-0" style="font-size: 13px">
                         <p class="m-0">
-                            {{$evento->full_code}} - {{$evento->order_id}} -
-                            {{\Carbon\Carbon::parse($evento->created_at)->format('d/m/Y H:i')}}
+                            {{$event->full_code}} - {{$event->order_id}} -
+                            {{\Carbon\Carbon::parse($event->created_at)->format('d/m/Y H:i')}}
                         </p>
                     </li>
                     @endforeach
@@ -333,7 +331,7 @@
         // ATUALIZANDO TODOS OS PEDIDOS
         function atualizarPedidos() {
             $.ajax({
-                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) && $data['pedido']->status != 0 ? $data['pedido']->id : null, 'filtro' => request()->get('filtro') ] ) }}",
+                url: "{{ route('pedido.atualizar', ['id_selecionado' => isset($data['pedido']) && $data['pedido']->status != 0 ? $data['pedido']->id : null, 'filters' => request()->get('filters') ] ) }}",
                 type: 'GET',
                 success: function(data) {
                     $('#pedidos-grid').html(data);

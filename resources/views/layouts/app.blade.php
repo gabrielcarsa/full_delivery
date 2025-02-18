@@ -83,8 +83,8 @@
                                 @endphp
                                 <!-- FIM LOJAS -->
 
-                                <a class="btn d-flex align-items-center justify-content-between dropdown-toggle" href="#"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="btn d-flex align-items-center justify-content-between dropdown-toggle"
+                                    href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                                     <!-- SE EXISTIR LOJAS PARA O USUARIO CONECTADO -->
                                     @if(!empty($stores))
@@ -222,7 +222,7 @@
                                                 style="border-left-width: 4px !important;">
                                                 <li class="my-2">
                                                     <a class="text-decoration-none text-secondary"
-                                                        href="{{ route('pedido.painel') }}">
+                                                        href="{{ route('orders.index') }}">
                                                         Painel de Pedidos
                                                     </a>
                                                 </li>

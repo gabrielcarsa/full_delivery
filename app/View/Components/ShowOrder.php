@@ -6,10 +6,10 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ShowPedido extends Component
+class ShowOrder extends Component
 {
 
-    public function __construct(public $pedido)
+    public function __construct(public $order)
     {
 
     }
@@ -19,6 +19,6 @@ class ShowPedido extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('pedido.interno.show');
+        return view('orders.internal.show');
     }
 }

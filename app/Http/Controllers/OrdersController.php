@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 use App\Helpers\DistanciaEntregaHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Loja;
-use App\Models\Produto;
-use App\Models\Pedido;
-use App\Models\Cliente;
-use App\Models\Entrega;
-use App\Models\ItemPedido;
-use App\Models\OpcionalItem;
-use App\Models\Cupom;
-use App\Models\Mesa;
-use App\Models\PollingEvento;
-use App\Models\UsoCupom;
-use App\Models\IfoodToken;
+use App\Models\Stores;
+use App\Models\Products;
+use App\Models\Orders;
+use App\Models\Customers;
+use App\Models\StoreDeliveries;
+use App\Models\OrderProducts;
+use App\Models\OrderProductOptions;
+use App\Models\StoreCoupons;
+use App\Models\StoreTables;
+use App\Models\StorePollingEvents;
+use App\Models\StoreCouponUsages;
+use App\Models\IfoodTokens;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ClienteEndereco;
+use App\Models\CustomerAddresses;
 use Illuminate\Support\Facades\Session;
 use App\Services\IfoodService;
 use App\Services\PollingIfoodService;
 
 
-class PedidoController extends Controller
+class OrdersController extends Controller
 {
     
     protected $ifoodService;
@@ -39,80 +39,79 @@ class PedidoController extends Controller
     //PAINEL DE PEDIDOS INTERNO
     //-------------------------
 
-    //EXIBIR PEDIDOS
-    public function painel(Request $request){
+    //ORDERS INDEX
+    public function index(Request $request){
 
-        //Verificar se há loja selecionado
-        if(!session('lojaConectado')){
-            return redirect()->route('loja.index')->with('error', 'Selecione uma loja primeiro');
+        if(!session('selected_store')){
+            return redirect()->route('stores.index')->with('error', 'Selecione uma loja!');
         }
 
-        //ID loja
-        $loja_id  = session('lojaConectado')['id'];
+        // Store ID
+        $store_id  = session('selected_store')['id'];
 
-        $loja = Loja::where('id', $loja_id)->first();
+        $store = Stores::find($store_id);
 
-        //Query Pedidos
-        $pedidos = Pedido::where('loja_id', $loja_id)
-        ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega')
-        ->orderBy('feito_em', 'DESC');
+        // Query orders
+        $orders = Orders::where('store_id', $store_id)
+        ->with('store', 'store_payment_method', 'order_product', 'customer', 'order_delivery')
+        ->orderBy('created_at', 'DESC');
 
-        //Filtros
-        $filtro = $request->input('filtro');
+        // Filters
+        $filters = $request->input('filters');
 
-        // Verificando filtro e apĺicando
-        if($filtro != null){
-            $pedidos->where('status', $filtro);
+        // If has filter
+        if($filters != null){
+            $orders->where('status', $filters);
         }
 
-        //Executa a query
-        $pedidos = $pedidos->get();
+        // Execute query
+        $orders = $orders->get();
 
-        //Setando padrão NULL
-        $pedido = null;
+        // Default NULL
+        $order = null;
 
-        //Se houver ID do pedido no request
-        $pedido_id = $request->input('id');
+        // If has Order ID to show
+        $order_id = $request->input('id');
 
-        //Pedido
-        if($pedido_id != null){
+        // Order
+        if($order_id != null){
 
-            $pedido = Pedido::where('id', $pedido_id)
-            ->with('loja', 'forma_pagamento', 'item_pedido', 'cliente', 'entrega', 'uso_cupom')
-            ->orderBy('feito_em', 'ASC')
+            $order = Orders::where('id', $order_id)
+            ->with('store', 'store_payment_method', 'order_product', 'customer', 'order_delivery')
+            ->orderBy('created_at', 'ASC')
             ->first();
 
         }
 
-        // Obtém token mais recente
-        $token = IfoodToken::where('loja_id', $loja_id)->latest()->first();
+        // Token
+        $token = IfoodTokens::where('store_id', $store_id)->latest()->first();
 
-        $polling_eventos = PollingEvento::where('loja_id', $loja_id)->limit(3)->orderBy('created_at','DESC')->get();
+        $store_polling_events = StorePollingEvents::where('store_id', $store_id)->limit(3)->orderBy('created_at','DESC')->get();
 
-        //Variáveis de contagem
-        $todos_pedidos = 0;
-        $pedidos_pendentes = 0;
+        $orders_total = 0;
+        $pending_orders = 0;
 
-        //Calcular
-        foreach($pedidos as $p){
-            if($p->status == 0){
-                $pedidos_pendentes++;
-            }elseif($p->status != 0 && $p->status != 5){
-                $todos_pedidos++;
+        // Calculate
+        foreach($orders as $o){
+            if($o->status == 0){
+                $pending_orders++;
+            }elseif($o->status != 0 && $o->status != 5){
+                $orders_total++;
             }
         }        
 
+        // Data to view
         $data = [
-            'loja' => $loja,
-            'pedido' => $pedido,
-            'pedidos' => $pedidos,
+            'store' => $store,
+            'order' => $order,
+            'orders' => $orders,
             'token' => $token,
-            'polling_eventos' => $polling_eventos,
-            'todos_pedidos' => $todos_pedidos,
-            'pedidos_pendentes' => $pedidos_pendentes,
+            'store_polling_events' => $store_polling_events,
+            'orders_total' => $orders_total,
+            'pending_orders' => $pending_orders,
         ];
 
-        return view('pedido/interno/painel', compact('data'));    
+        return view('orders/internal/index', compact('data'));    
     }
 
     

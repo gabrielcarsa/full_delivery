@@ -5,6 +5,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\StoresController;
 use App\Http\Controllers\StoreOpeningHoursController;
 use App\Http\Controllers\StoreUsersController;
+use App\Http\Controllers\OrdersController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoriaProdutoController;
@@ -12,7 +13,6 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CardapioController;
 use App\Http\Controllers\OpcionalProdutoController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\CupomController;
 use App\Http\Controllers\ClienteAuthController;
 use App\Http\Controllers\ClienteEnderecoController;
@@ -87,7 +87,7 @@ Route::middleware([
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         
         //STORES
-        Route::post('/selecionar-loja', [StoresController::class, 'select'])->name('store.select');
+        Route::post('/selected-store', [StoresController::class, 'select'])->name('store.select');
         Route::put('/store/alterar-logo', [StoresController::class, 'update_logo'])->name('store.update_logo');
         Route::put('/store/alterar-banner', [StoresController::class, 'update_banner'])->name('store.update_banner');
         Route::get('/store/integracao-ifood', [StoresController::class, 'create_integration_ifood'])->name('store.create_integration_ifood');
@@ -155,8 +155,7 @@ Route::middleware([
         Route::put('/cliente/alterar/{cliente_id}', [ClienteController::class, 'update']);
         Route::delete('/cliente/apagar/{id}', [ClienteController::class, 'destroy'])->name('cliente.excluir');
 
-        //PEDIDO
-        Route::get('/painel-pedidos', [PedidoController::class, 'painel'])->name('pedido.painel');
+        //ORDERS
         Route::get('/pedido/update-status', [PedidoController::class, 'update_status'])->name('pedido.update_status');
         Route::post('/pedido/cancelar', [PedidoController::class, 'cancelar'])->name('pedido.cancelar');
         Route::post('/pedido/pagamento-mesa', [PedidoController::class, 'pagamento_mesa'])->name('pedido.pagamento');
@@ -166,6 +165,7 @@ Route::middleware([
         Route::get('/pedido/adicionar-item', [PedidoController::class, 'adicionar_item'])->name('pedido.adicionar_item');
         Route::get('/pedidos/atualizar', [PedidoController::class, 'refresh_pedidos'])->name('pedido.atualizar');
         Route::get('/pedidos/polling-ifood', [PedidoController::class, 'polling_ifood'])->name('pedido.polling');
+        Route::resource('orders', OrdersController::class)->only(['index', 'show']);
 
 
         //CUPOM

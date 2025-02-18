@@ -88,7 +88,7 @@ class StoreUsersController extends Controller
      */
     public function edit(StoreUsers $store_user)
     {
-        return view('store_user.edit', compact('store_user'));
+        return view('store_users.edit', compact('store_user'));
     }
 
     /**
