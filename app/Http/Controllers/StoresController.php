@@ -270,18 +270,21 @@ class StoresController extends Controller
             ]);
 
             //Criando cliente para receber pedidos quando cliente não é cadastrado
-            Customers::create([
-                'name' => 'CLIENTE SEM CADASTRO',
-                'cpf' => '00000000000',
-                'email' => 'sem_cadastro@foomy.com',
-                'phone' => '67999999999',
-                'store_id' => $store->id,
-                'is_default_customer' => true,
-            ]);
+            $customers = Customers::all();
+            if($customers->count() == 0){
+                Customers::create([
+                    'name' => 'CLIENTE SEM CADASTRO',
+                    'cpf' => '00000000000',
+                    'email' => 'sem_cadastro@foomy.com',
+                    'phone' => '67999999999',
+                    'store_id' => $store->id,
+                    'is_default_customer' => true,
+                ]);
+            }
 
             $step = 2;
 
-            return redirect()->route('stores.create', ['step' => $step, 'store_id' => $store->id]);
+            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 2){
 
@@ -314,7 +317,7 @@ class StoresController extends Controller
 
             $step = 3;
 
-            return redirect()->route('stores.create', ['step' => $step, 'store_id' => $store->id]);
+            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 3){
 
@@ -354,7 +357,7 @@ class StoresController extends Controller
 
             $step = 4;
 
-            return redirect()->route('stores.create', ['step' => $step, 'store_id' => $store->id]);
+            return redirect()->route('store.create', ['step' => $step, 'store_id' => $store->id]);
 
         }elseif($step == 4){
 
@@ -393,7 +396,7 @@ class StoresController extends Controller
             //Definindo variavel de sessão de store
             session(['selected_store' => ['id'=> $store->id, 'name'=> $store->name]]);
 
-            return redirect()->route('stores.show',['store' => $store->id,'tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
+            return redirect()->route('store.show',['store' => $store->id,'tab' => 'planos'])->with('success', 'Cadastro da loja concluído com sucesso');
 
         }else{
             return redirect()->back()->with('error', 'Não autorizado');

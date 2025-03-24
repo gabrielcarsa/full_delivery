@@ -118,7 +118,7 @@
             <div class="col-md-4 my-auto">
 
                 <p class="m-0 fs-1 m-0 fw-bold">
-                    Olá, <span class="text-padrao">{{Auth::user()->name}}</span>
+                    Olá, <span class="text-primary">{{Auth::user()->name}}</span>
                 </p>
 
                 <p class="m-0 fw-medium">
@@ -163,7 +163,7 @@
                 <p class="m-0 fw-medium">
                     Não vai levar 5 minutos!
                 </p>
-                <a href="{{ route('store.create') }}" class="btn bg-padrao text-white fw-semibold w-100 my-3 shadow">
+                <a href="{{ route('store.create') }}" class="btn btn-primary w-100 my-3">
                     Criar loja
                 </a>
             </div>

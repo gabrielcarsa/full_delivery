@@ -13,7 +13,7 @@
                 <div class="d-flex align-items-center justify-content-between " style="margin: 30px 5%">
 
                     <div class="d-flex align-items-center">
-                        <div class="rounded-circle px-2 mr-2 {{!request('step') ? 'bg-padrao' : 'bg-clear'}}">
+                        <div class="rounded-circle px-2 mr-2 {{!request('step') ? 'bg-primary' : 'bg-clear'}}">
                             <p class="m-0 fw-bold fs-5 text-white">
                                 1
                             </p>
@@ -25,7 +25,7 @@
                     <div class="w-100 bg-clear mx-3 rounded" style="height: 2px"></div>
                     <div class="d-flex align-items-center">
                         <div
-                            class="rounded-circle px-2 mr-2 {{request('step') && request('step') == 2 ? 'bg-padrao' : 'bg-clear'}}">
+                            class="rounded-circle px-2 mr-2 {{request('step') && request('step') == 2 ? 'bg-primary' : 'bg-clear'}}">
                             <p class="m-0 fw-bold fs-5 text-white">
                                 2
                             </p>
@@ -38,7 +38,7 @@
 
                     <div class="d-flex align-items-center">
                         <div
-                            class="rounded-circle px-2 mr-2 {{request('step') && request('step') == 3 ? 'bg-padrao' : 'bg-clear'}}">
+                            class="rounded-circle px-2 mr-2 {{request('step') && request('step') == 3 ? 'bg-primary' : 'bg-clear'}}">
                             <p class="m-0 fw-bold fs-5 text-white">
                                 3
                             </p>
@@ -51,7 +51,7 @@
 
                     <div class="d-flex align-items-center">
                         <div
-                            class="rounded-circle px-2 mr-2 {{request('step') && request('step') == 4 ? 'bg-padrao' : 'bg-clear'}}">
+                            class="rounded-circle px-2 mr-2 {{request('step') && request('step') == 4 ? 'bg-primary' : 'bg-clear'}}">
                             <p class="m-0 fw-bold fs-5 text-white">
                                 4
                             </p>
@@ -82,7 +82,7 @@
 
                         <div class="col-sm-6 my-2">
                             <x-label for="nome" value="Nome da loja" />
-                            <x-input placeholder="Ex.: Restaurante do Foomy" id="nome" type="text" name="nome"
+                            <x-input placeholder="Ex.: Restaurante" id="nome" type="text" name="nome"
                                 :value="old('nome')" autofocus autocomplete="off" />
                         </div>
                         <div class="col-sm-6 my-2">
@@ -253,7 +253,7 @@
                 @elseif(request('step') && request('step') == 2 && $store != null)
 
                 <p class="fw-bold m-0">
-                    Muito bom <span class="text-padrao">{{$store->name}}</span>,
+                    Muito bom <span class="text-primary">{{$store->name}}</span>,
                 </p>
                 <p class="text-secondary m-0">
                     Agora vamos ajudar seus clientes a entrarem em contato com sua loja, preencha os campos abaixo:
@@ -323,7 +323,7 @@
                                 autofocus autocomplete="off" />
                         </div>
                         <div class="col-md-6 my-2 d-flex align-items-end">
-                            <button type="button" class="btn border-padrao text-padrao" onclick="buscarEndereco()">
+                            <button type="button" class="btn border-primary text-primary" onclick="buscarEndereco()">
                                 Buscar
                             </button>
                         </div>
@@ -492,12 +492,9 @@
             <!-- FIM COLUNA -->
 
             <!-- COLUNA -->
-            <div class="col-sm-6 d-flex align-items-center relative">
+            <div class="col-sm-6 d-flex align-items-center">
                 <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="" class="w-100 rounded-5 shadow">
-                <p class="absolute top-0 m-3 fs-3 fw-bolder">
-                    Não podemos te ajudar na cozinha, mas com certeza ajudaremos na gestão
-                </p>
             </div>
             <!-- FIM COLUNA -->
 

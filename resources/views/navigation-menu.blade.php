@@ -9,8 +9,8 @@
             </span>
         </button>
         @else
-        <a href="{{ route('dashboard') }}">
-            <img src="{{asset("storage/images/logo-black.png")}}" width="100px" alt="Foomy" class="mx-auto my-2">
+        <a href="{{ route('dashboard') }}" class="fs-3 fw-semibold text-decoration-none text-black">
+            Full Delivery
         </a>
         @endif
 
