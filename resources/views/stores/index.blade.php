@@ -10,7 +10,7 @@
 
             <!-- HEADER -->
             <div class="d-flex align-items-center justify-content-end">
-                <a class="btn bg-padrao text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
+                <a class="btn bg-primary text-white m-0 py-1 px-5 fw-bold d-flex align-items-center justify-content-center"
                     href="">
                     <span class="material-symbols-outlined mr-1">
                         add
@@ -32,7 +32,7 @@
 
             <!-- CARD LOJA -->
             <div
-                class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-padrao' : '' }}">
+                class="d-flex align-items-center border-3 bg-white p-3 rounded m-3 {{ session('selected_store') && session('selected_store')['id'] == $store->id ? 'border-primary' : '' }}">
 
                 <!-- LOGO LOJA -->
                 @if($store->logo != null)
@@ -95,7 +95,7 @@
                     </form>
                     @else
                     <a href="{{route('store.show', ['store' => $store->id])}}"
-                        class="btn bg-padrao fw-semibold text-white">
+                        class="btn bg-primary fw-semibold text-white">
                         Ir para loja
                     </a>
                     @endif

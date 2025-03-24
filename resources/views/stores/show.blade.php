@@ -6,31 +6,31 @@
         <!-- CARD GERAL -->
         <ul class="nav nav-pills fs-5">
             <li class="nav-item hover">
-                <a class="nav-link rounded-0 rounded-top {{request('tab') == null || request('tab') == 'sobre' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
+                <a class="nav-link rounded-0 rounded-top {{request('tab') == null || request('tab') == 'sobre' ? 'bg-white text-primary fw-bold' : 'text-secondary'}}"
                     aria-current="page" href="?tab=sobre">
                     Sobre a loja
                 </a>
             </li>
             <li class="nav-item hover">
-                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'horarios' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
+                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'horarios' ? 'bg-white text-primary fw-bold' : 'text-secondary'}}"
                     href="?tab=horarios">
                     Horários
                 </a>
             </li>
             <li class="nav-item hover">
-                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'equipe' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
+                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'equipe' ? 'bg-white text-primary fw-bold' : 'text-secondary'}}"
                     href="?tab=equipe">
                     Equipe
                 </a>
             </li>
             <li class="nav-item hover">
-                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'planos' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
+                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'planos' ? 'bg-white text-primary fw-bold' : 'text-secondary'}}"
                     href="?tab=planos">
                     Planos
                 </a>
             </li>
             <li class="nav-item hover">
-                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'integracoes' ? 'bg-white text-padrao fw-bold' : 'text-secondary'}}"
+                <a class="nav-link rounded-0 rounded-top {{request('tab') != null && request('tab') == 'integracoes' ? 'bg-white text-primary fw-bold' : 'text-secondary'}}"
                     href="?tab=integracoes">
                     Integrações
                 </a>
@@ -207,7 +207,7 @@
                 <!-- FIM INPUTS INFORMAÇÕES GERAIS LOJA -->
 
                 <!-- ENDEREÇO -->
-                <h3 class="fw-bold my-3 border-top border-bottom p-3 fs-5 text-padrao">
+                <h3 class="fw-bold my-3 border-top border-bottom p-3 fs-5 text-primary">
                     Endereço
                 </h3>
                 <p class="px-3 fw-light">
@@ -223,7 +223,7 @@
 
                     </div>
                     <div class="col-md-6 my-2 d-flex align-items-end">
-                        <button type="button" class="btn border-padrao text-padrao" onclick="buscarEndereco()">
+                        <button type="button" class="btn border-primary text-primary" onclick="buscarEndereco()">
                             Buscar
                         </button>
                     </div>
@@ -268,7 +268,7 @@
                 <!-- FIM ENDEREÇO -->
 
                 <!-- TAXA DE SERVIÇO -->
-                <h3 class="fw-bold my-3 border-top border-bottom p-3 fs-5 text-padrao">
+                <h3 class="fw-bold my-3 border-top border-bottom p-3 fs-5 text-primary">
                     Taxa de serviço
                 </h3>
                 <p class="px-3 fw-light">
@@ -284,14 +284,14 @@
 
                 <div class="bg-white p-3 d-flex justify-content-between sticky-bottom">
                     <div class="text-secondary d-flex align-items-center fw-bold">
-                        <span class="material-symbols-outlined mr-1">
+                        <span class="material-symbols-outlined me-1">
                             info
                         </span>
                         <p class="m-0">
                             Salve as alterações antes de sair.
                         </p>
                     </div>
-                    <button type="submit" class="btn bg-padrao text-white px-5 fw-semibold">
+                    <button type="submit" class="btn bg-primary text-white px-5 fw-semibold">
                         Salvar
                     </button>
                 </div>
@@ -307,7 +307,7 @@
                     Para excluir um horário basta clicar sobre ele.
                 </p>
                 <div class="d-flex justify-content-end my-3">
-                    <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
+                    <a href="" class="btn bg-primary text-white fw-bold" data-bs-toggle="modal"
                         data-bs-target="#modalAdicionarHorario">
                         Cadastrar horário
                     </a>
@@ -394,7 +394,7 @@
                         </form>
                     </div>
                     <div class="">
-                        <a href="" class="btn bg-padrao text-white fw-bold" data-bs-toggle="modal"
+                        <a href="" class="btn bg-primary text-white fw-bold" data-bs-toggle="modal"
                             data-bs-target="#modalCreateStoreUser">
                             Convidar usuário
                         </a>
@@ -417,7 +417,7 @@
                                     <div class="modal-body">
                                         <div class="card p-3 text-secondary">
                                             <div class="d-flex align-items-center">
-                                                <span class="material-symbols-outlined mr-2 fw-light">
+                                                <span class="material-symbols-outlined me-2 fw-light">
                                                     info
                                                 </span>
                                                 <p class="m-0 fw-light">
@@ -666,73 +666,73 @@
                         <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
                             Sem precisar cadastrar cartões.
                         </p>
-                        <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
+                        <a href="" class="btn bg-primary text-white fw-semibold mx-3 my-3">
                             Escolher
                         </a>
                         <hr class="mx-3">
                         <ul class="mx-3">
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Suporte via email.
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Receba até 50 pedidos por mês.
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Cardápio digital completo, somente para delivery.
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Integração completa com iFood.
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Gestor de pedidos e gestor de mesas.
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Tela de preparo (KDS).
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Impressão automáticas de pedidos.
+                                    Descrição Plano.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Mapa para controle de mesas.
+                                    Descrição Plano.
                                 </p>
                             </li>
                         </ul>
@@ -749,105 +749,104 @@
                     <div class="card h-100">
                         <div class="border-bottom text-center">
                             <p class="m-0 fw-bold fs-5">
-                                Standard
+                                Basic
                             </p>
                         </div>
                         <p class="mt-3 mb-0 mx-3 text-secondary text-decoration-line-through fw-semibold fs-5">
-                            R$ 99,90
+                            R$ 89,90
                         </p>
                         <div class="mx-3">
                             <p class="text-dark fw-bold fs-1 m-0 mx-1">
                                 <span class="text-secondary fs-6 m-0 fw-medium">12x</span>
-                                R$ 64,90
+                                R$ 55,90
                             </p>
                         </div>
                         <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
                             *Economize 35% no plano anual.
                         </p>
-                        <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
+                        <a href="" class="btn bg-primary text-white fw-semibold mx-3 my-3">
                             Escolher
                         </a>
                         <hr class="mx-3">
                         <ul class="mx-3">
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
-                                    stars
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
+                                    check
                                 </span>
                                 <p class="m-0 fw-bold">
                                     Todos benefícios do plano Gratuito e mais:
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Suporte via WhatsApp e email.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Pedidos ilimitados.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Cardápio digital completo: delivery, retirada e no
-                                    local.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Integração completa com iFood.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Gestor de pedidos e gestor de mesas.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Emissão de notas fiscais.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Tela de preparo (KDS).
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Financeiro completo.
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Sistema de frente de caixa (PDV).
+                                    Descrição Plano Basic.
                                 </p>
                             </li>
                         </ul>
@@ -864,11 +863,11 @@
                     <div class="card h-100">
                         <div class="border-bottom text-center">
                             <p class="m-0 fs-5 fw-bold">
-                                Business
+                                Medium
                             </p>
                         </div>
                         <p class="mt-3 mb-0 mx-3 text-secondary text-decoration-line-through fw-semibold fs-5">
-                            R$ 199,90
+                            R$ 189,90
                         </p>
                         <div class="mx-3">
                             <p class="text-dark fw-bold fs-1 m-0 mx-1">
@@ -879,50 +878,49 @@
                         <p class="text-secondary fw-normal mx-3" style="font-size: 14px">
                             *Economize 25% no plano anual.
                         </p>
-                        <a href="" class="btn bg-padrao text-white fw-semibold mx-3 my-3">
+                        <a href="" class="btn bg-primary text-white fw-semibold mx-3 my-3">
                             Escolher
                         </a>
                         <hr class="mx-3">
                         <ul class="mx-3">
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
-                                    stars
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
+                                    check
                                 </span>
                                 <p class="m-0 fw-bold">
-                                    Todos benefícios do plano Standard e mais:
+                                    Todos benefícios do plano Basic e mais:
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Suporte prioritário via WhatsApp e email.
+                                    Descrição Plano Medium.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Aplicativo para garçons (IOS e Android).
+                                    Descrição Plano Medium.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Gestor de estoque.
+                                    Descrição Plano Medium.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Relatórios, gráficos e estatísticas de dados
-                                    financeiros, vendas e pedidos.
+                                    Descrição Plano Medium.
                                 </p>
                             </li>
                         </ul>
@@ -939,70 +937,64 @@
                     <div class="card bg-dark text-white h-100">
                         <div class="border-bottom text-center">
                             <p class="m-0 fs-5 fw-bold">
-                                Ultra
+                                Premium
                             </p>
                         </div>
                         <p class="mt-3 mb-0 mx-3 text-white-50 text-decoration-line-through fw-semibold fs-5">
-                            R$ 489,90
+                            R$ 589,90
                         </p>
                         <div class="mx-3">
                             <p class="text-white fw-bold fs-1 m-0 mx-1">
                                 <span class="text-white-50 fs-6 m-0 fw-medium">12x</span>
-                                R$ 399,90
+                                R$ 401,90
                             </p>
                         </div>
                         <p class="text-white-50 fw-normal mx-3" style="font-size: 14px">
                             *Economize 18% no plano anual.
                         </p>
-                        <a href="" class="btn btn-light text-padrao fw-semibold mx-3 my-3">
+                        <a href="" class="btn btn-light text-primary fw-semibold mx-3 my-3">
                             Escolher
                         </a>
                         <hr class="mx-3">
                         <ul class="mx-3">
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
-                                    stars
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
+                                    check
                                 </span>
                                 <p class="m-0 fw-bold">
-                                    Todos benefícios do plano Business e mais:
+                                    Todos benefícios do plano Medium e mais:
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Suporte exclusivo via WhatsApp, email e chamadas de
-                                    vídeo.
+                                    Descrição Plano Premium.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal text-warning">
-                                    Aplicativo personalizado para sua loja com sua
-                                    marca.
+                                    Descrição Plano Premium.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Aplicativo para garçons (IOS e Android) com recursos
-                                    exclusivos de gestão para
-                                    administradores.
+                                    Descrição Plano Premium.
                                 </p>
                             </li>
                             <li class="d-flex align-items-center my-3">
-                                <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                                <span class="material-symbols-outlined fs-5 text-primary me-2">
                                     check
                                 </span>
                                 <p class="m-0 fw-normal">
-                                    Gestor de estoque com avisos no painel e mensagem
-                                    WhatsApp sobre reposição de
-                                    insumos.
+                                    Descrição Plano Premium.
                                 </p>
                             </li>
                         </ul>
@@ -1032,7 +1024,7 @@
                     </div>
 
                     <div class="d-flex align-items-center justify-content-center my-3">
-                        <span class="material-symbols-outlined fill-icon mr-2 text-success">
+                        <span class="material-symbols-outlined fill-icon me-2 text-success">
                             check_circle
                         </span>
                         <p class="m-0 fw-bold fs-5">
@@ -1102,7 +1094,7 @@
                             É bem simples, não leva 5 minutos e vai facilitar muitoooo sua vida.
                         </p>
                         <a href="{{route('store.create_integration_ifood')}}"
-                            class="btn bg-padrao text-white fw-semibold w-100">
+                            class="btn bg-primary text-white fw-semibold w-100">
                             Iniciar
                         </a>
                     </div>
@@ -1125,7 +1117,7 @@
                             </p>
                         </li>
                         <li class="d-flex align-items-center my-3">
-                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                            <span class="material-symbols-outlined fs-5 text-primary me-2">
                                 check
                             </span>
                             <p class="m-0 fw-normal">
@@ -1133,7 +1125,7 @@
                             </p>
                         </li>
                         <li class="d-flex align-items-center my-3">
-                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                            <span class="material-symbols-outlined fs-5 text-primary me-2">
                                 check
                             </span>
                             <p class="m-0 fw-normal">
@@ -1141,7 +1133,7 @@
                             </p>
                         </li>
                         <li class="d-flex align-items-center my-3">
-                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                            <span class="material-symbols-outlined fs-5 text-primary me-2">
                                 check
                             </span>
                             <p class="m-0 fw-normal">
@@ -1149,11 +1141,11 @@
                             </p>
                         </li>
                         <li class="d-flex align-items-center my-3">
-                            <span class="material-symbols-outlined fs-5 text-padrao mr-2">
+                            <span class="material-symbols-outlined fs-5 text-primary me-2">
                                 check
                             </span>
                             <p class="m-0 fw-normal">
-                                Ao usar o Gestor de Pedidos do Foomy, automáticamente, você mantêm a
+                                Ao usar o Gestor de Pedidos, automaticamente, você mantêm a
                                 sua Loja do iFood
                                 aberta para receber pedidos.
                             </p>
