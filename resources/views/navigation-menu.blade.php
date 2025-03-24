@@ -2,8 +2,8 @@
     <div class="container-fluid">
 
         @if(session('selected_store'))
-        <button class="text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSidebar"
-            aria-expanded="false" aria-controls="collapseSidebar">
+        <button class="btn m-0 p-0 text-secondary" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseSidebar" aria-expanded="false" aria-controls="collapseSidebar">
             <span class="material-symbols-outlined">
                 menu_open
             </span>
